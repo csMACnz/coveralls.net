@@ -11,7 +11,6 @@ namespace csmacnz.Coveralls
             p.Parse(args);
 
             Console.WriteLine("Hello World");
-            Console.ReadKey();
         }
     }
 }
