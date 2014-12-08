@@ -1,11 +1,15 @@
-﻿using System;
+﻿using Mono.Options;
+using System;
 
 namespace csmacnz.Coveralls
 {
-    class Program
+    public class Program
     {
-        static void Main(string[] args)
+        public static void Main(string[] args)
         {
+            var p = new OptionSet();
+            p.Parse(args);
+
             Console.WriteLine("Hello World");
             Console.ReadKey();
         }
