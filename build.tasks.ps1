@@ -15,3 +15,5 @@ task default
 task build {
 	exec { msbuild "/t:Clean;Build" "/p:Configuration=$configuration" $sln_file }
 }
+
+task appveyor -depends build
