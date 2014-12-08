@@ -1,3 +1,4 @@
+[![Stories in Ready](https://badge.waffle.io/csmacnz/coveralls.net.png?label=ready&title=Ready)](https://waffle.io/csmacnz/coveralls.net)
 coveralls.net
 =============
 
