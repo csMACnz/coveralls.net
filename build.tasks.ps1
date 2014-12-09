@@ -12,6 +12,10 @@ properties {
 
 task default
 
+task RestoreNuGetPackages { 
+ 	exec { nuget.exe restore $sln_file } 
+} 
+
 task clean {
 	exec { msbuild "/t:Clean" "/p:Configuration=$configuration" $sln_file }
 }
@@ -34,6 +38,6 @@ task coveralls-only {
 
 task postbuild -depends coverage-only, coveralls-only
 
-task appveyor-build -depends build
+task appveyor-build -depends RestoreNuGetPackages, build
 
 task appveyor-test -depends postbuild
