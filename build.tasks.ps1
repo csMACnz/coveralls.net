@@ -12,8 +12,28 @@ properties {
 
 task default
 
+task clean {
+	exec { msbuild "/t:Clean" "/p:Configuration=$configuration" $sln_file }
+}
+
 task build {
 	exec { msbuild "/t:Clean;Build" "/p:Configuration=$configuration" $sln_file }
 }
 
-task appveyor -depends build
+task coverage -depends build, coverage-only
+
+task coverage-only {
+	exec { & .\src\packages\OpenCover.4.5.3427\OpenCover.Console.exe -register:user -target:vstest.console.exe -targetargs:"src\csmacnz.Coveralls.Tests\bin\$Configuration\csmacnz.Coveralls.Tests.dll" -output:opencovertests.xml }
+}
+
+task coveralls -depends coverage, coveralls-only
+
+task coveralls-only {
+	exec { & ".\src\csmacnz.Coveralls\bin\$configuration\csmacnz.Coveralls.exe" }
+}
+
+task postbuild -depends coverage-only, coveralls-only
+
+task appveyor-build -depends build
+
+task appveyor-test -depends postbuild
