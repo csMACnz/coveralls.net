@@ -1,9 +1,4 @@
 ﻿using Newtonsoft.Json;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace csmacnz.Coveralls
 {
@@ -12,7 +7,7 @@ namespace csmacnz.Coveralls
         [JsonProperty("repo_token")]
         public string RepoToken { get; set; }
 
-        [JsonProperty("service_job_id")]
+        [JsonProperty("service_job_id", DefaultValueHandling = DefaultValueHandling.Ignore)]
         public string ServiceJobId { get; set; }
 
         [JsonProperty("service_name")]
@@ -20,5 +15,52 @@ namespace csmacnz.Coveralls
 
         [JsonProperty("source_files")]
         public CoverageFile[] SourceFiles { get; set; }
+
+        [JsonProperty("git", DefaultValueHandling = DefaultValueHandling.Ignore)]
+        public GitData Git { get; set; }
+    }
+
+    public sealed class GitData
+    {
+        [JsonProperty("head", DefaultValueHandling = DefaultValueHandling.Ignore)]
+        public GitHead Head { get; set; }
+
+        [JsonProperty("branch", DefaultValueHandling = DefaultValueHandling.Ignore)]
+        public string Branch { get; set; }
+
+        [JsonProperty("remotes", DefaultValueHandling = DefaultValueHandling.Ignore)]
+        public GitRemotes Remotes { get; set; }
+    }
+
+    public sealed class GitHead
+    {
+        [JsonProperty("id", DefaultValueHandling = DefaultValueHandling.Ignore)]
+        public string Id { get; set; }
+
+        [JsonProperty("author_name", DefaultValueHandling = DefaultValueHandling.Ignore)]
+        public string AuthorName { get; set; }
+
+        [JsonProperty("author_email", DefaultValueHandling = DefaultValueHandling.Ignore)]
+        public string AuthorEmail { get; set; }
+
+        [JsonProperty("committer_name", DefaultValueHandling = DefaultValueHandling.Ignore)]
+        public string CommitterName { get; set; }
+
+        [JsonProperty("committer_email", DefaultValueHandling = DefaultValueHandling.Ignore)]
+        public string ComitterEmail { get; set; }
+
+        [JsonProperty("message", DefaultValueHandling = DefaultValueHandling.Ignore)]
+        public string Message { get; set; }
+
+    }
+
+    public sealed class GitRemotes
+    {
+
+        [JsonProperty("name", DefaultValueHandling = DefaultValueHandling.Ignore)]
+        public string Name { get; set; }
+
+        [JsonProperty("url", DefaultValueHandling = DefaultValueHandling.Ignore)]
+        public string Url { get; set; }
     }
 }
