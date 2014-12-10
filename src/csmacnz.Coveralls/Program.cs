@@ -1,4 +1,6 @@
-﻿using Mono.Options;
+﻿using System.Collections.Generic;
+using System.Xml.Linq;
+using Mono.Options;
 using Newtonsoft.Json;
 using System;
 using System.Net.Http;
@@ -12,9 +14,34 @@ namespace csmacnz.Coveralls
             var p = new OptionSet();
             p.Parse(args);
 
-            var coverageBuilder = new CoverageFileBuilder(@"C:\sourceFile.cs");
-            var file = coverageBuilder.CreateFile();
+            var files = new List<CoverageFile>();
+            var fileName = @"opencovertests.xml";
+            var document = XDocument.Load(fileName);
 
+            if (document.Root != null)
+            {
+                var xElement = document.Root.Element("Modules");
+                if (xElement != null)
+                    foreach(var module in xElement.Elements("Module"))
+                    {
+                        var attribute = module.Attribute("skippedDueTo");
+                        if (attribute == null || string.IsNullOrEmpty(attribute.Value))
+                        {
+                            var element1 = module.Element("Files");
+                            if (element1 != null)
+                            {
+                                var fileElements = element1.Elements("File");
+                                foreach (var file in fileElements)
+                                {
+                                    var filePath = file.Attribute("fullPath").Value;
+                                    var coverageBuilder = new CoverageFileBuilder(filePath);
+                                    var coverageFile = coverageBuilder.CreateFile();
+                                    files.Add(coverageFile);
+                                }
+                            }
+                        }
+                    }
+            }
             GitData gitData = null;
             var commitId = Environment.GetEnvironmentVariable("APPVEYOR_REPO_COMMIT");
             if (!string.IsNullOrWhiteSpace(commitId))
@@ -39,7 +66,7 @@ namespace csmacnz.Coveralls
                 RepoToken = "9HuFWYElkcbOYDtBbEOpPgiTOkzKp4CG1",
                 ServiceJobId = serviceJobId,
                 ServiceName = "coveralls.net",
-                SourceFiles = new[] { file },
+                SourceFiles = files.ToArray(),
                 Git = gitData
             };
 
@@ -47,6 +74,7 @@ namespace csmacnz.Coveralls
             var uploaded = Upload(@"https://coveralls.io/api/v1/jobs", fileData);
             if (!uploaded)
             {
+                Console.Error.WriteLine("Failed to upload to coveralls");
                 Environment.Exit(1);
             }
         }
