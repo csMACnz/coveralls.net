@@ -27,12 +27,12 @@ namespace csmacnz.Coveralls
                         var attribute = module.Attribute("skippedDueTo");
                         if (attribute == null || string.IsNullOrEmpty(attribute.Value))
                         {
-                            var element1 = module.Element("Files");
-                            if (element1 != null)
+                            var filesElement = module.Element("Files");
+                            if (filesElement != null)
                             {
-                                var fileElements = element1.Elements("File");
-                                foreach (var file in fileElements)
+                                foreach (var file in filesElement.Elements("File"))
                                 {
+                                    var fileid = file.Attribute("uid").Value;
                                     var filePath = file.Attribute("fullPath").Value;
                                     var index = filePath.IndexOf(':');
                                     if (index != -1)
@@ -41,8 +41,41 @@ namespace csmacnz.Coveralls
                                     }
                                     filePath = filePath.Replace("\\", "/");
                                     var coverageBuilder = new CoverageFileBuilder(filePath);
-                                    var coverageFile = coverageBuilder.CreateFile();
 
+                                    var classesElement = module.Element("Classes");
+                                    if (classesElement != null)
+                                    {
+                                        foreach(var @class in classesElement.Elements("Class"))
+                                        {
+                                            var methods = @class.Element("Methods");
+                                            if (methods != null)
+                                                foreach (var method in methods.Elements("Method"))
+                                                {
+                                                    var sequencePointsElement = method.Element("SequencePoints");
+                                                    if (sequencePointsElement != null)
+                                                        foreach (var sequencePoint in sequencePointsElement.Elements("SequencePoint"))
+                                                        {
+                                                            var sequenceFileid = sequencePoint.Attribute("fileid").Value;
+                                                            if (fileid == sequenceFileid)
+                                                            {
+                                                                var sourceLine = int.Parse(sequencePoint.Attribute("sl").Value);
+                                                                var visitCount = int.Parse(sequencePoint.Attribute("vc").Value);
+                                                                if (visitCount > 0)
+                                                                {
+                                                                    coverageBuilder.RecordCovered(sourceLine);
+                                                                }
+                                                                else
+                                                                {
+                                                                    coverageBuilder.RecordUnCovered(sourceLine);
+                                                                }
+                                                            }
+
+                                                        }
+                                                }
+                                        }
+                                    }
+
+                                    var coverageFile = coverageBuilder.CreateFile();
                                     files.Add(coverageFile);
                                 }
                             }

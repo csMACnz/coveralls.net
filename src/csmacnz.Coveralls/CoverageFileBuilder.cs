@@ -34,7 +34,7 @@ namespace csmacnz.Coveralls
             var coverage = Enumerable.Range(0, length)
                 .Select(index => _coverage.ContainsKey(index) ? (int?) _coverage[index] : null)
                 .ToArray();
-            return new CoverageFile(_filePath, new [] { "" }, coverage);
+            return new CoverageFile(_filePath, new string[0], coverage);
         }
     }
 }
