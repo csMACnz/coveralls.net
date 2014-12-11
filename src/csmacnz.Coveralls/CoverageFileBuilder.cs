@@ -20,12 +20,12 @@ namespace csmacnz.Coveralls
 
         public void RecordCovered(int lineNumber)
         {
-            _coverage[lineNumber] = 1;
+            _coverage[lineNumber-1] = 1;
         }
 
         public void RecordUnCovered(int lineNumber)
         {
-            _coverage[lineNumber] = 0;
+            _coverage[lineNumber-1] = 0;
         }
 
         public CoverageFile CreateFile()
