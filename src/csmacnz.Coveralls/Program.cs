@@ -62,14 +62,8 @@ namespace csmacnz.Coveralls
                                                             {
                                                                 var sourceLine = int.Parse(sequencePoint.Attribute("sl").Value);
                                                                 var visitCount = int.Parse(sequencePoint.Attribute("vc").Value);
-                                                                if (visitCount > 0)
-                                                                {
-                                                                    coverageBuilder.RecordCovered(sourceLine);
-                                                                }
-                                                                else
-                                                                {
-                                                                    coverageBuilder.RecordUnCovered(sourceLine);
-                                                                }
+
+                                                                coverageBuilder.RecordCoverage(sourceLine,visitCount);
                                                             }
 
                                                         }

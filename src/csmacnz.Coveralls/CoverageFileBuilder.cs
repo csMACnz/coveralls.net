@@ -34,14 +34,9 @@ namespace csmacnz.Coveralls
             _sourceLines = lines;
         }
 
-        public void RecordCovered(int lineNumber)
+        public void RecordCoverage(int lineNumber, int coverageNumber)
         {
-            _coverage[lineNumber-1] = 1;
-        }
-
-        public void RecordUnCovered(int lineNumber)
-        {
-            _coverage[lineNumber-1] = 0;
+            _coverage[lineNumber - 1] = coverageNumber;
         }
 
         public CoverageFile CreateFile()
