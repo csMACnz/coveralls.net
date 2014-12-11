@@ -99,13 +99,9 @@ namespace csmacnz.Coveralls
                 };
             }
 
-            var serviceJobId = Environment.GetEnvironmentVariable("APPVEYOR_JOB_ID") ?? "0";
-
             var data = new CoverallData
             {
                 RepoToken = "UCIcRAOyPJIDrjvG8MreBKnKPonmR2L10",
-                ServiceJobId = serviceJobId,
-                ServiceName = "coveralls.net",
                 SourceFiles = files.ToArray(),
                 Git = gitData
             };
