@@ -42,6 +42,7 @@ namespace csmacnz.Coveralls
                                     filePath = filePath.Replace("\\", "/");
                                     var coverageBuilder = new CoverageFileBuilder(filePath);
                                     var coverageFile = coverageBuilder.CreateFile();
+
                                     files.Add(coverageFile);
                                 }
                             }
