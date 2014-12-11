@@ -63,7 +63,7 @@ namespace csmacnz.Coveralls
 
             var data = new CoverallData
             {
-                RepoToken = "9HuFWYElkcbOYDtBbEOpPgiTOkzKp4CG1",
+                RepoToken = "UCIcRAOyPJIDrjvG8MreBKnKPonmR2L10",
                 ServiceJobId = serviceJobId,
                 ServiceName = "coveralls.net",
                 SourceFiles = files.ToArray(),
