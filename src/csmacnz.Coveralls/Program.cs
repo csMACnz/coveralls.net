@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.IO;
 using System.Xml.Linq;
 using Mono.Options;
 using Newtonsoft.Json;
@@ -33,14 +34,15 @@ namespace csmacnz.Coveralls
                                 foreach (var file in filesElement.Elements("File"))
                                 {
                                     var fileid = file.Attribute("uid").Value;
-                                    var filePath = file.Attribute("fullPath").Value;
-                                    var index = filePath.IndexOf(':');
+                                    var fullPath = file.Attribute("fullPath").Value;
+                                    var sourcePath = fullPath;
+                                    var index = sourcePath.IndexOf(':');
                                     if (index != -1)
                                     {
-                                        filePath = filePath.Substring(index + 1);
+                                        sourcePath = sourcePath.Substring(index + 1);
                                     }
-                                    filePath = filePath.Replace("\\", "/");
-                                    var coverageBuilder = new CoverageFileBuilder(filePath);
+                                    sourcePath = sourcePath.Replace("\\", "/");
+                                    var coverageBuilder = new CoverageFileBuilder(sourcePath);
 
                                     var classesElement = module.Element("Classes");
                                     if (classesElement != null)
@@ -74,6 +76,8 @@ namespace csmacnz.Coveralls
                                                 }
                                         }
                                     }
+
+                                    coverageBuilder.AddSource(File.ReadAllText(fullPath));
 
                                     var coverageFile = coverageBuilder.CreateFile();
                                     files.Add(coverageFile);
