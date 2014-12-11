@@ -34,6 +34,12 @@ namespace csmacnz.Coveralls
                                 foreach (var file in fileElements)
                                 {
                                     var filePath = file.Attribute("fullPath").Value;
+                                    var index = filePath.IndexOf(':');
+                                    if (index != -1)
+                                    {
+                                        filePath = filePath.Substring(index + 1);
+                                    }
+                                    filePath = filePath.Replace("\\", "/");
                                     var coverageBuilder = new CoverageFileBuilder(filePath);
                                     var coverageFile = coverageBuilder.CreateFile();
                                     files.Add(coverageFile);
@@ -86,7 +92,7 @@ namespace csmacnz.Coveralls
             using (var client = new HttpClient())
             using (var formData = new MultipartFormDataContent())
             {
-                formData.Add(stringContent, "json_file", "json_file");
+                formData.Add(stringContent, "json_file", "coverage.json");
 
                 var response = client.PostAsync(url, formData).Result;
 
