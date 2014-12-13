@@ -15,71 +15,10 @@ namespace csmacnz.Coveralls
             var p = new OptionSet();
             p.Parse(args);
 
-            var files = new List<CoverageFile>();
             var fileName = @"opencovertests.xml";
             var document = XDocument.Load(fileName);
 
-            if (document.Root != null)
-            {
-                var xElement = document.Root.Element("Modules");
-                if (xElement != null)
-                    foreach(var module in xElement.Elements("Module"))
-                    {
-                        var attribute = module.Attribute("skippedDueTo");
-                        if (attribute == null || string.IsNullOrEmpty(attribute.Value))
-                        {
-                            var filesElement = module.Element("Files");
-                            if (filesElement != null)
-                            {
-                                foreach (var file in filesElement.Elements("File"))
-                                {
-                                    var fileid = file.Attribute("uid").Value;
-                                    var fullPath = file.Attribute("fullPath").Value;
-                                    var sourcePath = fullPath;
-                                    var index = sourcePath.IndexOf(':');
-                                    if (index != -1)
-                                    {
-                                        sourcePath = sourcePath.Substring(index + 1);
-                                    }
-                                    sourcePath = sourcePath.Replace("\\", "/");
-                                    var coverageBuilder = new CoverageFileBuilder(sourcePath);
-
-                                    var classesElement = module.Element("Classes");
-                                    if (classesElement != null)
-                                    {
-                                        foreach(var @class in classesElement.Elements("Class"))
-                                        {
-                                            var methods = @class.Element("Methods");
-                                            if (methods != null)
-                                                foreach (var method in methods.Elements("Method"))
-                                                {
-                                                    var sequencePointsElement = method.Element("SequencePoints");
-                                                    if (sequencePointsElement != null)
-                                                        foreach (var sequencePoint in sequencePointsElement.Elements("SequencePoint"))
-                                                        {
-                                                            var sequenceFileid = sequencePoint.Attribute("fileid").Value;
-                                                            if (fileid == sequenceFileid)
-                                                            {
-                                                                var sourceLine = int.Parse(sequencePoint.Attribute("sl").Value);
-                                                                var visitCount = int.Parse(sequencePoint.Attribute("vc").Value);
-
-                                                                coverageBuilder.RecordCoverage(sourceLine,visitCount);
-                                                            }
-
-                                                        }
-                                                }
-                                        }
-                                    }
-
-                                    coverageBuilder.AddSource(File.ReadAllText(fullPath));
-
-                                    var coverageFile = coverageBuilder.CreateFile();
-                                    files.Add(coverageFile);
-                                }
-                            }
-                        }
-                    }
-            }
+            List<CoverageFile> files = new OpenCoverParser(new FileSystem()).GenerateSourceFiles(document);
 
             GitData gitData = null;
             var commitId = Environment.GetEnvironmentVariable("APPVEYOR_REPO_COMMIT");
