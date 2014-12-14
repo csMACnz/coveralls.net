@@ -4,9 +4,13 @@ namespace csmacnz.Coveralls
 {
     public class FileSystem : IFileSystem
     {
-        public string TryLoadFile(string fullPath)
+        public string TryLoadFile(string filePath)
         {
-            return File.ReadAllText(fullPath);
+            if (File.Exists(filePath))
+            {
+                return File.ReadAllText(filePath);
+            }
+            return null;
         }
     }
 }

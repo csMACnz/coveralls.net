@@ -6,11 +6,11 @@ namespace csmacnz.Coveralls.Tests
     {
         private readonly Dictionary<string, string> _files = new Dictionary<string, string>();
 
-        public string TryLoadFile(string fullPath)
+        public string TryLoadFile(string filePath)
         {
-            if (_files.ContainsKey(fullPath))
+            if (_files.ContainsKey(filePath))
             {
-                return _files[fullPath];
+                return _files[filePath];
             }
             return null;
         }

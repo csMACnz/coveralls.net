@@ -1,21 +1,25 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.IO;
-using System.Xml.Linq;
-using Mono.Options;
-using Newtonsoft.Json;
-using System;
 using System.Net.Http;
+using System.Reflection;
+using System.Xml.Linq;
+using Newtonsoft.Json;
 
 namespace csmacnz.Coveralls
 {
     public class Program
     {
-        public static void Main(string[] args)
+        public static void Main(string[] argv)
         {
-            var p = new OptionSet();
-            p.Parse(args);
+            var args = new MainArgs(argv, exit: true, version: Assembly.GetEntryAssembly().GetName().Version);
 
-            var fileName = @"opencovertests.xml";
+            var fileName = args.OptInput;
+            if (!File.Exists(fileName))
+            {
+                Console.Error.WriteLine("Input file '" + fileName + "' cannot be found");
+                Environment.Exit(1);
+            }
             var document = XDocument.Load(fileName);
 
             List<CoverageFile> files = new OpenCoverParser(new FileSystem()).GenerateSourceFiles(document);

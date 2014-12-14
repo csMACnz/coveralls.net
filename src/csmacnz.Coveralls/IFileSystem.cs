@@ -2,6 +2,6 @@
 {
     public interface IFileSystem
     {
-        string TryLoadFile(string fullPath);
+        string TryLoadFile(string filePath);
     }
 }
