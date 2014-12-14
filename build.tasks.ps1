@@ -33,7 +33,7 @@ task coverage-only {
 task coveralls -depends coverage, coveralls-only
 
 task coveralls-only {
-	exec { & ".\src\csmacnz.Coveralls\bin\$configuration\csmacnz.Coveralls.exe --opencover -i opencovertests.xml" }
+	exec { & ".\src\csmacnz.Coveralls\bin\$configuration\csmacnz.Coveralls.exe" --opencover -i opencovertests.xml }
 }
 
 task postbuild -depends coverage-only, coveralls-only
