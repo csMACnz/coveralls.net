@@ -33,7 +33,7 @@ task build {
 task coverage -depends build, coverage-only
 
 task coverage-only {
-	exec { & .\src\packages\OpenCover.4.5.3427\OpenCover.Console.exe -register:user -target:vstest.console.exe -targetargs:"src\csmacnz.Coveralls.Tests\bin\$Configuration\csmacnz.Coveralls.Tests.dll $testOptions" -filter:"+[csmacnz.Coveralls*]*" -output:opencovertests.xml }
+	exec { & .\src\packages\OpenCover.4.5.3427\OpenCover.Console.exe -register:user -target:vstest.console.exe -targetargs:"src\csmacnz.Coveralls.Tests\bin\$Configuration\csmacnz.Coveralls.Tests.dll $script:testOptions" -filter:"+[csmacnz.Coveralls*]*" -output:opencovertests.xml }
 }
 
 task coveralls -depends coverage, coveralls-only
