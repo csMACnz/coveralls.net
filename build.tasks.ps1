@@ -8,6 +8,8 @@ properties {
 	
 	# files
 	$sln_file = "$base_dir\src\csmacnz.Coveralls.sln"
+	
+	$testOptions = ""
 }
 
 task default
@@ -16,9 +18,9 @@ task RestoreNuGetPackages {
  	exec { nuget.exe restore $sln_file } 
 } 
 
-task AppVeyorTestSettings { 
- 	exec { $testOptions = "/logger:Appveyor" } 
-} 
+task AppVeyorTestSettings {
+	$script:testOptions = "/logger:Appveyor"
+}
 
 task clean {
 	exec { msbuild "/t:Clean" "/p:Configuration=$configuration" $sln_file }
