@@ -25,7 +25,7 @@ task LocalTestSettings {
 }
 
 task AppVeyorTestSettings {
-    $script:xunit = "xunit.console.clr4"
+    $script:xunit = "xunit.console.clr4.exe"
     $script:testOptions = "/appveyor"
 }
 
@@ -40,7 +40,7 @@ task build {
 task coverage -depends LocalTestSettings, build, coverage-only
 
 task coverage-only {
-    exec { & .\src\packages\OpenCover.4.5.3427\OpenCover.Console.exe -register:user "-target:$script:xunit" "-targetargs:""src\csmacnz.Coveralls.Tests\bin\$Configuration\csmacnz.Coveralls.Tests.dll"" /noshadow $script:testOptions" -filter:"+[csmacnz.Coveralls*]*" -output:opencovertests.xml }
+    exec { & .\src\packages\OpenCover.4.5.3427\OpenCover.Console.exe -register:user -target:$script:xunit "-targetargs:""src\csmacnz.Coveralls.Tests\bin\$Configuration\csmacnz.Coveralls.Tests.dll"" /noshadow $script:testOptions" -filter:"+[csmacnz.Coveralls*]*" -output:opencovertests.xml }
 }
 
 task coveralls -depends coverage, coveralls-only
