@@ -1,69 +1,61 @@
-﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System;
+using Xunit;
 
 namespace csmacnz.Coveralls.Tests
 {
-    [TestClass]
     public class CoverageFileBuilderTests
     {
-        [TestMethod]
+        [Fact]
         public void CanConstructBuilder()
         {
             var builder = CreateFileBuilder();
-            Assert.IsNotNull(builder);
+            Assert.NotNull(builder);
         }
 
-        [TestMethod]
+        [Fact]
         public void NewBuilderCanCreateCoverageFile()
         {
             var builder = CreateFileBuilder();
             var coverageFile = builder.CreateFile();
-            Assert.IsNotNull(coverageFile);
+            Assert.NotNull(coverageFile);
         }
 
-        [TestClass]
         public class WhenCreatingACoverageFromADefaultBuilder
         {
-            private CoverageFile _coverageFile;
-            private const string FILENAME = @"C:\sourceFile.cs";
+            private readonly CoverageFile _coverageFile;
+            private const string Filename = @"C:\sourceFile.cs";
 
-            [TestInitialize]
-            public void Setup()
+            public  WhenCreatingACoverageFromADefaultBuilder()
             {
-                var builder = CoverageFileBuilderTests.CreateFileBuilder(FILENAME);
+                var builder = CreateFileBuilder(Filename);
                 _coverageFile = builder.CreateFile();
             }
 
-            [TestMethod]
+            [Fact]
             public void ThenFileNameIsSet()
             {
-                Assert.AreEqual(FILENAME, _coverageFile.Name);
+                Assert.Equal(Filename, _coverageFile.Name);
             }
-            
-            [TestMethod]
+
+            [Fact]
             public void ThenSourceIsEmpty()
             {
-                Assert.AreEqual(string.Empty, _coverageFile.Source);
+                Assert.Equal(string.Empty, _coverageFile.Source);
             }
-            
-            [TestMethod]
+
+            [Fact]
             public void ThenCoverageIsEmpty()
             {
-                Assert.IsNotNull(_coverageFile.Coverage);
-                Assert.AreEqual(1, _coverageFile.Coverage.Length);
-                Assert.IsNull(_coverageFile.Coverage[0]);
+                Assert.NotNull(_coverageFile.Coverage);
+                Assert.Equal(1, _coverageFile.Coverage.Length);
+                Assert.Null(_coverageFile.Coverage[0]);
             }
         }
 
-        [TestMethod]
-        [ExpectedException(typeof(ArgumentException))]
+        [Fact]
         public void NewBuilderWithInvalidPathThrowsArgumentException()
         {
-            var builder = new CoverageFileBuilder("");
+            Assert.Throws<ArgumentException>(() => new CoverageFileBuilder(""));
         }
 
         public static CoverageFileBuilder CreateFileBuilder(string filePath = @"C:\temp\file.cs")
