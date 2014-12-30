@@ -5,11 +5,11 @@ using System.Runtime.InteropServices;
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
 [assembly: AssemblyTitle("csmacnz.Coveralls")]
-[assembly: AssemblyDescription("")]
+[assembly: AssemblyDescription("Coveralls.io uploader for .NET Code Coverage")]
 [assembly: AssemblyConfiguration("")]
-[assembly: AssemblyCompany("Xero")]
+[assembly: AssemblyCompany("csmacnz")]
 [assembly: AssemblyProduct("csmacnz.Coveralls")]
-[assembly: AssemblyCopyright("Copyright © Xero 2014")]
+[assembly: AssemblyCopyright("Copyright © csmacnz 2014")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 

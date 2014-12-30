@@ -80,7 +80,7 @@ namespace csmacnz.Coveralls
 
         private string UnixifyPath(string fullPath)
         {
-            return fullPath.Replace(Path.DirectorySeparatorChar, '/');
+            return fullPath.Replace('\\', '/');
         }
     }
 }
