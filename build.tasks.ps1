@@ -34,8 +34,8 @@ task LocalTestSettings {
 
 task AppVeyorTestSettings {
     if (Test-Path Env:\APPVEYOR_BUILD_VERSION) {
-        $version = $env:APPVEYOR_BUILD_VERSION
-        echo "version set to $version"
+        $script:version = $env:APPVEYOR_BUILD_VERSION
+        echo "version set to $script:version"
     }
 
     $script:xunit = "xunit.console.clr4.exe"
@@ -79,7 +79,7 @@ task coveralls-only {
 task archive -depends build, archive-only
 
 task archive-only {
-    $archive_filename = "coveralls.net.$version.zip"
+    $archive_filename = "coveralls.net.$script:version.zip"
     
     mkdir $archive_dir
     
@@ -98,7 +98,7 @@ task pack-only {
     cp "$build_output_dir\*.*" "$nuget_pack_dir"
 
     $Spec = [xml](get-content "$nuget_pack_dir\$nuspec_filename")
-    $Spec.package.metadata.version = ([string]$Spec.package.metadata.version).Replace("{Version}",$version)
+    $Spec.package.metadata.version = ([string]$Spec.package.metadata.version).Replace("{Version}",$script:version)
     $Spec.Save("$nuget_pack_dir\$nuspec_filename")
 
     exec { nuget pack "$nuget_pack_dir\$nuspec_filename" }
