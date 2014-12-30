@@ -1,4 +1,6 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
+using System.IO;
 using System.Xml.Linq;
 
 namespace csmacnz.Coveralls
@@ -31,7 +33,8 @@ namespace csmacnz.Coveralls
                                 {
                                     var fileid = file.Attribute("uid").Value;
                                     var fullPath = file.Attribute("fullPath").Value;
-                                    var coverageBuilder = new CoverageFileBuilder(fullPath);
+                                    var compatibleFilePath = UnixifyPath(fullPath);
+                                    var coverageBuilder = new CoverageFileBuilder(compatibleFilePath);
 
                                     var classesElement = module.Element("Classes");
                                     if (classesElement != null)
@@ -73,6 +76,11 @@ namespace csmacnz.Coveralls
                     }
             }
             return files;
+        }
+
+        private string UnixifyPath(string fullPath)
+        {
+            return fullPath.Replace(Path.DirectorySeparatorChar, '/');
         }
     }
 }

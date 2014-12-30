@@ -9,6 +9,7 @@ namespace csmacnz.Coveralls.Tests
     public class OpenCoverParserTests
     {
         private const string SingleFileReportSourceFilePath = @"c:\Users\Mark\Documents\Visual Studio 2013\Projects\OpenCoverTesting\OpenCoverTesting\Class1.cs";
+        private const string ExpectedSingleFileReportSourceFilePath = @"c:/Users/Mark/Documents/Visual Studio 2013/Projects/OpenCoverTesting/OpenCoverTesting/Class1.cs";
 
         [Fact]
         public void EmptyReportLoadsNoSourceFiles()
@@ -38,7 +39,7 @@ namespace csmacnz.Coveralls.Tests
             var results = CreateOpenCoverParserForSingleFileReport().GenerateSourceFiles(document);
 
             Assert.Equal(1, results.Count);
-            Assert.Equal(SingleFileReportSourceFilePath, results[0].Name);
+            Assert.Equal(ExpectedSingleFileReportSourceFilePath, results[0].Name);
             Assert.Equal(12, results[0].Coverage.Length);
             Assert.Equal(1, results[0].Coverage[8]);
         }
@@ -51,7 +52,7 @@ namespace csmacnz.Coveralls.Tests
             var results = CreateOpenCoverParserForSingleFileReport().GenerateSourceFiles(document);
             
             Assert.Equal(1, results.Count);
-            Assert.Equal(SingleFileReportSourceFilePath, results[0].Name);
+            Assert.Equal(ExpectedSingleFileReportSourceFilePath, results[0].Name);
             Assert.Equal(12, results[0].Coverage.Length);
             Assert.Equal(0, results[0].Coverage[8]);
         }
