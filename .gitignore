@@ -182,4 +182,6 @@ UpgradeLog*.htm
 # Microsoft Fakes
 FakesAssemblies/
 
+Package/
+
 opencovertests.xml
