@@ -15,7 +15,6 @@ properties {
     # files
     $sln_file = "$base_dir\src\csmacnz.Coveralls.sln"
     $nuspec_filename = "coveralls.net.nuspec"
-    $archive_filename = "coveralls.net.$version.zip"
     $testOptions = ""
     $xunit = "$base_dir\src\packages\xunit.runners.1.9.2\tools\xunit.console.clr4.exe"
 
@@ -34,7 +33,11 @@ task LocalTestSettings {
 }
 
 task AppVeyorTestSettings {
-    $version = $env:APPVEYOR_BUILD_VERSION
+    if (Test-Path Env:\APPVEYOR_BUILD_VERSION) {
+        $version = $env:APPVEYOR_BUILD_VERSION
+        echo "version set to $version"
+    }
+
     $script:xunit = "xunit.console.clr4.exe"
     $script:testOptions = "/appveyor"
 }
@@ -46,6 +49,7 @@ task clean {
     if (Test-Path $test_results_dir) {
       Remove-Item $test_results_dir -r
     }
+    $archive_filename = "coveralls.net.*.zip"
     if (Test-Path $archive_filename) {
       Remove-Item $archive_filename
     }
@@ -75,6 +79,8 @@ task coveralls-only {
 task archive -depends build, archive-only
 
 task archive-only {
+    $archive_filename = "coveralls.net.$version.zip"
+    
     mkdir $archive_dir
     
     cp "$build_output_dir\*.*" "$archive_dir"
@@ -98,7 +104,7 @@ task pack-only {
     exec { nuget pack "$nuget_pack_dir\$nuspec_filename" }
 }
 
-task postbuild -depends coverage-only, coveralls-only, archive, pack
+task postbuild -depends coverage-only, coveralls-only, archive-only, pack-only
 
 task appveyor-build -depends RestoreNuGetPackages, build
 
