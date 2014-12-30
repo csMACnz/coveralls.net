@@ -12,3 +12,19 @@ coveralls.net
 [![Stories in Ready](https://badge.waffle.io/csmacnz/coveralls.net.png?label=ready&title=Ready)](https://waffle.io/csmacnz/coveralls.net)
 
 Coveralls uploader for .Net Code coverage
+
+
+InProgress Support
+------------------
+
+* [OpenCover](https://github.com/sawilde/opencover)
+
+
+Future Support
+--------------
+
+* [dotCover](https://www.jetbrains.com/dotcover)
+* [NCover](https://www.ncover.com/)
+* [Visual Studio Coverage](http://msdn.microsoft.com/en-us/library/dd299398%28v=vs.90%29.aspx) (based on [ReportGenerator's support](https://reportgenerator.codeplex.com/wikipage?title=Visual%20Studio%20Coverage%20Tools))
+* [Mono Code Coverage (monocov)](http://www.mono-project.com/docs/debug+profile/profile/code-coverage/)(if i can read .cov files)
+* [SharpCover](https://github.com/gaillard/SharpCover) (crossplatform, might take off?)
