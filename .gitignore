@@ -95,6 +95,9 @@ _TeamCity*
 # DotCover is a Code Coverage Tool
 *.dotCover
 
+# Visual Studio export Coverage xml
+*.coveragexml
+
 # NCrunch
 _NCrunch_*
 .*crunch*.local.xml
@@ -183,5 +186,7 @@ UpgradeLog*.htm
 FakesAssemblies/
 
 Package/
+
+cov-int/
 
 opencovertests.xml

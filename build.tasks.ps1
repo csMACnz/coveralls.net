@@ -2,7 +2,7 @@ properties {
     # build variables
     $framework = "4.5.1"		# .net framework version
     $configuration = "Release"	# build configuration
-    $version = "0.1.0"
+    $script:version = "0.1.0"
 
     # directories
     $base_dir = . resolve-path .\
@@ -16,9 +16,8 @@ properties {
     $sln_file = "$base_dir\src\csmacnz.Coveralls.sln"
     $nuspec_filename = "coveralls.net.nuspec"
     $testOptions = ""
-    $xunit = "$base_dir\src\packages\xunit.runners.1.9.2\tools\xunit.console.clr4.exe"
+    $script:xunit = "$base_dir\src\packages\xunit.runners.1.9.2\tools\xunit.console.clr4.exe"
 
-    
 }
 
 task default
@@ -64,6 +63,12 @@ task build {
     exec { msbuild "/t:Clean;Build" "/p:Configuration=$configuration" $sln_file }
 }
 
+task coverity {
+    cov-build --dir cov-int msbuild "/t:Clean;Build" "/p:Configuration=$configuration" $sln_file
+
+    Write-Zip -Path "cov-int" -OutputPath coveralls.coverity.$script:version.zip
+}
+
 task coverage -depends LocalTestSettings, build, coverage-only
 
 task coverage-only {
@@ -80,11 +85,11 @@ task archive -depends build, archive-only
 
 task archive-only {
     $archive_filename = "coveralls.net.$script:version.zip"
-    
+
     mkdir $archive_dir
-    
+
     cp "$build_output_dir\*.*" "$archive_dir"
-    
+
     Write-Zip -Path "$archive_dir\*" -OutputPath $archive_filename
 }
 
