@@ -78,7 +78,7 @@ task coverage-only {
 task coveralls -depends coverage, coveralls-only
 
 task coveralls-only {
-    exec { & ".\src\csmacnz.Coveralls\bin\$configuration\csmacnz.Coveralls.exe" --opencover -i opencovertests.xml }
+    exec { & ".\src\csmacnz.Coveralls\bin\$configuration\csmacnz.Coveralls.exe" --opencover -i opencovertests.xml -repoToken "UCIcRAOyPJIDrjvG8MreBKnKPonmR2L10" }
 }
 
 task archive -depends build, archive-only

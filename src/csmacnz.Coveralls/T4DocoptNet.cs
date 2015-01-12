@@ -1,3 +1,4 @@
+using System.Collections;
 using System.Collections.Generic;
 using DocoptNet;
 
@@ -9,7 +10,7 @@ namespace csmacnz.Coveralls
 		public const string Usage = @"csmac.Coveralls - a coveralls.io coverage publisher for .Net
 
 Usage:
-  csmacnz.Coveralls --opencover -i ./opencovertests.xml
+  csmacnz.Coveralls --opencover -i ./opencovertests.xml --repoToken ""UCIcRAOyPJIDrjvG8MreBKnKPonmR2L10""
   csmacnz.Coveralls --version
   csmacnz.Coveralls --help
 
@@ -18,6 +19,7 @@ Options:
  --version                  Show version.
  -i <file>, --input <file>  The coverage source file location.
  --opencover                Reads input as OpenCover data.
+ --repoToken <repoToken>    The coveralls.io repository token.
 
 What its for:
  Reads your .Net code coverage output data and submits it to
@@ -41,6 +43,7 @@ What its for:
         }
 		public bool OptOpencover { get { return _args["--opencover"].IsTrue; } }
 		public string OptInput { get { return _args["--input"].ToString(); } }
+		public string OptRepotoken { get { return _args["--repoToken"].ToString(); } }
 		public bool OptVersion { get { return _args["--version"].IsTrue; } }
 		public bool OptHelp { get { return _args["--help"].IsTrue; } }
     }

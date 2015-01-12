@@ -13,7 +13,13 @@ namespace csmacnz.Coveralls
         public static void Main(string[] argv)
         {
             var args = new MainArgs(argv, exit: true, version: Assembly.GetEntryAssembly().GetName().Version);
-
+            var repoToken = args.OptRepotoken;
+            if (string.IsNullOrWhiteSpace(repoToken))
+            {
+                Console.Error.WriteLine("parameter repoToken is required.");
+                Console.WriteLine(MainArgs.Usage);
+                Environment.Exit(1);
+            }
             var fileName = args.OptInput;
             if (!File.Exists(fileName))
             {
@@ -47,7 +53,7 @@ namespace csmacnz.Coveralls
 
             var data = new CoverallData
             {
-                RepoToken = "UCIcRAOyPJIDrjvG8MreBKnKPonmR2L10",
+                RepoToken = repoToken,
                 ServiceJobId = serviceJobId,
                 ServiceName = "coveralls.net",
                 SourceFiles = files.ToArray(),
