@@ -13,7 +13,7 @@ coveralls.net
 [![Stories in Ready](https://badge.waffle.io/csmacnz/coveralls.net.png?label=ready&title=Ready)](https://waffle.io/csmacnz/coveralls.net)
 [![Stories in progress](https://badge.waffle.io/csmacnz/coveralls.net.png?label=in%20progress&title=In%20Progress)](https://waffle.io/csmacnz/coveralls.net)
 
-Coveralls uploader for .Net Code coverage
+Coveralls uploader for .Net Code coverage of your C# source code. Should work with any code files that get reported with the supported coverage tools, but the primary focus is CSharp.
 
 
 InProgress Support
