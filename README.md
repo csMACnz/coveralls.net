@@ -12,6 +12,8 @@ coveralls.net
 [![Stories in Backlog](https://badge.waffle.io/csmacnz/coveralls.net.png?label=backlog&title=Backlog)](https://waffle.io/csmacnz/coveralls.net)
 [![Stories in Ready](https://badge.waffle.io/csmacnz/coveralls.net.png?label=ready&title=Ready)](https://waffle.io/csmacnz/coveralls.net)
 [![Stories in progress](https://badge.waffle.io/csmacnz/coveralls.net.png?label=in%20progress&title=In%20Progress)](https://waffle.io/csmacnz/coveralls.net)
+[![NuGet](https://img.shields.io/nuget/v/coveralls.net.svg)](https://www.nuget.org/packages/coveralls.net)
+[![NuGet](https://img.shields.io/nuget/dt/coveralls.net.svg)](https://www.nuget.org/packages/coveralls.net)
 
 Coveralls uploader for .Net Code coverage of your C# source code. Should work with any code files that get reported with the supported coverage tools, but the primary focus is CSharp.
 
