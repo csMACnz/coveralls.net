@@ -16,7 +16,7 @@ T4DocopNet Version 0.1.0
 // by install.ps1. It can also be set manually to point
 // to the right path. 
 #>
-<#@ assembly name="C:\Dev\coveralls.net\src\packages\docopt.net.0.6.1.6\lib\net40\DocoptNet.dll"  #>
+<#@ assembly name="$(SolutionDir)\packages\docopt.net.0.6.1.6\lib\net40\DocoptNet.dll"  #>
 <#@ import namespace="System.Collections.Generic" #>
 <#@ import namespace="System.IO" #>
 <#@ import namespace="System.Linq" #>
@@ -41,20 +41,20 @@ namespace <#= System.Runtime.Remoting.Messaging.CallContext.LogicalGetData("Name
         var entry = new UsageFileEntry(file);
 #>
     // Generated class for <#= Path.GetFileName(entry.FileName) #>
-	public class <#= entry.Name #>Args
-	{
-		public const string Usage = @"<#= entry.Usage #>";
-	    private readonly IDictionary<string, ValueObject> _args;
-		
+    public class <#= entry.Name #>Args
+    {
+        public const string Usage = @"<#= entry.Usage #>";
+        private readonly IDictionary<string, ValueObject> _args;
+        
         public <#= entry.Name #>Args(
             ICollection<string> argv, 
             bool help = true,
             object version = null, 
             bool optionsFirst = false, 
             bool exit = false)
-		{
-			_args = new Docopt().Apply(Usage, argv, help, version, optionsFirst, exit);
-		}
+        {
+            _args = new Docopt().Apply(Usage, argv, help, version, optionsFirst, exit);
+        }
 
         public IDictionary<string, ValueObject> Args
         {
@@ -62,47 +62,47 @@ namespace <#= System.Runtime.Remoting.Messaging.CallContext.LogicalGetData("Name
         }
 <#
         var s = new Docopt().GenerateCode(entry.Usage);
-		PushIndent("		");
-		Write(s);
-		ClearIndent();
+        PushIndent("		");
+        Write(s);
+        ClearIndent();
 #>    }
 <#
     }
 #>}
 <#+
-	class UsageFileEntry
-	{
-		public string FileName;
-		public string Name;
-		public string Usage;
-		public UsageFileEntry(string fileName)
-		{
-			FileName = fileName;
-			Name = ExtractName(fileName);
-			Usage = File.ReadAllText(fileName).Replace("\"", "\"\"");
-		}
+    class UsageFileEntry
+    {
+        public string FileName;
+        public string Name;
+        public string Usage;
+        public UsageFileEntry(string fileName)
+        {
+            FileName = fileName;
+            Name = ExtractName(fileName);
+            Usage = File.ReadAllText(fileName).Replace("\"", "\"\"");
+        }
 
-		private static string ExtractName(string fileName)
-		{
-	    
-			var s = Path.GetFileName(fileName).Replace(".usage.txt", "");
-			var res = "";
-			var first = true;
-			foreach (char c in s)
-			{
-				if (char.IsLetterOrDigit(c))
-				{
-					res += first ? char.ToUpperInvariant(c) : char.ToLowerInvariant(c);
-					first = false;
-				}
-				else
-				{
-					res += "_";
-				}
-			}
-			return res;
-		}
-	}
+        private static string ExtractName(string fileName)
+        {
+        
+            var s = Path.GetFileName(fileName).Replace(".usage.txt", "");
+            var res = "";
+            var first = true;
+            foreach (char c in s)
+            {
+                if (char.IsLetterOrDigit(c))
+                {
+                    res += first ? char.ToUpperInvariant(c) : char.ToLowerInvariant(c);
+                    first = false;
+                }
+                else
+                {
+                    res += "_";
+                }
+            }
+            return res;
+        }
+    }
 
 /* IMPORTANT: Do not add blanks after this last tag as it would break the T4 generation
  * See http://stackoverflow.com/questions/11379471/error-a-template-containing-a-class-feature-must-end-with-a-class-feature

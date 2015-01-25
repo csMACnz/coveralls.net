@@ -1,16 +1,22 @@
 ﻿csmac.Coveralls - a coveralls.io coverage publisher for .Net
 
 Usage:
-  csmacnz.Coveralls --opencover -i ./opencovertests.xml --repoToken "UCIcRAOyPJIDrjvG8MreBKnKPonmR2L10"
+  csmacnz.Coveralls --opencover -i ./opencovertests.xml --repoToken <repoToken> [--commitId <commitId> --commitBranch <commitBranch> [--commitAuthor <commitAuthor> --commitEmail <commitEmail> --commitMessage <commitMessage>] ] [--jobId <jobId>]
   csmacnz.Coveralls --version
   csmacnz.Coveralls --help
 
 Options:
- -h, --help                 Show this screen.
- --version                  Show version.
- -i <file>, --input <file>  The coverage source file location.
- --opencover                Reads input as OpenCover data.
- --repoToken <repoToken>    The coveralls.io repository token.
+ -h, --help                      Show this screen.
+ --version                       Show version.
+ -i <file>, --input <file>       The coverage source file location.
+ --opencover                     Reads input as OpenCover data.
+ --repoToken <repoToken>         The coveralls.io repository token.
+ --commitId <commitId>           The git commit hash for the coverage report.
+ --commitAuthor <commitAuthor>   The git commit author for the coverage report.
+ --commitEmail <commitEmail>     The git commit author email for the coverage report.
+ --commitMessage <commitMessage> The git commit message for the coverage report.
+ --commitBranch <commitBranch>   The git branch for the coverage report.
+ --jobId <jobId>                 The job Id to provide to coveralls.io.
 
 What its for:
  Reads your .Net code coverage output data and submits it to

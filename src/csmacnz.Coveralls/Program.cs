@@ -31,25 +31,28 @@ namespace csmacnz.Coveralls
             List<CoverageFile> files = new OpenCoverParser(new FileSystem()).GenerateSourceFiles(document);
 
             GitData gitData = null;
-            var commitId = Environment.GetEnvironmentVariable("APPVEYOR_REPO_COMMIT");
+            var commitId = args.OptCommitid ?? string.Empty;
             if (!string.IsNullOrWhiteSpace(commitId))
             {
+                var committerName = args.OptCommitauthor ?? string.Empty;
+                var comitterEmail = args.OptCommitemail ?? string.Empty;
+                var commitMessage = args.OptCommitmessage ?? string.Empty;
                 gitData = new GitData
                 {
                     Head = new GitHead
                     {
                         Id = commitId,
-                        AuthorName = Environment.GetEnvironmentVariable("APPVEYOR_REPO_COMMIT_AUTHOR"),
-                        AuthorEmail = Environment.GetEnvironmentVariable("APPVEYOR_REPO_COMMIT_AUTHOR_EMAIL"),
-                        CommitterName = Environment.GetEnvironmentVariable("APPVEYOR_REPO_COMMIT_AUTHOR"),
-                        ComitterEmail = Environment.GetEnvironmentVariable("APPVEYOR_REPO_COMMIT_AUTHOR_EMAIL"),
-                        Message = Environment.GetEnvironmentVariable("APPVEYOR_REPO_COMMIT_MESSAGE")
+                        AuthorName = committerName,
+                        AuthorEmail = comitterEmail,
+                        CommitterName = committerName,
+                        ComitterEmail = comitterEmail,
+                        Message = commitMessage
                     },
-                    Branch = Environment.GetEnvironmentVariable("APPVEYOR_REPO_BRANCH")
+                    Branch = args.OptCommitbranch ?? string.Empty
                 };
             }
 
-            var serviceJobId = Environment.GetEnvironmentVariable("APPVEYOR_JOB_ID") ?? "0";
+            var serviceJobId = args.OptJobid ?? "0";
 
             var data = new CoverallData
             {
