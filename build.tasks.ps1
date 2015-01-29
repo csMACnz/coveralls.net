@@ -124,15 +124,15 @@ task inspect {
         foreach ($issue in $issues) {
             Write-Host "File: $($issue.File) Line: $($issue.Line) Message: $($issue.Message)"
 
-            if (Get-Command "Add-AppveyorTest" -errorAction SilentlyContinue) {
-                if($errorType.Severity -eq "ERROR") {
-                    Add-AppveyorTest "Resharper Error: $($errorType.Description) Line: $($issue.Line)" -Outcome Failed -FileName "$($issue.File)" -ErrorMessage "$($issue.Message)"
-                }
-                elseif ($errorType.Severity -eq "WARNING") {
-                    Add-AppveyorTest "Resharper Warning: $($errorType.Description) Line: $($issue.Line)" -Outcome Inconclusive -FileName "$($issue.File)" -ErrorMessage "$($issue.Message)"
+            if(($errorType.Severity -eq "ERROR") -and (Get-Command "Add-AppveyorTest" -errorAction SilentlyContinue)) {
+                Add-AppveyorTest "Resharper Error: $($errorType.Description) Line: $($issue.Line)" -Outcome Failed -FileName "$($issue.File)" -ErrorMessage "$($issue.Message)"
+            }
+            elseif (Get-Command "Add-AppveyorMessage" -errorAction SilentlyContinue) {
+                if ($errorType.Severity -eq "WARNING") {
+                    Add-AppveyorMessage "Resharper Warning: $($errorType.Description) File: $($issue.File) Line: $($issue.Line)" -Category Warning -Details "$($issue.Message)"
                 }
                 else {
-                    Add-AppveyorTest "Resharper $($(Get-Culture).TextInfo.ToTitleCase($errorType.Severity.ToLower())): $($errorType.Description) Line: $($issue.Line)" -Outcome Ignored -FileName "$($issue.File)" -ErrorMessage "$($issue.Message)"
+                    Add-AppveyorMessage "Resharper $($(Get-Culture).TextInfo.ToTitleCase($errorType.Severity.ToLower())): $($errorType.Description) File: $($issue.File) Line: $($issue.Line)" -Category Information -Details "$($issue.Message)"
                 }
             }
         }
