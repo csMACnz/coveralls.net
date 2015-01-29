@@ -82,7 +82,7 @@ task coveralls-only {
 }
 
 task dupfinder {
-    dupfinder /o="duplicateReport.xml" .\src\csmacnz.Coveralls.sln /e="**tests.cs"
+    dupfinder /o="duplicateReport.xml" /show-text /e="**tests.cs" .\src\csmacnz.Coveralls.sln
     [xml]$stats = Get-Content .\duplicateReport.xml
     $anyDuplicates = $FALSE;
 
@@ -91,6 +91,7 @@ task dupfinder {
 
         foreach ($fragment in $duplicate.Fragment) {
             Write-Host "File: $($fragment.FileName) Line: $($fragment.LineRange.Start) - $($fragment.LineRange.End)";
+            Write-Host "Text: $($fragment.Text)"
         }
 
     $anyDuplicates = $TRUE;
