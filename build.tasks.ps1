@@ -81,6 +81,35 @@ task coveralls-only {
     exec { & ".\src\csmacnz.Coveralls\bin\$configuration\csmacnz.Coveralls.exe" --opencover -i opencovertests.xml --repoToken $env:COVERALLS_REPO_TOKEN --commitId $env:APPVEYOR_REPO_COMMIT --commitBranch $env:APPVEYOR_REPO_BRANCH --commitAuthor $env:APPVEYOR_REPO_COMMIT_AUTHOR --commitEmail $env:APPVEYOR_REPO_COMMIT_AUTHOR_EMAIL --commitMessage $env:APPVEYOR_REPO_COMMIT_MESSAGE --jobId $env:APPVEYOR_JOB_ID}
 }
 
+task dupfinder {
+    dupfinder /o="duplicateReport.xml" .\src\csmacnz.Coveralls.sln /e="**tests.cs"
+    [xml]$stats = Get-Content .\duplicateReport.xml
+    $anyDuplicates = $FALSE;
+
+    foreach ($duplicate in $stats.DuplicatesReport.Duplicates.Duplicate) {
+        Write-Host "Duplicate code found with a cost of $($duplicate.Cost), in $($duplicateCost.Fragment.Count) fragments";
+
+        foreach ($fragment in $duplicate.Fragment) {
+            Write-Host "File: $($fragment.FileName) Line: $($fragment.LineRange.Start) - $($fragment.LineRange.End)";
+        }
+
+    $anyDuplicates = $TRUE;
+
+        if(Get-Command "Add-AppveyorTest" -errorAction SilentlyContinue) {
+            Add-AppveyorTest "Duplicate Found with a cost of $($duplicate.Cost), across $($duplicate.Fragment.Count) Fragments" -Outcome Failed -ErrorMessage "See duplicateReport.xml for details of duplicates";
+        }
+    }
+
+    if(Get-Command "Push-AppveyorArtifact" -errorAction SilentlyContinue) {
+            Push-AppveyorArtifact .\duplicateReport.xml;
+    }
+
+    if ($anyDuplicates -eq $TRUE){
+        Write-Host "Failing build as there are duplicates in the code-base";
+        throw "Duplicates found in code base";
+    }
+}
+
 task inspect {
     inspectcode /o="resharperReport.xml" ".\src\csmacnz.Coveralls.sln"
     [xml]$stats = Get-Content .\resharperReport.xml
@@ -109,7 +138,7 @@ task inspect {
     }
 
     if (Get-Command "Push-AppveyorArtifact" -errorAction SilentlyContinue) {
-        Push-AppveyorArtifact $inspectCodeResultsFile;
+        Push-AppveyorArtifact .\resharperReport.xml;
     }
 
     if ($anyErrors -eq $TRUE) {
