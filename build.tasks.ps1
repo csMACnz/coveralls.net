@@ -128,6 +128,9 @@ task inspect {
                 if($errorType.Severity -eq "ERROR") {
                     Add-AppveyorTest "Resharper Error: $($errorType.Description) Line: $($issue.Line)" -Outcome Failed -FileName "$($issue.File)" -ErrorMessage "$($issue.Message)"
                 }
+                elseif ($errorType.Severity -eq "WARNING") {
+                    Add-AppveyorTest "Resharper Warning: $($errorType.Description) Line: $($issue.Line)" -Outcome Inconclusive -FileName "$($issue.File)" -ErrorMessage "$($issue.Message)"
+                }
                 else {
                     Add-AppveyorTest "Resharper $($(Get-Culture).TextInfo.ToTitleCase($errorType.Severity.ToLower())): $($errorType.Description) Line: $($issue.Line)" -Outcome Ignored -FileName "$($issue.File)" -ErrorMessage "$($issue.Message)"
                 }
