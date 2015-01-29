@@ -190,3 +190,5 @@ Package/
 cov-int/
 
 opencovertests.xml
+
+resharperReport.xml

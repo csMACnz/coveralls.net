@@ -81,6 +81,43 @@ task coveralls-only {
     exec { & ".\src\csmacnz.Coveralls\bin\$configuration\csmacnz.Coveralls.exe" --opencover -i opencovertests.xml --repoToken $env:COVERALLS_REPO_TOKEN --commitId $env:APPVEYOR_REPO_COMMIT --commitBranch $env:APPVEYOR_REPO_BRANCH --commitAuthor $env:APPVEYOR_REPO_COMMIT_AUTHOR --commitEmail $env:APPVEYOR_REPO_COMMIT_AUTHOR_EMAIL --commitMessage $env:APPVEYOR_REPO_COMMIT_MESSAGE --jobId $env:APPVEYOR_JOB_ID}
 }
 
+task inspect {
+    inspectcode /o="resharperReport.xml" ".\src\csmacnz.Coveralls.sln"
+    [xml]$stats = Get-Content .\resharperReport.xml
+    $anyErrors = $FALSE;
+    $errors = $stats.SelectNodes("/Report/IssueTypes/IssueType")
+
+    foreach ($errorType in $errors) {
+        Write-Host "Found InspectCode Error(s): $($errorType.Description)"
+
+        $issues = $stats.SelectNodes("/Report/Issues/Project/Issue[@TypeId='$($errorType.Id)']")
+        foreach ($issue in $issues) {
+            Write-Host "File: $($issue.File) Line: $($issue.Line) Message: $($issue.Message)"
+
+            if (Get-Command "Add-AppveyorTest" -errorAction SilentlyContinue) {
+                if($errorType.Severity -eq "ERROR") {
+                    Add-AppveyorTest "Resharper Error: $($errorType.Description) Line: $($errorIssue.Line)" -Outcome Failed -FileName "$($errorIssue.File)" -ErrorMessage "$($errorIssue.Message)"
+                }
+                else {
+                    Add-AppveyorTest "Resharper $($(Get-Culture).TextInfo.ToTitleCase($errorType.Severity.ToLower())): $($errorType.Description) Line: $($errorIssue.Line)" -Outcome Ignored -FileName "$($errorIssue.File)" -ErrorMessage "$($errorIssue.Message)"
+                }
+            }
+        }
+        if($errorType.Severity -eq "ERROR") {
+            $anyErrors = $TRUE;
+        }
+    }
+
+    if (Get-Command "Push-AppveyorArtifact" -errorAction SilentlyContinue) {
+        Push-AppveyorArtifact $inspectCodeResultsFile;
+    }
+
+    if ($anyErrors -eq $TRUE) {
+        Write-Host "There are Resharper errors in the solution";
+    throw "Resharper errors in the solution";
+    }
+}
+
 task archive -depends build, archive-only
 
 task archive-only {
@@ -109,7 +146,7 @@ task pack-only {
     exec { nuget pack "$nuget_pack_dir\$nuspec_filename" }
 }
 
-task postbuild -depends coverage-only, coveralls-only, archive-only, pack-only
+task postbuild -depends coverage-only, coveralls-only, inspect, archive-only, pack-only
 
 task appveyor-build -depends RestoreNuGetPackages, build
 
