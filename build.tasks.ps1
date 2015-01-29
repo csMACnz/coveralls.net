@@ -82,32 +82,32 @@ task coveralls-only {
 }
 
 task dupfinder {
-    dupfinder /o="duplicateReport.xml" /show-text /e="**tests.cs" .\src\csmacnz.Coveralls.sln
+    dupfinder /o="duplicateReport.xml" /show-text /e="**tests.cs" ".\src\csmacnz.Coveralls.sln"
     [xml]$stats = Get-Content .\duplicateReport.xml
     $anyDuplicates = $FALSE;
 
     foreach ($duplicate in $stats.DuplicatesReport.Duplicates.Duplicate) {
-        Write-Host "Duplicate code found with a cost of $($duplicate.Cost), in $($duplicateCost.Fragment.Count) fragments";
+        Write-Host "Duplicate code found with a cost of $($duplicate.Cost), in $($duplicateCost.Fragment.Count) fragments"
 
         foreach ($fragment in $duplicate.Fragment) {
-            Write-Host "File: $($fragment.FileName) Line: $($fragment.LineRange.Start) - $($fragment.LineRange.End)";
+            Write-Host "File: $($fragment.FileName) Line: $($fragment.LineRange.Start) - $($fragment.LineRange.End)"
             Write-Host "Text: $($fragment.Text)"
         }
 
     $anyDuplicates = $TRUE;
 
         if(Get-Command "Add-AppveyorTest" -errorAction SilentlyContinue) {
-            Add-AppveyorTest "Duplicate Found with a cost of $($duplicate.Cost), across $($duplicate.Fragment.Count) Fragments" -Outcome Failed -ErrorMessage "See duplicateReport.xml for details of duplicates";
+            Add-AppveyorTest "Duplicate Found with a cost of $($duplicate.Cost), across $($duplicate.Fragment.Count) Fragments" -Outcome Failed -ErrorMessage "See duplicateReport.xml for details of duplicates" -FileName "$($fragment.FileName)"
         }
     }
 
     if(Get-Command "Push-AppveyorArtifact" -errorAction SilentlyContinue) {
-            Push-AppveyorArtifact .\duplicateReport.xml;
+            Push-AppveyorArtifact .\duplicateReport.xml
     }
 
     if ($anyDuplicates -eq $TRUE){
-        Write-Host "Failing build as there are duplicates in the code-base";
-        throw "Duplicates found in code base";
+        Write-Host "Failing build as there are duplicates in the code-base"
+        throw "Duplicates found in code base"
     }
 }
 
@@ -126,25 +126,25 @@ task inspect {
 
             if (Get-Command "Add-AppveyorTest" -errorAction SilentlyContinue) {
                 if($errorType.Severity -eq "ERROR") {
-                    Add-AppveyorTest "Resharper Error: $($errorType.Description) Line: $($errorIssue.Line)" -Outcome Failed -FileName "$($errorIssue.File)" -ErrorMessage "$($errorIssue.Message)"
+                    Add-AppveyorTest "Resharper Error: $($errorType.Description) Line: $($issue.Line)" -Outcome Failed -FileName "$($issue.File)" -ErrorMessage "$($issue.Message)"
                 }
                 else {
-                    Add-AppveyorTest "Resharper $($(Get-Culture).TextInfo.ToTitleCase($errorType.Severity.ToLower())): $($errorType.Description) Line: $($errorIssue.Line)" -Outcome Ignored -FileName "$($errorIssue.File)" -ErrorMessage "$($errorIssue.Message)"
+                    Add-AppveyorTest "Resharper $($(Get-Culture).TextInfo.ToTitleCase($errorType.Severity.ToLower())): $($errorType.Description) Line: $($issue.Line)" -Outcome Ignored -FileName "$($issue.File)" -ErrorMessage "$($issue.Message)"
                 }
             }
         }
         if($errorType.Severity -eq "ERROR") {
-            $anyErrors = $TRUE;
+            $anyErrors = $TRUE
         }
     }
 
     if (Get-Command "Push-AppveyorArtifact" -errorAction SilentlyContinue) {
-        Push-AppveyorArtifact .\resharperReport.xml;
+        Push-AppveyorArtifact .\resharperReport.xml
     }
 
     if ($anyErrors -eq $TRUE) {
-        Write-Host "There are Resharper errors in the solution";
-    throw "Resharper errors in the solution";
+        Write-Host "There are Resharper errors in the solution"
+    throw "Resharper errors in the solution"
     }
 }
 
