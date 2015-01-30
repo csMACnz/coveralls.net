@@ -1,4 +1,5 @@
-﻿using System.IO;
+﻿using System.Collections.Generic;
+using System.IO;
 using System.Reflection;
 using System.Xml;
 using System.Xml.Linq;
@@ -38,9 +39,7 @@ namespace csmacnz.Coveralls.Tests
 
             var results = CreateOpenCoverParserForSingleFileReport().GenerateSourceFiles(document);
 
-            Assert.Equal(1, results.Count);
-            Assert.Equal(ExpectedSingleFileReportSourceFilePath, results[0].Name);
-            Assert.Equal(12, results[0].Coverage.Length);
+            AssertSingleFileResult(ExpectedSingleFileReportSourceFilePath, 12, results);
             Assert.Equal(1, results[0].Coverage[8]);
         }
 
@@ -51,9 +50,7 @@ namespace csmacnz.Coveralls.Tests
 
             var results = CreateOpenCoverParserForSingleFileReport().GenerateSourceFiles(document);
             
-            Assert.Equal(1, results.Count);
-            Assert.Equal(ExpectedSingleFileReportSourceFilePath, results[0].Name);
-            Assert.Equal(12, results[0].Coverage.Length);
+            AssertSingleFileResult(ExpectedSingleFileReportSourceFilePath, 12, results);
             Assert.Equal(0, results[0].Coverage[8]);
         }
 
@@ -98,6 +95,13 @@ namespace csmacnz.Coveralls.Tests
                 }
             }
             return content;
+        }
+
+        private void AssertSingleFileResult(string expectedFileName, int expectedLength, List<CoverageFile> results)
+        {
+            Assert.Equal(1, results.Count);
+            Assert.Equal(expectedFileName, results[0].Name);
+            Assert.Equal(expectedLength, results[0].Coverage.Length);
         }
     }
 }
