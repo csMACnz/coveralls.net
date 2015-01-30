@@ -192,5 +192,7 @@ cov-int/
 opencovertests.xml
 
 resharperReport.xml
+resharperReport.html
 
 duplicateReport.xml
+duplicateReport.html

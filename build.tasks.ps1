@@ -82,7 +82,7 @@ task coveralls-only {
 }
 
 task dupfinder {
-    dupfinder /o="duplicateReport.xml" /show-text /e="**tests.cs" ".\src\csmacnz.Coveralls.sln"
+    dupfinder /o="duplicateReport.xml" /show-text ".\src\csmacnz.Coveralls.sln"
     [xml]$stats = Get-Content .\duplicateReport.xml
     $anyDuplicates = $FALSE;
 
@@ -100,9 +100,14 @@ task dupfinder {
             Add-AppveyorTest "Duplicate Found with a cost of $($duplicate.Cost), across $($duplicate.Fragment.Count) Fragments" -Outcome Failed -ErrorMessage "See duplicateReport.xml for details of duplicates" -FileName "$($fragment.FileName)"
         }
     }
+    
+    $xslt = New-Object System.Xml.Xsl.XslCompiledTransform
+    $xslt.Load("BuildTools\dupfinder.xslt")
+    $xslt.Transform("duplicateReport.xml", "duplicateReport.html")
 
     if(Get-Command "Push-AppveyorArtifact" -errorAction SilentlyContinue) {
-            Push-AppveyorArtifact .\duplicateReport.xml
+        Push-AppveyorArtifact .\duplicateReport.xml
+        Push-AppveyorArtifact .\duplicateReport.html
     }
 
     if ($anyDuplicates -eq $TRUE){
@@ -141,8 +146,13 @@ task inspect {
         }
     }
 
+    $xslt = New-Object System.Xml.Xsl.XslCompiledTransform
+    $xslt.Load("BuildTools\resharperReport.xslt")
+    $xslt.Transform("resharperReport.xml", "resharperReport.html")
+
     if (Get-Command "Push-AppveyorArtifact" -errorAction SilentlyContinue) {
         Push-AppveyorArtifact .\resharperReport.xml
+        Push-AppveyorArtifact .\resharperReport.html
     }
 
     if ($anyErrors -eq $TRUE) {
