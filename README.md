@@ -17,12 +17,16 @@ coveralls.net
 
 Coveralls uploader for .Net Code coverage of your C# source code. Should work with any code files that get reported with the supported coverage tools, but the primary focus is CSharp.
 
+Samples
+-------
+
+Sample applications using Coveralls.net to publish their results can be found in the [csmacnz/Coveralls.net-Samples](https://github.com/csmacnz/Coveralls.net-Samples) Project.
 
 InProgress Support
 ------------------
 
 * [OpenCover](https://github.com/sawilde/opencover)
-
+* [Mono Code Coverage (monocov)](http://www.mono-project.com/docs/debug+profile/profile/code-coverage/)(if i can read .cov files)
 
 Future Support
 --------------
@@ -30,5 +34,4 @@ Future Support
 * [dotCover](https://www.jetbrains.com/dotcover)
 * [NCover](https://www.ncover.com/)
 * [Visual Studio Coverage](http://msdn.microsoft.com/en-us/library/dd299398%28v=vs.90%29.aspx) (based on [ReportGenerator's support](https://reportgenerator.codeplex.com/wikipage?title=Visual%20Studio%20Coverage%20Tools))
-* [Mono Code Coverage (monocov)](http://www.mono-project.com/docs/debug+profile/profile/code-coverage/)(if i can read .cov files)
 * [SharpCover](https://github.com/gaillard/SharpCover) (crossplatform, might take off?)
