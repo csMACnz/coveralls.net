@@ -200,7 +200,7 @@ task pack-only {
     exec { nuget pack "$nuget_pack_dir\$nuspec_filename" }
 }
 
-task postbuild -depends coverage-only, integration, coveralls-only, inspect, dupfinder, archive-only, pack-only
+task postbuild -depends coverage-only, integration, mono-integration, coveralls-only, inspect, dupfinder, archive-only, pack-only
 
 task appveyor-build -depends RestoreNuGetPackages, build
 

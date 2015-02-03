@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Diagnostics;
 using System.IO;
+using System.Text;
 using System.Text.RegularExpressions;
 using Xunit;
 using Xunit.Sdk;
@@ -62,7 +63,7 @@ namespace csmacnz.Coveralls.Tests.Integration
                 var mono = GetMonoPath();
 
                 //quick test against travis
-                argumentsToUse = "-c \"mono --version\""; //-c \"" + mono + " " + exePath + " " + arguments + "\"";
+                argumentsToUse = "-c \"" + mono + " " + exePath + " " + arguments + "\"";
             }
 
             var process = new Process();
@@ -72,6 +73,7 @@ namespace csmacnz.Coveralls.Tests.Integration
             startInfo.Arguments = argumentsToUse;
             startInfo.UseShellExecute = false;
             startInfo.RedirectStandardOutput = true;
+            startInfo.StandardOutputEncoding = Encoding.UTF8;
             process.StartInfo = startInfo;
 
             string results;
@@ -80,6 +82,7 @@ namespace csmacnz.Coveralls.Tests.Integration
                 process.Start();
 
                 results = process.StandardOutput.ReadToEnd();
+                Console.WriteLine(results);
 
                 const int timeoutInMilliseconds = 10000;
                 if (!process.WaitForExit(timeoutInMilliseconds))
