@@ -49,6 +49,11 @@ What its for:
         {
             get { return _args; }
         }
+
+        public bool IsProvided(string parameter)
+        {
+            return _args[parameter] != null;
+        }
 		public bool OptOpencover { get { return _args["--opencover"].IsTrue; } }
 		public string OptInput { get { return _args["--input"].ToString(); } }
 		public string OptRepotoken { get { return _args["--repoToken"].ToString(); } }

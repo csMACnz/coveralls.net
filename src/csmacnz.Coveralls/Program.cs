@@ -26,7 +26,7 @@ namespace csmacnz.Coveralls
                 Console.Error.WriteLine("Input file '" + fileName + "' cannot be found");
                 Environment.Exit(1);
             }
-            var outputFile = args.OptOutput;
+            var outputFile = args.IsProvided("--output") ? args.OptOutput : string.Empty;
             if (!string.IsNullOrWhiteSpace(outputFile) && File.Exists(outputFile))
             {
                 Console.WriteLine("output file '{0}' already exists and will be overwritten.", outputFile);
@@ -38,7 +38,7 @@ namespace csmacnz.Coveralls
             List<CoverageFile> files = new OpenCoverParser(new FileSystem()).GenerateSourceFiles(document);
 
             GitData gitData = null;
-            var commitId = args.OptCommitid ?? string.Empty;
+            var commitId = args.IsProvided("--commitId") ? args.OptCommitid : string.Empty;
             if (!string.IsNullOrWhiteSpace(commitId))
             {
                 var committerName = args.OptCommitauthor ?? string.Empty;
