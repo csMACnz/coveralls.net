@@ -48,16 +48,19 @@ namespace csmacnz.Coveralls.Tests.Integration
             var exePath = Path.Combine(GetCoverallsExePath(), CoverallsExe);
             var argumentsToUse = arguments;
             var fileNameToUse = exePath;
-            if (Environment.GetEnvironmentVariable("MONO_INTEGRATION_MODE") == true.ToString())
+            if (Environment.GetEnvironmentVariable("MONO_INTEGRATION_MODE") == "WINDOWS")
             {
-                fileNameToUse =  "mono";
-                var monoPath = Environment.GetEnvironmentVariable("MONO_INTEGRATION_MONOPATH");
-                if (!string.IsNullOrWhiteSpace(monoPath))
-                {
-                    fileNameToUse = monoPath + Path.DirectorySeparatorChar + "mono";
-                }
+                fileNameToUse = GetMonoPath();
 
                 argumentsToUse = exePath + " " + arguments;
+            }
+            if (Environment.GetEnvironmentVariable("MONO_INTEGRATION_MODE") == "SH")
+            {
+                fileNameToUse = "sh";
+
+                var mono = GetMonoPath();
+
+                argumentsToUse = mono + " " + exePath + " " + arguments;
             }
 
             var process = new Process();
@@ -72,6 +75,17 @@ namespace csmacnz.Coveralls.Tests.Integration
             process.WaitForExit(5000);
             var results = process.StandardOutput.ReadToEnd();
             return results;
+        }
+
+        private static string GetMonoPath()
+        {
+            var monoApp = "mono";
+            var monoPath = Environment.GetEnvironmentVariable("MONO_INTEGRATION_MONOPATH");
+            if (!string.IsNullOrWhiteSpace(monoPath))
+            {
+                monoApp = monoPath + Path.DirectorySeparatorChar + "mono";
+            }
+            return monoApp;
         }
 
         private string GetCoverallsExePath()
