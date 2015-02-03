@@ -61,11 +61,6 @@ namespace csmacnz.Coveralls.Tests.Integration
 
         private string GetCoverallsExePath()
         {
-            string pathToCoverallsExecutable = Environment.GetEnvironmentVariable("INTEGRATION_COVERALLS_EXE_PATH");
-            if (string.IsNullOrWhiteSpace(pathToCoverallsExecutable))
-            {
-                return pathToCoverallsExecutable;
-            }
 #if DEBUG
             var configuration = "Debug";
 #else

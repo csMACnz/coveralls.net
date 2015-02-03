@@ -70,7 +70,6 @@ task coverity {
 }
 
 task integration {
-    $env:INTEGRATION_COVERALLS_EXE_PATH = ".\src\csmacnz.Coveralls\bin\$configuration\csmacnz.Coveralls.exe"
     iex "& $script:xunit "".\src\csmacnz.Coveralls.Tests.Integration\bin\$configuration\csmacnz.Coveralls.Tests.Integration.dll"" /noshadow $script:testOptions"
 }
 
