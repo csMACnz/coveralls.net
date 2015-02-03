@@ -70,6 +70,13 @@ task coverity {
 }
 
 task integration {
+    $env:MONO_INTEGRATION_MODE = "False"
+    iex "& $script:xunit "".\src\csmacnz.Coveralls.Tests.Integration\bin\$configuration\csmacnz.Coveralls.Tests.Integration.dll"" /noshadow $script:testOptions"
+}
+
+task mono-integration {
+    $env:MONO_INTEGRATION_MODE = "True"
+    $env:MONO_INTEGRATION_MONOPATH = "C:\Program Files (x86)\Mono-3.2.3\bin"
     iex "& $script:xunit "".\src\csmacnz.Coveralls.Tests.Integration\bin\$configuration\csmacnz.Coveralls.Tests.Integration.dll"" /noshadow $script:testOptions"
 }
 

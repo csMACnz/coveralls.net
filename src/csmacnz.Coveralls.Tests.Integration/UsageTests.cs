@@ -45,11 +45,26 @@ namespace csmacnz.Coveralls.Tests.Integration
 
         private string RunCoveralls(string arguments)
         {
+            var exePath = Path.Combine(GetCoverallsExePath(), CoverallsExe);
+            var argumentsToUse = arguments;
+            var fileNameToUse = exePath;
+            if (Environment.GetEnvironmentVariable("MONO_INTEGRATION_MODE") == true.ToString())
+            {
+                fileNameToUse =  "mono";
+                var monoPath = Environment.GetEnvironmentVariable("MONO_INTEGRATION_MONOPATH");
+                if (!string.IsNullOrWhiteSpace(monoPath))
+                {
+                    fileNameToUse = monoPath + Path.DirectorySeparatorChar + "mono";
+                }
+
+                argumentsToUse = exePath + " " + arguments;
+            }
+
             var process = new Process();
             var startInfo = new ProcessStartInfo();
             startInfo.WindowStyle = ProcessWindowStyle.Hidden;
-            startInfo.FileName = Path.Combine(GetCoverallsExePath(), CoverallsExe);
-            startInfo.Arguments = arguments;
+            startInfo.FileName = fileNameToUse;
+            startInfo.Arguments = argumentsToUse;
             startInfo.UseShellExecute = false;
             startInfo.RedirectStandardOutput = true;
             process.StartInfo = startInfo;
