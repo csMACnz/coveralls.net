@@ -62,7 +62,7 @@ namespace csmacnz.Coveralls.Tests.Integration
                 var mono = GetMonoPath();
 
                 //quick test against travis
-                argumentsToUse = "\"" + mono + " --version\""; //-C \"" + mono + " " + exePath + " " + arguments + "\"";
+                argumentsToUse = "\"command -v mono"; //-C \"" + mono + " " + exePath + " " + arguments + "\"";
             }
 
             var process = new Process();
