@@ -3,6 +3,7 @@ using System.Diagnostics;
 using System.IO;
 using System.Text.RegularExpressions;
 using Xunit;
+using Xunit.Sdk;
 using Xunit.Should;
 
 namespace csmacnz.Coveralls.Tests.Integration
@@ -71,9 +72,22 @@ namespace csmacnz.Coveralls.Tests.Integration
             startInfo.UseShellExecute = false;
             startInfo.RedirectStandardOutput = true;
             process.StartInfo = startInfo;
-            process.Start();
-            process.WaitForExit(5000);
-            var results = process.StandardOutput.ReadToEnd();
+
+            string results;
+            using (process)
+            {
+                process.Start();
+
+                results = process.StandardOutput.ReadToEnd();
+
+                const int timeoutInMilliseconds = 10000;
+                if (!process.WaitForExit(timeoutInMilliseconds))
+                {
+                    throw new Xunit.Sdk.TimeoutException(timeoutInMilliseconds);
+                }
+                ;
+            }
+
             return results;
         }
 
