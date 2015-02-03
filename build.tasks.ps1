@@ -69,6 +69,11 @@ task coverity {
     Write-Zip -Path "cov-int" -OutputPath coveralls.coverity.$script:version.zip
 }
 
+task integration {
+    $env:INTEGRATION_COVERALLS_EXE_PATH = ".\src\csmacnz.Coveralls\bin\$configuration\csmacnz.Coveralls.exe"
+    iex "& $script:xunit "".\src\csmacnz.Coveralls.Tests.Integration\bin\$configuration\csmacnz.Coveralls.Tests.Integration.dll"" /noshadow $script:testOptions"
+}
+
 task coverage -depends LocalTestSettings, build, coverage-only
 
 task coverage-only {
@@ -189,7 +194,7 @@ task pack-only {
     exec { nuget pack "$nuget_pack_dir\$nuspec_filename" }
 }
 
-task postbuild -depends coverage-only, coveralls-only, inspect, dupfinder, archive-only, pack-only
+task postbuild -depends coverage-only, integration, coveralls-only, inspect, dupfinder, archive-only, pack-only
 
 task appveyor-build -depends RestoreNuGetPackages, build
 
