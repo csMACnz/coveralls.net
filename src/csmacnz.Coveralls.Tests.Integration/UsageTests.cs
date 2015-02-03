@@ -50,20 +50,11 @@ namespace csmacnz.Coveralls.Tests.Integration
             var exePath = Path.Combine(GetCoverallsExePath(), CoverallsExe);
             var argumentsToUse = arguments;
             var fileNameToUse = exePath;
-            if (Environment.GetEnvironmentVariable("MONO_INTEGRATION_MODE") == "WINDOWS")
+            if (Environment.GetEnvironmentVariable("MONO_INTEGRATION_MODE") == "True")
             {
                 fileNameToUse = GetMonoPath();
 
                 argumentsToUse = exePath + " " + arguments;
-            }
-            if (Environment.GetEnvironmentVariable("MONO_INTEGRATION_MODE") == "SH")
-            {
-                fileNameToUse = "sh";
-
-                var mono = GetMonoPath();
-
-                //quick test against travis
-                argumentsToUse = "-c \"" + mono + " " + exePath + " " + arguments + "\"";
             }
 
             var process = new Process();
