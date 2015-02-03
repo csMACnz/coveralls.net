@@ -55,9 +55,9 @@ namespace csmacnz.Coveralls.Tests.Integration
 
                 argumentsToUse = exePath + " " + arguments;
             }
-            if (Environment.GetEnvironmentVariable("MONO_INTEGRATION_MODE") == "SH")
+            if (Environment.GetEnvironmentVariable("MONO_INTEGRATION_MODE") == "BASH")
             {
-                fileNameToUse = "sh";
+                fileNameToUse = "bash";
 
                 var mono = GetMonoPath();
 
