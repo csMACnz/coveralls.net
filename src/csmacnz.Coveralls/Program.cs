@@ -64,11 +64,14 @@ namespace csmacnz.Coveralls
             };
 
             var fileData = JsonConvert.SerializeObject(data);
-            var uploaded = Upload(@"https://coveralls.io/api/v1/jobs", fileData);
-            if (!uploaded)
+            if (!args.OptDryrun)
             {
-                Console.Error.WriteLine("Failed to upload to coveralls");
-                Environment.Exit(1);
+                var uploaded = Upload(@"https://coveralls.io/api/v1/jobs", fileData);
+                if (!uploaded)
+                {
+                    Console.Error.WriteLine("Failed to upload to coveralls");
+                    Environment.Exit(1);
+                }
             }
         }
 
