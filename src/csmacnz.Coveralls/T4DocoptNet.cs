@@ -10,7 +10,7 @@ namespace csmacnz.Coveralls
         public const string Usage = @"csmac.Coveralls - a coveralls.io coverage publisher for .Net
 
 Usage:
-  csmacnz.Coveralls --opencover -i ./opencovertests.xml --repoToken <repoToken> [--dryrun] [--commitId <commitId> --commitBranch <commitBranch> [--commitAuthor <commitAuthor> --commitEmail <commitEmail> --commitMessage <commitMessage>] ] [--jobId <jobId>]
+  csmacnz.Coveralls --opencover -i ./opencovertests.xml --repoToken <repoToken> [-o ./opencovertests.json] [--dryrun] [--commitId <commitId> --commitBranch <commitBranch> [--commitAuthor <commitAuthor> --commitEmail <commitEmail> --commitMessage <commitMessage>] ] [--jobId <jobId>]
   csmacnz.Coveralls --version
   csmacnz.Coveralls --help
 
@@ -18,6 +18,7 @@ Options:
  -h, --help                      Show this screen.
  --version                       Show version.
  -i <file>, --input <file>       The coverage source file location.
+ -o <file>, --output <file>      The coverage results json will be written to this file it provided. 
  --dryrun                        This flag will stop coverage results being posted to coveralls.io
  --opencover                     Reads input as OpenCover data.
  --repoToken <repoToken>         The coveralls.io repository token.
@@ -51,6 +52,7 @@ What its for:
 		public bool OptOpencover { get { return _args["--opencover"].IsTrue; } }
 		public string OptInput { get { return _args["--input"].ToString(); } }
 		public string OptRepotoken { get { return _args["--repoToken"].ToString(); } }
+		public string OptOutput { get { return _args["--output"].ToString(); } }
 		public bool OptDryrun { get { return _args["--dryrun"].IsTrue; } }
 		public string OptCommitid { get { return _args["--commitId"].ToString(); } }
 		public string OptCommitbranch { get { return _args["--commitBranch"].ToString(); } }

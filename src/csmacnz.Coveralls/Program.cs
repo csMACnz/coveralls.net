@@ -26,6 +26,13 @@ namespace csmacnz.Coveralls
                 Console.Error.WriteLine("Input file '" + fileName + "' cannot be found");
                 Environment.Exit(1);
             }
+            var outputFile = args.OptOutput;
+            if (!string.IsNullOrWhiteSpace(outputFile) && File.Exists(outputFile))
+            {
+                Console.WriteLine("output file '{0}' already exists and will be overwritten.", outputFile);
+                Environment.Exit(1);
+            }
+
             var document = XDocument.Load(fileName);
 
             List<CoverageFile> files = new OpenCoverParser(new FileSystem()).GenerateSourceFiles(document);
@@ -64,6 +71,10 @@ namespace csmacnz.Coveralls
             };
 
             var fileData = JsonConvert.SerializeObject(data);
+            if (!string.IsNullOrWhiteSpace(outputFile))
+            {
+                WriteFileData(fileData, outputFile);
+            }
             if (!args.OptDryrun)
             {
                 var uploaded = Upload(@"https://coveralls.io/api/v1/jobs", fileData);
@@ -72,6 +83,18 @@ namespace csmacnz.Coveralls
                     Console.Error.WriteLine("Failed to upload to coveralls");
                     Environment.Exit(1);
                 }
+            }
+        }
+
+        private static void WriteFileData(string fileData, string outputFile)
+        {
+            try
+            {
+                File.WriteAllText(outputFile, fileData);
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine("Failed to write data to output file '{0}'.", outputFile);
             }
         }
 
