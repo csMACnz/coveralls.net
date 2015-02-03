@@ -1,0 +1,21 @@
+version: 0.2.{build}
+assembly_info:
+  patch: true
+  file: '**\AssemblyInfo.*'
+  assembly_version: 0.2.0.0
+  assembly_file_version: '{version}'
+  assembly_informational_version: '{version}'
+environment:
+  COVERALLS_REPO_TOKEN:
+    secure: 7+M7//b+83bTse+910JEiExhI3kRpPNByeBKgndUaWmjCmdJglS2Hermr2V2MabW
+install:
+- ps: .\build.environment.ps1
+build_script:
+- ps: psake .\build.tasks.ps1 appveyor-build
+test_script:
+- ps: psake .\build.tasks.ps1 appveyor-test
+artifacts:
+- path: opencovertests.xml
+  name: opencovertests.xml
+- path: coveralls.net.*.zip
+- path: coveralls.net.*.nupkg
