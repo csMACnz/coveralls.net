@@ -60,7 +60,7 @@ namespace csmacnz.Coveralls.Tests.Integration
 
                 var mono = GetMonoPath();
 
-                argumentsToUse = mono + " " + exePath + " " + arguments;
+                argumentsToUse = "-C \"" + mono + " " + exePath + " " + arguments + "\"";
             }
 
             var process = new Process();
