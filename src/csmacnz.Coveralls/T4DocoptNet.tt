@@ -27,7 +27,6 @@ T4DocopNet Version 0.1.0
 <#@ import namespace="EnvDTE" #>
 <#@ import namespace="EnvDTE80" #>
 <#@ import namespace="Microsoft.VisualStudio.TextTemplating" #>
-using System.Collections;
 using System.Collections.Generic;
 using DocoptNet;
 
@@ -45,12 +44,12 @@ namespace <#= System.Runtime.Remoting.Messaging.CallContext.LogicalGetData("Name
     {
         public const string Usage = @"<#= entry.Usage #>";
         private readonly IDictionary<string, ValueObject> _args;
-        
+
         public <#= entry.Name #>Args(
-            ICollection<string> argv, 
+            ICollection<string> argv,
             bool help = true,
-            object version = null, 
-            bool optionsFirst = false, 
+            object version = null,
+            bool optionsFirst = false,
             bool exit = false)
         {
             _args = new Docopt().Apply(Usage, argv, help, version, optionsFirst, exit);

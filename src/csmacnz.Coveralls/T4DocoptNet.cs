@@ -1,4 +1,3 @@
-using System.Collections;
 using System.Collections.Generic;
 using DocoptNet;
 
@@ -34,12 +33,12 @@ What its for:
  coveralls.io's service. This can be used by your build scripts 
  or with a CI builder server.";
         private readonly IDictionary<string, ValueObject> _args;
-        
+
         public MainArgs(
-            ICollection<string> argv, 
+            ICollection<string> argv,
             bool help = true,
-            object version = null, 
-            bool optionsFirst = false, 
+            object version = null,
+            bool optionsFirst = false,
             bool exit = false)
         {
             _args = new Docopt().Apply(Usage, argv, help, version, optionsFirst, exit);

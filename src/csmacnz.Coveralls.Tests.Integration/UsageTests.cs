@@ -4,8 +4,8 @@ using System.IO;
 using System.Text;
 using System.Text.RegularExpressions;
 using Xunit;
-using Xunit.Sdk;
 using Xunit.Should;
+using TimeoutException = Xunit.Sdk.TimeoutException;
 
 namespace csmacnz.Coveralls.Tests.Integration
 {
@@ -58,13 +58,15 @@ namespace csmacnz.Coveralls.Tests.Integration
             }
 
             var process = new Process();
-            var startInfo = new ProcessStartInfo();
-            startInfo.WindowStyle = ProcessWindowStyle.Hidden;
-            startInfo.FileName = fileNameToUse;
-            startInfo.Arguments = argumentsToUse;
-            startInfo.UseShellExecute = false;
-            startInfo.RedirectStandardOutput = true;
-            startInfo.StandardOutputEncoding = Encoding.UTF8;
+            var startInfo = new ProcessStartInfo
+            {
+                WindowStyle = ProcessWindowStyle.Hidden,
+                FileName = fileNameToUse,
+                Arguments = argumentsToUse,
+                UseShellExecute = false,
+                RedirectStandardOutput = true,
+                StandardOutputEncoding = Encoding.UTF8
+            };
             process.StartInfo = startInfo;
 
             string results;
@@ -78,9 +80,8 @@ namespace csmacnz.Coveralls.Tests.Integration
                 const int timeoutInMilliseconds = 10000;
                 if (!process.WaitForExit(timeoutInMilliseconds))
                 {
-                    throw new Xunit.Sdk.TimeoutException(timeoutInMilliseconds);
+                    throw new TimeoutException(timeoutInMilliseconds);
                 }
-                ;
             }
 
             return results;

@@ -22,7 +22,7 @@ namespace csmacnz.Coveralls
 
         public void AddSource(string source)
         {
-            List<string> lines = new List<string>();
+            var lines = new List<string>();
             using (var sr = new StringReader(source))
             {
                 string nextLine;

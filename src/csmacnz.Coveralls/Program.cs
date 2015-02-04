@@ -92,7 +92,7 @@ namespace csmacnz.Coveralls
             {
                 File.WriteAllText(outputFile, fileData);
             }
-            catch (Exception ex)
+            catch (Exception)
             {
                 Console.WriteLine("Failed to write data to output file '{0}'.", outputFile);
             }

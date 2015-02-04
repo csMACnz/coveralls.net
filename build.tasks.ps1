@@ -134,7 +134,8 @@ task inspect {
     $errors = $stats.SelectNodes("/Report/IssueTypes/IssueType")
 
     foreach ($errorType in $errors) {
-        Write-Host "Found InspectCode Error(s): $($errorType.Description)"
+        $errorTypeName = $(Get-Culture).TextInfo.ToTitleCase($errorType.Severity.ToLower())
+        Write-Host "Found InspectCode $errorTypeName(s): $($errorType.Description)"
 
         $issues = $stats.SelectNodes("/Report/Issues/Project/Issue[@TypeId='$($errorType.Id)']")
         foreach ($issue in $issues) {
@@ -148,7 +149,7 @@ task inspect {
                     Add-AppveyorMessage "Resharper Warning: $($errorType.Description) File: $($issue.File) Line: $($issue.Line)" -Category Warning -Details "$($issue.Message)"
                 }
                 else {
-                    Add-AppveyorMessage "Resharper $($(Get-Culture).TextInfo.ToTitleCase($errorType.Severity.ToLower())): $($errorType.Description) File: $($issue.File) Line: $($issue.Line)" -Category Information -Details "$($issue.Message)"
+                    Add-AppveyorMessage "Resharper $($errorTypeName): $($errorType.Description) File: $($issue.File) Line: $($issue.Line)" -Category Information -Details "$($issue.Message)"
                 }
             }
         }

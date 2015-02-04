@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Diagnostics;
 using System.IO;
 using System.Reflection;
 using System.Xml;
@@ -74,6 +75,7 @@ namespace csmacnz.Coveralls.Tests
             using (var stream = executingAssembly.GetManifestResourceStream(embeddedResource))
             {
                 Assert.NotNull(stream);
+                Debug.Assert(stream != null, "stream != null");
                 using (var reader = XmlReader.Create(stream))
                 {
                     document = XDocument.Load(reader);
@@ -89,6 +91,7 @@ namespace csmacnz.Coveralls.Tests
             using (var stream = executingAssembly.GetManifestResourceStream(embeddedResource))
             {
                 Assert.NotNull(stream);
+                Debug.Assert(stream != null, "stream != null");
                 using (var reader = new StreamReader(stream))
                 {
                     content = reader.ReadToEnd();
@@ -97,7 +100,9 @@ namespace csmacnz.Coveralls.Tests
             return content;
         }
 
+        // ReSharper disable UnusedParameter.Local
         private void AssertSingleFileResult(string expectedFileName, int expectedLength, List<CoverageFile> results)
+        // ReSharper restore UnusedParameter.Local
         {
             Assert.Equal(1, results.Count);
             Assert.Equal(expectedFileName, results[0].Name);
