@@ -22,11 +22,15 @@ Samples
 
 Sample applications using Coveralls.net to publish their results can be found in the [csmacnz/Coveralls.net-Samples](https://github.com/csmacnz/Coveralls.net-Samples) Project.
 
+Supported
+---------
+
+* [OpenCover](https://github.com/sawilde/opencover)
+
 InProgress Support
 ------------------
 
-* [OpenCover](https://github.com/sawilde/opencover)
-* [Mono Code Coverage (monocov)](http://www.mono-project.com/docs/debug+profile/profile/code-coverage/)(if i can read .cov files)
+* [Mono Code Coverage (monocov)](http://www.mono-project.com/docs/debug+profile/profile/code-coverage/)
 
 Future Support
 --------------
