@@ -64,6 +64,7 @@ namespace <#= System.Runtime.Remoting.Messaging.CallContext.LogicalGetData("Name
         {
             return _args[parameter] != null;
         }
+
 <#
         var s = new Docopt().GenerateCode(entry.Usage);
         PushIndent("		");

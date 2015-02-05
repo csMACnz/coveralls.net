@@ -9,7 +9,7 @@ namespace csmacnz.Coveralls
         public const string Usage = @"csmac.Coveralls - a coveralls.io coverage publisher for .Net
 
 Usage:
-  csmacnz.Coveralls --opencover -i ./opencovertests.xml --repoToken <repoToken> [-o ./opencovertests.json] [--dryrun] [--commitId <commitId> --commitBranch <commitBranch> [--commitAuthor <commitAuthor> --commitEmail <commitEmail> --commitMessage <commitMessage>] ] [--jobId <jobId>]
+  csmacnz.Coveralls (--opencover | --monocov) -i ./opencovertests.xml --repoToken <repoToken> [-o ./opencovertests.json] [--dryrun] [--commitId <commitId> --commitBranch <commitBranch> [--commitAuthor <commitAuthor> --commitEmail <commitEmail> --commitMessage <commitMessage>] ] [--jobId <jobId>]
   csmacnz.Coveralls --version
   csmacnz.Coveralls --help
 
@@ -20,6 +20,7 @@ Options:
  -o <file>, --output <file>      The coverage results json will be written to this file it provided. 
  --dryrun                        This flag will stop coverage results being posted to coveralls.io
  --opencover                     Reads input as OpenCover data.
+ --monocov                       Reads input as monocov results folder.
  --repoToken <repoToken>         The coveralls.io repository token.
  --commitId <commitId>           The git commit hash for the coverage report.
  --commitAuthor <commitAuthor>   The git commit author for the coverage report.
@@ -53,7 +54,9 @@ What its for:
         {
             return _args[parameter] != null;
         }
+
 		public bool OptOpencover { get { return _args["--opencover"].IsTrue; } }
+		public bool OptMonocov { get { return _args["--monocov"].IsTrue; } }
 		public string OptInput { get { return _args["--input"].ToString(); } }
 		public string OptRepotoken { get { return _args["--repoToken"].ToString(); } }
 		public string OptOutput { get { return _args["--output"].ToString(); } }

@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using System.Net.Http;
 using System.Reflection;
 using System.Xml.Linq;
@@ -20,12 +21,7 @@ namespace csmacnz.Coveralls
                 Console.WriteLine(MainArgs.Usage);
                 Environment.Exit(1);
             }
-            var fileName = args.OptInput;
-            if (!File.Exists(fileName))
-            {
-                Console.Error.WriteLine("Input file '" + fileName + "' cannot be found");
-                Environment.Exit(1);
-            }
+
             var outputFile = args.IsProvided("--output") ? args.OptOutput : string.Empty;
             if (!string.IsNullOrWhiteSpace(outputFile) && File.Exists(outputFile))
             {
@@ -33,9 +29,33 @@ namespace csmacnz.Coveralls
                 Environment.Exit(1);
             }
 
-            var document = XDocument.Load(fileName);
+            List<CoverageFile> files;
+            if (args.IsProvided("--monocov") && args.OptMonocov)
+            {
+                var fileName = args.OptInput;
+                if (!Directory.Exists(fileName))
+                {
+                    Console.Error.WriteLine("Input file '" + fileName + "' cannot be found");
+                    Environment.Exit(1);
+                }
+                List<XDocument> documents = Directory.GetFiles(fileName).Where(f => f.EndsWith(".xml")).Select(XDocument.Load).ToList();
 
-            List<CoverageFile> files = new OpenCoverParser(new FileSystem()).GenerateSourceFiles(document);
+                files = new MonoCoverParser().GenerateSourceFiles(documents);
+            }
+            else
+            {
+
+                var fileName = args.OptInput;
+                if (!File.Exists(fileName))
+                {
+                    Console.Error.WriteLine("Input file '" + fileName + "' cannot be found");
+                    Environment.Exit(1);
+                }
+
+                var document = XDocument.Load(fileName);
+
+                files = new OpenCoverParser(new FileSystem()).GenerateSourceFiles(document);
+            }
 
             GitData gitData = null;
             var commitId = args.IsProvided("--commitId") ? args.OptCommitid : string.Empty;

@@ -62,6 +62,7 @@
     <Compile Include="CoverallData.cs" />
     <Compile Include="FileSystem.cs" />
     <Compile Include="IFileSystem.cs" />
+    <Compile Include="MonoCoverParser.cs" />
     <Compile Include="OpenCoverParser.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
