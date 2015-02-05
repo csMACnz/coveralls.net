@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="us-ascii"?>
+<?xml-stylesheet href="style.xsl" type="text/xsl"?>
+<namespace name="GameOfLife">
+  <coverage hit="2" missed="111" coverage="2" />
+  <class name="World" fullname="GameOfLife.World">
+    <coverage hit="2" missed="5" coverage="29" />
+  </class>
+  <namespace name="GameOfLife.xUnit">
+    <coverage hit="0" missed="10" coverage="0" />
+  </namespace>
+  <class name="Game" fullname="GameOfLife.Game">
+    <coverage hit="0" missed="47" coverage="0" />
+  </class>
+  <class name="Program" fullname="GameOfLife.Program">
+    <coverage hit="0" missed="11" coverage="0" />
+  </class>
+  <class name="WorldBuilder" fullname="GameOfLife.WorldBuilder">
+    <coverage hit="0" missed="38" coverage="0" />
+  </class>
+</namespace>

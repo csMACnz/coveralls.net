@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="us-ascii"?>
+<?xml-stylesheet href="style.xsl" type="text/xsl"?>
+<class name="Program" fullname="GameOfLife.Program" namespace="GameOfLife">
+  <coverage hit="0" missed="11" coverage="0" />
+  <source sourceFile="/home/travis/build/csMACnz/Coveralls.net-Samples/src/GameOfLife/Program.cs">
+    <l line="1" count="-1">using System;</l>
+    <l line="2" count="-1">using System.Threading;</l>
+    <l line="3" count="-1" />
+    <l line="4" count="-1">namespace GameOfLife</l>
+    <l line="5" count="-1">{</l>
+    <l line="6" count="-1">    public class Program</l>
+    <l line="7" count="-1">    {</l>
+    <l line="8" count="-1">        public static void Main(string[] args)</l>
+    <l line="9" count="-1">        {</l>
+    <l line="10" count="-1">            //uncomment for different beginning states</l>
+    <l line="11" count="-1" />
+    <l line="12" count="-1">            //var world = WorldBuilder.BuildBeaconWorld();</l>
+    <l line="13" count="-1">            //var world = WorldBuilder.BuildBlinkerWorld();</l>
+    <l line="14" count="-1">            //var world = WorldBuilder.BuildToadWorld();</l>
+    <l line="15" count="0">            var world = WorldBuilder.BuildRandomWorld();</l>
+    <l line="16" count="0" />
+    <l line="17" count="0">            while (true)</l>
+    <l line="18" count="0">            {</l>
+    <l line="19" count="0">                world = Game.GetNextWorldState(world);</l>
+    <l line="20" count="0" />
+    <l line="21" count="0">                Console.Clear();</l>
+    <l line="22" count="0" />
+    <l line="23" count="0">                Game.DrawWorld(world);</l>
+    <l line="24" count="0" />
+    <l line="25" count="0">                Thread.Sleep(600);</l>
+    <l line="26" count="-1">            }</l>
+    <l line="27" count="-1">        }</l>
+    <l line="28" count="-1">    }</l>
+    <l line="29" count="-1">}</l>
+  </source>
+</class>

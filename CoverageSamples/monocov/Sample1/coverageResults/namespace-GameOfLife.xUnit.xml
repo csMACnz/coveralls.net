@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="us-ascii"?>
+<?xml-stylesheet href="style.xsl" type="text/xsl"?>
+<namespace name="GameOfLife.xUnit">
+  <coverage hit="0" missed="10" coverage="0" />
+  <namespace name="GameOfLife.xUnit.Tests">
+    <coverage hit="0" missed="10" coverage="0" />
+  </namespace>
+</namespace>

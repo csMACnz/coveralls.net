@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="us-ascii"?>
+<?xml-stylesheet href="style.xsl" type="text/xsl"?>
+<class name="WorldBuilder" fullname="GameOfLife.WorldBuilder" namespace="GameOfLife">
+  <coverage hit="0" missed="38" coverage="0" />
+  <source sourceFile="/home/travis/build/csMACnz/Coveralls.net-Samples/src/GameOfLife/WorldBuilder.cs">
+    <l line="1" count="-1">using System;</l>
+    <l line="2" count="-1">using System.Linq;</l>
+    <l line="3" count="-1" />
+    <l line="4" count="-1">namespace GameOfLife</l>
+    <l line="5" count="-1">{</l>
+    <l line="6" count="-1">    public static class WorldBuilder</l>
+    <l line="7" count="-1">    {</l>
+    <l line="8" count="-1">        private const int DefaultWidth = 10;</l>
+    <l line="9" count="-1">        private const int DefaultHeight = 10;</l>
+    <l line="10" count="-1" />
+    <l line="11" count="-1">        public static World BuildBlinkerWorld()</l>
+    <l line="12" count="-1">        {</l>
+    <l line="13" count="0">            var world = new bool[DefaultHeight, DefaultWidth];</l>
+    <l line="14" count="0">            </l>
+    <l line="15" count="0">            world[5, 4] = true;</l>
+    <l line="16" count="0">            world[5, 5] = true;</l>
+    <l line="17" count="0">            world[5, 6] = true;</l>
+    <l line="18" count="0" />
+    <l line="19" count="0">            return new World(world);</l>
+    <l line="20" count="-1">        }</l>
+    <l line="21" count="-1" />
+    <l line="22" count="-1">        public static World BuildToadWorld()</l>
+    <l line="23" count="-1">        {</l>
+    <l line="24" count="0">            var world = new bool[DefaultHeight, DefaultWidth];</l>
+    <l line="25" count="0" />
+    <l line="26" count="0">            world[5, 4] = true;</l>
+    <l line="27" count="0">            world[5, 5] = true;</l>
+    <l line="28" count="0">            world[5, 6] = true;</l>
+    <l line="29" count="0">            world[6, 3] = true;</l>
+    <l line="30" count="0">            world[6, 4] = true;</l>
+    <l line="31" count="0">            world[6, 5] = true;</l>
+    <l line="32" count="0" />
+    <l line="33" count="0">            return new World(world);</l>
+    <l line="34" count="-1">        }</l>
+    <l line="35" count="-1" />
+    <l line="36" count="-1">        public static World BuildBeaconWorld()</l>
+    <l line="37" count="-1">        {</l>
+    <l line="38" count="0">            var world = new bool[DefaultHeight, DefaultWidth];</l>
+    <l line="39" count="0" />
+    <l line="40" count="0">            world[3, 3] = true;</l>
+    <l line="41" count="0">            world[3, 4] = true;</l>
+    <l line="42" count="0">            world[4, 3] = true;</l>
+    <l line="43" count="0">            world[5, 6] = true;</l>
+    <l line="44" count="0">            world[6, 5] = true;</l>
+    <l line="45" count="0">            world[6, 6] = true;</l>
+    <l line="46" count="0" />
+    <l line="47" count="0">            return new World(world);</l>
+    <l line="48" count="-1">        }</l>
+    <l line="49" count="-1" />
+    <l line="50" count="-1">        public static World BuildRandomWorld()</l>
+    <l line="51" count="-1">        {</l>
+    <l line="52" count="0">            var world = new bool[DefaultHeight, DefaultWidth];</l>
+    <l line="53" count="0">            </l>
+    <l line="54" count="0">            var random = new Random((int)DateTime.Now.Ticks % Int32.MaxValue);</l>
+    <l line="55" count="0">            foreach (int row in Enumerable.Range(0, DefaultHeight))</l>
+    <l line="56" count="0">            {</l>
+    <l line="57" count="0">                foreach (int col in Enumerable.Range(0, DefaultWidth))</l>
+    <l line="58" count="0">                {</l>
+    <l line="59" count="0">                    world[row, col] = random.Next(2) == 1;</l>
+    <l line="60" count="0">                }</l>
+    <l line="61" count="0">            }</l>
+    <l line="62" count="0">            return new World(world);</l>
+    <l line="63" count="-1">        }</l>
+    <l line="64" count="-1">    }</l>
+    <l line="65" count="-1">}</l>
+  </source>
+</class>

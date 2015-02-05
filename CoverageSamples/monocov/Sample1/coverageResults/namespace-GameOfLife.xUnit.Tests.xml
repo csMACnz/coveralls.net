@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="us-ascii"?>
+<?xml-stylesheet href="style.xsl" type="text/xsl"?>
+<namespace name="GameOfLife.xUnit.Tests">
+  <coverage hit="0" missed="10" coverage="0" />
+  <class name="WorldTests" fullname="GameOfLife.xUnit.Tests.WorldTests">
+    <coverage hit="0" missed="10" coverage="0" />
+  </class>
+</namespace>

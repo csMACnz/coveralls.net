@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="us-ascii"?>
+<?xml-stylesheet href="style.xsl" type="text/xsl"?>
+<class name="World" fullname="GameOfLife.World" namespace="GameOfLife">
+  <coverage hit="2" missed="5" coverage="29" />
+  <source sourceFile="/home/travis/build/csMACnz/Coveralls.net-Samples/src/GameOfLife/World.cs">
+    <l line="1" count="-1">namespace GameOfLife</l>
+    <l line="2" count="-1">{</l>
+    <l line="3" count="-1">    public class World</l>
+    <l line="4" count="-1">    {</l>
+    <l line="5" count="-1">        private readonly bool[,] _data;</l>
+    <l line="6" count="-1" />
+    <l line="7" count="2">        public World(bool[,] data)</l>
+    <l line="8" count="2">        {</l>
+    <l line="9" count="-1">            Width = data.GetUpperBound(0) + 1;</l>
+    <l line="10" count="-1">            Height = data.GetUpperBound(1) + 1;</l>
+    <l line="11" count="-1">            _data = data;</l>
+    <l line="12" count="-1">        }</l>
+    <l line="13" count="-1" />
+    <l line="14" count="0">        public int Width { get; private set; }</l>
+    <l line="15" count="0">        public int Height { get; private set; }</l>
+    <l line="16" count="-1" />
+    <l line="17" count="-1">        public bool IsAlive(int x, int y)</l>
+    <l line="18" count="-1">        {</l>
+    <l line="19" count="0">            return _data[x, y];</l>
+    <l line="20" count="-1">        }</l>
+    <l line="21" count="-1">    }</l>
+    <l line="22" count="-1">}</l>
+  </source>
+</class>

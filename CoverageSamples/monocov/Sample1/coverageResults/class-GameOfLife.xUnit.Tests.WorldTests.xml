@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="us-ascii"?>
+<?xml-stylesheet href="style.xsl" type="text/xsl"?>
+<class name="WorldTests" fullname="GameOfLife.xUnit.Tests.WorldTests" namespace="GameOfLife.xUnit.Tests">
+  <coverage hit="0" missed="10" coverage="0" />
+  <source sourceFile="/home/travis/build/csMACnz/Coveralls.net-Samples/src/GameOfLife.xUnit.Tests/WorldTests.cs">
+    <l line="1" count="-1">using Xunit;</l>
+    <l line="2" count="-1" />
+    <l line="3" count="-1">namespace GameOfLife.xUnit.Tests</l>
+    <l line="4" count="-1">{</l>
+    <l line="5" count="-1">    public class WorldTests</l>
+    <l line="6" count="-1">    {</l>
+    <l line="7" count="-1">        [Fact]</l>
+    <l line="8" count="-1">        public void World_ConstructNew_WidthCorrect()</l>
+    <l line="9" count="-1">        {</l>
+    <l line="10" count="-1">            const int expectedWidth = 5;</l>
+    <l line="11" count="0">            var data = new bool[expectedWidth, 12];</l>
+    <l line="12" count="0" />
+    <l line="13" count="0">            var world = new World(data);</l>
+    <l line="14" count="0" />
+    <l line="15" count="0">            Assert.Equal(expectedWidth, world.Width);</l>
+    <l line="16" count="-1">        }</l>
+    <l line="17" count="-1" />
+    <l line="18" count="-1">        [Fact]</l>
+    <l line="19" count="-1">        public void World_ConstructNew_HeightCorrect()</l>
+    <l line="20" count="-1">        {</l>
+    <l line="21" count="-1">            const int expectedHeight = 5;</l>
+    <l line="22" count="0">            var data = new bool[12, expectedHeight];</l>
+    <l line="23" count="0" />
+    <l line="24" count="0">            var world = new World(data);</l>
+    <l line="25" count="0" />
+    <l line="26" count="0">            Assert.Equal(expectedHeight, world.Height);</l>
+    <l line="27" count="-1">        }</l>
+    <l line="28" count="-1">    }</l>
+    <l line="29" count="-1">}</l>
+  </source>
+</class>
