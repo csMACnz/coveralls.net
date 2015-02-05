@@ -43,11 +43,7 @@ namespace csmacnz.Coveralls.Tests.Integration
             var results = CoverallsTestRunner.RunCoveralls("--help");
 
             results.ExitCode.ShouldBe(0);
-            results.StandardOutput.ShouldContain("Usage:");
-            results.StandardOutput.ShouldContain("csmacnz.Coveralls --help");
-            results.StandardOutput.ShouldContain("Options:");
-            results.StandardOutput.ShouldContain("Options:");
-            results.StandardOutput.ShouldContain("What its for:");
+            ContainsStandardUsageText(results);
         }
 
         [Fact]
@@ -56,12 +52,16 @@ namespace csmacnz.Coveralls.Tests.Integration
             var results = CoverallsTestRunner.RunCoveralls("-h");
 
             results.ExitCode.ShouldBe(0);
+            ContainsStandardUsageText(results);
+        }
+
+        private static void ContainsStandardUsageText(CoverageRunResults results)
+        {
             results.StandardOutput.ShouldContain("Usage:");
             results.StandardOutput.ShouldContain("csmacnz.Coveralls --help");
             results.StandardOutput.ShouldContain("Options:");
             results.StandardOutput.ShouldContain("Options:");
             results.StandardOutput.ShouldContain("What its for:");
         }
-
     }
 }
