@@ -45,6 +45,11 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="CoverageRunResults.cs" />
+    <Compile Include="CoverallsTestRunner.cs" />
+    <Compile Include="OpenCoverTests.cs" />
+    <Compile Include="RepositoryPaths.cs" />
+    <Compile Include="TestFolders.cs" />
     <Compile Include="UsageTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

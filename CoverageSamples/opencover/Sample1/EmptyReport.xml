@@ -1,0 +1,301 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<CoverageSession xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <Summary numSequencePoints="0" visitedSequencePoints="0" numBranchPoints="0" visitedBranchPoints="0" sequenceCoverage="0" branchCoverage="0" maxCyclomaticComplexity="0" minCyclomaticComplexity="0" />
+  <Modules>
+    <Module skippedDueTo="Filter" hash="B5-D0-3C-D0-D3-0E-6D-9A-B0-27-ED-4B-C0-AC-D5-4F-18-84-56-AE">
+      <FullName>C:\Windows\Microsoft.Net\assembly\GAC_32\mscorlib\v4.0_4.0.0.0__b77a5c561934e089\mscorlib.dll</FullName>
+      <ModuleName>mscorlib</ModuleName>
+      <Classes />
+    </Module>
+    <Module skippedDueTo="Filter" hash="E2-DA-17-B7-8D-65-C9-A7-DC-AA-70-F5-C0-F4-F6-88-06-2B-68-8D">
+      <FullName>C:\Program Files\Microsoft Visual Studio 12.0\Common7\IDE\CommonExtensions\Microsoft\TestWindow\vstest.console.exe</FullName>
+      <ModuleName>vstest.console</ModuleName>
+      <Classes />
+    </Module>
+    <Module skippedDueTo="Filter" hash="86-AC-D6-5D-91-9A-F3-AA-B4-32-E5-5F-5B-BE-B0-02-78-F5-FD-44">
+      <FullName>C:\Program Files\Microsoft Visual Studio 12.0\Common7\IDE\CommonExtensions\Microsoft\TestWindow\Microsoft.VisualStudio.TestPlatform.ObjectModel.dll</FullName>
+      <ModuleName>Microsoft.VisualStudio.TestPlatform.ObjectModel</ModuleName>
+      <Classes />
+    </Module>
+    <Module skippedDueTo="Filter" hash="04-DF-13-16-0B-F4-57-A9-D9-9C-5A-63-DC-51-CD-BF-FD-3A-AF-DA">
+      <FullName>C:\Windows\Microsoft.Net\assembly\GAC_MSIL\System\v4.0_4.0.0.0__b77a5c561934e089\System.dll</FullName>
+      <ModuleName>System</ModuleName>
+      <Classes />
+    </Module>
+    <Module skippedDueTo="Filter" hash="B6-60-CE-70-25-03-8E-12-F0-FF-EB-DA-C8-94-AA-A9-02-DE-71-07">
+      <FullName>C:\Windows\Microsoft.Net\assembly\GAC_MSIL\System.Configuration\v4.0_4.0.0.0__b03f5f7f11d50a3a\System.Configuration.dll</FullName>
+      <ModuleName>System.Configuration</ModuleName>
+      <Classes />
+    </Module>
+    <Module skippedDueTo="Filter" hash="2C-B8-8B-0E-27-14-38-8E-71-A5-1D-A0-EE-33-D9-22-5F-A4-AF-79">
+      <FullName>C:\Windows\Microsoft.Net\assembly\GAC_MSIL\System.Xml\v4.0_4.0.0.0__b77a5c561934e089\System.Xml.dll</FullName>
+      <ModuleName>System.Xml</ModuleName>
+      <Classes />
+    </Module>
+    <Module skippedDueTo="Filter" hash="67-DC-13-00-4E-3F-CA-F8-1F-EE-74-29-06-1A-04-06-D7-0D-79-5E">
+      <FullName>C:\Windows\Microsoft.Net\assembly\GAC_MSIL\System.ComponentModel.Composition\v4.0_4.0.0.0__b77a5c561934e089\System.ComponentModel.Composition.dll</FullName>
+      <ModuleName>System.ComponentModel.Composition</ModuleName>
+      <Classes />
+    </Module>
+    <Module skippedDueTo="Filter" hash="1D-4C-5A-E0-2F-C0-C3-3A-4E-2C-65-81-1A-A3-14-05-4F-49-BE-BD">
+      <FullName>C:\Program Files\Microsoft Visual Studio 12.0\Common7\IDE\CommonExtensions\Microsoft\TestWindow\Microsoft.VisualStudio.TestPlatform.Common.dll</FullName>
+      <ModuleName>Microsoft.VisualStudio.TestPlatform.Common</ModuleName>
+      <Classes />
+    </Module>
+    <Module skippedDueTo="Filter" hash="43-0F-9E-14-71-13-7F-E2-26-11-26-04-62-4A-0E-92-1F-0F-04-20">
+      <FullName>C:\Windows\Microsoft.Net\assembly\GAC_MSIL\System.Core\v4.0_4.0.0.0__b77a5c561934e089\System.Core.dll</FullName>
+      <ModuleName>System.Core</ModuleName>
+      <Classes />
+    </Module>
+    <Module skippedDueTo="Filter" hash="06-BE-FB-49-EF-02-AD-98-5C-5B-72-13-51-89-84-A2-91-5D-8B-5C">
+      <FullName>C:\Program Files\Microsoft Visual Studio 12.0\Common7\IDE\CommonExtensions\Microsoft\TestWindow\Microsoft.VisualStudio.TestPlatform.Core.dll</FullName>
+      <ModuleName>Microsoft.VisualStudio.TestPlatform.Core</ModuleName>
+      <Classes />
+    </Module>
+    <Module skippedDueTo="Filter" hash="99-0A-09-85-14-BD-E4-7D-C7-11-CF-5F-29-63-60-43-24-F2-16-CF">
+      <FullName>C:\Program Files\Microsoft Visual Studio 12.0\Common7\IDE\CommonExtensions\Microsoft\TestWindow\Microsoft.VisualStudio.TestPlatform.Utilities.dll</FullName>
+      <ModuleName>Microsoft.VisualStudio.TestPlatform.Utilities</ModuleName>
+      <Classes />
+    </Module>
+    <Module skippedDueTo="Filter" hash="5F-48-90-1B-6E-E9-62-87-25-54-6F-4E-30-6F-4E-A2-DD-F6-AF-D0">
+      <FullName>C:\Program Files\Microsoft Visual Studio 12.0\Common7\IDE\CommonExtensions\Microsoft\TestWindow\Microsoft.VisualStudio.TestPlatform.Client.dll</FullName>
+      <ModuleName>Microsoft.VisualStudio.TestPlatform.Client</ModuleName>
+      <Classes />
+    </Module>
+    <Module skippedDueTo="Filter" hash="C4-A2-27-56-A1-A0-C6-27-70-D9-77-45-7B-5E-40-61-AD-18-71-65">
+      <FullName>C:\Windows\Microsoft.Net\assembly\GAC_MSIL\System.ServiceModel\v4.0_4.0.0.0__b77a5c561934e089\System.ServiceModel.dll</FullName>
+      <ModuleName>System.ServiceModel</ModuleName>
+      <Classes />
+    </Module>
+    <Module skippedDueTo="Filter" hash="F6-29-8B-2A-5B-7C-F6-3F-E0-47-31-3F-09-AD-2A-42-A4-C4-F3-B8">
+      <FullName>C:\Windows\Microsoft.Net\assembly\GAC_32\System.Transactions\v4.0_4.0.0.0__b77a5c561934e089\System.Transactions.dll</FullName>
+      <ModuleName>System.Transactions</ModuleName>
+      <Classes />
+    </Module>
+    <Module skippedDueTo="Filter" hash="">
+      <FullName>RefEmit_InMemoryManifestModule</FullName>
+      <ModuleName>MetadataViewProxies_4b94101e-f10e-474d-8e1a-607a963d862d</ModuleName>
+      <Classes />
+    </Module>
+    <Module skippedDueTo="Filter" hash="EC-EB-0C-B7-2A-06-A8-2E-67-58-FF-C7-30-AF-90-EA-DB-3F-D9-A5">
+      <FullName>C:\Windows\assembly\GAC_MSIL\Microsoft.VisualStudio.Diagnostics.Measurement\12.0.0.0__b03f5f7f11d50a3a\Microsoft.VisualStudio.Diagnostics.Measurement.dll</FullName>
+      <ModuleName>Microsoft.VisualStudio.Diagnostics.Measurement</ModuleName>
+      <Classes />
+    </Module>
+    <Module skippedDueTo="Filter" hash="2A-AF-F1-4F-17-70-38-B9-47-C0-95-72-84-97-C5-49-91-16-5D-53">
+      <FullName>C:\Program Files\Microsoft Visual Studio 12.0\Common7\IDE\CommonExtensions\Microsoft\TestWindow\Extensions\Microsoft.VisualStudio.TestPlatform.Extensions.dll</FullName>
+      <ModuleName>Microsoft.VisualStudio.TestPlatform.Extensions</ModuleName>
+      <Classes />
+    </Module>
+    <Module skippedDueTo="Filter" hash="F2-34-EF-81-79-DD-A6-D2-29-6B-7E-06-E2-9C-42-7F-EE-73-FD-46">
+      <FullName>C:\Program Files\Microsoft Visual Studio 12.0\Common7\IDE\CommonExtensions\Microsoft\TestWindow\Extensions\Microsoft.VisualStudio.TestPlatform.Extensions.GenericTestAdapter.dll</FullName>
+      <ModuleName>Microsoft.VisualStudio.TestPlatform.Extensions.GenericTestAdapter</ModuleName>
+      <Classes />
+    </Module>
+    <Module skippedDueTo="Filter" hash="43-C4-CD-E8-C4-F2-D3-78-D4-D7-85-25-2D-DF-A7-4F-97-BA-73-4E">
+      <FullName>C:\Program Files\Microsoft Visual Studio 12.0\Common7\IDE\CommonExtensions\Microsoft\TestWindow\Extensions\Microsoft.VisualStudio.TestPlatform.Extensions.MSAppContainerAdapter.dll</FullName>
+      <ModuleName>Microsoft.VisualStudio.TestPlatform.Extensions.MSAppContainerAdapter</ModuleName>
+      <Classes />
+    </Module>
+    <Module skippedDueTo="Filter" hash="0F-F6-59-47-CA-CF-EE-BB-7A-75-E3-32-7A-F4-71-62-D2-1A-68-B0">
+      <FullName>C:\Program Files\Microsoft Visual Studio 12.0\Common7\IDE\CommonExtensions\Microsoft\TestWindow\Extensions\Microsoft.VisualStudio.TestPlatform.UnitTestFramework.dll</FullName>
+      <ModuleName>Microsoft.VisualStudio.TestPlatform.UnitTestFramework</ModuleName>
+      <Classes />
+    </Module>
+    <Module skippedDueTo="Filter" hash="74-27-CE-1C-50-B6-F7-A1-A9-30-56-7F-52-53-35-B1-1A-D0-98-B9">
+      <FullName>C:\Program Files\Microsoft Visual Studio 12.0\Common7\IDE\CommonExtensions\Microsoft\TestWindow\Extensions\Microsoft.VisualStudio.TestPlatform.Extensions.MSPhoneAdapter.dll</FullName>
+      <ModuleName>Microsoft.VisualStudio.TestPlatform.Extensions.MSPhoneAdapter</ModuleName>
+      <Classes />
+    </Module>
+    <Module skippedDueTo="Filter" hash="69-0D-AC-4D-B4-54-59-DE-D5-3C-B6-40-C4-E6-88-FF-51-02-DE-3A">
+      <FullName>C:\Program Files\Microsoft Visual Studio 12.0\Common7\IDE\CommonExtensions\Microsoft\TestWindow\Extensions\Microsoft.VisualStudio.TestPlatform.Extensions.OrderedTestAdapter.dll</FullName>
+      <ModuleName>Microsoft.VisualStudio.TestPlatform.Extensions.OrderedTestAdapter</ModuleName>
+      <Classes />
+    </Module>
+    <Module skippedDueTo="Filter" hash="99-71-41-AC-91-88-1B-A5-A7-8E-4C-A2-DB-46-F5-D9-A3-35-4C-E4">
+      <FullName>C:\Program Files\Microsoft Visual Studio 12.0\Common7\IDE\CommonExtensions\Microsoft\TestWindow\Extensions\Microsoft.VisualStudio.TestPlatform.Extensions.TfsLogger.dll</FullName>
+      <ModuleName>Microsoft.VisualStudio.TestPlatform.Extensions.TfsLogger</ModuleName>
+      <Classes />
+    </Module>
+    <Module skippedDueTo="Filter" hash="22-48-03-F7-21-B3-A9-C1-DC-50-F0-AE-A9-81-AC-1A-CF-78-5F-3E">
+      <FullName>C:\Program Files\Microsoft Visual Studio 12.0\Common7\IDE\CommonExtensions\Microsoft\TestWindow\Extensions\Microsoft.VisualStudio.TestPlatform.Extensions.TmiAdapter.dll</FullName>
+      <ModuleName>Microsoft.VisualStudio.TestPlatform.Extensions.TmiAdapter</ModuleName>
+      <Classes />
+    </Module>
+    <Module skippedDueTo="Filter" hash="DC-F8-9B-F7-2C-08-0C-DA-07-27-F8-D5-02-E6-16-D6-41-91-92-AB">
+      <FullName>C:\Windows\assembly\GAC_MSIL\Microsoft.VisualStudio.QualityTools.Common\12.0.0.0__b03f5f7f11d50a3a\Microsoft.VisualStudio.QualityTools.Common.dll</FullName>
+      <ModuleName>Microsoft.VisualStudio.QualityTools.Common</ModuleName>
+      <Classes />
+    </Module>
+    <Module skippedDueTo="Filter" hash="FE-44-CA-BB-43-B4-12-2D-A1-CC-82-7D-38-12-69-FC-2B-B4-4E-D3">
+      <FullName>C:\Program Files\Microsoft Visual Studio 12.0\Common7\IDE\CommonExtensions\Microsoft\TestWindow\Extensions\Microsoft.VisualStudio.TestPlatform.Extensions.TrxLogger.dll</FullName>
+      <ModuleName>Microsoft.VisualStudio.TestPlatform.Extensions.TrxLogger</ModuleName>
+      <Classes />
+    </Module>
+    <Module skippedDueTo="Filter" hash="54-01-51-B7-33-46-19-F1-4C-48-2C-68-35-80-2F-24-E0-63-41-84">
+      <FullName>C:\Program Files\Microsoft Visual Studio 12.0\Common7\IDE\CommonExtensions\Microsoft\TestWindow\Extensions\Microsoft.VisualStudio.TestPlatform.Extensions.VSTestIntegration.dll</FullName>
+      <ModuleName>Microsoft.VisualStudio.TestPlatform.Extensions.VSTestIntegration</ModuleName>
+      <Classes />
+    </Module>
+    <Module skippedDueTo="Filter" hash="B6-BE-C7-09-6A-69-79-02-C4-B3-2E-2E-B9-3D-72-09-BB-84-01-6E">
+      <FullName>C:\Windows\assembly\GAC_MSIL\Microsoft.VisualStudio.QualityTools.UnitTestFramework\10.0.0.0__b03f5f7f11d50a3a\Microsoft.VisualStudio.QualityTools.UnitTestFramework.dll</FullName>
+      <ModuleName>Microsoft.VisualStudio.QualityTools.UnitTestFramework</ModuleName>
+      <Classes />
+    </Module>
+    <Module skippedDueTo="Filter" hash="B6-92-70-2B-74-74-8B-7D-92-C2-67-1D-CA-15-D4-44-41-B2-4E-15">
+      <FullName>C:\Windows\Microsoft.Net\assembly\GAC_32\System.Data\v4.0_4.0.0.0__b77a5c561934e089\System.Data.dll</FullName>
+      <ModuleName>System.Data</ModuleName>
+      <Classes />
+    </Module>
+    <Module skippedDueTo="Filter" hash="47-E0-71-7A-71-73-8A-74-ED-67-A4-2E-2D-FC-DF-E5-71-84-BB-70">
+      <FullName>C:\Program Files\Microsoft Visual Studio 12.0\Common7\IDE\CommonExtensions\Microsoft\TestWindow\Extensions\Microsoft.VisualStudio.TestTools.CppUnitTestFramework.ComInterfaces.dll</FullName>
+      <ModuleName>Microsoft.VisualStudio.TestTools.CppUnitTestFramework.ComInterfaces</ModuleName>
+      <Classes />
+    </Module>
+    <Module skippedDueTo="Filter" hash="CC-A6-78-0A-8A-B6-B7-C5-81-69-21-E8-E0-E2-2D-B1-79-29-92-04">
+      <FullName>C:\Program Files\Microsoft Visual Studio 12.0\Common7\IDE\CommonExtensions\Microsoft\TestWindow\Extensions\Microsoft.VisualStudio.TestTools.CppUnitTestFramework.CppPhoneUnitTestExtension.dll</FullName>
+      <ModuleName>Microsoft.VisualStudio.TestTools.CppUnitTestFramework.CppPhoneUnitTestExtension</ModuleName>
+      <Classes />
+    </Module>
+    <Module skippedDueTo="Filter" hash="05-85-6C-E2-56-69-E3-16-5E-B3-FF-51-8F-E0-36-DE-4F-BC-AE-80">
+      <FullName>C:\Program Files\Microsoft Visual Studio 12.0\Common7\IDE\CommonExtensions\Microsoft\TestWindow\Extensions\Microsoft.VisualStudio.TestTools.CppUnitTestFramework.CppUnitTestExtension.dll</FullName>
+      <ModuleName>Microsoft.VisualStudio.TestTools.CppUnitTestFramework.CppUnitTestExtension</ModuleName>
+      <Classes />
+    </Module>
+    <Module skippedDueTo="Filter" hash="28-86-08-88-E5-45-6F-EC-A8-91-6B-ED-AF-77-B2-61-58-C7-6E-FA">
+      <FullName>C:\Windows\Microsoft.Net\assembly\GAC_MSIL\SMDiagnostics\v4.0_4.0.0.0__b77a5c561934e089\SMDiagnostics.dll</FullName>
+      <ModuleName>SMDiagnostics</ModuleName>
+      <Classes />
+    </Module>
+    <Module skippedDueTo="Filter" hash="">
+      <FullName>RefEmit_InMemoryManifestModule</FullName>
+      <ModuleName>MetadataViewProxies_4b94101e-f10e-474d-8e1a-607a963d862d</ModuleName>
+      <Classes />
+    </Module>
+    <Module skippedDueTo="Filter" hash="86-AC-D6-5D-91-9A-F3-AA-B4-32-E5-5F-5B-BE-B0-02-78-F5-FD-44">
+      <FullName>C:\Program Files\Microsoft Visual Studio 12.0\Common7\IDE\CommonExtensions\Microsoft\TestWindow\Microsoft.VisualStudio.TestPlatform.ObjectModel.dll</FullName>
+      <ModuleName>Microsoft.VisualStudio.TestPlatform.ObjectModel</ModuleName>
+      <Classes />
+    </Module>
+    <Module skippedDueTo="Filter" hash="D5-DC-65-9E-F6-0D-A8-18-BB-49-1E-69-98-7F-43-53-1B-C5-E1-A8">
+      <FullName>C:\Users\Mark\Documents\Visual Studio 2013\Projects\OpenCoverTesting\TestProject\bin\debug\TestProject.dll</FullName>
+      <ModuleName>TestProject</ModuleName>
+      <Classes />
+    </Module>
+    <Module skippedDueTo="Filter" hash="0B-5B-83-64-D5-80-F2-FF-11-1E-85-83-58-AA-2C-A4-8D-67-C6-C3">
+      <FullName>C:\Program Files\Microsoft Visual Studio 12.0\Common7\IDE\CommonExtensions\Microsoft\TestWindow\Microsoft.VisualStudio.TestPlatform.Utilities.AppContainer.dll</FullName>
+      <ModuleName>Microsoft.VisualStudio.TestPlatform.Utilities.AppContainer</ModuleName>
+      <Classes />
+    </Module>
+    <Module skippedDueTo="Filter" hash="70-49-08-2C-C5-F6-DC-B7-3A-98-6B-94-A2-1D-15-50-93-60-67-57">
+      <FullName>C:\Program Files\Microsoft Visual Studio 12.0\Common7\IDE\CommonExtensions\Microsoft\TestWindow\Microsoft.VisualStudio.TestPlatform.Utilities.PhoneAppContainer.dll</FullName>
+      <ModuleName>Microsoft.VisualStudio.TestPlatform.Utilities.PhoneAppContainer</ModuleName>
+      <Classes />
+    </Module>
+    <Module skippedDueTo="Filter" hash="86-AC-D6-5D-91-9A-F3-AA-B4-32-E5-5F-5B-BE-B0-02-78-F5-FD-44">
+      <FullName>C:\Program Files\Microsoft Visual Studio 12.0\Common7\IDE\CommonExtensions\Microsoft\TestWindow\Microsoft.VisualStudio.TestPlatform.ObjectModel.dll</FullName>
+      <ModuleName>Microsoft.VisualStudio.TestPlatform.ObjectModel</ModuleName>
+      <Classes />
+    </Module>
+    <Module skippedDueTo="Filter" hash="D5-DC-65-9E-F6-0D-A8-18-BB-49-1E-69-98-7F-43-53-1B-C5-E1-A8">
+      <FullName>C:\Users\Mark\Documents\Visual Studio 2013\Projects\OpenCoverTesting\TestProject\bin\debug\TestProject.dll</FullName>
+      <ModuleName>TestProject</ModuleName>
+      <Classes />
+    </Module>
+    <Module skippedDueTo="Filter" hash="86-AC-D6-5D-91-9A-F3-AA-B4-32-E5-5F-5B-BE-B0-02-78-F5-FD-44">
+      <FullName>C:\Program Files\Microsoft Visual Studio 12.0\Common7\IDE\CommonExtensions\Microsoft\TestWindow\Microsoft.VisualStudio.TestPlatform.ObjectModel.dll</FullName>
+      <ModuleName>Microsoft.VisualStudio.TestPlatform.ObjectModel</ModuleName>
+      <Classes />
+    </Module>
+    <Module skippedDueTo="Filter" hash="D5-DC-65-9E-F6-0D-A8-18-BB-49-1E-69-98-7F-43-53-1B-C5-E1-A8">
+      <FullName>C:\Users\Mark\Documents\Visual Studio 2013\Projects\OpenCoverTesting\TestProject\bin\debug\TestProject.dll</FullName>
+      <ModuleName>TestProject</ModuleName>
+      <Classes />
+    </Module>
+    <Module skippedDueTo="Filter" hash="86-AC-D6-5D-91-9A-F3-AA-B4-32-E5-5F-5B-BE-B0-02-78-F5-FD-44">
+      <FullName>C:\Program Files\Microsoft Visual Studio 12.0\Common7\IDE\CommonExtensions\Microsoft\TestWindow\Microsoft.VisualStudio.TestPlatform.ObjectModel.dll</FullName>
+      <ModuleName>Microsoft.VisualStudio.TestPlatform.ObjectModel</ModuleName>
+      <Classes />
+    </Module>
+    <Module skippedDueTo="Filter" hash="D5-DC-65-9E-F6-0D-A8-18-BB-49-1E-69-98-7F-43-53-1B-C5-E1-A8">
+      <FullName>C:\Users\Mark\Documents\Visual Studio 2013\Projects\OpenCoverTesting\TestProject\bin\debug\TestProject.dll</FullName>
+      <ModuleName>TestProject</ModuleName>
+      <Classes />
+    </Module>
+    <Module skippedDueTo="Filter" hash="86-AC-D6-5D-91-9A-F3-AA-B4-32-E5-5F-5B-BE-B0-02-78-F5-FD-44">
+      <FullName>C:\Program Files\Microsoft Visual Studio 12.0\Common7\IDE\CommonExtensions\Microsoft\TestWindow\Microsoft.VisualStudio.TestPlatform.ObjectModel.dll</FullName>
+      <ModuleName>Microsoft.VisualStudio.TestPlatform.ObjectModel</ModuleName>
+      <Classes />
+    </Module>
+    <Module skippedDueTo="Filter" hash="04-DF-13-16-0B-F4-57-A9-D9-9C-5A-63-DC-51-CD-BF-FD-3A-AF-DA">
+      <FullName>C:\Windows\Microsoft.Net\assembly\GAC_MSIL\System\v4.0_4.0.0.0__b77a5c561934e089\System.dll</FullName>
+      <ModuleName>System</ModuleName>
+      <Classes />
+    </Module>
+    <Module skippedDueTo="Filter" hash="54-01-51-B7-33-46-19-F1-4C-48-2C-68-35-80-2F-24-E0-63-41-84">
+      <FullName>C:\Program Files\Microsoft Visual Studio 12.0\Common7\IDE\CommonExtensions\Microsoft\TestWindow\Extensions\Microsoft.VisualStudio.TestPlatform.Extensions.VSTestIntegration.dll</FullName>
+      <ModuleName>Microsoft.VisualStudio.TestPlatform.Extensions.VSTestIntegration</ModuleName>
+      <Classes />
+    </Module>
+    <Module skippedDueTo="Filter" hash="D5-DC-65-9E-F6-0D-A8-18-BB-49-1E-69-98-7F-43-53-1B-C5-E1-A8">
+      <FullName>C:\Users\Mark\Documents\Visual Studio 2013\Projects\OpenCoverTesting\TestProject\bin\debug\TestProject.dll</FullName>
+      <ModuleName>TestProject</ModuleName>
+      <Classes />
+    </Module>
+    <Module skippedDueTo="Filter" hash="B6-BE-C7-09-6A-69-79-02-C4-B3-2E-2E-B9-3D-72-09-BB-84-01-6E">
+      <FullName>C:\Windows\assembly\GAC_MSIL\Microsoft.VisualStudio.QualityTools.UnitTestFramework\10.0.0.0__b03f5f7f11d50a3a\Microsoft.VisualStudio.QualityTools.UnitTestFramework.dll</FullName>
+      <ModuleName>Microsoft.VisualStudio.QualityTools.UnitTestFramework</ModuleName>
+      <Classes />
+    </Module>
+    <Module skippedDueTo="Filter" hash="43-0F-9E-14-71-13-7F-E2-26-11-26-04-62-4A-0E-92-1F-0F-04-20">
+      <FullName>C:\Windows\Microsoft.Net\assembly\GAC_MSIL\System.Core\v4.0_4.0.0.0__b77a5c561934e089\System.Core.dll</FullName>
+      <ModuleName>System.Core</ModuleName>
+      <Classes />
+    </Module>
+    <Module skippedDueTo="Filter" hash="50-D1-2E-18-09-00-96-D1-E5-5F-62-09-93-83-51-58-1F-78-2C-D9">
+      <FullName>C:\Program Files\Microsoft Visual Studio 12.0\Common7\IDE\CommonExtensions\Microsoft\TestWindow\msdia120typelib_clr0200.dll</FullName>
+      <ModuleName>msdia120typelib_clr0200</ModuleName>
+      <Classes />
+    </Module>
+    <Module skippedDueTo="Filter" hash="86-AC-D6-5D-91-9A-F3-AA-B4-32-E5-5F-5B-BE-B0-02-78-F5-FD-44">
+      <FullName>C:\Program Files\Microsoft Visual Studio 12.0\Common7\IDE\CommonExtensions\Microsoft\TestWindow\Microsoft.VisualStudio.TestPlatform.ObjectModel.dll</FullName>
+      <ModuleName>Microsoft.VisualStudio.TestPlatform.ObjectModel</ModuleName>
+      <Classes />
+    </Module>
+    <Module skippedDueTo="Filter" hash="54-01-51-B7-33-46-19-F1-4C-48-2C-68-35-80-2F-24-E0-63-41-84">
+      <FullName>C:\Program Files\Microsoft Visual Studio 12.0\Common7\IDE\CommonExtensions\Microsoft\TestWindow\Extensions\Microsoft.VisualStudio.TestPlatform.Extensions.VSTestIntegration.dll</FullName>
+      <ModuleName>Microsoft.VisualStudio.TestPlatform.Extensions.VSTestIntegration</ModuleName>
+      <Classes />
+    </Module>
+    <Module skippedDueTo="Filter" hash="B6-92-70-2B-74-74-8B-7D-92-C2-67-1D-CA-15-D4-44-41-B2-4E-15">
+      <FullName>C:\Windows\Microsoft.Net\assembly\GAC_32\System.Data\v4.0_4.0.0.0__b77a5c561934e089\System.Data.dll</FullName>
+      <ModuleName>System.Data</ModuleName>
+      <Classes />
+    </Module>
+    <Module skippedDueTo="Filter" hash="D5-DC-65-9E-F6-0D-A8-18-BB-49-1E-69-98-7F-43-53-1B-C5-E1-A8">
+      <FullName>C:\Users\Mark\Documents\Visual Studio 2013\Projects\OpenCoverTesting\TestProject\bin\debug\TestProject.dll</FullName>
+      <ModuleName>TestProject</ModuleName>
+      <Classes />
+    </Module>
+    <Module skippedDueTo="Filter" hash="B6-60-CE-70-25-03-8E-12-F0-FF-EB-DA-C8-94-AA-A9-02-DE-71-07">
+      <FullName>C:\Windows\Microsoft.Net\assembly\GAC_MSIL\System.Configuration\v4.0_4.0.0.0__b03f5f7f11d50a3a\System.Configuration.dll</FullName>
+      <ModuleName>System.Configuration</ModuleName>
+      <Classes />
+    </Module>
+    <Module skippedDueTo="Filter" hash="2C-B8-8B-0E-27-14-38-8E-71-A5-1D-A0-EE-33-D9-22-5F-A4-AF-79">
+      <FullName>C:\Windows\Microsoft.Net\assembly\GAC_MSIL\System.Xml\v4.0_4.0.0.0__b77a5c561934e089\System.Xml.dll</FullName>
+      <ModuleName>System.Xml</ModuleName>
+      <Classes />
+    </Module>
+    <Module skippedDueTo="Filter" hash="7E-D6-0C-5F-08-95-B3-B7-AE-9C-0F-24-97-E9-46-63-43-CF-F3-C3">
+      <FullName>C:\Program Files\Microsoft Visual Studio 12.0\Common7\IDE\CommonExtensions\Microsoft\TestWindow\Extensions\CppUnitFramework\Microsoft.VisualStudio.TestTools.CppUnitTestFramework.TestEngine.dll</FullName>
+      <ModuleName>Microsoft.VisualStudio.TestTools.CppUnitTestFramework.TestEngine</ModuleName>
+      <Classes />
+    </Module>
+    <Module skippedDueTo="Filter" hash="49-FB-E6-5F-63-17-3F-47-76-D5-73-EE-00-1C-ED-B8-E9-ED-07-82">
+      <FullName>C:\Program Files\Microsoft Visual Studio 12.0\Common7\IDE\CommonExtensions\Microsoft\TestWindow\Extensions\CppUnitFramework\Microsoft.VisualStudio.TestTools.CppUnitTestFramework.Discoverer.dll</FullName>
+      <ModuleName>Microsoft.VisualStudio.TestTools.CppUnitTestFramework.Discoverer</ModuleName>
+      <Classes />
+    </Module>
+  </Modules>
+</CoverageSession>

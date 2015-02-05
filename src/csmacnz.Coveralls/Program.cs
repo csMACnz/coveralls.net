@@ -79,7 +79,7 @@ namespace csmacnz.Coveralls
                 };
             }
 
-            var serviceJobId = args.OptJobid ?? "0";
+            var serviceJobId = args.IsProvided("--jobId") ? args.OptJobid : "0";
 
             var data = new CoverallData
             {
