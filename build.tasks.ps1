@@ -2,7 +2,7 @@ properties {
     # build variables
     $framework = "4.5.1"		# .net framework version
     $configuration = "Release"	# build configuration
-    $script:version = "0.2.0"
+    $script:version = "0.3.0"
 
     # directories
     $base_dir = . resolve-path .\
