@@ -1,12 +1,43 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
+using System.Xml.Linq;
 
 namespace csmacnz.Coveralls
 {
     public class MonoCoverParser
     {
-        public List<CoverageFile> GenerateSourceFiles(object documents)
+        public List<CoverageFile> GenerateSourceFiles(Dictionary<string, XDocument> documents)
         {
-            return new List<CoverageFile>();
+            var sourceFiles = new List<CoverageFile>();
+            foreach (var fileName in documents.Keys.Where(k => k.StartsWith("class-") && k.EndsWith(".xml")))
+            {
+                var rootDocument = documents[fileName];
+                if (rootDocument.Root != null)
+                {
+                    var sourceElement = rootDocument.Root.Element("source");
+                    if (sourceElement != null)
+                    {
+                        List<int?> coverage = new List<int?>();
+                        List<string> source = new List<string>();
+                        var filePath = sourceElement.Attribute("sourceFile").Value;
+                        foreach (var line in sourceElement.Elements("l"))
+                        {
+                            int coverageCount;
+                            if (!int.TryParse(line.Attribute("count").Value, out coverageCount))
+                            {
+                                coverageCount = -1;
+                            }
+                            coverage.Add(coverageCount == -1 ? null : (int?)coverageCount);
+                            source.Add(line.Value);
+                        }
+
+                        sourceFiles.Add(new CoverageFile(filePath, source.ToArray(), coverage.ToArray()));
+                    }
+                }
+            }
+
+
+            return sourceFiles;
         }
     }
 }

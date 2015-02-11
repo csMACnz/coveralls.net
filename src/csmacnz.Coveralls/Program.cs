@@ -26,7 +26,6 @@ namespace csmacnz.Coveralls
             if (!string.IsNullOrWhiteSpace(outputFile) && File.Exists(outputFile))
             {
                 Console.WriteLine("output file '{0}' already exists and will be overwritten.", outputFile);
-                Environment.Exit(1);
             }
 
             List<CoverageFile> files;
@@ -38,7 +37,7 @@ namespace csmacnz.Coveralls
                     Console.Error.WriteLine("Input file '" + fileName + "' cannot be found");
                     Environment.Exit(1);
                 }
-                List<XDocument> documents = Directory.GetFiles(fileName).Where(f => f.EndsWith(".xml")).Select(XDocument.Load).ToList();
+                Dictionary<string,XDocument> documents = new DirectoryInfo(fileName).GetFiles().Where(f => f.Name.EndsWith(".xml")).ToDictionary(f=>f.Name, f=>XDocument.Load(f.FullName));
 
                 files = new MonoCoverParser().GenerateSourceFiles(documents);
             }
