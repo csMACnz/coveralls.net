@@ -29,10 +29,6 @@ Supported
 ---------
 
 * [OpenCover](https://github.com/sawilde/opencover)
-
-InProgress Support
-------------------
-
 * [Mono Code Coverage (monocov)](http://www.mono-project.com/docs/debug+profile/profile/code-coverage/)
 
 Future Support
