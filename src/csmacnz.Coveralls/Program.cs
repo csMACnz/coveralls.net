@@ -28,6 +28,8 @@ namespace csmacnz.Coveralls
                 Console.WriteLine("output file '{0}' already exists and will be overwritten.", outputFile);
             }
 
+            var pathProcessor = new PathProcessor(args.IsProvided("--basePath") ? args.OptBasepath : null);
+
             List<CoverageFile> files;
             if (args.IsProvided("--monocov") && args.OptMonocov)
             {
@@ -39,7 +41,7 @@ namespace csmacnz.Coveralls
                 }
                 Dictionary<string,XDocument> documents = new DirectoryInfo(fileName).GetFiles().Where(f => f.Name.EndsWith(".xml")).ToDictionary(f=>f.Name, f=>XDocument.Load(f.FullName));
 
-                files = new MonoCoverParser(new PathProcessor()).GenerateSourceFiles(documents, args.OptRelativepaths);
+                files = new MonoCoverParser(pathProcessor).GenerateSourceFiles(documents, args.OptRelativepaths);
             }
             else
             {
@@ -53,7 +55,7 @@ namespace csmacnz.Coveralls
 
                 var document = XDocument.Load(fileName);
 
-                files = new OpenCoverParser(new FileSystem(), new PathProcessor()).GenerateSourceFiles(document, args.OptRelativepaths);
+                files = new OpenCoverParser(new FileSystem(), pathProcessor).GenerateSourceFiles(document, args.OptRelativepaths);
             }
 
             GitData gitData = null;

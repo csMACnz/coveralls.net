@@ -57,7 +57,7 @@ namespace csmacnz.Coveralls.Tests
 
         private OpenCoverParser CreateOpenCoverParser()
         {
-            return new OpenCoverParser(new TestFileSystem(), new PathProcessor());
+            return new OpenCoverParser(new TestFileSystem(), DefaultPathProcessor());
         }
 
         private OpenCoverParser CreateOpenCoverParserForSingleFileReport()
@@ -65,7 +65,12 @@ namespace csmacnz.Coveralls.Tests
             var testFileSystem = new TestFileSystem();
             var singleFileReportSourceContent = LoadContentFromResource("csmacnz.Coveralls.Tests.SingleFileReportSourceFile.txt");
             testFileSystem.AddFile(SingleFileReportSourceFilePath, singleFileReportSourceContent);
-            return new OpenCoverParser(testFileSystem,new PathProcessor());
+            return new OpenCoverParser(testFileSystem, DefaultPathProcessor());
+        }
+
+        private static PathProcessor DefaultPathProcessor()
+        {
+            return new PathProcessor(string.Empty);
         }
 
         private static XDocument LoadDocumentFromResource(string embeddedResource)

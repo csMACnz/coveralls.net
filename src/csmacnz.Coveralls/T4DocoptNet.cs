@@ -9,7 +9,7 @@ namespace csmacnz.Coveralls
         public const string Usage = @"csmac.Coveralls - a coveralls.io coverage publisher for .Net
 
 Usage:
-  csmacnz.Coveralls (--opencover | --monocov) -i ./opencovertests.xml --repoToken <repoToken> [-o ./opencovertests.json] [--dryrun] [--relativePaths] [--commitId <commitId> --commitBranch <commitBranch> [--commitAuthor <commitAuthor> --commitEmail <commitEmail> --commitMessage <commitMessage>] ] [--jobId <jobId>]
+  csmacnz.Coveralls (--opencover | --monocov) -i ./opencovertests.xml --repoToken <repoToken> [-o ./opencovertests.json] [--dryrun] [--relativePaths --basePath <path>] [--commitId <commitId> --commitBranch <commitBranch> [--commitAuthor <commitAuthor> --commitEmail <commitEmail> --commitMessage <commitMessage>] ] [--jobId <jobId>]
   csmacnz.Coveralls --version
   csmacnz.Coveralls --help
 
@@ -19,7 +19,8 @@ Options:
  -i <file>, --input <file>       The coverage source file location.
  -o <file>, --output <file>      The coverage results json will be written to this file it provided. 
  --dryrun                        This flag will stop coverage results being posted to coveralls.io
- --relativePaths                 This flag, when provided, will attempt to strip the current working directory from the beginning of the source file path.
+ --useRelativePaths              This flag, when provided, will attempt to strip the current working directory from the beginning of the source file path.
+ --basePath <path>               When useRelativePaths and a basePath is provided, this path is used instead of the current working directory.
  --opencover                     Reads input as OpenCover data.
  --monocov                       Reads input as monocov results folder.
  --repoToken <repoToken>         The coveralls.io repository token.
@@ -63,6 +64,7 @@ What its for:
 		public string OptOutput { get { return _args["--output"].ToString(); } }
 		public bool OptDryrun { get { return _args["--dryrun"].IsTrue; } }
 		public bool OptRelativepaths { get { return _args["--relativePaths"].IsTrue; } }
+		public string OptBasepath { get { return _args["--basePath"].ToString(); } }
 		public string OptCommitid { get { return _args["--commitId"].ToString(); } }
 		public string OptCommitbranch { get { return _args["--commitBranch"].ToString(); } }
 		public string OptCommitauthor { get { return _args["--commitAuthor"].ToString(); } }
