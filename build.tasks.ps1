@@ -2,7 +2,8 @@ properties {
     # build variables
     $framework = "4.5.1"		# .net framework version
     $configuration = "Release"	# build configuration
-    $script:version = "0.3.0"
+    $script:version = "0.3.0.0"
+    $script:nugetVersion = "0.3.0.0"
 
     # directories
     $base_dir = . resolve-path .\
@@ -32,11 +33,23 @@ task LocalTestSettings {
 }
 
 task AppVeyorTestSettings {
-    if (Test-Path Env:\APPVEYOR_BUILD_VERSION) {
+    if(Test-Path Env:\GitVersion_ClassicVersion) {
+        $script:version = $env:GitVersion_ClassicVersion
+        echo "version set to $script:version"
+    }
+    elseif (Test-Path Env:\APPVEYOR_BUILD_VERSION) {
         $script:version = $env:APPVEYOR_BUILD_VERSION
         echo "version set to $script:version"
     }
-
+    if(Test-Path Env:\GitVersion_NuGetVersionV2) {
+        $script:nugetVersion = $env:GitVersion_NuGetVersionV2
+        echo "nuget version set to $script:nugetVersion"
+    }
+    elseif (Test-Path Env:\APPVEYOR_BUILD_VERSION) {
+        $script:nugetVersion = $env:APPVEYOR_BUILD_VERSION
+        echo "nuget version set to $script:nugetVersion"
+    }
+    
     $script:xunit = "xunit.console.clr4.exe"
     $script:testOptions = "/appveyor"
 }
@@ -66,7 +79,7 @@ task build {
 task coverity {
     cov-build --dir cov-int msbuild "/t:Clean;Build" "/p:Configuration=$configuration" $sln_file
 
-    Write-Zip -Path "cov-int" -OutputPath coveralls.coverity.$script:version.zip
+    Write-Zip -Path "cov-int" -OutputPath coveralls.coverity.$script:nugetVersion.zip
 }
 
 task integration {
@@ -93,7 +106,7 @@ task coveralls-only {
 }
 
 task dupfinder {
-    dupfinder /o="duplicateReport.xml" /show-text ".\src\csmacnz.Coveralls.sln"
+    dupfinder /o="duplicateReport.xml" /show-text ".\src\csmacnz.Coveralls.sln" 2> $null
     [xml]$stats = Get-Content .\duplicateReport.xml
     $anyDuplicates = $FALSE;
 
@@ -128,7 +141,7 @@ task dupfinder {
 }
 
 task inspect {
-    inspectcode /o="resharperReport.xml" ".\src\csmacnz.Coveralls.sln"
+    inspectcode /o="resharperReport.xml" ".\src\csmacnz.Coveralls.sln" 2> $null
     [xml]$stats = Get-Content .\resharperReport.xml
     $anyErrors = $FALSE;
     $errors = $stats.SelectNodes("/Report/IssueTypes/IssueType")
@@ -176,7 +189,7 @@ task inspect {
 task archive -depends build, archive-only
 
 task archive-only {
-    $archive_filename = "coveralls.net.$script:version.zip"
+    $archive_filename = "coveralls.net.$script:nugetVersion.zip"
 
     mkdir $archive_dir
 
@@ -195,7 +208,7 @@ task pack-only {
     cp "$build_output_dir\*.*" "$nuget_pack_dir"
 
     $Spec = [xml](get-content "$nuget_pack_dir\$nuspec_filename")
-    $Spec.package.metadata.version = ([string]$Spec.package.metadata.version).Replace("{Version}",$env:GitVersion_NuGetVersion)
+    $Spec.package.metadata.version = ([string]$Spec.package.metadata.version).Replace("{Version}", $script:nugetVersion)
     $Spec.Save("$nuget_pack_dir\$nuspec_filename")
 
     exec { nuget pack "$nuget_pack_dir\$nuspec_filename" }
