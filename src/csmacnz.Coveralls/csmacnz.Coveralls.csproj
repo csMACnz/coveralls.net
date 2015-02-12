@@ -64,6 +64,7 @@
     <Compile Include="IFileSystem.cs" />
     <Compile Include="MonoCoverParser.cs" />
     <Compile Include="OpenCoverParser.cs" />
+    <Compile Include="PathStripper.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="T4DocoptNet.cs">

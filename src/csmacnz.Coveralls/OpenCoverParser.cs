@@ -6,13 +6,15 @@ namespace csmacnz.Coveralls
     public class OpenCoverParser
     {
         private readonly IFileSystem _fileSystem;
+        private readonly PathProcessor _pathProcessor;
 
-        public OpenCoverParser(IFileSystem fileSystem)
+        public OpenCoverParser(IFileSystem fileSystem, PathProcessor pathProcessor)
         {
             _fileSystem = fileSystem;
+            _pathProcessor = pathProcessor;
         }
 
-        public List<CoverageFile> GenerateSourceFiles(XDocument document)
+        public List<CoverageFile> GenerateSourceFiles(XDocument document, bool useRelativePaths)
         {
             var files = new List<CoverageFile>();
             if (document.Root != null)
@@ -31,8 +33,13 @@ namespace csmacnz.Coveralls
                                 {
                                     var fileid = file.Attribute("uid").Value;
                                     var fullPath = file.Attribute("fullPath").Value;
-                                    var compatibleFilePath = UnixifyPath(fullPath);
-                                    var coverageBuilder = new CoverageFileBuilder(compatibleFilePath);
+                                    var path = fullPath;
+                                    if (useRelativePaths)
+                                    {
+                                        path = _pathProcessor.ConvertPath(fullPath);
+                                    }
+                                    path = _pathProcessor.UnixifyPath(path);
+                                    var coverageBuilder = new CoverageFileBuilder(path);
 
                                     var classesElement = module.Element("Classes");
                                     if (classesElement != null)
@@ -74,11 +81,6 @@ namespace csmacnz.Coveralls
                     }
             }
             return files;
-        }
-
-        private string UnixifyPath(string fullPath)
-        {
-            return fullPath.Replace('\\', '/');
         }
     }
 }

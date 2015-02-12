@@ -39,7 +39,7 @@ namespace csmacnz.Coveralls
                 }
                 Dictionary<string,XDocument> documents = new DirectoryInfo(fileName).GetFiles().Where(f => f.Name.EndsWith(".xml")).ToDictionary(f=>f.Name, f=>XDocument.Load(f.FullName));
 
-                files = new MonoCoverParser().GenerateSourceFiles(documents);
+                files = new MonoCoverParser(new PathProcessor()).GenerateSourceFiles(documents, args.OptRelativepaths);
             }
             else
             {
@@ -53,7 +53,7 @@ namespace csmacnz.Coveralls
 
                 var document = XDocument.Load(fileName);
 
-                files = new OpenCoverParser(new FileSystem()).GenerateSourceFiles(document);
+                files = new OpenCoverParser(new FileSystem(), new PathProcessor()).GenerateSourceFiles(document, args.OptRelativepaths);
             }
 
             GitData gitData = null;

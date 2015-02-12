@@ -1,7 +1,7 @@
 ﻿csmac.Coveralls - a coveralls.io coverage publisher for .Net
 
 Usage:
-  csmacnz.Coveralls (--opencover | --monocov) -i ./opencovertests.xml --repoToken <repoToken> [-o ./opencovertests.json] [--dryrun] [--commitId <commitId> --commitBranch <commitBranch> [--commitAuthor <commitAuthor> --commitEmail <commitEmail> --commitMessage <commitMessage>] ] [--jobId <jobId>]
+  csmacnz.Coveralls (--opencover | --monocov) -i ./opencovertests.xml --repoToken <repoToken> [-o ./opencovertests.json] [--dryrun] [--relativePaths] [--commitId <commitId> --commitBranch <commitBranch> [--commitAuthor <commitAuthor> --commitEmail <commitEmail> --commitMessage <commitMessage>] ] [--jobId <jobId>]
   csmacnz.Coveralls --version
   csmacnz.Coveralls --help
 
@@ -11,6 +11,7 @@ Options:
  -i <file>, --input <file>       The coverage source file location.
  -o <file>, --output <file>      The coverage results json will be written to this file it provided. 
  --dryrun                        This flag will stop coverage results being posted to coveralls.io
+ --relativePaths                 This flag, when provided, will attempt to strip the current working directory from the beginning of the source file path.
  --opencover                     Reads input as OpenCover data.
  --monocov                       Reads input as monocov results folder.
  --repoToken <repoToken>         The coveralls.io repository token.
