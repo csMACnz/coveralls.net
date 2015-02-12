@@ -1,6 +1,7 @@
 choco install psake
 choco install pscx
 choco install nuget.CommandLine
+choco install GitVersion.Portable
 choco install resharper-clt.portable
 
 $pscxPath = "C:\Program Files (x86)\PowerShell Community Extensions\Pscx3\Pscx";
