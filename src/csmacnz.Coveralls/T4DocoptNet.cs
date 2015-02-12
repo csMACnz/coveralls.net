@@ -9,7 +9,7 @@ namespace csmacnz.Coveralls
         public const string Usage = @"csmac.Coveralls - a coveralls.io coverage publisher for .Net
 
 Usage:
-  csmacnz.Coveralls (--opencover | --monocov) -i ./opencovertests.xml --repoToken <repoToken> [-o ./opencovertests.json] [--dryrun] [--useRelativePaths --basePath <path>] [--commitId <commitId> --commitBranch <commitBranch> [--commitAuthor <commitAuthor> --commitEmail <commitEmail> --commitMessage <commitMessage>] ] [--jobId <jobId>]
+  csmacnz.Coveralls (--opencover | --monocov) -i ./opencovertests.xml --repoToken <repoToken> [-o ./opencovertests.json] [--dryrun] [--useRelativePaths --basePath <path>] [--commitId <commitId> --commitBranch <commitBranch> [--commitAuthor <commitAuthor> --commitEmail <commitEmail> --commitMessage <commitMessage>] ] [--jobId <jobId>] [--serviceName <Name>]
   csmacnz.Coveralls --version
   csmacnz.Coveralls --help
 
@@ -30,6 +30,7 @@ Options:
  --commitMessage <commitMessage> The git commit message for the coverage report.
  --commitBranch <commitBranch>   The git branch for the coverage report.
  --jobId <jobId>                 The job Id to provide to coveralls.io.
+ --serviceName <Name>            The service-name for the coverage report.
 
 What its for:
  Reads your .Net code coverage output data and submits it to
@@ -71,6 +72,7 @@ What its for:
 		public string OptCommitemail { get { return _args["--commitEmail"].ToString(); } }
 		public string OptCommitmessage { get { return _args["--commitMessage"].ToString(); } }
 		public string OptJobid { get { return _args["--jobId"].ToString(); } }
+		public string OptServicename { get { return _args["--serviceName"].ToString(); } }
 		public bool OptVersion { get { return _args["--version"].IsTrue; } }
 		public bool OptHelp { get { return _args["--help"].IsTrue; } }
     }

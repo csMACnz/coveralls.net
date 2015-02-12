@@ -82,11 +82,12 @@ namespace csmacnz.Coveralls
 
             var serviceJobId = args.IsProvided("--jobId") ? args.OptJobid : "0";
 
+            string serviceName = args.IsProvided("--serviceName") ? args.OptServicename : "coveralls.net";
             var data = new CoverallData
             {
                 RepoToken = repoToken,
                 ServiceJobId = serviceJobId,
-                ServiceName = "coveralls.net",
+                ServiceName = serviceName,
                 SourceFiles = files.ToArray(),
                 Git = gitData
             };
