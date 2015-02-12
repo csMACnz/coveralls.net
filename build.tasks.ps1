@@ -35,10 +35,6 @@ task AppVeyorTestSettings {
     if (Test-Path Env:\APPVEYOR_BUILD_VERSION) {
         $script:version = $env:APPVEYOR_BUILD_VERSION
         echo "version set to $script:version"
-        echo "GitVersion FullSemVer is $env:GitVersion_FullSemVer"
-        echo "GitVersion AssemblySemVer is $env:GitVersion_AssemblySemVer"
-        echo "GitVersion InformationalVersion  is $env:GitVersion_InformationalVersion"
-        echo "GitVersion NuGetVersion is $env:GitVersion_NuGetVersion"
     }
 
     $script:xunit = "xunit.console.clr4.exe"
