@@ -4,7 +4,7 @@ environment:
     secure: 7+M7//b+83bTse+910JEiExhI3kRpPNByeBKgndUaWmjCmdJglS2Hermr2V2MabW
 install:
 - ps: .\build.environment.ps1
-- ps: GitVersion /output buildserver /updateassemblyinfo /assemblyVersionFormat Major
+- ps: GitVersion /output buildserver /updateassemblyinfo true /assemblyVersionFormat Major
 build_script:
 - ps: psake .\build.tasks.ps1 appveyor-build
 test_script:
