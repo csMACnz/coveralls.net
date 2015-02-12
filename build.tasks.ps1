@@ -34,7 +34,7 @@ task LocalTestSettings {
 
 task AppVeyorEnvironmentSettings {
     
-    if($APPVEYOR) {
+    if($env:APPVEYOR) {
         Update-AppveyorBuild -Version $env:GitVersion_FullSemVer
     }
     
