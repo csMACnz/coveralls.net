@@ -106,7 +106,7 @@ task coveralls-only {
 }
 
 task dupfinder {
-    dupfinder /o="duplicateReport.xml" /show-text ".\src\csmacnz.Coveralls.sln"
+    try { dupfinder /o="duplicateReport.xml" /show-text ".\src\csmacnz.Coveralls.sln" } catch {}
     [xml]$stats = Get-Content .\duplicateReport.xml
     $anyDuplicates = $FALSE;
 
@@ -141,7 +141,7 @@ task dupfinder {
 }
 
 task inspect {
-    inspectcode /o="resharperReport.xml" ".\src\csmacnz.Coveralls.sln"
+    try { inspectcode /o="resharperReport.xml" ".\src\csmacnz.Coveralls.sln" } catch {}
     [xml]$stats = Get-Content .\resharperReport.xml
     $anyErrors = $FALSE;
     $errors = $stats.SelectNodes("/Report/IssueTypes/IssueType")
