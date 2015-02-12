@@ -199,7 +199,7 @@ task pack-only {
     cp "$build_output_dir\*.*" "$nuget_pack_dir"
 
     $Spec = [xml](get-content "$nuget_pack_dir\$nuspec_filename")
-    $Spec.package.metadata.version = ([string]$Spec.package.metadata.version).Replace("{Version}",$script:version)
+    $Spec.package.metadata.version = ([string]$Spec.package.metadata.version).Replace("{Version}",$env:GitVersion_NuGetVersion)
     $Spec.Save("$nuget_pack_dir\$nuspec_filename")
 
     exec { nuget pack "$nuget_pack_dir\$nuspec_filename" }
