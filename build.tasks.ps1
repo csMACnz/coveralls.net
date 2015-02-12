@@ -105,8 +105,8 @@ task coveralls-only {
     exec { & ".\src\csmacnz.Coveralls\bin\$configuration\csmacnz.Coveralls.exe" --opencover -i opencovertests.xml --repoToken $env:COVERALLS_REPO_TOKEN --commitId $env:APPVEYOR_REPO_COMMIT --commitBranch $env:APPVEYOR_REPO_BRANCH --commitAuthor $env:APPVEYOR_REPO_COMMIT_AUTHOR --commitEmail $env:APPVEYOR_REPO_COMMIT_AUTHOR_EMAIL --commitMessage $env:APPVEYOR_REPO_COMMIT_MESSAGE --jobId $env:APPVEYOR_JOB_ID}
 }
 
-task dupfinder {
-    try { dupfinder /o="duplicateReport.xml" /show-text ".\src\csmacnz.Coveralls.sln" } catch {}
+task dupfinder -ContinueOnError {
+    dupfinder /o="duplicateReport.xml" /show-text ".\src\csmacnz.Coveralls.sln"
     [xml]$stats = Get-Content .\duplicateReport.xml
     $anyDuplicates = $FALSE;
 
@@ -140,8 +140,8 @@ task dupfinder {
     }
 }
 
-task inspect {
-    try { inspectcode /o="resharperReport.xml" ".\src\csmacnz.Coveralls.sln" } catch {}
+task inspect  -ContinueOnError {
+    inspectcode /o="resharperReport.xml" ".\src\csmacnz.Coveralls.sln"
     [xml]$stats = Get-Content .\resharperReport.xml
     $anyErrors = $FALSE;
     $errors = $stats.SelectNodes("/Report/IssueTypes/IssueType")
