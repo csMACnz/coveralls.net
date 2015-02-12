@@ -9,7 +9,7 @@ namespace csmacnz.Coveralls
         public const string Usage = @"csmac.Coveralls - a coveralls.io coverage publisher for .Net
 
 Usage:
-  csmacnz.Coveralls (--opencover | --monocov) -i ./opencovertests.xml --repoToken <repoToken> [-o ./opencovertests.json] [--dryrun] [--relativePaths --basePath <path>] [--commitId <commitId> --commitBranch <commitBranch> [--commitAuthor <commitAuthor> --commitEmail <commitEmail> --commitMessage <commitMessage>] ] [--jobId <jobId>]
+  csmacnz.Coveralls (--opencover | --monocov) -i ./opencovertests.xml --repoToken <repoToken> [-o ./opencovertests.json] [--dryrun] [--useRelativePaths --basePath <path>] [--commitId <commitId> --commitBranch <commitBranch> [--commitAuthor <commitAuthor> --commitEmail <commitEmail> --commitMessage <commitMessage>] ] [--jobId <jobId>]
   csmacnz.Coveralls --version
   csmacnz.Coveralls --help
 
@@ -63,7 +63,7 @@ What its for:
 		public string OptRepotoken { get { return _args["--repoToken"].ToString(); } }
 		public string OptOutput { get { return _args["--output"].ToString(); } }
 		public bool OptDryrun { get { return _args["--dryrun"].IsTrue; } }
-		public bool OptRelativepaths { get { return _args["--relativePaths"].IsTrue; } }
+		public bool OptUserelativepaths { get { return _args["--useRelativePaths"].IsTrue; } }
 		public string OptBasepath { get { return _args["--basePath"].ToString(); } }
 		public string OptCommitid { get { return _args["--commitId"].ToString(); } }
 		public string OptCommitbranch { get { return _args["--commitBranch"].ToString(); } }
