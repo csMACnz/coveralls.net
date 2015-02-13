@@ -28,6 +28,8 @@ namespace csmacnz.Coveralls
                 Console.WriteLine("output file '{0}' already exists and will be overwritten.", outputFile);
             }
 
+            var pathProcessor = new PathProcessor(args.IsProvided("--basePath") ? args.OptBasepath : null);
+
             List<CoverageFile> files;
             if (args.IsProvided("--monocov") && args.OptMonocov)
             {
@@ -39,7 +41,7 @@ namespace csmacnz.Coveralls
                 }
                 Dictionary<string,XDocument> documents = new DirectoryInfo(fileName).GetFiles().Where(f => f.Name.EndsWith(".xml")).ToDictionary(f=>f.Name, f=>XDocument.Load(f.FullName));
 
-                files = new MonoCoverParser().GenerateSourceFiles(documents);
+                files = new MonoCoverParser(pathProcessor).GenerateSourceFiles(documents, args.OptUserelativepaths);
             }
             else
             {
@@ -53,7 +55,7 @@ namespace csmacnz.Coveralls
 
                 var document = XDocument.Load(fileName);
 
-                files = new OpenCoverParser(new FileSystem()).GenerateSourceFiles(document);
+                files = new OpenCoverParser(new FileSystem(), pathProcessor).GenerateSourceFiles(document, args.OptUserelativepaths);
             }
 
             GitData gitData = null;
@@ -80,11 +82,12 @@ namespace csmacnz.Coveralls
 
             var serviceJobId = args.IsProvided("--jobId") ? args.OptJobid : "0";
 
+            string serviceName = args.IsProvided("--serviceName") ? args.OptServicename : "coveralls.net";
             var data = new CoverallData
             {
                 RepoToken = repoToken,
                 ServiceJobId = serviceJobId,
-                ServiceName = "coveralls.net",
+                ServiceName = serviceName,
                 SourceFiles = files.ToArray(),
                 Git = gitData
             };
