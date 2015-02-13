@@ -32,7 +32,12 @@ task LocalTestSettings {
     $script:testOptions = ""
 }
 
-task AppVeyorTestSettings {
+task AppVeyorEnvironmentSettings {
+    
+    if($env:APPVEYOR) {
+        Update-AppveyorBuild -Version $env:GitVersion_FullSemVer
+    }
+    
     if(Test-Path Env:\GitVersion_ClassicVersion) {
         $script:version = $env:GitVersion_ClassicVersion
         echo "version set to $script:version"
@@ -216,6 +221,6 @@ task pack-only {
 
 task postbuild -depends coverage-only, integration, mono-integration, coveralls-only, inspect, dupfinder, archive-only, pack-only
 
-task appveyor-build -depends RestoreNuGetPackages, build
+task appveyor-build -depends RestoreNuGetPackages, AppVeyorEnvironmentSettings, build
 
-task appveyor-test -depends AppVeyorTestSettings, postbuild
+task appveyor-test -depends AppVeyorEnvironmentSettings, postbuild
