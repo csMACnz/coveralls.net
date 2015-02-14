@@ -31,11 +31,15 @@ Supported
 * [OpenCover](https://github.com/sawilde/opencover)
 * [Mono Code Coverage (monocov)](http://www.mono-project.com/docs/debug+profile/profile/code-coverage/)
 
+InProgress Support
+------------------
+
+* [Visual Studio Coverage](http://msdn.microsoft.com/en-us/library/dd299398%28v=vs.90%29.aspx) (based on [ReportGenerator's support](https://reportgenerator.codeplex.com/wikipage?title=Visual%20Studio%20Coverage%20Tools))
+
 Future Support
 --------------
 
 * [dotCover](https://www.jetbrains.com/dotcover)
 * [NCover](https://www.ncover.com/)
-* [Visual Studio Coverage](http://msdn.microsoft.com/en-us/library/dd299398%28v=vs.90%29.aspx) (based on [ReportGenerator's support](https://reportgenerator.codeplex.com/wikipage?title=Visual%20Studio%20Coverage%20Tools))
 * [XR-Baboon](https://github.com/inorton/XR.Baboon) (When i can get it to export to xml)
 * [SharpCover](https://github.com/gaillard/SharpCover) (crossplatform, might take off?)
