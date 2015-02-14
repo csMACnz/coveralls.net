@@ -43,9 +43,12 @@ namespace csmacnz.Coveralls
 
                 files = new MonoCoverParser(pathProcessor).GenerateSourceFiles(documents, args.OptUserelativepaths);
             }
+            else if (args.IsProvided("--vscodecoverage") && args.OptVscodecoverage)
+            {
+                files = new List<CoverageFile>();
+            }
             else
             {
-
                 var fileName = args.OptInput;
                 if (!File.Exists(fileName))
                 {
