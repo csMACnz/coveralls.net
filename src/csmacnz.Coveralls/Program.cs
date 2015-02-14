@@ -45,7 +45,16 @@ namespace csmacnz.Coveralls
             }
             else if (args.IsProvided("--vscodecoverage") && args.OptVscodecoverage)
             {
-                files = new List<CoverageFile>();
+                var fileName = args.OptInput;
+                if (!File.Exists(fileName))
+                {
+                    Console.Error.WriteLine("Input file '" + fileName + "' cannot be found");
+                    Environment.Exit(1);
+                }
+
+                var document = XDocument.Load(fileName);
+
+                files = new VSCodeCoverageParser(new FileSystem(), pathProcessor).GenerateSourceFiles(document, args.OptUserelativepaths);
             }
             else
             {
