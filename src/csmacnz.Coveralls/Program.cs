@@ -6,6 +6,7 @@ using System.Net.Http;
 using System.Reflection;
 using System.Xml.Linq;
 using Newtonsoft.Json;
+using BCLExtensions;
 
 namespace csmacnz.Coveralls
 {
@@ -60,7 +61,7 @@ namespace csmacnz.Coveralls
 
             GitData gitData = null;
             var commitId = args.IsProvided("--commitId") ? args.OptCommitid : string.Empty;
-            if (!string.IsNullOrWhiteSpace(commitId))
+            if (commitId.IsNotNullOrWhitespace())
             {
                 var committerName = args.OptCommitauthor ?? string.Empty;
                 var comitterEmail = args.OptCommitemail ?? string.Empty;
