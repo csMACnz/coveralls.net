@@ -33,11 +33,11 @@ task LocalTestSettings {
 }
 
 task AppVeyorEnvironmentSettings {
-    
+
     if($env:APPVEYOR) {
         Update-AppveyorBuild -Version $env:GitVersion_FullSemVer
     }
-    
+
     if(Test-Path Env:\GitVersion_ClassicVersion) {
         $script:version = $env:GitVersion_ClassicVersion
         echo "version set to $script:version"
@@ -54,7 +54,7 @@ task AppVeyorEnvironmentSettings {
         $script:nugetVersion = $env:APPVEYOR_BUILD_VERSION
         echo "nuget version set to $script:nugetVersion"
     }
-    
+
     $script:xunit = "xunit.console.clr4.exe"
     $script:testOptions = "/appveyor"
 }
