@@ -123,13 +123,16 @@ task dupfinder {
             Write-Host "Text: $($fragment.Text)"
         }
 
-    $anyDuplicates = $TRUE;
+        $anyDuplicates = $TRUE;
 
         if(Get-Command "Add-AppveyorTest" -errorAction SilentlyContinue) {
-            Add-AppveyorTest "Duplicate Found with a cost of $($duplicate.Cost), across $($duplicate.Fragment.Count) Fragments" -Outcome Failed -ErrorMessage "See duplicateReport.xml for details of duplicates" -FileName "$($fragment.FileName)"
+            Add-AppveyorMessage "Duplicate Found in the file $($fragment.FileName) with a cost of $($duplicate.Cost), across $($duplicate.Fragment.Count) Fragments" -Category Warning -Details "See duplicateReport.xml for details of duplicates"
+            if ([convert]::ToInt32($duplicate.Cost,10) -gt 100){
+                Add-AppveyorTest "Duplicate Found with a cost of $($duplicate.Cost), across $($duplicate.Fragment.Count) Fragments" -Outcome Failed -ErrorMessage "See duplicateReport.xml for details of duplicates" -FileName "$($fragment.FileName)"
+            }
         }
     }
-    
+
     $xslt = New-Object System.Xml.Xsl.XslCompiledTransform
     $xslt.Load("BuildTools\dupfinder.xslt")
     $xslt.Transform("duplicateReport.xml", "duplicateReport.html")
@@ -137,11 +140,6 @@ task dupfinder {
     if(Get-Command "Push-AppveyorArtifact" -errorAction SilentlyContinue) {
         Push-AppveyorArtifact .\duplicateReport.xml
         Push-AppveyorArtifact .\duplicateReport.html
-    }
-
-    if ($anyDuplicates -eq $TRUE){
-        Write-Host "Failing build as there are duplicates in the code-base"
-        throw "Duplicates found in code base"
     }
 }
 
