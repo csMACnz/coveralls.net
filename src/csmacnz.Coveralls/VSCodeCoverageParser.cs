@@ -20,9 +20,9 @@ namespace csmacnz.Coveralls
             var files = new List<CoverageFile>();
             if (document.Root != null)
             {
-                var xElement = document.Root.Element("Modules");
+                var xElement = document.Root.Element("modules");
                 if (xElement != null)
-                    foreach (var module in xElement.Elements("Module"))
+                    foreach (var module in xElement.Elements("module"))
                     {
                         var filesElement = module.Element("source_files");
                         if (filesElement != null)
