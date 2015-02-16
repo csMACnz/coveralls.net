@@ -1,7 +1,7 @@
 ﻿csmac.Coveralls - a coveralls.io coverage publisher for .Net
 
 Usage:
-  csmacnz.Coveralls (--opencover | --vscodecoverage | --monocov) -i ./opencovertests.xml --repoToken <repoToken> [-o ./opencovertests.json] [--dryrun] [--useRelativePaths --basePath <path>] [--commitId <commitId> --commitBranch <commitBranch> [--commitAuthor <commitAuthor> --commitEmail <commitEmail> --commitMessage <commitMessage>] ] [--jobId <jobId>] [--serviceName <Name>]
+  csmacnz.Coveralls (--opencover | --vscodecoverage | --monocov) -i ./opencovertests.xml --repoToken <repoToken> [-o ./opencovertests.json] [--dryrun] [--useRelativePaths [--basePath <path>] ] [--commitId <commitId> --commitBranch <commitBranch> [--commitAuthor <commitAuthor> --commitEmail <commitEmail> --commitMessage <commitMessage>] ] [--jobId <jobId>] [--serviceName <Name>]
   csmacnz.Coveralls --version
   csmacnz.Coveralls --help
 
