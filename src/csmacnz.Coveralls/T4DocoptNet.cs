@@ -9,7 +9,7 @@ namespace csmacnz.Coveralls
         public const string Usage = @"csmac.Coveralls - a coveralls.io coverage publisher for .Net
 
 Usage:
-  csmacnz.Coveralls (--opencover | --monocov) -i ./opencovertests.xml --repoToken <repoToken> [-o ./opencovertests.json] [--dryrun] [--useRelativePaths --basePath <path>] [--commitId <commitId> --commitBranch <commitBranch> [--commitAuthor <commitAuthor> --commitEmail <commitEmail> --commitMessage <commitMessage>] ] [--jobId <jobId>] [--serviceName <Name>]
+  csmacnz.Coveralls (--opencover | --vscodecoverage | --monocov) -i ./opencovertests.xml --repoToken <repoToken> [-o ./opencovertests.json] [--dryrun] [--useRelativePaths --basePath <path>] [--commitId <commitId> --commitBranch <commitBranch> [--commitAuthor <commitAuthor> --commitEmail <commitEmail> --commitMessage <commitMessage>] ] [--jobId <jobId>] [--serviceName <Name>]
   csmacnz.Coveralls --version
   csmacnz.Coveralls --help
 
@@ -22,6 +22,7 @@ Options:
  --useRelativePaths              This flag, when provided, will attempt to strip the current working directory from the beginning of the source file path.
  --basePath <path>               When useRelativePaths and a basePath is provided, this path is used instead of the current working directory.
  --opencover                     Reads input as OpenCover data.
+ --vscodecoverage                Reads input as the CodeCoverage.exe xml.
  --monocov                       Reads input as monocov results folder.
  --repoToken <repoToken>         The coveralls.io repository token.
  --commitId <commitId>           The git commit hash for the coverage report.
@@ -59,6 +60,7 @@ What its for:
         }
 
 		public bool OptOpencover { get { return _args["--opencover"].IsTrue; } }
+		public bool OptVscodecoverage { get { return _args["--vscodecoverage"].IsTrue; } }
 		public bool OptMonocov { get { return _args["--monocov"].IsTrue; } }
 		public string OptInput { get { return _args["--input"].ToString(); } }
 		public string OptRepotoken { get { return _args["--repoToken"].ToString(); } }
