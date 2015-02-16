@@ -34,7 +34,7 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="BCLExtensions">
-      <HintPath>..\packages\BCLExtensions.1.0.0-beta0002\lib\BCLExtensions.dll</HintPath>
+      <HintPath>..\packages\BCLExtensions.1.0.0\lib\BCLExtensions.dll</HintPath>
     </Reference>
     <Reference Include="DocoptNet">
       <HintPath>..\packages\docopt.net.0.6.1.6\lib\net40\DocoptNet.dll</HintPath>
