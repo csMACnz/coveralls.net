@@ -4,12 +4,12 @@ using System.Xml.Linq;
 
 namespace csmacnz.Coveralls
 {
-    public class VSCodeCoverageParser
+    public class DynamicCodeCoverageParser
     {
         private readonly FileSystem _fileSystem;
         private readonly PathProcessor _pathProcessor;
 
-        public VSCodeCoverageParser(FileSystem fileSystem, PathProcessor pathProcessor)
+        public DynamicCodeCoverageParser(FileSystem fileSystem, PathProcessor pathProcessor)
         {
             _fileSystem = fileSystem;
             _pathProcessor = pathProcessor;

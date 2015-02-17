@@ -44,7 +44,7 @@ namespace csmacnz.Coveralls
 
                 files = new MonoCoverParser(pathProcessor).GenerateSourceFiles(documents, args.OptUserelativepaths);
             }
-            else if (args.IsProvided("--vscodecoverage") && args.OptVscodecoverage)
+            else if (args.IsProvided("--dynamiccodecoverage") && args.OptDynamiccodecoverage)
             {
                 var fileName = args.OptInput;
                 if (!File.Exists(fileName))
@@ -55,7 +55,7 @@ namespace csmacnz.Coveralls
 
                 var document = XDocument.Load(fileName);
 
-                files = new VSCodeCoverageParser(new FileSystem(), pathProcessor).GenerateSourceFiles(document, args.OptUserelativepaths);
+                files = new DynamicCodeCoverageParser(new FileSystem(), pathProcessor).GenerateSourceFiles(document, args.OptUserelativepaths);
             }
             else
             {
