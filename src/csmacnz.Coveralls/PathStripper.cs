@@ -25,7 +25,7 @@ namespace csmacnz.Coveralls
 
         public string UnixifyPath(string filePath)
         {
-            return filePath.Replace('\\', '/');
+            return filePath.Replace('\\', '/').Replace(":", "");
         }
     }
 }
