@@ -60,6 +60,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="CommandLineGitDataResolver.cs" />
     <Compile Include="CoverageFile.cs" />
     <Compile Include="CoverageFileBuilder.cs" />
     <Compile Include="CoverallData.cs" />
@@ -67,6 +68,7 @@
     <Compile Include="FileCoverageDataBuilder.cs" />
     <Compile Include="FileSystem.cs" />
     <Compile Include="IFileSystem.cs" />
+    <Compile Include="IGitDataResolver.cs" />
     <Compile Include="MonoCoverParser.cs" />
     <Compile Include="OpenCoverParser.cs" />
     <Compile Include="PathStripper.cs" />

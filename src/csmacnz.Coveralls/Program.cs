@@ -6,7 +6,6 @@ using System.Net.Http;
 using System.Reflection;
 using System.Xml.Linq;
 using Newtonsoft.Json;
-using BCLExtensions;
 
 namespace csmacnz.Coveralls
 {
@@ -132,28 +131,11 @@ namespace csmacnz.Coveralls
 
         private static GitData ResolveGitData(MainArgs args)
         {
-            GitData gitData = null;
-            var commitId = args.IsProvided("--commitId") ? args.OptCommitid : string.Empty;
-            if (commitId.IsNotNullOrWhitespace())
+            var providers = new List<IGitDataResolver>
             {
-                var committerName = args.OptCommitauthor ?? string.Empty;
-                var comitterEmail = args.OptCommitemail ?? string.Empty;
-                var commitMessage = args.OptCommitmessage ?? string.Empty;
-                gitData = new GitData
-                {
-                    Head = new GitHead
-                    {
-                        Id = commitId,
-                        AuthorName = committerName,
-                        AuthorEmail = comitterEmail,
-                        CommitterName = committerName,
-                        ComitterEmail = comitterEmail,
-                        Message = commitMessage
-                    },
-                    Branch = args.OptCommitbranch ?? string.Empty
-                };
-            }
-            return gitData;
+                new CommandLineGitDataResolver(args)
+            };
+            return (from provider in providers where provider.CanProvideData() select provider.GenerateData()).FirstOrDefault();
         }
 
         private static void WriteFileData(string fileData, string outputFile)
