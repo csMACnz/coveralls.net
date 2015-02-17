@@ -73,5 +73,3 @@ Contributers
 Mark Clearwater (Primary Owner)
 * [@csMACnz](https://twitter.com/csmacnz) on twitter
 * [csMACnz](https://github.com/csMACnz) on github
-* 
-
