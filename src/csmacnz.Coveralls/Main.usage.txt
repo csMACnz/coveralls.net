@@ -18,12 +18,19 @@ Options:
  --monocov                       Reads input as monocov results folder.
  --repoToken <repoToken>         The coveralls.io repository token.
  --commitId <commitId>           The git commit hash for the coverage report.
+ --commitBranch <commitBranch>   The git branch for the coverage report.
  --commitAuthor <commitAuthor>   The git commit author for the coverage report.
  --commitEmail <commitEmail>     The git commit author email for the coverage report.
  --commitMessage <commitMessage> The git commit message for the coverage report.
- --commitBranch <commitBranch>   The git branch for the coverage report.
  --jobId <jobId>                 The job Id to provide to coveralls.io.
- --serviceName <Name>            The service-name for the coverage report.
+ --serviceName <Name>            The service-name for the coverage report. [default: "coveralls.net"]
+
+Commit Options:
+  If --commitId and --commitBranch are provided, all git settings will come from the command line arguments.
+  If you do not provide any commit information, the correct information will be resolved for you using the following logic:
+    * If you are on AppVeyor build server ($env:APPVEYOR -eq $true) We will locate the data from the Environment Variables.
+    * If git is available in the current working directory, the settings will be loaded from git.
+
 
 What its for:
  Reads your .Net code coverage output data and submits it to

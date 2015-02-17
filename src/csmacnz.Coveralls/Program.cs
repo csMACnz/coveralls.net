@@ -100,27 +100,7 @@ namespace csmacnz.Coveralls
                 }).ToList();
             }
 
-            GitData gitData = null;
-            var commitId = args.IsProvided("--commitId") ? args.OptCommitid : string.Empty;
-            if (commitId.IsNotNullOrWhitespace())
-            {
-                var committerName = args.OptCommitauthor ?? string.Empty;
-                var comitterEmail = args.OptCommitemail ?? string.Empty;
-                var commitMessage = args.OptCommitmessage ?? string.Empty;
-                gitData = new GitData
-                {
-                    Head = new GitHead
-                    {
-                        Id = commitId,
-                        AuthorName = committerName,
-                        AuthorEmail = comitterEmail,
-                        CommitterName = committerName,
-                        ComitterEmail = comitterEmail,
-                        Message = commitMessage
-                    },
-                    Branch = args.OptCommitbranch ?? string.Empty
-                };
-            }
+            var gitData = ResolveGitData(args);
 
             var serviceJobId = args.IsProvided("--jobId") ? args.OptJobid : "0";
 
@@ -148,6 +128,32 @@ namespace csmacnz.Coveralls
                     Environment.Exit(1);
                 }
             }
+        }
+
+        private static GitData ResolveGitData(MainArgs args)
+        {
+            GitData gitData = null;
+            var commitId = args.IsProvided("--commitId") ? args.OptCommitid : string.Empty;
+            if (commitId.IsNotNullOrWhitespace())
+            {
+                var committerName = args.OptCommitauthor ?? string.Empty;
+                var comitterEmail = args.OptCommitemail ?? string.Empty;
+                var commitMessage = args.OptCommitmessage ?? string.Empty;
+                gitData = new GitData
+                {
+                    Head = new GitHead
+                    {
+                        Id = commitId,
+                        AuthorName = committerName,
+                        AuthorEmail = comitterEmail,
+                        CommitterName = committerName,
+                        ComitterEmail = comitterEmail,
+                        Message = commitMessage
+                    },
+                    Branch = args.OptCommitbranch ?? string.Empty
+                };
+            }
+            return gitData;
         }
 
         private static void WriteFileData(string fileData, string outputFile)
