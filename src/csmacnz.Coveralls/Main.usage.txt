@@ -1,7 +1,7 @@
 ﻿csmac.Coveralls - a coveralls.io coverage publisher for .Net
 
 Usage:
-  csmacnz.Coveralls (--opencover | --vscodecoverage | --monocov) -i ./opencovertests.xml --repoToken <repoToken> [-o ./opencovertests.json] [--dryrun] [--useRelativePaths [--basePath <path>] ] [--commitId <commitId> --commitBranch <commitBranch> [--commitAuthor <commitAuthor> --commitEmail <commitEmail> --commitMessage <commitMessage>] ] [--jobId <jobId>] [--serviceName <Name>]
+  csmacnz.Coveralls (--opencover | --dynamiccodecoverage | --monocov) -i ./opencovertests.xml --repoToken <repoToken> [-o ./opencovertests.json] [--dryrun] [--useRelativePaths [--basePath <path>] ] [--commitId <commitId> --commitBranch <commitBranch> [--commitAuthor <commitAuthor> --commitEmail <commitEmail> --commitMessage <commitMessage>] ] [--jobId <jobId>] [--serviceName <Name>]
   csmacnz.Coveralls --version
   csmacnz.Coveralls --help
 
@@ -14,7 +14,7 @@ Options:
  --useRelativePaths              This flag, when provided, will attempt to strip the current working directory from the beginning of the source file path.
  --basePath <path>               When useRelativePaths and a basePath is provided, this path is used instead of the current working directory.
  --opencover                     Reads input as OpenCover data.
- --vscodecoverage                Reads input as the CodeCoverage.exe xml.
+ --dynamiccodecoverage           Reads input as the CodeCoverage.exe xml format.
  --monocov                       Reads input as monocov results folder.
  --repoToken <repoToken>         The coveralls.io repository token.
  --commitId <commitId>           The git commit hash for the coverage report.

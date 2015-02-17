@@ -50,7 +50,7 @@ namespace csmacnz.Coveralls
             else
             {
                 List<FileCoverageData> coverageData;
-                if (args.IsProvided("--vscodecoverage") && args.OptVscodecoverage)
+                if (args.IsProvided("--dynamiccodecoverage") && args.OptDynamiccodecoverage)
                 {
                     var fileName = args.OptInput;
                     if (!File.Exists(fileName))
@@ -61,7 +61,7 @@ namespace csmacnz.Coveralls
 
                     var document = XDocument.Load(fileName);
 
-                    coverageData = new VSCodeCoverageParser().GenerateSourceFiles(document);
+                    coverageData = new DynamicCodeCoverageParser().GenerateSourceFiles(document);
                 }
                 else
                 {

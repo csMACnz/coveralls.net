@@ -2,8 +2,8 @@ properties {
     # build variables
     $framework = "4.5.1"		# .net framework version
     $configuration = "Release"	# build configuration
-    $script:version = "0.3.0.0"
-    $script:nugetVersion = "0.3.0.0"
+    $script:version = "0.5.0.0"
+    $script:nugetVersion = "0.5.0.0"
 
     # directories
     $base_dir = . resolve-path .\
@@ -33,11 +33,7 @@ task LocalTestSettings {
 }
 
 task AppVeyorEnvironmentSettings {
-    
-    if($env:APPVEYOR) {
-        Update-AppveyorBuild -Version $env:GitVersion_FullSemVer
-    }
-    
+
     if(Test-Path Env:\GitVersion_ClassicVersion) {
         $script:version = $env:GitVersion_ClassicVersion
         echo "version set to $script:version"
@@ -54,7 +50,7 @@ task AppVeyorEnvironmentSettings {
         $script:nugetVersion = $env:APPVEYOR_BUILD_VERSION
         echo "nuget version set to $script:nugetVersion"
     }
-    
+
     $script:xunit = "xunit.console.clr4.exe"
     $script:testOptions = "/appveyor"
 }

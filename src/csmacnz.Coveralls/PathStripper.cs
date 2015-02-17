@@ -13,9 +13,9 @@ namespace csmacnz.Coveralls
 
         public string ConvertPath(string path)
         {
-            var currentWorkingDirectory = _basePath;
+            var currentWorkingDirectory = _basePath.ToLower();
 
-            if (path.StartsWith(currentWorkingDirectory))
+            if (path.ToLower().StartsWith(currentWorkingDirectory))
             {
                 return path.Substring(currentWorkingDirectory.Length);
             }

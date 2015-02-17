@@ -16,7 +16,8 @@ coveralls.net
 [![NuGet](https://img.shields.io/nuget/dt/coveralls.net.svg)](https://www.nuget.org/packages/coveralls.net)
 [![Issue Stats](http://www.issuestats.com/github/csMACnz/coveralls.net/badge/pr)](http://www.issuestats.com/github/csMACnz/coveralls.net)
 [![Issue Stats](http://www.issuestats.com/github/csMACnz/coveralls.net/badge/issue)](http://www.issuestats.com/github/csMACnz/coveralls.net)
-[![Badges](http://img.shields.io/:badges-13/13-ff6799.svg)](https://github.com/badges/badgerbadgerbadger)
+[![Gratipay](http://img.shields.io/gratipay/csMACnz.svg)](https://gratipay.com/csMACnz/)
+[![Badges](http://img.shields.io/:badges-14/14-ff6799.svg)](https://github.com/badges/badgerbadgerbadger)
 
 Coveralls uploader for .Net Code coverage of your C# source code. Should work with any code files that get reported with the supported coverage tools, but the primary focus is CSharp.
 
@@ -30,12 +31,18 @@ Supported
 
 * [OpenCover](https://github.com/sawilde/opencover)
 * [Mono Code Coverage (monocov)](http://www.mono-project.com/docs/debug+profile/profile/code-coverage/)
+* [Visual Studio's Dynamic Coverage](http://msdn.microsoft.com/en-us/library/dd299398%28v=vs.90%29.aspx) (based on [ReportGenerator's support](https://reportgenerator.codeplex.com/wikipage?title=Visual%20Studio%20Coverage%20Tools),  using vstest.console.exe and CodeCoverage.exe)
+
+InProgress Support
+------------------
+
+* [SharpCover](https://github.com/gaillard/SharpCover) (used by the Xamarin Community)
 
 Future Support
 --------------
 
 * [dotCover](https://www.jetbrains.com/dotcover)
 * [NCover](https://www.ncover.com/)
-* [Visual Studio Coverage](http://msdn.microsoft.com/en-us/library/dd299398%28v=vs.90%29.aspx) (based on [ReportGenerator's support](https://reportgenerator.codeplex.com/wikipage?title=Visual%20Studio%20Coverage%20Tools))
 * [XR-Baboon](https://github.com/inorton/XR.Baboon) (When i can get it to export to xml)
-* [SharpCover](https://github.com/gaillard/SharpCover) (crossplatform, might take off?)
+* [Visual Studio Coverage Export](http://msdn.microsoft.com/en-us/library/dd299398%28v=vs.90%29.aspx) (also covered by [ReportGenerator's support](https://reportgenerator.codeplex.com/wikipage?title=Visual%20Studio%20Coverage%20Tools), not sure if it can be command-line driven)
+* 
