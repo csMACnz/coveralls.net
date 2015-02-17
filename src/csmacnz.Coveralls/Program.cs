@@ -6,6 +6,7 @@ using System.Net.Http;
 using System.Reflection;
 using System.Xml.Linq;
 using Newtonsoft.Json;
+using BCLExtensions;
 
 namespace csmacnz.Coveralls
 {
@@ -43,9 +44,21 @@ namespace csmacnz.Coveralls
 
                 files = new MonoCoverParser(pathProcessor).GenerateSourceFiles(documents, args.OptUserelativepaths);
             }
+            else if (args.IsProvided("--dynamiccodecoverage") && args.OptDynamiccodecoverage)
+            {
+                var fileName = args.OptInput;
+                if (!File.Exists(fileName))
+                {
+                    Console.Error.WriteLine("Input file '" + fileName + "' cannot be found");
+                    Environment.Exit(1);
+                }
+
+                var document = XDocument.Load(fileName);
+
+                files = new DynamicCodeCoverageParser(new FileSystem(), pathProcessor).GenerateSourceFiles(document, args.OptUserelativepaths);
+            }
             else
             {
-
                 var fileName = args.OptInput;
                 if (!File.Exists(fileName))
                 {
@@ -60,7 +73,7 @@ namespace csmacnz.Coveralls
 
             GitData gitData = null;
             var commitId = args.IsProvided("--commitId") ? args.OptCommitid : string.Empty;
-            if (!string.IsNullOrWhiteSpace(commitId))
+            if (commitId.IsNotNullOrWhitespace())
             {
                 var committerName = args.OptCommitauthor ?? string.Empty;
                 var comitterEmail = args.OptCommitemail ?? string.Empty;
