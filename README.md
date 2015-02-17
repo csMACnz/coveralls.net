@@ -65,7 +65,7 @@ Follow development progress, report bugs and suggest features using [github issu
 Follow The App
 --------------
 
-You can ask questions and get updates using the twitter account [coveralls.net (@coverallsdotnet)[https://twitter.com/coverallsdotnet].
+You can ask questions and get updates using the twitter account [coveralls.net (@coverallsdotnet)](https://twitter.com/coverallsdotnet).
 
 Contributers
 ------------
