@@ -1,23 +1,20 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.IO;
-using System.Linq;
+using BCLExtensions;
 
 namespace csmacnz.Coveralls
 {
     public class CoverageFileBuilder
     {
-        private readonly string _filePath;
-        private readonly Dictionary<int,int> _coverage = new Dictionary<int, int>();
+        private string _filePath;
+        private readonly int?[] _coverage;
         private List<string> _sourceLines;
 
-        public CoverageFileBuilder(string filePath)
+        public CoverageFileBuilder(FileCoverageData data)
         {
-            if (string.IsNullOrWhiteSpace(filePath))
-            {
-                throw new ArgumentException("filePath");
-            }
-            _filePath = filePath;
+            data.EnsureIsNotNull("data");
+            _coverage = data.Coverage;
+            _filePath = data.FullPath;
         }
 
         public void AddSource(string source)
@@ -34,19 +31,24 @@ namespace csmacnz.Coveralls
             _sourceLines = lines;
         }
 
-        public void RecordCoverage(int lineNumber, int coverageNumber)
+        public void SetPath(string path)
         {
-            _coverage[lineNumber - 1] = coverageNumber;
+            _filePath = path;
         }
 
         public CoverageFile CreateFile()
         {
-            var length = _sourceLines != null ? _sourceLines.Count : _coverage.Any() ? _coverage.Max(c => c.Key) + 1 : 1;
-            var coverage = Enumerable.Range(0, length)
-                .Select(index => _coverage.ContainsKey(index) ? (int?) _coverage[index] : null)
-                .ToArray();
+            var length = _sourceLines != null ? _sourceLines.Count : _coverage.Length;
+            var coverage = _coverage;
+            if (length > _coverage.Length)
+            {
+                coverage = new int?[length];
+                _coverage.CopyTo(coverage,0);
+            }
+
             var sourceLines = _sourceLines != null ? _sourceLines.ToArray() : new string[0];
             return new CoverageFile(_filePath, sourceLines, coverage);
         }
+
     }
 }

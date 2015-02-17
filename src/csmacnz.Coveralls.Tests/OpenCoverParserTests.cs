@@ -1,6 +1,4 @@
-﻿using System.Collections.Generic;
-using System.Diagnostics;
-using System.IO;
+﻿using System.Diagnostics;
 using System.Reflection;
 using System.Xml;
 using System.Xml.Linq;
@@ -10,15 +8,12 @@ namespace csmacnz.Coveralls.Tests
 {
     public class OpenCoverParserTests
     {
-        private const string SingleFileReportSourceFilePath = @"c:\Users\Mark\Documents\Visual Studio 2013\Projects\OpenCoverTesting\OpenCoverTesting\Class1.cs";
-        private const string ExpectedSingleFileReportSourceFilePath = @"c:/Users/Mark/Documents/Visual Studio 2013/Projects/OpenCoverTesting/OpenCoverTesting/Class1.cs";
-
         [Fact]
         public void EmptyReportLoadsNoSourceFiles()
         {
             var document = LoadDocumentFromResource("csmacnz.Coveralls.Tests.EmptyReport.xml");
 
-            var results = CreateOpenCoverParser().GenerateSourceFiles(document, false);
+            var results = CreateOpenCoverParser().GenerateSourceFiles(document);
 
             Assert.Equal(0, results.Count);
         }
@@ -28,7 +23,7 @@ namespace csmacnz.Coveralls.Tests
         {
             var document = LoadDocumentFromResource("csmacnz.Coveralls.Tests.SingleFileReport.xml");
 
-            var results = CreateOpenCoverParser().GenerateSourceFiles(document, false);
+            var results = CreateOpenCoverParser().GenerateSourceFiles(document);
 
             Assert.Equal(1, results.Count);
         }
@@ -38,9 +33,8 @@ namespace csmacnz.Coveralls.Tests
         {
             var document = LoadDocumentFromResource("csmacnz.Coveralls.Tests.SingleFileReportOneLineCovered.xml");
 
-            var results = CreateOpenCoverParserForSingleFileReport().GenerateSourceFiles(document, false);
+            var results = CreateOpenCoverParser().GenerateSourceFiles(document);
 
-            AssertSingleFileResult(ExpectedSingleFileReportSourceFilePath, 12, results);
             Assert.Equal(1, results[0].Coverage[8]);
         }
 
@@ -49,28 +43,14 @@ namespace csmacnz.Coveralls.Tests
         {
             var document = LoadDocumentFromResource("csmacnz.Coveralls.Tests.SingleFileReportOneLineUncovered.xml");
 
-            var results = CreateOpenCoverParserForSingleFileReport().GenerateSourceFiles(document, false);
+            var results = CreateOpenCoverParser().GenerateSourceFiles(document);
 
-            AssertSingleFileResult(ExpectedSingleFileReportSourceFilePath, 12, results);
             Assert.Equal(0, results[0].Coverage[8]);
         }
 
         private OpenCoverParser CreateOpenCoverParser()
         {
-            return new OpenCoverParser(new TestFileSystem(), DefaultPathProcessor());
-        }
-
-        private OpenCoverParser CreateOpenCoverParserForSingleFileReport()
-        {
-            var testFileSystem = new TestFileSystem();
-            var singleFileReportSourceContent = LoadContentFromResource("csmacnz.Coveralls.Tests.SingleFileReportSourceFile.txt");
-            testFileSystem.AddFile(SingleFileReportSourceFilePath, singleFileReportSourceContent);
-            return new OpenCoverParser(testFileSystem, DefaultPathProcessor());
-        }
-
-        private static PathProcessor DefaultPathProcessor()
-        {
-            return new PathProcessor(string.Empty);
+            return new OpenCoverParser();
         }
 
         private static XDocument LoadDocumentFromResource(string embeddedResource)
@@ -89,29 +69,5 @@ namespace csmacnz.Coveralls.Tests
             return document;
         }
 
-        private static string LoadContentFromResource(string embeddedResource)
-        {
-            string content;
-            var executingAssembly = Assembly.GetExecutingAssembly();
-            using (var stream = executingAssembly.GetManifestResourceStream(embeddedResource))
-            {
-                Assert.NotNull(stream);
-                Debug.Assert(stream != null, "stream != null");
-                using (var reader = new StreamReader(stream))
-                {
-                    content = reader.ReadToEnd();
-                }
-            }
-            return content;
-        }
-
-        // ReSharper disable UnusedParameter.Local
-        private void AssertSingleFileResult(string expectedFileName, int expectedLength, List<CoverageFile> results)
-        // ReSharper restore UnusedParameter.Local
-        {
-            Assert.Equal(1, results.Count);
-            Assert.Equal(expectedFileName, results[0].Name);
-            Assert.Equal(expectedLength, results[0].Coverage.Length);
-        }
     }
 }

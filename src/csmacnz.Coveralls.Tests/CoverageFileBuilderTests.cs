@@ -53,14 +53,14 @@ namespace csmacnz.Coveralls.Tests
         }
 
         [Fact]
-        public void NewBuilderWithInvalidPathThrowsArgumentException()
+        public void NewBuilderWithNullFileThrowsArgumentException()
         {
-            Assert.Throws<ArgumentException>(() => new CoverageFileBuilder(""));
+            Assert.Throws<ArgumentNullException>(() => new CoverageFileBuilder(null));
         }
 
         public static CoverageFileBuilder CreateFileBuilder(string filePath = @"C:\temp\file.cs")
         {
-            return new CoverageFileBuilder(filePath);
+            return new CoverageFileBuilder(new FileCoverageData(filePath, new int?[1]));
         }
     }
 }

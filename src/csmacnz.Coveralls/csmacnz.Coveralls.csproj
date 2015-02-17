@@ -63,6 +63,8 @@
     <Compile Include="CoverageFile.cs" />
     <Compile Include="CoverageFileBuilder.cs" />
     <Compile Include="CoverallData.cs" />
+    <Compile Include="FileCoverageData.cs" />
+    <Compile Include="FileCoverageDataBuilder.cs" />
     <Compile Include="FileSystem.cs" />
     <Compile Include="IFileSystem.cs" />
     <Compile Include="MonoCoverParser.cs" />

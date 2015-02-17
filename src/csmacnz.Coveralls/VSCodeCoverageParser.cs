@@ -6,18 +6,9 @@ namespace csmacnz.Coveralls
 {
     public class VSCodeCoverageParser
     {
-        private readonly FileSystem _fileSystem;
-        private readonly PathProcessor _pathProcessor;
-
-        public VSCodeCoverageParser(FileSystem fileSystem, PathProcessor pathProcessor)
+        public List<FileCoverageData> GenerateSourceFiles(XDocument document)
         {
-            _fileSystem = fileSystem;
-            _pathProcessor = pathProcessor;
-        }
-
-        public List<CoverageFile> GenerateSourceFiles(XDocument document, bool useRelativePaths)
-        {
-            var files = new List<CoverageFile>();
+            var files = new List<FileCoverageData>();
             if (document.Root != null)
             {
                 var xElement = document.Root.Element("Modules");
@@ -31,13 +22,8 @@ namespace csmacnz.Coveralls
                             {
                                 var fileid = file.Attribute("id").Value;
                                 var fullPath = file.Attribute("path").Value;
-                                var path = fullPath;
-                                if (useRelativePaths)
-                                {
-                                    path = _pathProcessor.ConvertPath(fullPath);
-                                }
-                                path = _pathProcessor.UnixifyPath(path);
-                                var coverageBuilder = new CoverageFileBuilder(path);
+
+                                var coverageBuilder = new FileCoverageDataBuilder(fullPath);
 
                                 var classesElement = module.Element("functions");
                                 if (classesElement != null)
@@ -68,14 +54,6 @@ namespace csmacnz.Coveralls
                                         }
                                     }
                                 }
-
-                                var readAllText = _fileSystem.TryLoadFile(fullPath);
-                                if (readAllText != null)
-                                {
-                                    coverageBuilder.AddSource(readAllText);
-                                }
-                                var coverageFile = coverageBuilder.CreateFile();
-                                files.Add(coverageFile);
                             }
                         }
                     }

@@ -40,35 +40,64 @@ namespace csmacnz.Coveralls
                     Console.Error.WriteLine("Input file '" + fileName + "' cannot be found");
                     Environment.Exit(1);
                 }
-                Dictionary<string,XDocument> documents = new DirectoryInfo(fileName).GetFiles().Where(f => f.Name.EndsWith(".xml")).ToDictionary(f=>f.Name, f=>XDocument.Load(f.FullName));
+                Dictionary<string, XDocument> documents =
+                    new DirectoryInfo(fileName).GetFiles()
+                        .Where(f => f.Name.EndsWith(".xml"))
+                        .ToDictionary(f => f.Name, f => XDocument.Load(f.FullName));
 
                 files = new MonoCoverParser(pathProcessor).GenerateSourceFiles(documents, args.OptUserelativepaths);
             }
-            else if (args.IsProvided("--vscodecoverage") && args.OptVscodecoverage)
-            {
-                var fileName = args.OptInput;
-                if (!File.Exists(fileName))
-                {
-                    Console.Error.WriteLine("Input file '" + fileName + "' cannot be found");
-                    Environment.Exit(1);
-                }
-
-                var document = XDocument.Load(fileName);
-
-                files = new VSCodeCoverageParser(new FileSystem(), pathProcessor).GenerateSourceFiles(document, args.OptUserelativepaths);
-            }
             else
             {
-                var fileName = args.OptInput;
-                if (!File.Exists(fileName))
+                List<FileCoverageData> coverageData;
+                if (args.IsProvided("--vscodecoverage") && args.OptVscodecoverage)
                 {
-                    Console.Error.WriteLine("Input file '" + fileName + "' cannot be found");
-                    Environment.Exit(1);
+                    var fileName = args.OptInput;
+                    if (!File.Exists(fileName))
+                    {
+                        Console.Error.WriteLine("Input file '" + fileName + "' cannot be found");
+                        Environment.Exit(1);
+                    }
+
+                    var document = XDocument.Load(fileName);
+
+                    coverageData = new VSCodeCoverageParser().GenerateSourceFiles(document);
+                }
+                else
+                {
+                    var fileName = args.OptInput;
+                    if (!File.Exists(fileName))
+                    {
+                        Console.Error.WriteLine("Input file '" + fileName + "' cannot be found");
+                        Environment.Exit(1);
+                    }
+
+                    var document = XDocument.Load(fileName);
+
+                    coverageData = new OpenCoverParser().GenerateSourceFiles(document);
                 }
 
-                var document = XDocument.Load(fileName);
+                files = coverageData.Select(coverageFileData =>
+                {
+                    var coverageBuilder = new CoverageFileBuilder(coverageFileData);
 
-                files = new OpenCoverParser(new FileSystem(), pathProcessor).GenerateSourceFiles(document, args.OptUserelativepaths);
+                    var path = coverageFileData.FullPath;
+                    if (args.OptUserelativepaths)
+                    {
+                        path = pathProcessor.ConvertPath(coverageFileData.FullPath);
+                    }
+                    path = pathProcessor.UnixifyPath(path);
+                    coverageBuilder.SetPath(path);
+
+                    var readAllText = new FileSystem().TryLoadFile(coverageFileData.FullPath);
+                    if (readAllText != null)
+                    {
+                        coverageBuilder.AddSource(readAllText);
+                    }
+
+                    var coverageFile = coverageBuilder.CreateFile();
+                    return coverageFile;
+                }).ToList();
             }
 
             GitData gitData = null;
