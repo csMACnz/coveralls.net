@@ -7,8 +7,8 @@ coveralls.net
 [![License](http://img.shields.io/:license-mit-blue.svg)](http://csmacnz.mit-license.org)
 [![NuGet](https://img.shields.io/nuget/v/coveralls.net.svg)](https://www.nuget.org/packages/coveralls.net)
 [![NuGet](https://img.shields.io/nuget/dt/coveralls.net.svg)](https://www.nuget.org/packages/coveralls.net)
-[![Source Browser](https://img.shields.io/badge/Browse-Source-green.svg)](http://sourcebrowser.io/Browse/csMACnz/coveralls.net)
-[![Badges](http://img.shields.io/:badges-16/16-ff6799.svg)](https://github.com/badges/badgerbadgerbadger)
+[![Gratipay](http://img.shields.io/gratipay/csMACnz.svg)](https://gratipay.com/csMACnz/)
+[![Badges](http://img.shields.io/:badges-17/17-ff6799.svg)](https://github.com/badges/badgerbadgerbadger)
 
 [![Build status](https://ci.appveyor.com/api/projects/status/m9hqgm8a38s4vke1?svg=true)](https://ci.appveyor.com/project/MarkClearwater/coveralls-net)
 [![Travis Build Status](https://img.shields.io/travis/csMACnz/coveralls.net.svg)](https://travis-ci.org/csMACnz/coveralls.net)
@@ -22,7 +22,11 @@ coveralls.net
 [![Stories in next release](https://badge.waffle.io/csmacnz/coveralls.net.png?label=in%20next%20release&title=In%20Next%20Release)](https://waffle.io/csmacnz/coveralls.net)
 [![Issue Stats](http://www.issuestats.com/github/csMACnz/coveralls.net/badge/pr)](http://www.issuestats.com/github/csMACnz/coveralls.net)
 [![Issue Stats](http://www.issuestats.com/github/csMACnz/coveralls.net/badge/issue)](http://www.issuestats.com/github/csMACnz/coveralls.net)
-[![Gratipay](http://img.shields.io/gratipay/csMACnz.svg)](https://gratipay.com/csMACnz/)
+
+[![Source Browser](https://img.shields.io/badge/Browse-Source-green.svg)](http://sourcebrowser.io/Browse/csMACnz/coveralls.net)
+[![Open Hub](https://img.shields.io/badge/Open-Hub-0185CA.svg)](https://www.openhub.net/p/coverallsdotnet)
+
+
 
 Coveralls uploader for .Net Code coverage of your C# source code. Should work with any code files that get reported with the supported coverage tools, but the primary focus is CSharp.
 
