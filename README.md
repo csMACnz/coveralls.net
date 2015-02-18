@@ -44,18 +44,7 @@ Supported
 * [Mono Code Coverage (monocov)](http://www.mono-project.com/docs/debug+profile/profile/code-coverage/)
 * [Visual Studio's Dynamic Coverage](http://msdn.microsoft.com/en-us/library/dd299398%28v=vs.90%29.aspx) (based on [ReportGenerator's support](https://reportgenerator.codeplex.com/wikipage?title=Visual%20Studio%20Coverage%20Tools),  using vstest.console.exe and CodeCoverage.exe)
 
-InProgress Support
-------------------
-
-* [SharpCover](https://github.com/gaillard/SharpCover) (used by the Xamarin Community)
-
-Future Support
---------------
-
-* [dotCover](https://www.jetbrains.com/dotcover)
-* [NCover](https://www.ncover.com/)
-* [XR-Baboon](https://github.com/inorton/XR.Baboon) (When i can get it to export to xml)
-* [Visual Studio Coverage Export](http://msdn.microsoft.com/en-us/library/dd299398%28v=vs.90%29.aspx) (also covered by [ReportGenerator's support](https://reportgenerator.codeplex.com/wikipage?title=Visual%20Studio%20Coverage%20Tools), not sure if it can be command-line driven)
+Full Supported, In Progress, and Future Support information can be found [Coverage Support](https://github.com/csMACnz/coveralls.net/wiki/Coverage-Support) wiki page
 
 Issues
 ------
@@ -74,3 +63,10 @@ Mark Clearwater (Primary Owner)
 * [@csMACnz](https://twitter.com/csmacnz) on twitter
 * [csMACnz](https://github.com/csMACnz) on github
 * <csmacnz@csmac.co.nz> on email
+
+Graphs
+------
+
+Throughput of this project (thanks to [waffle.io](https://waffle.io/))
+
+[![Throughput Graph](https://graphs.waffle.io/csmacnz/coveralls.net/throughput.svg)](https://waffle.io/csmacnz/coveralls.net/metrics)
