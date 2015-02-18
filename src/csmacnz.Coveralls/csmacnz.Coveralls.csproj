@@ -32,6 +32,9 @@
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
+  <PropertyGroup>
+    <ApplicationIcon>Properties\coverallsNet.ico</ApplicationIcon>
+  </PropertyGroup>
   <ItemGroup>
     <Reference Include="BCLExtensions">
       <HintPath>..\packages\BCLExtensions.1.0.0\lib\BCLExtensions.dll</HintPath>
@@ -91,6 +94,7 @@
     <None Include="T4DocoptNet.tt.hooks.t4" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Properties\coverallsNet.ico" />
     <Content Include="Main.usage.txt" />
     <None Include="T4DocoptNet.tt.settings.xml" />
   </ItemGroup>
