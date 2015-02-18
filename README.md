@@ -25,6 +25,13 @@ coveralls.net
 
 Coveralls uploader for .Net Code coverage of your C# source code. Should work with any code files that get reported with the supported coverage tools, but the primary focus is CSharp.
 
+Install
+-------
+
+This is available on nuget at https://www.nuget.org/packages/coveralls.net. To install coveralls.net you can find it by searching for `coveralls.net` in the visual studio nuget extension, or install by run this command in the Package Manager Console
+
+    PM> Install-Package coveralls.net
+
 How To Use
 ----------
 
