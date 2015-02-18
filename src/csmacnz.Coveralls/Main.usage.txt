@@ -22,8 +22,8 @@ Options:
  --commitAuthor <commitAuthor>   The git commit author for the coverage report.
  --commitEmail <commitEmail>     The git commit author email for the coverage report.
  --commitMessage <commitMessage> The git commit message for the coverage report.
- --jobId <jobId>                 The job Id to provide to coveralls.io.
- --serviceName <Name>            The service-name for the coverage report. [default: "coveralls.net"]
+ --jobId <jobId>                 The job Id to provide to coveralls.io. [default: 0]
+ --serviceName <Name>            The service-name for the coverage report. [default: coveralls.net]
 
 Commit Options:
   If --commitId and --commitBranch are provided, all git settings will come from the command line arguments.
