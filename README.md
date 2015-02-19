@@ -25,6 +25,7 @@ coveralls.net
 
 [![Source Browser](https://img.shields.io/badge/Browse-Source-green.svg)](http://sourcebrowser.io/Browse/csMACnz/coveralls.net)
 [![Open Hub](https://img.shields.io/badge/Open-Hub-0185CA.svg)](https://www.openhub.net/p/coverallsdotnet)
+[![Documentation Status](https://readthedocs.org/projects/coverallsnet/badge/?version=latest)](https://readthedocs.org/projects/coverallsnet/?badge=latest)
 
 
 
