@@ -8,6 +8,7 @@
     <owners>csmacnz</owners>
     <licenseUrl>https://github.com/csmacnz/coveralls.net/blob/master/LICENSE</licenseUrl>
     <projectUrl>https://github.com/csmacnz/coveralls.net</projectUrl>
+    <iconUrl>http://img.csmac.nz/coverallsNet-32.png</iconUrl>
     <requireLicenseAcceptance>false</requireLicenseAcceptance>
     <summary>Coveralls.io uploader for .NET Code Coverage.</summary>
       <description>Coveralls.io uploader for .NET Code Coverage. Supports opencover and visual studio's codecoverage.exe on windows, and monocov for mono</description>
