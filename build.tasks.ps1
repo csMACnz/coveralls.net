@@ -76,11 +76,59 @@ task clean {
 task build {
     exec { msbuild "/t:Clean;Build" "/p:Configuration=$configuration" $sln_file }
 }
+task appveyor-checkCoverity {
+  if($env:APPVEYOR_SCHEDULED_BUILD -eq "True") {
+    #download coverity
+    Invoke-WebRequest -Uri "https://scan.coverity.com/download/cxx/win_64" -Body @{ project = "$env:APPVEYOR_REPO_NAME"; token = "$env:COVERITY_TOKEN" } -OutFile "$env:APPVEYOR_BUILD_FOLDER\coverity.zip"
+    
+    Expand-Archive .\coverity.zip
 
-task coverity {
-    cov-build --dir cov-int msbuild "/t:Clean;Build" "/p:Configuration=$configuration" $sln_file
+    $script:runCoverity = $true
+    $script:covbuild = (Resolve-Path ".\cov-analysis-win64-*\bin\cov-build.exe").ToString()
+  }
+}
 
-    Write-Zip -Path "cov-int" -OutputPath coveralls.coverity.$script:nugetVersion.zip
+task setup-coverity-local {
+  $script:runCoverity = $true
+  $script:covbuild = "cov-build"
+  $env:APPVEYOR_BUILD_FOLDER = "."
+  $env:APPVEYOR_BUILD_VERSION = $script:version
+  $env:APPVEYOR_REPO_NAME = "csmacnz/coveralls.net"
+  "You should have set the COVERITY_TOKEN environment variable already"
+}
+
+task test-coverity -depends setup-coverity-local, coverity
+
+task coverity -precondition { return $script:runCoverity }{
+  & $script:covbuild --dir cov-int msbuild "/t:Clean;Build" "/p:Configuration=$configuration" $sln_file
+  $coverityFileName = "coveralls.coverity.$script:nugetVersion.zip"
+  Write-Zip -Path "cov-int" -OutputPath $coverityFileName
+  
+  #TODO an app for this:
+  Add-Type -AssemblyName "System.Net.Http"
+  $client = New-Object Net.Http.HttpClient
+  $client.Timeout = [TimeSpan]::FromMinutes(20)
+  $form = New-Object Net.Http.MultipartFormDataContent
+  [Net.Http.HttpContent]$formField = New-Object Net.Http.StringContent($env:COVERITY_TOKEN)
+  $form.Add($formField, "token")
+  $formField = New-Object Net.Http.StringContent($env:COVERITY_EMAIL)
+  $form.Add($formField, "email")
+  $fs = New-Object IO.FileStream("$env:APPVEYOR_BUILD_FOLDER\$coverityFileName", [IO.FileMode]::Open, [IO.FileAccess]::Read)
+  $formField = New-Object Net.Http.StreamContent($fs)
+  $form.Add($formField, "file", "$coverityFileName")
+  $formField = New-Object Net.Http.StringContent($script:nugetVersion)
+  $form.Add($formField, "version")
+  $formField = New-Object Net.Http.StringContent("AppVeyor scheduled build ($env:APPVEYOR_BUILD_VERSION).")
+  $form.Add($formField, "description")
+  $url = "https://scan.coverity.com/builds?project=$env:APPVEYOR_REPO_NAME"
+  $task = $client.PostAsync($url, $form)
+  try {
+    $task.Wait()  # throws AggregateException on time-out
+  } catch [AggregateException] {
+    throw $_.Exception.InnerException
+  }
+  $task.Result
+  $fs.Close()
 }
 
 task integration {
@@ -217,4 +265,4 @@ task postbuild -depends coverage-only, integration, mono-integration, coveralls-
 
 task appveyor-build -depends RestoreNuGetPackages, AppVeyorEnvironmentSettings, build
 
-task appveyor-test -depends AppVeyorEnvironmentSettings, postbuild
+task appveyor-test -depends AppVeyorEnvironmentSettings, postbuild, appveyor-checkCoverity, coverity
