@@ -3,6 +3,8 @@ os: Windows Server 2012 R2
 environment:
   COVERALLS_REPO_TOKEN:
     secure: 7+M7//b+83bTse+910JEiExhI3kRpPNByeBKgndUaWmjCmdJglS2Hermr2V2MabW
+  COVERITY_TOKEN: TODO
+  COVERITY_EMAIL: TODO
 install:
 - ps: .\build.environment.ps1
 - ps: GitVersion /output buildserver /updateassemblyinfo true /assemblyVersionFormat Major
