@@ -2,7 +2,7 @@
 coveralls.net
 =============
 
-<img align="right" width="256px" height="256px" src="http://res.cloudinary.com/csmacnz/image/upload/v1419318612/coverallsNet-256_lnjetq.svg">
+<img align="right" width="256px" height="256px" src="http://img.csmac.nz/coverallsNet-256.svg">
 
 [![License](http://img.shields.io/:license-mit-blue.svg)](http://csmacnz.mit-license.org)
 [![NuGet](https://img.shields.io/nuget/v/coveralls.net.svg)](https://www.nuget.org/packages/coveralls.net)

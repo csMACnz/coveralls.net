@@ -33,7 +33,7 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <PropertyGroup>
-    <ApplicationIcon>Properties\coverallsNet.ico</ApplicationIcon>
+    <ApplicationIcon>coverallsNet.ico</ApplicationIcon>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="BCLExtensions">
@@ -94,6 +94,7 @@
     <None Include="T4DocoptNet.tt.hooks.t4" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="coverallsNet.ico" />
     <Content Include="Properties\coverallsNet.ico" />
     <Content Include="Main.usage.txt" />
     <None Include="T4DocoptNet.tt.settings.xml" />
