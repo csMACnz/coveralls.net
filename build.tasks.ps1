@@ -236,4 +236,4 @@ task postbuild -depends coverage-only, integration, mono-integration, coveralls-
 
 task appveyor-build -depends RestoreNuGetPackages, AppVeyorEnvironmentSettings, build
 
-task appveyor-test -depends AppVeyorEnvironmentSettings, postbuild, appveyor-checkCoverity, coverity
+task appveyor-test -depends AppVeyorEnvironmentSettings, postbuild, coverity
