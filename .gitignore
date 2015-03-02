@@ -188,6 +188,7 @@ FakesAssemblies/
 Package/
 
 cov-int/
+coveralls.coverity.*.zip
 
 opencovertests.xml
 
