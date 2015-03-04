@@ -91,12 +91,11 @@ task test-coverity -depends setup-coverity-local, coverity
 
 task coverity -precondition { return $env:APPVEYOR_SCHEDULED_BUILD -eq "True" }{
   
-  & cov-build --dir cov-int msbuild "/t:Clean;Build" "/p:Configuration=$configuration" $sln_file
-  
   $coverityFileName = "coveralls.coverity.$script:nugetVersion.zip"
-  
   $PublishCoverity = (Resolve-Path ".\src\packages\PublishCoverity.*\PublishCoverity.exe").ToString()
 
+  & $script:covbuild --dir cov-int msbuild "/t:Clean;Build" "/p:Configuration=$configuration" $sln_file
+  
   & $PublishCoverity compress -o $coverityFileName
   
   & $PublishCoverity publish -t $env:COVERITY_TOKEN -e $env:COVERITY_EMAIL -z $coverityFileName -d "AppVeyor scheduled build ($env:APPVEYOR_BUILD_VERSION)." --codeVersion $script:nugetVersion
@@ -237,3 +236,4 @@ task postbuild -depends coverage-only, integration, mono-integration, coveralls-
 task appveyor-build -depends RestoreNuGetPackages, AppVeyorEnvironmentSettings, build
 
 task appveyor-test -depends AppVeyorEnvironmentSettings, postbuild, coverity
+    
