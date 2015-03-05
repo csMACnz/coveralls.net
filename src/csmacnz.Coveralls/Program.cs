@@ -133,7 +133,9 @@ namespace csmacnz.Coveralls
         {
             var providers = new List<IGitDataResolver>
             {
-                new CommandLineGitDataResolver(args)
+                new AppVeyorGitDataResolver(),
+                new CommandLineGitDataResolver(args),
+                
             };
             return (from provider in providers where provider.CanProvideData() select provider.GenerateData()).FirstOrDefault();
         }

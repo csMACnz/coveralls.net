@@ -63,6 +63,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="AppVeyorGitDataResolver.cs" />
     <Compile Include="CommandLineGitDataResolver.cs" />
     <Compile Include="CoverageFile.cs" />
     <Compile Include="CoverageFileBuilder.cs" />
