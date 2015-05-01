@@ -8,7 +8,7 @@ namespace csmacnz.Coveralls
 
         public PathProcessor(string basePath)
         {
-            _basePath = !string.IsNullOrWhiteSpace(_basePath) ? basePath : Directory.GetCurrentDirectory();
+            _basePath = !string.IsNullOrWhiteSpace(basePath) ? basePath : Directory.GetCurrentDirectory();
         }
 
         public string ConvertPath(string path)
