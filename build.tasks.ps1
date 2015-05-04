@@ -51,7 +51,7 @@ task AppVeyorEnvironmentSettings {
         echo "nuget version set to $script:nugetVersion"
     }
 
-    $script:xunit = "xunit.console.clr4.exe"
+    $script:xunit = "%xunit20%\xunit.console.exe"
     $script:testOptions = "/appveyor"
 }
 
