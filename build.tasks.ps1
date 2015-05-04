@@ -17,7 +17,7 @@ properties {
     $sln_file = "$base_dir\src\csmacnz.Coveralls.sln"
     $nuspec_filename = "coveralls.net.nuspec"
     $testOptions = ""
-    $script:xunit = "$base_dir\src\packages\xunit.runners.1.9.2\tools\xunit.console.clr4.exe"
+    $script:xunit = "$base_dir\src\packages\xunit.runner.console.2.0.0/tools/xunit.console.exe"
 
 }
 
@@ -28,7 +28,7 @@ task RestoreNuGetPackages {
 }
 
 task LocalTestSettings {
-    $script:xunit = "$base_dir/src/packages/xunit.runners.1.9.2/tools/xunit.console.clr4.exe"
+    $script:xunit = "$base_dir/src/packages/xunit.runner.console.2.0.0/tools/xunit.console.exe"
     $script:testOptions = ""
 }
 
@@ -99,21 +99,25 @@ task coverity -precondition { return $env:APPVEYOR_SCHEDULED_BUILD -eq "True" }{
   & $PublishCoverity publish -t $env:COVERITY_TOKEN -e $env:COVERITY_EMAIL -z $coverityFileName -d "AppVeyor scheduled build ($env:APPVEYOR_BUILD_VERSION)." --codeVersion $script:nugetVersion
 }
 
+task unit-test {
+    exec { & $script:xunit "src\csmacnz.Coveralls.Tests\bin\$Configuration\csmacnz.Coveralls.Tests.dll" -noshadow $script:testOptions }
+}
+
 task integration {
     $env:MONO_INTEGRATION_MODE = ""
-    iex "& $script:xunit "".\src\csmacnz.Coveralls.Tests.Integration\bin\$configuration\csmacnz.Coveralls.Tests.Integration.dll"" /noshadow $script:testOptions"
+    iex "& $script:xunit "".\src\csmacnz.Coveralls.Tests.Integration\bin\$configuration\csmacnz.Coveralls.Tests.Integration.dll"" -noshadow $script:testOptions"
 }
 
 task mono-integration {
     $env:MONO_INTEGRATION_MODE = "True"
     $env:MONO_INTEGRATION_MONOPATH = "C:\Program Files (x86)\Mono-3.2.3\bin"
-    iex "& $script:xunit "".\src\csmacnz.Coveralls.Tests.Integration\bin\$configuration\csmacnz.Coveralls.Tests.Integration.dll"" /noshadow $script:testOptions"
+    iex "& $script:xunit "".\src\csmacnz.Coveralls.Tests.Integration\bin\$configuration\csmacnz.Coveralls.Tests.Integration.dll"" -noshadow $script:testOptions"
 }
 
 task coverage -depends LocalTestSettings, build, coverage-only
 
 task coverage-only {
-    exec { & .\src\packages\OpenCover.4.5.3427\OpenCover.Console.exe -register:user -target:$script:xunit "-targetargs:""src\csmacnz.Coveralls.Tests\bin\$Configuration\csmacnz.Coveralls.Tests.dll"" /noshadow $script:testOptions" -filter:"+[csmacnz.Coveralls*]*" -output:opencovertests.xml }
+    exec { & .\src\packages\OpenCover.4.5.3723\OpenCover.Console.exe -register:user -target:$script:xunit "-targetargs:""src\csmacnz.Coveralls.Tests\bin\$Configuration\csmacnz.Coveralls.Tests.dll"" -noshadow $script:testOptions" -filter:"+[csmacnz.Coveralls*]*" -output:opencovertests.xml }
 }
 
 task coveralls -depends coverage, coveralls-only

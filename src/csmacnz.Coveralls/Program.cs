@@ -133,11 +133,11 @@ namespace csmacnz.Coveralls
         {
             var providers = new List<IGitDataResolver>
             {
-                new AppVeyorGitDataResolver(),
+                new AppVeyorGitDataResolver(new EnvironmentVariables()),
                 new CommandLineGitDataResolver(args),
-                
             };
-            return (from provider in providers where provider.CanProvideData() select provider.GenerateData()).FirstOrDefault();
+
+            return providers .Where(p=>p.CanProvideData()).Select(p=>p.GenerateData()).FirstOrDefault();
         }
 
         private static void WriteFileData(string fileData, string outputFile)
