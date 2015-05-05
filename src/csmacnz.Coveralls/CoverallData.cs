@@ -13,6 +13,9 @@ namespace csmacnz.Coveralls
         [JsonProperty("service_name")]
         public string ServiceName { get; set; }
 
+        [JsonProperty("service_pull_request", DefaultValueHandling = DefaultValueHandling.Ignore)]
+        public string ServicePullRequest { get; set; }
+
         [JsonProperty("source_files")]
         public CoverageFile[] SourceFiles { get; set; }
 

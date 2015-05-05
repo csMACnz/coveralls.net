@@ -103,13 +103,15 @@ namespace csmacnz.Coveralls
             var gitData = ResolveGitData(args);
 
             var serviceJobId = ResolveServiceJobId(args);
-
+            string servicePullRequest = ResolveServicePullRequest(args);
             string serviceName = args.IsProvided("--serviceName") ? args.OptServicename : "coveralls.net";
+            
             var data = new CoverallData
             {
                 RepoToken = repoToken,
                 ServiceJobId = serviceJobId,
                 ServiceName = serviceName,
+                ServicePullRequest = servicePullRequest,
                 SourceFiles = files.ToArray(),
                 Git = gitData
             };
@@ -135,7 +137,15 @@ namespace csmacnz.Coveralls
             if (args.IsProvided("--jobId")) return args.OptJobid;
             var jobId = new EnvironmentVariables().GetEnvironmentVariable("APPVEYOR_JOB_ID");
             if (jobId.IsNotNullOrWhitespace()) return jobId;
-            return "0";
+            return null;
+        }
+
+        private static string ResolveServicePullRequest(MainArgs args)
+        {
+            //if (args.IsProvided("--prId")) return args.OptPRID;
+            var jobId = new EnvironmentVariables().GetEnvironmentVariable("APPVEYOR_PULL_REQUEST_NUMBER");
+            if (jobId.IsNotNullOrWhitespace()) return jobId;
+            return null;
         }
 
         private static GitData ResolveGitData(MainArgs args)
