@@ -36,6 +36,9 @@
   <PropertyGroup>
     <ApplicationIcon>coverallsNet.ico</ApplicationIcon>
   </PropertyGroup>
+  <PropertyGroup>
+    <StartupObject>csmacnz.Coveralls.Program</StartupObject>
+  </PropertyGroup>
   <ItemGroup>
     <Reference Include="BCLExtensions, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\BCLExtensions.1.1.0-beta0001\lib\BCLExtensions.dll</HintPath>
