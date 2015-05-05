@@ -5,6 +5,7 @@ using System.Linq;
 using System.Net.Http;
 using System.Reflection;
 using System.Xml.Linq;
+using BCLExtensions;
 using Newtonsoft.Json;
 
 namespace csmacnz.Coveralls
@@ -101,7 +102,7 @@ namespace csmacnz.Coveralls
 
             var gitData = ResolveGitData(args);
 
-            var serviceJobId = args.IsProvided("--jobId") ? args.OptJobid : "0";
+            var serviceJobId = ResolveServiceJobId(args);
 
             string serviceName = args.IsProvided("--serviceName") ? args.OptServicename : "coveralls.net";
             var data = new CoverallData
@@ -127,6 +128,14 @@ namespace csmacnz.Coveralls
                     Environment.Exit(1);
                 }
             }
+        }
+
+        private static string ResolveServiceJobId(MainArgs args)
+        {
+            if (args.IsProvided("--jobId")) return args.OptJobid;
+            var jobId = new EnvironmentVariables().GetEnvironmentVariable("APPVEYOR_JOB_ID");
+            if (jobId.IsNotNullOrWhitespace()) return jobId;
+            return "0";
         }
 
         private static GitData ResolveGitData(MainArgs args)
