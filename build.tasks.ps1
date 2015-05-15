@@ -120,7 +120,7 @@ task coverage-only {
     exec { & .\src\packages\OpenCover.4.5.3723\OpenCover.Console.exe -register:user -target:$script:xunit "-targetargs:""src\csmacnz.Coveralls.Tests\bin\$Configuration\csmacnz.Coveralls.Tests.dll"" -noshadow $script:testOptions" -filter:"+[csmacnz.Coveralls*]*" -output:opencovertests.xml }
 }
 
-task coveralls -depends coverage, coveralls-only
+task coveralls -precondition { return $env:COVERALLS_REPO_TOKEN -ne "" } -depends coverage, coveralls-only
 
 task coveralls-only {
     exec { & ".\src\csmacnz.Coveralls\bin\$configuration\csmacnz.Coveralls.exe" --opencover -i opencovertests.xml --repoToken $env:COVERALLS_REPO_TOKEN }
