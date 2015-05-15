@@ -1,15 +1,37 @@
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 using System.Collections.Generic;
 using DocoptNet;
 
 namespace csmacnz.Coveralls
 {
+
     // Generated class for Main.usage.txt
     public class MainArgs
     {
         public const string Usage = @"csmac.Coveralls - a coveralls.io coverage publisher for .Net
 
 Usage:
-  csmacnz.Coveralls (--opencover | --dynamiccodecoverage | --monocov) -i ./opencovertests.xml --repoToken <repoToken> [-o ./opencovertests.json] [--dryrun] [--useRelativePaths [--basePath <path>] ] [--commitId <commitId> --commitBranch <commitBranch> [--commitAuthor <commitAuthor> --commitEmail <commitEmail> --commitMessage <commitMessage>] ] [--jobId <jobId>] [--serviceName <Name>]
+  csmacnz.Coveralls (--opencover | --dynamiccodecoverage | --monocov) -i ./opencovertests.xml [--repoToken <repoToken>] [-o ./opencovertests.json] [--dryrun] [--useRelativePaths [--basePath <path>] ] [--commitId <commitId> --commitBranch <commitBranch> [--commitAuthor <commitAuthor> --commitEmail <commitEmail> --commitMessage <commitMessage>] ] [--jobId <jobId>] [--serviceName <Name>]
   csmacnz.Coveralls --version
   csmacnz.Coveralls --help
 
@@ -30,8 +52,8 @@ Options:
  --commitAuthor <commitAuthor>   The git commit author for the coverage report.
  --commitEmail <commitEmail>     The git commit author email for the coverage report.
  --commitMessage <commitMessage> The git commit message for the coverage report.
- --jobId <jobId>                 The job Id to provide to coveralls.io.
- --serviceName <Name>            The service-name for the coverage report. [default: ""coveralls.net""]
+ --jobId <jobId>                 The job Id to provide to coveralls.io. [default: 0]
+ --serviceName <Name>            The service-name for the coverage report. [default: coveralls.net]
 
 Commit Options:
   If --commitId and --commitBranch are provided, all git settings will come from the command line arguments.
@@ -66,7 +88,7 @@ What its for:
             return _args[parameter] != null;
         }
 
-		public bool OptOpencover { get { return _args["--opencover"].IsTrue; } }
+public bool OptOpencover { get { return _args["--opencover"].IsTrue; } }
 		public bool OptDynamiccodecoverage { get { return _args["--dynamiccodecoverage"].IsTrue; } }
 		public bool OptMonocov { get { return _args["--monocov"].IsTrue; } }
 		public string OptInput { get { return _args["--input"].ToString(); } }

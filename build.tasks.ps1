@@ -122,7 +122,7 @@ task coverage-only {
 
 task coveralls -depends coverage, coveralls-only
 
-task coveralls-only {
+task coveralls-only -precondition { return $env:COVERALLS_REPO_TOKEN -ne $null } {
     exec { & ".\src\csmacnz.Coveralls\bin\$configuration\csmacnz.Coveralls.exe" --opencover -i opencovertests.xml --repoToken $env:COVERALLS_REPO_TOKEN }
 }
 

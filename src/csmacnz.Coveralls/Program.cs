@@ -15,7 +15,8 @@ namespace csmacnz.Coveralls
         public static void Main(string[] argv)
         {
             var args = new MainArgs(argv, exit: true, version: Assembly.GetEntryAssembly().GetName().Version);
-            var repoToken = args.OptRepotoken;
+            var repoToken = ResolveCoveralsRepoToken(args);
+
             if (string.IsNullOrWhiteSpace(repoToken))
             {
                 Console.Error.WriteLine("parameter repoToken is required.");
@@ -136,6 +137,14 @@ namespace csmacnz.Coveralls
             var jobId = new EnvironmentVariables().GetEnvironmentVariable("APPVEYOR_JOB_ID");
             if (jobId.IsNotNullOrWhitespace()) return jobId;
             return "0";
+        }
+
+        private static string ResolveCoveralsRepoToken(MainArgs args)
+        {
+            if (args.IsProvided("--repoToken")) return args.OptRepotoken;
+            var repoToken = new EnvironmentVariables().GetEnvironmentVariable("COVERALLS_REPO_TOKEN");
+            if (repoToken.IsNotNullOrWhitespace()) return repoToken;
+            return null;
         }
 
         private static GitData ResolveGitData(MainArgs args)
