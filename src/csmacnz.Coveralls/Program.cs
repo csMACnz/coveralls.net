@@ -15,14 +15,30 @@ namespace csmacnz.Coveralls
         public static void Main(string[] argv)
         {
             var args = new MainArgs(argv, exit: true, version: Assembly.GetEntryAssembly().GetName().Version);
-            var repoToken = args.OptRepotoken;
-            if (string.IsNullOrWhiteSpace(repoToken))
+            string repoToken;
+            if (args.IsProvided("--repoToken"))
             {
-                Console.Error.WriteLine("parameter repoToken is required.");
-                Console.WriteLine(MainArgs.Usage);
-                Environment.Exit(1);
+                repoToken = args.OptRepotoken;
+                if (repoToken.IsNullOrWhitespace())
+                {
+                    ExitWithError("parameter repoToken is required.");
+                }
             }
+            else
+            {
+                var variable = args.OptRepotokenvariable;
+                if (variable.IsNullOrWhitespace())
+                {
+                    ExitWithError("parameter repoTokenVariable is required.");
+                }
 
+                repoToken = Environment.GetEnvironmentVariable(variable);
+                if (repoToken.IsNullOrWhitespace())
+                {
+                    ExitWithError("No token found in Environment Variable '{0}'.".FormatWith(variable));
+                }
+
+            }
             var outputFile = args.IsProvided("--output") ? args.OptOutput : string.Empty;
             if (!string.IsNullOrWhiteSpace(outputFile) && File.Exists(outputFile))
             {
@@ -37,8 +53,7 @@ namespace csmacnz.Coveralls
                 var fileName = args.OptInput;
                 if (!Directory.Exists(fileName))
                 {
-                    Console.Error.WriteLine("Input file '" + fileName + "' cannot be found");
-                    Environment.Exit(1);
+                    ExitWithError("Input file '" + fileName + "' cannot be found");
                 }
                 Dictionary<string, XDocument> documents =
                     new DirectoryInfo(fileName).GetFiles()
@@ -55,8 +70,7 @@ namespace csmacnz.Coveralls
                     var fileName = args.OptInput;
                     if (!File.Exists(fileName))
                     {
-                        Console.Error.WriteLine("Input file '" + fileName + "' cannot be found");
-                        Environment.Exit(1);
+                        ExitWithError("Input file '" + fileName + "' cannot be found");
                     }
 
                     var document = XDocument.Load(fileName);
@@ -68,8 +82,7 @@ namespace csmacnz.Coveralls
                     var fileName = args.OptInput;
                     if (!File.Exists(fileName))
                     {
-                        Console.Error.WriteLine("Input file '" + fileName + "' cannot be found");
-                        Environment.Exit(1);
+                        ExitWithError("Input file '" + fileName + "' cannot be found");
                     }
 
                     var document = XDocument.Load(fileName);
@@ -124,10 +137,15 @@ namespace csmacnz.Coveralls
                 var uploaded = Upload(@"https://coveralls.io/api/v1/jobs", fileData);
                 if (!uploaded)
                 {
-                    Console.Error.WriteLine("Failed to upload to coveralls");
-                    Environment.Exit(1);
+                    ExitWithError("Failed to upload to coveralls");
                 }
             }
+        }
+
+        private static void ExitWithError(string message)
+        {
+            Console.Error.WriteLine(message);
+            Environment.Exit(1);
         }
 
         private static string ResolveServiceJobId(MainArgs args)

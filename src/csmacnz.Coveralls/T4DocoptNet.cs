@@ -9,29 +9,30 @@ namespace csmacnz.Coveralls
         public const string Usage = @"csmac.Coveralls - a coveralls.io coverage publisher for .Net
 
 Usage:
-  csmacnz.Coveralls (--opencover | --dynamiccodecoverage | --monocov) -i ./opencovertests.xml --repoToken <repoToken> [-o ./opencovertests.json] [--dryrun] [--useRelativePaths [--basePath <path>] ] [--commitId <commitId> --commitBranch <commitBranch> [--commitAuthor <commitAuthor> --commitEmail <commitEmail> --commitMessage <commitMessage>] ] [--jobId <jobId>] [--serviceName <Name>]
+  csmacnz.Coveralls (--opencover | --dynamiccodecoverage | --monocov) -i ./opencovertests.xml (--repoToken <repoToken> | [--repoTokenVariable <repoTokenVariable>]) [-o ./opencovertests.json] [--dryrun] [--useRelativePaths [--basePath <path>] ] [--commitId <commitId> --commitBranch <commitBranch> [--commitAuthor <commitAuthor> --commitEmail <commitEmail> --commitMessage <commitMessage>] ] [--jobId <jobId>] [--serviceName <Name>]
   csmacnz.Coveralls --version
   csmacnz.Coveralls --help
 
 Options:
- -h, --help                      Show this screen.
- --version                       Show version.
- -i <file>, --input <file>       The coverage source file location.
- -o <file>, --output <file>      The coverage results json will be written to this file it provided. 
- --dryrun                        This flag will stop coverage results being posted to coveralls.io
- --useRelativePaths              This flag, when provided, will attempt to strip the current working directory from the beginning of the source file path.
- --basePath <path>               When useRelativePaths and a basePath is provided, this path is used instead of the current working directory.
- --opencover                     Reads input as OpenCover data.
- --dynamiccodecoverage           Reads input as the CodeCoverage.exe xml format.
- --monocov                       Reads input as monocov results folder.
- --repoToken <repoToken>         The coveralls.io repository token.
- --commitId <commitId>           The git commit hash for the coverage report.
- --commitBranch <commitBranch>   The git branch for the coverage report.
- --commitAuthor <commitAuthor>   The git commit author for the coverage report.
- --commitEmail <commitEmail>     The git commit author email for the coverage report.
- --commitMessage <commitMessage> The git commit message for the coverage report.
- --jobId <jobId>                 The job Id to provide to coveralls.io.
- --serviceName <Name>            The service-name for the coverage report. [default: ""coveralls.net""]
+ -h, --help                               Show this screen.
+ --version                                Show version.
+ -i <file>, --input <file>                The coverage source file location.
+ -o <file>, --output <file>               The coverage results json will be written to this file it provided. 
+ --dryrun                                 This flag will stop coverage results being posted to coveralls.io
+ --useRelativePaths                       This flag, when provided, will attempt to strip the current working directory from the beginning of the source file path.
+ --basePath <path>                        When useRelativePaths and a basePath is provided, this path is used instead of the current working directory.
+ --opencover                              Reads input as OpenCover data.
+ --dynamiccodecoverage                    Reads input as the CodeCoverage.exe xml format.
+ --monocov                                Reads input as monocov results folder.
+ --repoToken <repoToken>                  The coveralls.io repository token.
+ --repoTokenVariable <repoTokenVariable>  The Environment Variable name where the coveralls.io repository token is available. [default: COVERALLS_REPO_TOKEN]
+ --commitId <commitId>                    The git commit hash for the coverage report.
+ --commitBranch <commitBranch>            The git branch for the coverage report.
+ --commitAuthor <commitAuthor>            The git commit author for the coverage report.
+ --commitEmail <commitEmail>              The git commit author email for the coverage report.
+ --commitMessage <commitMessage>          The git commit message for the coverage report.
+ --jobId <jobId>                          The job Id to provide to coveralls.io. [default: 0]
+ --serviceName <Name>                     The service-name for the coverage report. [default: coveralls.net]
 
 Commit Options:
   If --commitId and --commitBranch are provided, all git settings will come from the command line arguments.
@@ -71,6 +72,7 @@ What its for:
 		public bool OptMonocov { get { return _args["--monocov"].IsTrue; } }
 		public string OptInput { get { return _args["--input"].ToString(); } }
 		public string OptRepotoken { get { return _args["--repoToken"].ToString(); } }
+		public string OptRepotokenvariable { get { return _args["--repoTokenVariable"].ToString(); } }
 		public string OptOutput { get { return _args["--output"].ToString(); } }
 		public bool OptDryrun { get { return _args["--dryrun"].IsTrue; } }
 		public bool OptUserelativepaths { get { return _args["--useRelativePaths"].IsTrue; } }
