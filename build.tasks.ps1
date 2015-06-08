@@ -242,7 +242,7 @@ task archive-only {
 
 task pack -depends build, pack-only
 
-task pack-only {
+task pack-only -depends SetChocolateyPath {
 
     mkdir $nuget_pack_dir
     cp "$nuspec_filename" "$nuget_pack_dir"
