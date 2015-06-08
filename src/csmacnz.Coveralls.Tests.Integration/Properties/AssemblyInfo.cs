@@ -9,7 +9,7 @@ using System.Runtime.InteropServices;
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("")]
 [assembly: AssemblyProduct("csmacnz.Coveralls.Tests.Integration")]
-[assembly: AssemblyCopyright("Copyright © csmacnz 2015")]
+[assembly: AssemblyCopyright("Copyright © csMACnz 2015")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Net.Http;
@@ -14,7 +15,7 @@ namespace csmacnz.Coveralls
     {
         public static void Main(string[] argv)
         {
-            var args = new MainArgs(argv, exit: true, version: Assembly.GetEntryAssembly().GetName().Version);
+            var args = new MainArgs(argv, exit: true, version: GetDisplayVersion());
             string repoToken;
             if (args.IsProvided("--repoToken"))
             {
@@ -140,6 +141,11 @@ namespace csmacnz.Coveralls
                     ExitWithError("Failed to upload to coveralls");
                 }
             }
+        }
+
+        private static string GetDisplayVersion()
+        {
+            return FileVersionInfo.GetVersionInfo(Assembly.GetEntryAssembly().Location).ProductVersion;
         }
 
         private static void ExitWithError(string message)

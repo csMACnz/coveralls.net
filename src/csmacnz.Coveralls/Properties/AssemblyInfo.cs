@@ -9,7 +9,7 @@ using System.Runtime.InteropServices;
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("csmacnz")]
 [assembly: AssemblyProduct("csmacnz.Coveralls")]
-[assembly: AssemblyCopyright("Copyright © csmacnz 2015")]
+[assembly: AssemblyCopyright("Copyright © csMACnz 2015")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 
