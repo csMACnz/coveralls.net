@@ -46,8 +46,8 @@ namespace csmacnz.Coveralls
                 _coverage.CopyTo(coverage,0);
             }
 
-            var sourceLines = _sourceLines != null ? _sourceLines.ToArray() : new string[0];
-            return new CoverageFile(_filePath, sourceLines, coverage);
+            var sourceDigest = Crypto.CalculateMD5Digest(string.Join("\n", _sourceLines != null ? _sourceLines.ToArray() : new string[0]));
+            return new CoverageFile(_filePath, sourceDigest, coverage);
         }
 
     }

@@ -43,7 +43,7 @@ namespace csmacnz.Coveralls
                             source.Add(line.Value);
                         }
 
-                        sourceFiles.Add(new CoverageFile(filePath, source.ToArray(), coverage.ToArray()));
+                        sourceFiles.Add(new CoverageFile(filePath, Crypto.CalculateMD5Digest(string.Join(",", source.ToArray())), coverage.ToArray()));
                     }
                 }
             }

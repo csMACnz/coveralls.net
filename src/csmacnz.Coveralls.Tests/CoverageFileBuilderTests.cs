@@ -38,9 +38,9 @@ namespace csmacnz.Coveralls.Tests
             }
 
             [Fact]
-            public void ThenSourceIsEmpty()
+            public void ThenSourceDigestIsTheEmptyDigest()
             {
-                Assert.Equal(string.Empty, _coverageFile.Source);
+                Assert.Equal("D41D8CD98F00B204E9800998ECF8427E", _coverageFile.SourceDigest);
             }
 
             [Fact]
