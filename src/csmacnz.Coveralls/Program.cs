@@ -135,10 +135,10 @@ namespace csmacnz.Coveralls
             }
             if (!args.OptDryrun)
             {
-                var uploaded = Upload(@"https://coveralls.io/api/v1/jobs", fileData);
-                if (!uploaded)
+                var uploadResult = Upload(@"https://coveralls.io/api/v1/jobs", fileData);
+                if (!uploadResult.Success)
                 {
-                    ExitWithError("Failed to upload to coveralls");
+                    ExitWithError(string.Format("Failed to upload to coveralls\n{0}", uploadResult.Message));
                 }
             }
         }
@@ -185,7 +185,7 @@ namespace csmacnz.Coveralls
             }
         }
 
-        private static bool Upload(string url, string fileData)
+        private static UploadResult Upload(string url, string fileData)
         {
             HttpContent stringContent = new StringContent(fileData);
 
@@ -198,10 +198,39 @@ namespace csmacnz.Coveralls
 
                 if (!response.IsSuccessStatusCode)
                 {
-                    return false;
+                    var content = response.Content.ReadAsStringAsync().Result;
+                    var message = TryGetJsonMessageFromResponse(content) ?? content;
+
+                    return new UploadResult
+                    {
+                        Success = false,
+                        Message = string.Format("{0} - {1}", response.StatusCode, message)
+                    };
                 }
-                return true;
+                return new UploadResult
+                    {
+                        Success = true
+                    };
             }
+        }
+
+        private static string TryGetJsonMessageFromResponse(string content)
+        {
+            try
+            {
+                dynamic result = JsonConvert.DeserializeObject(content);
+                return result.message;
+            }
+            catch
+            {
+                return null;
+            }
+        }
+
+        private class UploadResult
+        {
+            public bool Success { get; set; }
+            public string Message { get; set; }
         }
     }
 }
