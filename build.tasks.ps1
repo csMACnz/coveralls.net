@@ -146,7 +146,7 @@ task coverage-only {
 task coveralls -depends coverage, coveralls-only
 
 task coveralls-only -precondition { return -not $env:APPVEYOR_PULL_REQUEST_NUMBER } {
-    exec { & ".\src\csmacnz.Coveralls\bin\$configuration\csmacnz.Coveralls.exe" --opencover -i opencovertests.xml }
+    exec { & ".\src\csmacnz.Coveralls\bin\$configuration\csmacnz.Coveralls.exe" --opencover -i opencovertests.xml --treatUploadErrorsAsWarnings }
 }
 
 task dupfinder {

@@ -139,7 +139,15 @@ namespace csmacnz.Coveralls
                 var uploadResult = new CoverallsService().Upload(fileData);
                 if (!uploadResult.Successful)
                 {
-                    ExitWithError(string.Format("Failed to upload to coveralls\n{0}", uploadResult.Error));
+                    var message = string.Format("Failed to upload to coveralls\n{0}", uploadResult.Error);
+                    if (args.OptTreatuploaderrorsaswarnings)
+                    {
+                        Console.WriteLine(message);
+                    }
+                    else
+                    {
+                        ExitWithError(message);
+                    }
                 }
             }
         }
