@@ -21,7 +21,8 @@ namespace csmacnz.Coveralls.Tests.Integration
 
                 argumentsToUse = exePath + " " + arguments;
             }
-
+            Console.WriteLine("Looking for Coveralls At: {0}", fileNameToUse);
+            Console.WriteLine("With Arguments: {0}", argumentsToUse);
             var process = new Process();
             var startInfo = new ProcessStartInfo
             {
@@ -86,7 +87,6 @@ namespace csmacnz.Coveralls.Tests.Integration
             {
                 basePath = Path.Combine("..", "..", "..");
             }
-            Console.WriteLine(basePath);
             return Path.Combine(basePath, "csmacnz.Coveralls", "bin", configuration);
         }
     }
