@@ -41,6 +41,10 @@
       <HintPath>..\packages\BCLExtensions.1.1.0\lib\BCLExtensions.dll</HintPath>
       <Private>True</Private>
     </Reference>
+    <Reference Include="Beefeater, Version=0.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Beefeater.0.2.0\lib\portable-net4+sl5+netcore45+wpa81+wp8+MonoAndroid1+MonoTouch1\Beefeater.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="DocoptNet">
       <HintPath>..\packages\docopt.net.0.6.1.6\lib\net40\DocoptNet.dll</HintPath>
     </Reference>

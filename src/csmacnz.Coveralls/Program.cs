@@ -7,6 +7,7 @@ using System.Net.Http;
 using System.Reflection;
 using System.Xml.Linq;
 using BCLExtensions;
+using Beefeater;
 using Newtonsoft.Json;
 
 namespace csmacnz.Coveralls
@@ -15,7 +16,7 @@ namespace csmacnz.Coveralls
     {
         public static void Main(string[] argv)
         {
-            var args = new MainArgs(argv, exit: true, version: GetDisplayVersion());
+            var args = new MainArgs(argv, exit: true, version: (string)GetDisplayVersion());
             string repoToken;
             if (args.IsProvided("--repoToken"))
             {
@@ -104,9 +105,9 @@ namespace csmacnz.Coveralls
                     coverageBuilder.SetPath(path);
 
                     var readAllText = new FileSystem().TryLoadFile(coverageFileData.FullPath);
-                    if (readAllText != null)
+                    if (readAllText.HasValue)
                     {
-                        coverageBuilder.AddSource(readAllText);
+                        coverageBuilder.AddSource((string)readAllText);
                     }
 
                     var coverageFile = coverageBuilder.CreateFile();
@@ -122,10 +123,10 @@ namespace csmacnz.Coveralls
             var data = new CoverallData
             {
                 RepoToken = repoToken,
-                ServiceJobId = serviceJobId,
+                ServiceJobId = serviceJobId.ValueOr("0"),
                 ServiceName = serviceName,
                 SourceFiles = files.ToArray(),
-                Git = gitData
+                Git = gitData.ValueOrDefault()
             };
 
             var fileData = JsonConvert.SerializeObject(data);
@@ -136,14 +137,14 @@ namespace csmacnz.Coveralls
             if (!args.OptDryrun)
             {
                 var uploadResult = Upload(@"https://coveralls.io/api/v1/jobs", fileData);
-                if (!uploadResult.Success)
+                if (!uploadResult.Successful)
                 {
-                    ExitWithError(string.Format("Failed to upload to coveralls\n{0}", uploadResult.Message));
+                    ExitWithError(string.Format("Failed to upload to coveralls\n{0}", uploadResult.Error));
                 }
             }
         }
 
-        private static string GetDisplayVersion()
+        private static NotNull<string> GetDisplayVersion()
         {
             return FileVersionInfo.GetVersionInfo(Assembly.GetEntryAssembly().Location).ProductVersion;
         }
@@ -154,15 +155,15 @@ namespace csmacnz.Coveralls
             Environment.Exit(1);
         }
 
-        private static string ResolveServiceJobId(MainArgs args)
+        private static Option<string> ResolveServiceJobId(MainArgs args)
         {
             if (args.IsProvided("--jobId")) return args.OptJobid;
             var jobId = new EnvironmentVariables().GetEnvironmentVariable("APPVEYOR_JOB_ID");
             if (jobId.IsNotNullOrWhitespace()) return jobId;
-            return "0";
+            return null;
         }
 
-        private static GitData ResolveGitData(MainArgs args)
+        private static Option<GitData> ResolveGitData(MainArgs args)
         {
             var providers = new List<IGitDataResolver>
             {
@@ -185,52 +186,41 @@ namespace csmacnz.Coveralls
             }
         }
 
-        private static UploadResult Upload(string url, string fileData)
+        //TODO(csMACnz): change from bool to Unit or a simplified Result<TError> as a thing?
+        private static Result<bool, string> Upload(string url, string fileData)
         {
-            HttpContent stringContent = new StringContent(fileData);
-
-            using (var client = new HttpClient())
-            using (var formData = new MultipartFormDataContent())
+            using (HttpContent stringContent = new StringContent(fileData))
             {
-                formData.Add(stringContent, "json_file", "coverage.json");
-
-                var response = client.PostAsync(url, formData).Result;
-
-                if (!response.IsSuccessStatusCode)
+                using (var client = new HttpClient())
+                using (var formData = new MultipartFormDataContent())
                 {
-                    var content = response.Content.ReadAsStringAsync().Result;
-                    var message = TryGetJsonMessageFromResponse(content) ?? content;
+                    formData.Add(stringContent, "json_file", "coverage.json");
 
-                    return new UploadResult
+                    var response = client.PostAsync(url, formData).Result;
+
+                    if (!response.IsSuccessStatusCode)
                     {
-                        Success = false,
-                        Message = string.Format("{0} - {1}", response.StatusCode, message)
-                    };
+                        var content = response.Content.ReadAsStringAsync().Result;
+                        var message = TryGetJsonMessageFromResponse(content).ValueOr(content);
+
+                        return string.Format("{0} - {1}", response.StatusCode, message);
+                    }
+                    return true;
                 }
-                return new UploadResult
-                    {
-                        Success = true
-                    };
             }
         }
 
-        private static string TryGetJsonMessageFromResponse(string content)
+        private static Option<string> TryGetJsonMessageFromResponse(string content)
         {
             try
             {
                 dynamic result = JsonConvert.DeserializeObject(content);
                 return result.message;
             }
-            catch
+            catch (Exception)
             {
                 return null;
             }
-        }
-
-        private class UploadResult
-        {
-            public bool Success { get; set; }
-            public string Message { get; set; }
         }
     }
 }

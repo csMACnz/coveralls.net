@@ -1,7 +1,9 @@
-﻿namespace csmacnz.Coveralls
+﻿using Beefeater;
+
+namespace csmacnz.Coveralls
 {
     public interface IFileSystem
     {
-        string TryLoadFile(string filePath);
+        Option<string> TryLoadFile(string filePath);
     }
 }

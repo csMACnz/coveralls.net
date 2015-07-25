@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using Beefeater;
 
 namespace csmacnz.Coveralls.Tests
 {
@@ -6,7 +7,7 @@ namespace csmacnz.Coveralls.Tests
     {
         private readonly Dictionary<string, string> _files = new Dictionary<string, string>();
 
-        public string TryLoadFile(string filePath)
+        public Option<string> TryLoadFile(string filePath)
         {
             if (_files.ContainsKey(filePath))
             {
