@@ -81,13 +81,7 @@ namespace csmacnz.Coveralls.Tests.Integration
 #else
             var configuration = "Release";
 #endif
-            var basePath = Environment.GetEnvironmentVariable("COVERALLS_TEST_BASEPATH");
-            if (string.IsNullOrWhiteSpace(basePath))
-            {
-                basePath = Path.Combine("..", "..", "..");
-            }
-            Console.WriteLine(basePath);
-            return Path.Combine(basePath, "csmacnz.Coveralls", "bin", configuration);
+            return Path.Combine("..", "..", "..", "csmacnz.Coveralls", "bin", configuration);
         }
     }
 }
