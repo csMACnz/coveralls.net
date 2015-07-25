@@ -111,14 +111,14 @@ task setup-coverity-local {
 task test-coverity -depends setup-coverity-local, coverity
 
 task coverity -precondition { return $env:APPVEYOR_SCHEDULED_BUILD -eq "True" }{
-  
+
   $coverityFileName = "coveralls.coverity.$script:nugetVersion.zip"
   $PublishCoverity = (Resolve-Path ".\src\packages\PublishCoverity.*\PublishCoverity.exe").ToString()
 
   & cov-build --dir cov-int msbuild "/t:Clean;Build" "/p:Configuration=$configuration" $sln_file
-  
+
   & $PublishCoverity compress -o $coverityFileName
-  
+
   & $PublishCoverity publish -t $env:COVERITY_TOKEN -e $env:COVERITY_EMAIL -z $coverityFileName -d "AppVeyor scheduled build ($env:APPVEYOR_BUILD_VERSION)." --codeVersion $script:nugetVersion
 }
 
@@ -127,14 +127,16 @@ task unit-test {
 }
 
 task integration {
+	pwd
     $env:MONO_INTEGRATION_MODE = ""
-    iex "& $script:xunit "".\src\csmacnz.Coveralls.Tests.Integration\bin\$configuration\csmacnz.Coveralls.Tests.Integration.dll"" -noshadow $script:testOptions"
+    & $script:xunit ".\src\csmacnz.Coveralls.Tests.Integration\bin\$configuration\csmacnz.Coveralls.Tests.Integration.dll" -noshadow $script:testOptions
 }
 
 task mono-integration {
+	pwd
     $env:MONO_INTEGRATION_MODE = "True"
     $env:MONO_INTEGRATION_MONOPATH = "C:\Program Files (x86)\Mono-3.2.3\bin"
-    iex "& $script:xunit "".\src\csmacnz.Coveralls.Tests.Integration\bin\$configuration\csmacnz.Coveralls.Tests.Integration.dll"" -noshadow $script:testOptions"
+    & $script:xunit ".\src\csmacnz.Coveralls.Tests.Integration\bin\$configuration\csmacnz.Coveralls.Tests.Integration.dll" -noshadow $script:testOptions
 }
 
 task coverage -depends LocalTestSettings, build, coverage-only
@@ -254,7 +256,7 @@ task pack-only -depends SetChocolateyPath {
     $Spec = [xml](get-content "$nuget_pack_dir\$nuspec_filename")
     $Spec.package.metadata.version = ([string]$Spec.package.metadata.version).Replace("{Version}", $script:nugetVersion)
     $Spec.Save("$nuget_pack_dir\$nuspec_filename")
-    
+
     $chocolateyBinDir = Join-Path $script:chocolateyDir -ChildPath "bin";
 	$NuGetExe = Join-Path $chocolateyBinDir -ChildPath "NuGet.exe";
 
@@ -268,4 +270,4 @@ task appveyor-install -depends GitVersion, RestoreNuGetPackages
 task appveyor-build -depends build
 
 task appveyor-test -depends AppVeyorEnvironmentSettings, postbuild, coverity
-    
+
