@@ -76,11 +76,13 @@
     <Compile Include="CoverageFile.cs" />
     <Compile Include="CoverageFileBuilder.cs" />
     <Compile Include="CoverallData.cs" />
+    <Compile Include="CoverallsService.cs" />
     <Compile Include="EnvironmentVariables.cs" />
     <Compile Include="Crypto.cs" />
     <Compile Include="FileCoverageData.cs" />
     <Compile Include="FileCoverageDataBuilder.cs" />
     <Compile Include="FileSystem.cs" />
+    <Compile Include="ICoverallsService.cs" />
     <Compile Include="IEnvironment.cs" />
     <Compile Include="IFileSystem.cs" />
     <Compile Include="IGitDataResolver.cs" />

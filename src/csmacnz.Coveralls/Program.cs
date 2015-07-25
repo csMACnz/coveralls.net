@@ -136,7 +136,7 @@ namespace csmacnz.Coveralls
             }
             if (!args.OptDryrun)
             {
-                var uploadResult = Upload(@"https://coveralls.io/api/v1/jobs", fileData);
+                var uploadResult = new CoverallsService().Upload(fileData);
                 if (!uploadResult.Successful)
                 {
                     ExitWithError(string.Format("Failed to upload to coveralls\n{0}", uploadResult.Error));
@@ -183,43 +183,6 @@ namespace csmacnz.Coveralls
             catch (Exception)
             {
                 Console.WriteLine("Failed to write data to output file '{0}'.", outputFile);
-            }
-        }
-
-        //TODO(csMACnz): change from bool to Unit or a simplified Result<TError> as a thing?
-        private static Result<bool, string> Upload(string url, string fileData)
-        {
-            using (HttpContent stringContent = new StringContent(fileData))
-            {
-                using (var client = new HttpClient())
-                using (var formData = new MultipartFormDataContent())
-                {
-                    formData.Add(stringContent, "json_file", "coverage.json");
-
-                    var response = client.PostAsync(url, formData).Result;
-
-                    if (!response.IsSuccessStatusCode)
-                    {
-                        var content = response.Content.ReadAsStringAsync().Result;
-                        var message = TryGetJsonMessageFromResponse(content).ValueOr(content);
-
-                        return string.Format("{0} - {1}", response.StatusCode, message);
-                    }
-                    return true;
-                }
-            }
-        }
-
-        private static Option<string> TryGetJsonMessageFromResponse(string content)
-        {
-            try
-            {
-                dynamic result = JsonConvert.DeserializeObject(content);
-                return result.message;
-            }
-            catch (Exception)
-            {
-                return null;
             }
         }
     }
