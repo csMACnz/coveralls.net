@@ -249,7 +249,7 @@ task pack-only -depends SetChocolateyPath {
     mkdir $nuget_pack_dir
     cp "$nuspec_filename" "$nuget_pack_dir"
 
-	$nuget_tools_dir = "$build_output_dir\tools"
+	$nuget_tools_dir = "$nuget_pack_dir\tools"
 	mkdir $nuget_tools_dir
     cp "$build_output_dir\*.*" "$nuget_tools_dir"
 
