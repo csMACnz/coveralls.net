@@ -47,7 +47,7 @@ task GitVersion -depends SetChocolateyPath {
 	$chocolateyBinDir = Join-Path $script:chocolateyDir -ChildPath "bin";
 	$gitVersionExe = Join-Path $chocolateyBinDir -ChildPath "GitVersion.exe";
 
-    & $gitVersionExe /output buildserver /updateassemblyinfo true /assemblyVersionFormat Major
+    & $gitVersionExe /output buildserver /updateassemblyinfo
 }
 
 task LocalTestSettings {
