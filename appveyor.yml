@@ -1,4 +1,4 @@
-version: 0.{build}
+version: 0.0.{build}
 os: Windows Server 2012 R2
 environment:
   COVERALLS_REPO_TOKEN:
