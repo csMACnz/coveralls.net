@@ -140,7 +140,8 @@ task mono-integration {
 task coverage -depends LocalTestSettings, build, coverage-only
 
 task coverage-only {
-    exec { & .\src\packages\OpenCover.4.5.3723\OpenCover.Console.exe -register:user -target:$script:xunit "-targetargs:""src\csmacnz.Coveralls.Tests\bin\$Configuration\csmacnz.Coveralls.Tests.dll"" -noshadow $script:testOptions" -filter:"+[csmacnz.Coveralls*]*" -output:opencovertests.xml }
+	$opencover = (Resolve-Path ".\src\packages\OpenCover.*\OpenCover.Console.exe").ToString()
+    exec { & $opencover -register:user -target:$script:xunit "-targetargs:""src\csmacnz.Coveralls.Tests\bin\$Configuration\csmacnz.Coveralls.Tests.dll"" -noshadow $script:testOptions" -filter:"+[csmacnz.Coveralls*]*" -output:opencovertests.xml }
 }
 
 task coveralls -depends coverage, coveralls-only
