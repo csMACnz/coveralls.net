@@ -1,4 +1,5 @@
 using System.IO;
+using BCLExtensions;
 
 namespace csmacnz.Coveralls
 {
@@ -8,7 +9,7 @@ namespace csmacnz.Coveralls
 
         public PathProcessor(string basePath)
         {
-            _basePath = !string.IsNullOrWhiteSpace(_basePath) ? basePath : Directory.GetCurrentDirectory();
+            _basePath = basePath.IsNotNullOrWhitespace() ? basePath : Directory.GetCurrentDirectory();
         }
 
         public string ConvertPath(string path)
@@ -25,7 +26,7 @@ namespace csmacnz.Coveralls
 
         public string UnixifyPath(string filePath)
         {
-            return filePath.Replace('\\', '/');
+            return filePath.Replace('\\', '/').Replace(":", "");
         }
     }
 }

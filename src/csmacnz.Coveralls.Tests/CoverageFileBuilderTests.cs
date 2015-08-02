@@ -38,9 +38,9 @@ namespace csmacnz.Coveralls.Tests
             }
 
             [Fact]
-            public void ThenSourceIsEmpty()
+            public void ThenSourceDigestIsTheEmptyDigest()
             {
-                Assert.Equal(string.Empty, _coverageFile.Source);
+                Assert.Equal("D41D8CD98F00B204E9800998ECF8427E", _coverageFile.SourceDigest);
             }
 
             [Fact]
@@ -53,14 +53,14 @@ namespace csmacnz.Coveralls.Tests
         }
 
         [Fact]
-        public void NewBuilderWithInvalidPathThrowsArgumentException()
+        public void NewBuilderWithNullFileThrowsArgumentException()
         {
-            Assert.Throws<ArgumentException>(() => new CoverageFileBuilder(""));
+            Assert.Throws<ArgumentNullException>(() => new CoverageFileBuilder(null));
         }
 
         public static CoverageFileBuilder CreateFileBuilder(string filePath = @"C:\temp\file.cs")
         {
-            return new CoverageFileBuilder(filePath);
+            return new CoverageFileBuilder(new FileCoverageData(filePath, new int?[1]));
         }
     }
 }

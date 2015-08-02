@@ -1,11 +1,15 @@
-version: 0.{build}
+version: 0.0.{build}
 os: Windows Server 2012 R2
 environment:
   COVERALLS_REPO_TOKEN:
-    secure: 7+M7//b+83bTse+910JEiExhI3kRpPNByeBKgndUaWmjCmdJglS2Hermr2V2MabW
+    secure: /6Ynh8LMsDKryTdOsEc2zl0ePsN3ce+oYemlM6CFK3ChePYSavZmgIH1ENWE0ZDh
+  COVERITY_TOKEN:
+    secure: eJdOjCT+V5sq+EWTsuBwx8r47EHFutwOxnA2+yhdA2E=
+  COVERITY_EMAIL:
+    secure: YNNLrvdTPJBtXcWskGnutoOOXbWeulhguf0c7iX9Gis=
 install:
 - ps: .\build.environment.ps1
-- ps: GitVersion /output buildserver /updateassemblyinfo true /assemblyVersionFormat Major
+- ps: psake .\build.tasks.ps1 appveyor-install
 build_script:
 - ps: psake .\build.tasks.ps1 appveyor-build
 test_script:
@@ -15,3 +19,19 @@ artifacts:
   name: opencovertests.xml
 - path: coveralls.net.*.zip
 - path: coveralls.net.*.nupkg
+deploy:
+- provider: GitHub
+  release: $($env:GitVersion_SemVer)
+  auth_token:
+    secure: hH6A9i7v+sf5mZy9FLQVG7n4UpLWkUhpshIsia7sGi1ONr+iMKroqjkJk0Hsi3nK
+  artifact: /.*\.nupkg/
+  prerelease: true
+  on:
+    branch: /release-.*/
+    APPVEYOR_REPO_TAG: true
+- provider: NuGet
+  api_key:
+    secure: 4XLKYHbHXYJuc9SCTYZt5VzxE/XDBpjWSttRIK3ZGux5TwIgAnhMBamo16fjVmzS
+  on:
+    branch: /release-.*/
+    APPVEYOR_REPO_TAG: true

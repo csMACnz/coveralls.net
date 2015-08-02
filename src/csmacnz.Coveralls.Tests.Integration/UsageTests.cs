@@ -1,6 +1,5 @@
 ﻿using System.Text.RegularExpressions;
 using Xunit;
-using Xunit.Should;
 
 namespace csmacnz.Coveralls.Tests.Integration
 {
@@ -11,14 +10,14 @@ namespace csmacnz.Coveralls.Tests.Integration
         {
             var results = CoverallsTestRunner.RunCoveralls(string.Empty);
 
-            results.ExitCode.ShouldNotBe(0);
+            Assert.NotEqual(0, results.ExitCode);
         }
         [Fact]
         public void InvalidArgument_ExitCodeNotSuccess()
         {
             var results = CoverallsTestRunner.RunCoveralls("--notanoption");
 
-            results.ExitCode.ShouldNotBe(0);
+            Assert.NotEqual(0, results.ExitCode);
         }
 
         [Fact]
@@ -26,8 +25,8 @@ namespace csmacnz.Coveralls.Tests.Integration
         {
             var results = CoverallsTestRunner.RunCoveralls("--opencover -i opencover.xml --dryrun --repoToken MYTESTREPOTOKEN");
 
-            results.ExitCode.ShouldNotBe(0);
-            results.StandardError.ShouldContain("Input file 'opencover.xml' cannot be found");
+            Assert.NotEqual(0, results.ExitCode);
+            Assert.Contains("Input file 'opencover.xml' cannot be found", results.StandardError);
         }
         [Fact]
         public void Version()
@@ -42,7 +41,7 @@ namespace csmacnz.Coveralls.Tests.Integration
         {
             var results = CoverallsTestRunner.RunCoveralls("--help");
 
-            results.ExitCode.ShouldBe(0);
+            Assert.Equal(0, results.ExitCode);
             ContainsStandardUsageText(results);
         }
 
@@ -51,17 +50,17 @@ namespace csmacnz.Coveralls.Tests.Integration
         {
             var results = CoverallsTestRunner.RunCoveralls("-h");
 
-            results.ExitCode.ShouldBe(0);
+            Assert.Equal(0, results.ExitCode);
             ContainsStandardUsageText(results);
         }
 
         private static void ContainsStandardUsageText(CoverageRunResults results)
         {
-            results.StandardOutput.ShouldContain("Usage:");
-            results.StandardOutput.ShouldContain("csmacnz.Coveralls --help");
-            results.StandardOutput.ShouldContain("Options:");
-            results.StandardOutput.ShouldContain("Options:");
-            results.StandardOutput.ShouldContain("What its for:");
+            Assert.Contains("Usage:", results.StandardOutput);
+            Assert.Contains("csmacnz.Coveralls --help", results.StandardOutput);
+            Assert.Contains("Options:", results.StandardOutput);
+            Assert.Contains("Options:", results.StandardOutput);
+            Assert.Contains("What its for:", results.StandardOutput);
         }
     }
 }

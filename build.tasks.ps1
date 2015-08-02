@@ -17,18 +17,41 @@ properties {
     $sln_file = "$base_dir\src\csmacnz.Coveralls.sln"
     $nuspec_filename = "coveralls.net.nuspec"
     $testOptions = ""
-    $script:xunit = "$base_dir\src\packages\xunit.runners.1.9.2\tools\xunit.console.clr4.exe"
+    $script:xunit = "$base_dir\src\packages\xunit.runner.console.2.0.0/tools/xunit.console.exe"
 
 }
 
 task default
 
-task RestoreNuGetPackages {
-    exec { nuget.exe restore $sln_file }
+task SetChocolateyPath {
+    $script:chocolateyDir = $null
+    if ($env:ChocolateyInstall -ne $null) {
+        $script:chocolateyDir = $env:ChocolateyInstall;
+    } elseif (Test-Path (Join-Path $env:SYSTEMDRIVE Chocolatey)) {
+        $script:chocolateyDir = Join-Path $env:SYSTEMDRIVE Chocolatey;
+    } elseif (Test-Path (Join-Path ([Environment]::GetFolderPath("CommonApplicationData")) Chocolatey)) {
+        $script:chocolateyDir = Join-Path ([Environment]::GetFolderPath("CommonApplicationData")) Chocolatey;
+    }
+
+    Write-Output "Chocolatey installed at $script:chocolateyDir";
+}
+
+task RestoreNuGetPackages -depends SetChocolateyPath {
+    $chocolateyBinDir = Join-Path $script:chocolateyDir -ChildPath "bin";
+    $NuGetExe = Join-Path $chocolateyBinDir -ChildPath "NuGet.exe";
+
+    exec { & $NuGetExe restore $sln_file }
+}
+
+task GitVersion -depends SetChocolateyPath {
+    $chocolateyBinDir = Join-Path $script:chocolateyDir -ChildPath "bin";
+    $gitVersionExe = Join-Path $chocolateyBinDir -ChildPath "GitVersion.exe";
+
+    & $gitVersionExe /output buildserver /updateassemblyinfo
 }
 
 task LocalTestSettings {
-    $script:xunit = "$base_dir/src/packages/xunit.runners.1.9.2/tools/xunit.console.clr4.exe"
+    $script:xunit = "$base_dir/src/packages/xunit.runner.console.2.0.0/tools/xunit.console.exe"
     $script:testOptions = ""
 }
 
@@ -51,8 +74,8 @@ task AppVeyorEnvironmentSettings {
         echo "nuget version set to $script:nugetVersion"
     }
 
-    $script:xunit = "xunit.console.clr4.exe"
-    $script:testOptions = "/appveyor"
+    $script:xunit = "$($Env:xunit20)\xunit.console.exe"
+    $script:testOptions = "-appveyor"
 }
 
 task clean {
@@ -77,37 +100,59 @@ task build {
     exec { msbuild "/t:Clean;Build" "/p:Configuration=$configuration" $sln_file }
 }
 
-task coverity {
-    cov-build --dir cov-int msbuild "/t:Clean;Build" "/p:Configuration=$configuration" $sln_file
+task setup-coverity-local {
+  $env:APPVEYOR_BUILD_FOLDER = "."
+  $env:APPVEYOR_BUILD_VERSION = $script:version
+  $env:APPVEYOR_REPO_NAME = "csMACnz/coveralls.net"
+  "You should have set the COVERITY_TOKEN and COVERITY_EMAIL environment variable already"
+  $env:APPVEYOR_SCHEDULED_BUILD = "True"
+}
 
-    Write-Zip -Path "cov-int" -OutputPath coveralls.coverity.$script:nugetVersion.zip
+task test-coverity -depends setup-coverity-local, coverity
+
+task coverity -precondition { return $env:APPVEYOR_SCHEDULED_BUILD -eq "True" }{
+
+  $coverityFileName = "coveralls.coverity.$script:nugetVersion.zip"
+  $PublishCoverity = (Resolve-Path ".\src\packages\PublishCoverity.*\PublishCoverity.exe").ToString()
+
+  & cov-build --dir cov-int msbuild "/t:Clean;Build" "/p:Configuration=$configuration" $sln_file
+
+  & $PublishCoverity compress -o $coverityFileName
+
+  & $PublishCoverity publish -t $env:COVERITY_TOKEN -e $env:COVERITY_EMAIL -z $coverityFileName -d "AppVeyor scheduled build ($env:APPVEYOR_BUILD_VERSION)." --codeVersion $script:nugetVersion
+}
+
+task unit-test {
+    exec { & $script:xunit "src\csmacnz.Coveralls.Tests\bin\$Configuration\csmacnz.Coveralls.Tests.dll" -noshadow $script:testOptions }
 }
 
 task integration {
     $env:MONO_INTEGRATION_MODE = ""
-    iex "& $script:xunit "".\src\csmacnz.Coveralls.Tests.Integration\bin\$configuration\csmacnz.Coveralls.Tests.Integration.dll"" /noshadow $script:testOptions"
+    iex "& $script:xunit "".\src\csmacnz.Coveralls.Tests.Integration\bin\$configuration\csmacnz.Coveralls.Tests.Integration.dll"" -noshadow $script:testOptions"
 }
 
 task mono-integration {
     $env:MONO_INTEGRATION_MODE = "True"
-    $env:MONO_INTEGRATION_MONOPATH = "C:\Program Files (x86)\Mono-3.2.3\bin"
-    iex "& $script:xunit "".\src\csmacnz.Coveralls.Tests.Integration\bin\$configuration\csmacnz.Coveralls.Tests.Integration.dll"" /noshadow $script:testOptions"
+    $env:MONO_INTEGRATION_MONOPATH = "C:\Program Files (x86)\Mono\bin"
+    iex "& $script:xunit "".\src\csmacnz.Coveralls.Tests.Integration\bin\$configuration\csmacnz.Coveralls.Tests.Integration.dll"" -noshadow $script:testOptions"
 }
 
 task coverage -depends LocalTestSettings, build, coverage-only
 
 task coverage-only {
-    exec { & .\src\packages\OpenCover.4.5.3427\OpenCover.Console.exe -register:user -target:$script:xunit "-targetargs:""src\csmacnz.Coveralls.Tests\bin\$Configuration\csmacnz.Coveralls.Tests.dll"" /noshadow $script:testOptions" -filter:"+[csmacnz.Coveralls*]*" -output:opencovertests.xml }
+    $opencover = (Resolve-Path ".\src\packages\OpenCover.*\tools\OpenCover.Console.exe").ToString()
+    exec { & $opencover -register:user -target:$script:xunit "-targetargs:""src\csmacnz.Coveralls.Tests\bin\$Configuration\csmacnz.Coveralls.Tests.dll"" -noshadow $script:testOptions" -filter:"+[csmacnz.Coveralls*]*" -output:opencovertests.xml }
 }
 
 task coveralls -depends coverage, coveralls-only
 
-task coveralls-only {
-    exec { & ".\src\csmacnz.Coveralls\bin\$configuration\csmacnz.Coveralls.exe" --opencover -i opencovertests.xml --repoToken $env:COVERALLS_REPO_TOKEN --commitId $env:APPVEYOR_REPO_COMMIT --commitBranch $env:APPVEYOR_REPO_BRANCH --commitAuthor $env:APPVEYOR_REPO_COMMIT_AUTHOR --commitEmail $env:APPVEYOR_REPO_COMMIT_AUTHOR_EMAIL --commitMessage $env:APPVEYOR_REPO_COMMIT_MESSAGE --jobId $env:APPVEYOR_JOB_ID}
+task coveralls-only -precondition { return -not $env:APPVEYOR_PULL_REQUEST_NUMBER } {
+    exec { & ".\src\csmacnz.Coveralls\bin\$configuration\csmacnz.Coveralls.exe" --opencover -i opencovertests.xml --treatUploadErrorsAsWarnings }
 }
 
 task dupfinder {
-    dupfinder /o="duplicateReport.xml" /show-text ".\src\csmacnz.Coveralls.sln" 2> $null
+    $dupfinder = (Resolve-Path ".\src\packages\JetBrains.ReSharper.CommandLineTools.*\tools\dupfinder.exe").ToString()
+    & $dupfinder /o="duplicateReport.xml" /show-text ".\src\csmacnz.Coveralls.sln" 2> $null
     [xml]$stats = Get-Content .\duplicateReport.xml
     $anyDuplicates = $FALSE;
 
@@ -140,7 +185,8 @@ task dupfinder {
 }
 
 task inspect {
-    inspectcode /o="resharperReport.xml" ".\src\csmacnz.Coveralls.sln" 2> $null
+    $inspectcode = (Resolve-Path ".\src\packages\JetBrains.ReSharper.CommandLineTools.*\tools\inspectcode.exe").ToString()
+    & $inspectcode /o="resharperReport.xml" ".\src\csmacnz.Coveralls.sln" 2> $null
     [xml]$stats = Get-Content .\resharperReport.xml
     $anyErrors = $FALSE;
     $errors = $stats.SelectNodes("/Report/IssueTypes/IssueType")
@@ -199,22 +245,30 @@ task archive-only {
 
 task pack -depends build, pack-only
 
-task pack-only {
+task pack-only -depends SetChocolateyPath {
 
     mkdir $nuget_pack_dir
     cp "$nuspec_filename" "$nuget_pack_dir"
 
-    cp "$build_output_dir\*.*" "$nuget_pack_dir"
+    $nuget_tools_dir = "$nuget_pack_dir\tools"
+    mkdir $nuget_tools_dir
+    cp "$build_output_dir\*.*" "$nuget_tools_dir"
 
     $Spec = [xml](get-content "$nuget_pack_dir\$nuspec_filename")
     $Spec.package.metadata.version = ([string]$Spec.package.metadata.version).Replace("{Version}", $script:nugetVersion)
     $Spec.Save("$nuget_pack_dir\$nuspec_filename")
 
-    exec { nuget pack "$nuget_pack_dir\$nuspec_filename" }
+    $chocolateyBinDir = Join-Path $script:chocolateyDir -ChildPath "bin";
+    $NuGetExe = Join-Path $chocolateyBinDir -ChildPath "NuGet.exe";
+
+    exec { & $NuGetExe pack "$nuget_pack_dir\$nuspec_filename" }
 }
 
 task postbuild -depends coverage-only, integration, mono-integration, coveralls-only, inspect, dupfinder, archive-only, pack-only
 
-task appveyor-build -depends RestoreNuGetPackages, AppVeyorEnvironmentSettings, build
+task appveyor-install -depends GitVersion, RestoreNuGetPackages
 
-task appveyor-test -depends AppVeyorEnvironmentSettings, postbuild
+task appveyor-build -depends build
+
+task appveyor-test -depends AppVeyorEnvironmentSettings, postbuild, coverity
+

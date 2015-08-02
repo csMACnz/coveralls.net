@@ -1,12 +1,14 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Net.Http;
 using System.Reflection;
 using System.Xml.Linq;
-using Newtonsoft.Json;
 using BCLExtensions;
+using Beefeater;
+using Newtonsoft.Json;
 
 namespace csmacnz.Coveralls
 {
@@ -14,15 +16,31 @@ namespace csmacnz.Coveralls
     {
         public static void Main(string[] argv)
         {
-            var args = new MainArgs(argv, exit: true, version: Assembly.GetEntryAssembly().GetName().Version);
-            var repoToken = args.OptRepotoken;
-            if (string.IsNullOrWhiteSpace(repoToken))
+            var args = new MainArgs(argv, exit: true, version: (string)GetDisplayVersion());
+            string repoToken;
+            if (args.IsProvided("--repoToken"))
             {
-                Console.Error.WriteLine("parameter repoToken is required.");
-                Console.WriteLine(MainArgs.Usage);
-                Environment.Exit(1);
+                repoToken = args.OptRepotoken;
+                if (repoToken.IsNullOrWhitespace())
+                {
+                    ExitWithError("parameter repoToken is required.");
+                }
             }
+            else
+            {
+                var variable = args.OptRepotokenvariable;
+                if (variable.IsNullOrWhitespace())
+                {
+                    ExitWithError("parameter repoTokenVariable is required.");
+                }
 
+                repoToken = Environment.GetEnvironmentVariable(variable);
+                if (repoToken.IsNullOrWhitespace())
+                {
+                    ExitWithError("No token found in Environment Variable '{0}'.".FormatWith(variable));
+                }
+
+            }
             var outputFile = args.IsProvided("--output") ? args.OptOutput : string.Empty;
             if (!string.IsNullOrWhiteSpace(outputFile) && File.Exists(outputFile))
             {
@@ -37,72 +55,78 @@ namespace csmacnz.Coveralls
                 var fileName = args.OptInput;
                 if (!Directory.Exists(fileName))
                 {
-                    Console.Error.WriteLine("Input file '" + fileName + "' cannot be found");
-                    Environment.Exit(1);
+                    ExitWithError("Input file '" + fileName + "' cannot be found");
                 }
-                Dictionary<string,XDocument> documents = new DirectoryInfo(fileName).GetFiles().Where(f => f.Name.EndsWith(".xml")).ToDictionary(f=>f.Name, f=>XDocument.Load(f.FullName));
+                Dictionary<string, XDocument> documents =
+                    new DirectoryInfo(fileName).GetFiles()
+                        .Where(f => f.Name.EndsWith(".xml"))
+                        .ToDictionary(f => f.Name, f => XDocument.Load(f.FullName));
 
                 files = new MonoCoverParser(pathProcessor).GenerateSourceFiles(documents, args.OptUserelativepaths);
             }
-            else if (args.IsProvided("--dynamiccodecoverage") && args.OptDynamiccodecoverage)
-            {
-                var fileName = args.OptInput;
-                if (!File.Exists(fileName))
-                {
-                    Console.Error.WriteLine("Input file '" + fileName + "' cannot be found");
-                    Environment.Exit(1);
-                }
-
-                var document = XDocument.Load(fileName);
-
-                files = new DynamicCodeCoverageParser(new FileSystem(), pathProcessor).GenerateSourceFiles(document, args.OptUserelativepaths);
-            }
             else
             {
-                var fileName = args.OptInput;
-                if (!File.Exists(fileName))
+                List<FileCoverageData> coverageData;
+                if (args.IsProvided("--dynamiccodecoverage") && args.OptDynamiccodecoverage)
                 {
-                    Console.Error.WriteLine("Input file '" + fileName + "' cannot be found");
-                    Environment.Exit(1);
+                    var fileName = args.OptInput;
+                    if (!File.Exists(fileName))
+                    {
+                        ExitWithError("Input file '" + fileName + "' cannot be found");
+                    }
+
+                    var document = XDocument.Load(fileName);
+
+                    coverageData = new DynamicCodeCoverageParser().GenerateSourceFiles(document);
+                }
+                else
+                {
+                    var fileName = args.OptInput;
+                    if (!File.Exists(fileName))
+                    {
+                        ExitWithError("Input file '" + fileName + "' cannot be found");
+                    }
+
+                    var document = XDocument.Load(fileName);
+
+                    coverageData = new OpenCoverParser().GenerateSourceFiles(document);
                 }
 
-                var document = XDocument.Load(fileName);
-
-                files = new OpenCoverParser(new FileSystem(), pathProcessor).GenerateSourceFiles(document, args.OptUserelativepaths);
-            }
-
-            GitData gitData = null;
-            var commitId = args.IsProvided("--commitId") ? args.OptCommitid : string.Empty;
-            if (commitId.IsNotNullOrWhitespace())
-            {
-                var committerName = args.OptCommitauthor ?? string.Empty;
-                var comitterEmail = args.OptCommitemail ?? string.Empty;
-                var commitMessage = args.OptCommitmessage ?? string.Empty;
-                gitData = new GitData
+                files = coverageData.Select(coverageFileData =>
                 {
-                    Head = new GitHead
+                    var coverageBuilder = new CoverageFileBuilder(coverageFileData);
+
+                    var path = coverageFileData.FullPath;
+                    if (args.OptUserelativepaths)
                     {
-                        Id = commitId,
-                        AuthorName = committerName,
-                        AuthorEmail = comitterEmail,
-                        CommitterName = committerName,
-                        ComitterEmail = comitterEmail,
-                        Message = commitMessage
-                    },
-                    Branch = args.OptCommitbranch ?? string.Empty
-                };
+                        path = pathProcessor.ConvertPath(coverageFileData.FullPath);
+                    }
+                    path = pathProcessor.UnixifyPath(path);
+                    coverageBuilder.SetPath(path);
+
+                    var readAllText = new FileSystem().TryLoadFile(coverageFileData.FullPath);
+                    if (readAllText.HasValue)
+                    {
+                        coverageBuilder.AddSource((string)readAllText);
+                    }
+
+                    var coverageFile = coverageBuilder.CreateFile();
+                    return coverageFile;
+                }).ToList();
             }
 
-            var serviceJobId = args.IsProvided("--jobId") ? args.OptJobid : "0";
+            var gitData = ResolveGitData(args);
+
+            var serviceJobId = ResolveServiceJobId(args);
 
             string serviceName = args.IsProvided("--serviceName") ? args.OptServicename : "coveralls.net";
             var data = new CoverallData
             {
                 RepoToken = repoToken,
-                ServiceJobId = serviceJobId,
+                ServiceJobId = serviceJobId.ValueOr("0"),
                 ServiceName = serviceName,
                 SourceFiles = files.ToArray(),
-                Git = gitData
+                Git = gitData.ValueOrDefault()
             };
 
             var fileData = JsonConvert.SerializeObject(data);
@@ -112,13 +136,50 @@ namespace csmacnz.Coveralls
             }
             if (!args.OptDryrun)
             {
-                var uploaded = Upload(@"https://coveralls.io/api/v1/jobs", fileData);
-                if (!uploaded)
+                var uploadResult = new CoverallsService().Upload(fileData);
+                if (!uploadResult.Successful)
                 {
-                    Console.Error.WriteLine("Failed to upload to coveralls");
-                    Environment.Exit(1);
+                    var message = string.Format("Failed to upload to coveralls\n{0}", uploadResult.Error);
+                    if (args.OptTreatuploaderrorsaswarnings)
+                    {
+                        Console.WriteLine(message);
+                    }
+                    else
+                    {
+                        ExitWithError(message);
+                    }
                 }
             }
+        }
+
+        private static NotNull<string> GetDisplayVersion()
+        {
+            return FileVersionInfo.GetVersionInfo(Assembly.GetEntryAssembly().Location).ProductVersion;
+        }
+
+        private static void ExitWithError(string message)
+        {
+            Console.Error.WriteLine(message);
+            Environment.Exit(1);
+        }
+
+        private static Option<string> ResolveServiceJobId(MainArgs args)
+        {
+            if (args.IsProvided("--jobId")) return args.OptJobid;
+            var jobId = new EnvironmentVariables().GetEnvironmentVariable("APPVEYOR_JOB_ID");
+            if (jobId.IsNotNullOrWhitespace()) return jobId;
+            return null;
+        }
+
+        private static Option<GitData> ResolveGitData(MainArgs args)
+        {
+            var providers = new List<IGitDataResolver>
+            {
+                new CommandLineGitDataResolver(args),
+                new AppVeyorGitDataResolver(new EnvironmentVariables())
+            };
+
+            return providers.Where(p=>p.CanProvideData()).Select(p=>p.GenerateData()).FirstOrDefault();
         }
 
         private static void WriteFileData(string fileData, string outputFile)
@@ -130,25 +191,6 @@ namespace csmacnz.Coveralls
             catch (Exception)
             {
                 Console.WriteLine("Failed to write data to output file '{0}'.", outputFile);
-            }
-        }
-
-        private static bool Upload(string url, string fileData)
-        {
-            HttpContent stringContent = new StringContent(fileData);
-
-            using (var client = new HttpClient())
-            using (var formData = new MultipartFormDataContent())
-            {
-                formData.Add(stringContent, "json_file", "coverage.json");
-
-                var response = client.PostAsync(url, formData).Result;
-
-                if (!response.IsSuccessStatusCode)
-                {
-                    return false;
-                }
-                return true;
             }
         }
     }

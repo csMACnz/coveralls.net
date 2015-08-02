@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 2013
-VisualStudioVersion = 12.0.30723.0
+# Visual Studio 14
+VisualStudioVersion = 14.0.23107.0
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "csmacnz.Coveralls", "csmacnz.Coveralls\csmacnz.Coveralls.csproj", "{EE91F48D-75D2-4C73-A3AA-B1DDC7ED7E13}"
 EndProject
@@ -17,11 +17,6 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 	EndProjectSection
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "csmacnz.Coveralls.Tests", "csmacnz.Coveralls.Tests\csmacnz.Coveralls.Tests.csproj", "{E839B336-A92B-4712-A586-C30786DE9790}"
-EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".nuget", ".nuget", "{F74D27FE-8BEF-416A-B982-AF0A1FB892D1}"
-	ProjectSection(SolutionItems) = preProject
-		.nuget\packages.config = .nuget\packages.config
-	EndProjectSection
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "csmacnz.Coveralls.Tests.Integration", "csmacnz.Coveralls.Tests.Integration\csmacnz.Coveralls.Tests.Integration.csproj", "{79F0A92A-C354-467A-8A61-E0B07BF342C9}"
 EndProject

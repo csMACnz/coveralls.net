@@ -2,7 +2,7 @@
 using System.Diagnostics;
 using System.IO;
 using System.Text;
-using TimeoutException = Xunit.Sdk.TimeoutException;
+using Xunit.Sdk;
 
 namespace csmacnz.Coveralls.Tests.Integration
 {
@@ -50,7 +50,7 @@ namespace csmacnz.Coveralls.Tests.Integration
                 const int timeoutInMilliseconds = 10000;
                 if (!process.WaitForExit(timeoutInMilliseconds))
                 {
-                    throw new TimeoutException(timeoutInMilliseconds);
+                    throw new XunitException(string.Format("Test execution time exceeded: {0}ms", timeoutInMilliseconds));
                 }
                 exitCode = process.ExitCode;
             }

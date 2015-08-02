@@ -4,7 +4,6 @@ using System.Linq;
 using System.Xml.Linq;
 using System.Xml.XPath;
 using Xunit;
-using Xunit.Should;
 
 namespace csmacnz.Coveralls.Tests.Integration
 {
@@ -16,7 +15,7 @@ namespace csmacnz.Coveralls.Tests.Integration
             var emptyFilePath = Path.Combine(RepositoryPaths.GetSamplesPath(), "opencover", "Sample1", "EmptyReport.xml");
             var results = DryRunCoverallsWithInputFile(emptyFilePath);
 
-            results.ExitCode.ShouldBe(0);
+            Assert.Equal(0, results.ExitCode);
         }
 
         [Fact]
@@ -35,7 +34,7 @@ namespace csmacnz.Coveralls.Tests.Integration
 
             var results = DryRunCoverallsWithInputFile(coverageFilePath);
 
-            results.ExitCode.ShouldBe(0);
+            Assert.Equal(0, results.ExitCode);
         }
 
         private static CoverageRunResults DryRunCoverallsWithInputFile(string inputFilePath)

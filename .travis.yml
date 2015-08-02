@@ -3,8 +3,5 @@ solution: ./src/csmacnz.Coveralls.sln
 install:
   - export MONO_INTEGRATION_MODE=True
   - nuget restore ./src/csmacnz.Coveralls.sln
-  - chmod +x ./src/packages/xunit.runners.1.9.2/tools/xunit.console.clr4.exe
 script:
   - xbuild /p:Configuration=Release ./src/csmacnz.Coveralls.sln
-  - mono ./src/packages/xunit.runners.1.9.2/tools/xunit.console.clr4.exe ./src/csmacnz.Coveralls.Tests/bin/Release/csmacnz.Coveralls.Tests.dll
-  - mono ./src/packages/xunit.runners.1.9.2/tools/xunit.console.clr4.exe ./src/csmacnz.Coveralls.Tests.Integration/bin/Release/csmacnz.Coveralls.Tests.Integration.dll
