@@ -54,6 +54,7 @@ namespace csmacnz.Coveralls
                                         }
                                     }
                                 }
+                                files.Add(coverageBuilder.CreateFile());
                             }
                         }
                     }

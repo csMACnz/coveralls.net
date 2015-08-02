@@ -96,7 +96,7 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>T4DocoptNet.tt</DependentUpon>
     </Compile>
-    <Compile Include="VSCodeCoverageParser.cs" />
+    <Compile Include="DynamicCodeCoverageParser.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />

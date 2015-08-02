@@ -24,28 +24,28 @@ properties {
 task default
 
 task SetChocolateyPath {
-	$script:chocolateyDir = $null
-	if ($env:ChocolateyInstall -ne $null) {
-		$script:chocolateyDir = $env:ChocolateyInstall;
-	} elseif (Test-Path (Join-Path $env:SYSTEMDRIVE Chocolatey)) {
-		$script:chocolateyDir = Join-Path $env:SYSTEMDRIVE Chocolatey;
-	} elseif (Test-Path (Join-Path ([Environment]::GetFolderPath("CommonApplicationData")) Chocolatey)) {
-		$script:chocolateyDir = Join-Path ([Environment]::GetFolderPath("CommonApplicationData")) Chocolatey;
-	}
+    $script:chocolateyDir = $null
+    if ($env:ChocolateyInstall -ne $null) {
+        $script:chocolateyDir = $env:ChocolateyInstall;
+    } elseif (Test-Path (Join-Path $env:SYSTEMDRIVE Chocolatey)) {
+        $script:chocolateyDir = Join-Path $env:SYSTEMDRIVE Chocolatey;
+    } elseif (Test-Path (Join-Path ([Environment]::GetFolderPath("CommonApplicationData")) Chocolatey)) {
+        $script:chocolateyDir = Join-Path ([Environment]::GetFolderPath("CommonApplicationData")) Chocolatey;
+    }
 
     Write-Output "Chocolatey installed at $script:chocolateyDir";
 }
 
 task RestoreNuGetPackages -depends SetChocolateyPath {
     $chocolateyBinDir = Join-Path $script:chocolateyDir -ChildPath "bin";
-	$NuGetExe = Join-Path $chocolateyBinDir -ChildPath "NuGet.exe";
+    $NuGetExe = Join-Path $chocolateyBinDir -ChildPath "NuGet.exe";
 
     exec { & $NuGetExe restore $sln_file }
 }
 
 task GitVersion -depends SetChocolateyPath {
-	$chocolateyBinDir = Join-Path $script:chocolateyDir -ChildPath "bin";
-	$gitVersionExe = Join-Path $chocolateyBinDir -ChildPath "GitVersion.exe";
+    $chocolateyBinDir = Join-Path $script:chocolateyDir -ChildPath "bin";
+    $gitVersionExe = Join-Path $chocolateyBinDir -ChildPath "GitVersion.exe";
 
     & $gitVersionExe /output buildserver /updateassemblyinfo
 }
@@ -140,7 +140,7 @@ task mono-integration {
 task coverage -depends LocalTestSettings, build, coverage-only
 
 task coverage-only {
-	$opencover = (Resolve-Path ".\src\packages\OpenCover.*\tools\OpenCover.Console.exe").ToString()
+    $opencover = (Resolve-Path ".\src\packages\OpenCover.*\tools\OpenCover.Console.exe").ToString()
     exec { & $opencover -register:user -target:$script:xunit "-targetargs:""src\csmacnz.Coveralls.Tests\bin\$Configuration\csmacnz.Coveralls.Tests.dll"" -noshadow $script:testOptions" -filter:"+[csmacnz.Coveralls*]*" -output:opencovertests.xml }
 }
 
@@ -250,8 +250,8 @@ task pack-only -depends SetChocolateyPath {
     mkdir $nuget_pack_dir
     cp "$nuspec_filename" "$nuget_pack_dir"
 
-	$nuget_tools_dir = "$nuget_pack_dir\tools"
-	mkdir $nuget_tools_dir
+    $nuget_tools_dir = "$nuget_pack_dir\tools"
+    mkdir $nuget_tools_dir
     cp "$build_output_dir\*.*" "$nuget_tools_dir"
 
     $Spec = [xml](get-content "$nuget_pack_dir\$nuspec_filename")
@@ -259,7 +259,7 @@ task pack-only -depends SetChocolateyPath {
     $Spec.Save("$nuget_pack_dir\$nuspec_filename")
 
     $chocolateyBinDir = Join-Path $script:chocolateyDir -ChildPath "bin";
-	$NuGetExe = Join-Path $chocolateyBinDir -ChildPath "NuGet.exe";
+    $NuGetExe = Join-Path $chocolateyBinDir -ChildPath "NuGet.exe";
 
     exec { & $NuGetExe pack "$nuget_pack_dir\$nuspec_filename" }
 }
