@@ -186,7 +186,7 @@ task dupfinder {
 
 task inspect {
     $inspectcode = (Resolve-Path ".\src\packages\JetBrains.ReSharper.CommandLineTools.*\tools\inspectcode.exe").ToString()
-    & $inspectcode /o="resharperReport.xml" ".\src\csmacnz.Coveralls.sln" 2> $null
+    & $inspectcode /o="resharperReport.xml" ".\src\csmacnz.Coveralls.sln"
     [xml]$stats = Get-Content .\resharperReport.xml
     $anyErrors = $FALSE;
     $errors = $stats.SelectNodes("/Report/IssueTypes/IssueType")
