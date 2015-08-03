@@ -24,30 +24,30 @@ properties {
 task default
 
 task SetChocolateyPath {
-	$script:chocolateyDir = $null
-	if ($env:ChocolateyInstall -ne $null) {
-		$script:chocolateyDir = $env:ChocolateyInstall;
-	} elseif (Test-Path (Join-Path $env:SYSTEMDRIVE Chocolatey)) {
-		$script:chocolateyDir = Join-Path $env:SYSTEMDRIVE Chocolatey;
-	} elseif (Test-Path (Join-Path ([Environment]::GetFolderPath("CommonApplicationData")) Chocolatey)) {
-		$script:chocolateyDir = Join-Path ([Environment]::GetFolderPath("CommonApplicationData")) Chocolatey;
-	}
+    $script:chocolateyDir = $null
+    if ($env:ChocolateyInstall -ne $null) {
+        $script:chocolateyDir = $env:ChocolateyInstall;
+    } elseif (Test-Path (Join-Path $env:SYSTEMDRIVE Chocolatey)) {
+        $script:chocolateyDir = Join-Path $env:SYSTEMDRIVE Chocolatey;
+    } elseif (Test-Path (Join-Path ([Environment]::GetFolderPath("CommonApplicationData")) Chocolatey)) {
+        $script:chocolateyDir = Join-Path ([Environment]::GetFolderPath("CommonApplicationData")) Chocolatey;
+    }
 
     Write-Output "Chocolatey installed at $script:chocolateyDir";
 }
 
 task RestoreNuGetPackages -depends SetChocolateyPath {
     $chocolateyBinDir = Join-Path $script:chocolateyDir -ChildPath "bin";
-	$NuGetExe = Join-Path $chocolateyBinDir -ChildPath "NuGet.exe";
+    $NuGetExe = Join-Path $chocolateyBinDir -ChildPath "NuGet.exe";
 
     exec { & $NuGetExe restore $sln_file }
 }
 
 task GitVersion -depends SetChocolateyPath {
-	$chocolateyBinDir = Join-Path $script:chocolateyDir -ChildPath "bin";
-	$gitVersionExe = Join-Path $chocolateyBinDir -ChildPath "GitVersion.exe";
+    $chocolateyBinDir = Join-Path $script:chocolateyDir -ChildPath "bin";
+    $gitVersionExe = Join-Path $chocolateyBinDir -ChildPath "GitVersion.exe";
 
-    & $gitVersionExe /output buildserver /updateassemblyinfo true /assemblyVersionFormat Major
+    & $gitVersionExe /output buildserver /updateassemblyinfo
 }
 
 task LocalTestSettings {
@@ -111,14 +111,14 @@ task setup-coverity-local {
 task test-coverity -depends setup-coverity-local, coverity
 
 task coverity -precondition { return $env:APPVEYOR_SCHEDULED_BUILD -eq "True" }{
-  
+
   $coverityFileName = "coveralls.coverity.$script:nugetVersion.zip"
   $PublishCoverity = (Resolve-Path ".\src\packages\PublishCoverity.*\PublishCoverity.exe").ToString()
 
   & cov-build --dir cov-int msbuild "/t:Clean;Build" "/p:Configuration=$configuration" $sln_file
-  
+
   & $PublishCoverity compress -o $coverityFileName
-  
+
   & $PublishCoverity publish -t $env:COVERITY_TOKEN -e $env:COVERITY_EMAIL -z $coverityFileName -d "AppVeyor scheduled build ($env:APPVEYOR_BUILD_VERSION)." --codeVersion $script:nugetVersion
 }
 
@@ -133,20 +133,21 @@ task integration {
 
 task mono-integration {
     $env:MONO_INTEGRATION_MODE = "True"
-    $env:MONO_INTEGRATION_MONOPATH = "C:\Program Files (x86)\Mono-3.2.3\bin"
+    $env:MONO_INTEGRATION_MONOPATH = "C:\Program Files (x86)\Mono\bin"
     iex "& $script:xunit "".\src\csmacnz.Coveralls.Tests.Integration\bin\$configuration\csmacnz.Coveralls.Tests.Integration.dll"" -noshadow $script:testOptions"
 }
 
 task coverage -depends LocalTestSettings, build, coverage-only
 
 task coverage-only {
-    exec { & .\src\packages\OpenCover.4.5.3723\OpenCover.Console.exe -register:user -target:$script:xunit "-targetargs:""src\csmacnz.Coveralls.Tests\bin\$Configuration\csmacnz.Coveralls.Tests.dll"" -noshadow $script:testOptions" -filter:"+[csmacnz.Coveralls*]*" -output:opencovertests.xml }
+    $opencover = (Resolve-Path ".\src\packages\OpenCover.*\tools\OpenCover.Console.exe").ToString()
+    exec { & $opencover -register:user -target:$script:xunit "-targetargs:""src\csmacnz.Coveralls.Tests\bin\$Configuration\csmacnz.Coveralls.Tests.dll"" -noshadow $script:testOptions" -filter:"+[csmacnz.Coveralls*]*" -output:opencovertests.xml }
 }
 
 task coveralls -depends coverage, coveralls-only
 
 task coveralls-only -precondition { return -not $env:APPVEYOR_PULL_REQUEST_NUMBER } {
-    exec { & ".\src\csmacnz.Coveralls\bin\$configuration\csmacnz.Coveralls.exe" --opencover -i opencovertests.xml }
+    exec { & ".\src\csmacnz.Coveralls\bin\$configuration\csmacnz.Coveralls.exe" --opencover -i opencovertests.xml --treatUploadErrorsAsWarnings }
 }
 
 task dupfinder {
@@ -249,14 +250,16 @@ task pack-only -depends SetChocolateyPath {
     mkdir $nuget_pack_dir
     cp "$nuspec_filename" "$nuget_pack_dir"
 
-    cp "$build_output_dir\*.*" "$nuget_pack_dir"
+    $nuget_tools_dir = "$nuget_pack_dir\tools"
+    mkdir $nuget_tools_dir
+    cp "$build_output_dir\*.*" "$nuget_tools_dir"
 
     $Spec = [xml](get-content "$nuget_pack_dir\$nuspec_filename")
     $Spec.package.metadata.version = ([string]$Spec.package.metadata.version).Replace("{Version}", $script:nugetVersion)
     $Spec.Save("$nuget_pack_dir\$nuspec_filename")
-    
+
     $chocolateyBinDir = Join-Path $script:chocolateyDir -ChildPath "bin";
-	$NuGetExe = Join-Path $chocolateyBinDir -ChildPath "NuGet.exe";
+    $NuGetExe = Join-Path $chocolateyBinDir -ChildPath "NuGet.exe";
 
     exec { & $NuGetExe pack "$nuget_pack_dir\$nuspec_filename" }
 }
@@ -268,4 +271,4 @@ task appveyor-install -depends GitVersion, RestoreNuGetPackages
 task appveyor-build -depends build
 
 task appveyor-test -depends AppVeyorEnvironmentSettings, postbuild, coverity
-    
+
