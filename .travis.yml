@@ -6,3 +6,6 @@ install:
   - nuget restore ./src/csmacnz.Coveralls.sln
 script:
   - xbuild /p:Configuration=Release ./src/csmacnz.Coveralls.sln
+cache:
+  directories:
+  - ./src/packages
