@@ -247,21 +247,10 @@ task pack -depends build, pack-only
 
 task pack-only -depends SetChocolateyPath {
 
-    mkdir $nuget_pack_dir
-    cp "$nuspec_filename" "$nuget_pack_dir"
-
-    $nuget_tools_dir = "$nuget_pack_dir\tools"
-    mkdir $nuget_tools_dir
-    cp "$build_output_dir\*.*" "$nuget_tools_dir"
-
-    $Spec = [xml](get-content "$nuget_pack_dir\$nuspec_filename")
-    $Spec.package.metadata.version = ([string]$Spec.package.metadata.version).Replace("{Version}", $script:nugetVersion)
-    $Spec.Save("$nuget_pack_dir\$nuspec_filename")
-
     $chocolateyBinDir = Join-Path $script:chocolateyDir -ChildPath "bin";
     $NuGetExe = Join-Path $chocolateyBinDir -ChildPath "NuGet.exe";
 
-    exec { & $NuGetExe pack "$nuget_pack_dir\$nuspec_filename" }
+    exec { & $NuGetExe pack .\src\csmacnz.Coveralls\csmacnz.Coveralls.nuspec -Version $script:nugetVersion -Properties Configuration=Release }
 }
 
 task postbuild -depends coverage-only, integration, mono-integration, coveralls-only, inspect, dupfinder, archive-only, pack-only

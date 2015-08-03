@@ -100,6 +100,7 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
+    <None Include="csmacnz.Coveralls.nuspec" />
     <None Include="packages.config" />
     <None Include="T4DocoptNet.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
@@ -108,8 +109,8 @@
     <None Include="T4DocoptNet.tt.hooks.t4" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Properties\coverallsNet.ico" />
-    <Content Include="Main.usage.txt" />
+    <None Include="Properties\coverallsNet.ico" />
+    <None Include="Main.usage.txt" />
     <None Include="T4DocoptNet.tt.settings.xml" />
   </ItemGroup>
   <ItemGroup>

@@ -4,7 +4,7 @@ using System.Runtime.InteropServices;
 [assembly: AssemblyTitle("csmacnz.Coveralls")]
 [assembly: AssemblyDescription("Coveralls.io uploader for .NET Code Coverage")]
 [assembly: AssemblyConfiguration("")]
-[assembly: AssemblyCompany("csmacnz")]
+[assembly: AssemblyCompany("csMACnz")]
 [assembly: AssemblyProduct("csmacnz.Coveralls")]
 [assembly: AssemblyCopyright("Copyright © csMACnz 2015")]
 [assembly: AssemblyTrademark("")]
