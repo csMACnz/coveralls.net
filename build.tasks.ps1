@@ -240,7 +240,9 @@ task archive-only {
 
     cp "$build_output_dir\*.*" "$archive_dir"
 
-    Write-Zip -Path "$archive_dir\*" -OutputPath $archive_filename
+    Add-Type -assembly "system.io.compression.filesystem"
+
+    [io.compression.zipfile]::CreateFromDirectory("$archive_dir", $archive_filename)
 }
 
 task pack -depends build, pack-only
