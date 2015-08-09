@@ -152,7 +152,7 @@ task coveralls-only -precondition { return -not $env:APPVEYOR_PULL_REQUEST_NUMBE
 
 task dupfinder {
     $dupfinder = (Resolve-Path ".\src\packages\JetBrains.ReSharper.CommandLineTools.*\tools\dupfinder.exe").ToString()
-    & $dupfinder /o="duplicateReport.xml" /show-text ".\src\csmacnz.Coveralls.sln" 2> $null
+    & $dupfinder /o="duplicateReport.xml" /show-text ".\src\csmacnz.Coveralls.sln" 2>&1
     [xml]$stats = Get-Content .\duplicateReport.xml
     $anyDuplicates = $FALSE;
 
@@ -186,7 +186,7 @@ task dupfinder {
 
 task inspect {
     $inspectcode = (Resolve-Path ".\src\packages\JetBrains.ReSharper.CommandLineTools.*\tools\inspectcode.exe").ToString()
-    & $inspectcode /o="resharperReport.xml" ".\src\csmacnz.Coveralls.sln" 2> $null
+    & $inspectcode /o="resharperReport.xml" ".\src\csmacnz.Coveralls.sln" 2>&1
     [xml]$stats = Get-Content .\resharperReport.xml
     $anyErrors = $FALSE;
     $errors = $stats.SelectNodes("/Report/IssueTypes/IssueType")
