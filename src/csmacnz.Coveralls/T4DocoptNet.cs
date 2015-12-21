@@ -9,7 +9,7 @@ namespace csmacnz.Coveralls
         public const string Usage = @"csmac.Coveralls - a coveralls.io coverage publisher for .Net
 
 Usage:
-  csmacnz.Coveralls (--opencover | --dynamiccodecoverage | --monocov) -i ./opencovertests.xml (--repoToken <repoToken> | [--repoTokenVariable <repoTokenVariable>]) [-o ./opencovertests.json] [--dryrun] [--useRelativePaths [--basePath <path>] ] [--commitId <commitId> --commitBranch <commitBranch> [--commitAuthor <commitAuthor> --commitEmail <commitEmail> --commitMessage <commitMessage>] ] [--jobId <jobId>] [--serviceName <Name>] [--treatUploadErrorsAsWarnings]
+  csmacnz.Coveralls (--opencover | --dynamiccodecoverage | --monocov) -i ./opencovertests.xml (--repoToken <repoToken> | [--repoTokenVariable <repoTokenVariable>]) [-o ./opencovertests.json] [--dryrun] [--useRelativePaths [--basePath <path>] ] [--commitId <commitId> --commitBranch <commitBranch> [--commitAuthor <commitAuthor> --commitEmail <commitEmail> --commitMessage <commitMessage>] ] [--jobId <jobId>] [--serviceName <Name>] [--pullRequest <id>] [--treatUploadErrorsAsWarnings]
   csmacnz.Coveralls --version
   csmacnz.Coveralls --help
 
@@ -33,6 +33,7 @@ Options:
  --commitMessage <commitMessage>          The git commit message for the coverage report.
  --jobId <jobId>                          The job Id to provide to coveralls.io. [default: 0]
  --serviceName <Name>                     The service-name for the coverage report. [default: coveralls.net]
+ --pullRequest <id>                       The ID of the pull request for this coverage report.
  -k, --treatUploadErrorsAsWarnings        Exit successfully if an upload error is encountered and this flag is set.
 
 Commit Options:
@@ -85,6 +86,7 @@ What its for:
 		public string OptCommitmessage { get { return _args["--commitMessage"].ToString(); } }
 		public string OptJobid { get { return _args["--jobId"].ToString(); } }
 		public string OptServicename { get { return _args["--serviceName"].ToString(); } }
+		public string OptServicePullRequest { get { return _args["--pullRequest"].ToString(); } }
 		public bool OptTreatuploaderrorsaswarnings { get { return _args["--treatUploadErrorsAsWarnings"].IsTrue; } }
 		public bool OptVersion { get { return _args["--version"].IsTrue; } }
 		public bool OptHelp { get { return _args["--help"].IsTrue; } }
