@@ -6,7 +6,7 @@ namespace csmacnz.Coveralls
     // Generated class for Main.usage.txt
     public class MainArgs
     {
-        public const string Usage = @"csmac.Coveralls - a coveralls.io coverage publisher for .Net
+        public const string Usage = @"csmacnz.Coveralls - a coveralls.io coverage publisher for .Net
 
 Usage:
   csmacnz.Coveralls (--opencover | --dynamiccodecoverage | --monocov) -i ./opencovertests.xml (--repoToken <repoToken> | [--repoTokenVariable <repoTokenVariable>]) [-o ./opencovertests.json] [--dryrun] [--useRelativePaths [--basePath <path>] ] [--commitId <commitId> --commitBranch <commitBranch> [--commitAuthor <commitAuthor> --commitEmail <commitEmail> --commitMessage <commitMessage>] ] [--jobId <jobId>] [--serviceName <Name>] [--treatUploadErrorsAsWarnings]
