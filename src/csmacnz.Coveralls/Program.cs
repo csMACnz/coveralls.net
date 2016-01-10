@@ -151,6 +151,10 @@ namespace csmacnz.Coveralls
                         ExitWithError(message);
                     }
                 }
+                else
+                {
+                    Console.WriteLine("Coverage data uploaded to coveralls.");
+                }
             }
         }
 
