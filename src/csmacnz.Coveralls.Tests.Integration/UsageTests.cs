@@ -60,7 +60,7 @@ namespace csmacnz.Coveralls.Tests.Integration
             Assert.Contains("csmacnz.Coveralls --help", results.StandardOutput);
             Assert.Contains("Options:", results.StandardOutput);
             Assert.Contains("Options:", results.StandardOutput);
-            Assert.Contains("What its for:", results.StandardOutput);
+            Assert.Contains("What it's for:", results.StandardOutput);
         }
     }
 }
