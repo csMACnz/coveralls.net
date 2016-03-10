@@ -79,6 +79,18 @@ namespace csmacnz.Coveralls
 
                     coverageData = new DynamicCodeCoverageParser().GenerateSourceFiles(document);
                 }
+                else if(args.IsProvided("--exportcodecoverage") && args.OptExportcodecoverage)
+                {
+                    var fileName = args.OptInput;
+                    if (!File.Exists(fileName))
+                    {
+                        ExitWithError("Input file '" + fileName + "' cannot be found");
+                    }
+
+                    var document = XDocument.Load(fileName);
+
+                    coverageData = new ExportCodeCoverageParser().GenerateSourceFiles(document);
+                }
                 else
                 {
                     var fileName = args.OptInput;
