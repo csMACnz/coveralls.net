@@ -23,7 +23,7 @@ Options:
  --basePath <path>                        When useRelativePaths and a basePath is provided, this path is used instead of the current working directory.
  --opencover                              Reads input as OpenCover data.
  --dynamiccodecoverage                    Reads input as the CodeCoverage.exe xml format.
- --exportcodecoverage					  Reads input as the Visual Studio Coverage Export xml format
+ --exportcodecoverage                     Reads input as the Visual Studio Coverage Export xml format
  --monocov                                Reads input as monocov results folder.
  --repoToken <repoToken>                  The coveralls.io repository token.
  --repoTokenVariable <repoTokenVariable>  The Environment Variable name where the coveralls.io repository token is available. [default: COVERALLS_REPO_TOKEN]
@@ -70,27 +70,27 @@ What it's for:
             return _args[parameter] != null;
         }
 
-		public bool OptOpencover { get { return _args["--opencover"].IsTrue; } }
-		public bool OptDynamiccodecoverage { get { return _args["--dynamiccodecoverage"].IsTrue; } }
+        public bool OptOpencover { get { return _args["--opencover"].IsTrue; } }
+        public bool OptDynamiccodecoverage { get { return _args["--dynamiccodecoverage"].IsTrue; } }
         public bool OptExportcodecoverage { get { return _args["--exportcodecoverage"].IsTrue; } }
         public bool OptMonocov { get { return _args["--monocov"].IsTrue; } }
-		public string OptInput { get { return _args["--input"].ToString(); } }
-		public string OptRepotoken { get { return _args["--repoToken"].ToString(); } }
-		public string OptRepotokenvariable { get { return _args["--repoTokenVariable"].ToString(); } }
-		public string OptOutput { get { return _args["--output"].ToString(); } }
-		public bool OptDryrun { get { return _args["--dryrun"].IsTrue; } }
-		public bool OptUserelativepaths { get { return _args["--useRelativePaths"].IsTrue; } }
-		public string OptBasepath { get { return _args["--basePath"].ToString(); } }
-		public string OptCommitid { get { return _args["--commitId"].ToString(); } }
-		public string OptCommitbranch { get { return _args["--commitBranch"].ToString(); } }
-		public string OptCommitauthor { get { return _args["--commitAuthor"].ToString(); } }
-		public string OptCommitemail { get { return _args["--commitEmail"].ToString(); } }
-		public string OptCommitmessage { get { return _args["--commitMessage"].ToString(); } }
-		public string OptJobid { get { return _args["--jobId"].ToString(); } }
-		public string OptServicename { get { return _args["--serviceName"].ToString(); } }
-		public string OptPullrequest { get { return _args["--pullRequest"].ToString(); } }
-		public bool OptTreatuploaderrorsaswarnings { get { return _args["--treatUploadErrorsAsWarnings"].IsTrue; } }
-		public bool OptVersion { get { return _args["--version"].IsTrue; } }
-		public bool OptHelp { get { return _args["--help"].IsTrue; } }
+        public string OptInput { get { return _args["--input"].ToString(); } }
+        public string OptRepotoken { get { return _args["--repoToken"].ToString(); } }
+        public string OptRepotokenvariable { get { return _args["--repoTokenVariable"].ToString(); } }
+        public string OptOutput { get { return _args["--output"].ToString(); } }
+        public bool OptDryrun { get { return _args["--dryrun"].IsTrue; } }
+        public bool OptUserelativepaths { get { return _args["--useRelativePaths"].IsTrue; } }
+        public string OptBasepath { get { return _args["--basePath"].ToString(); } }
+        public string OptCommitid { get { return _args["--commitId"].ToString(); } }
+        public string OptCommitbranch { get { return _args["--commitBranch"].ToString(); } }
+        public string OptCommitauthor { get { return _args["--commitAuthor"].ToString(); } }
+        public string OptCommitemail { get { return _args["--commitEmail"].ToString(); } }
+        public string OptCommitmessage { get { return _args["--commitMessage"].ToString(); } }
+        public string OptJobid { get { return _args["--jobId"].ToString(); } }
+        public string OptServicename { get { return _args["--serviceName"].ToString(); } }
+        public string OptPullrequest { get { return _args["--pullRequest"].ToString(); } }
+        public bool OptTreatuploaderrorsaswarnings { get { return _args["--treatUploadErrorsAsWarnings"].IsTrue; } }
+        public bool OptVersion { get { return _args["--version"].IsTrue; } }
+        public bool OptHelp { get { return _args["--help"].IsTrue; } }
     }
 }

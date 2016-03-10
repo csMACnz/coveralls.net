@@ -15,7 +15,7 @@ Options:
  --basePath <path>                        When useRelativePaths and a basePath is provided, this path is used instead of the current working directory.
  --opencover                              Reads input as OpenCover data.
  --dynamiccodecoverage                    Reads input as the CodeCoverage.exe xml format.
- --exportcodecoverage					  Reads input as the Visual Studio Coverage Export xml format
+ --exportcodecoverage                     Reads input as the Visual Studio Coverage Export xml format
  --monocov                                Reads input as monocov results folder.
  --repoToken <repoToken>                  The coveralls.io repository token.
  --repoTokenVariable <repoTokenVariable>  The Environment Variable name where the coveralls.io repository token is available. [default: COVERALLS_REPO_TOKEN]
