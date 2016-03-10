@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
 using System.Linq;
-using System.Net.Http;
 using System.Reflection;
 using System.Xml.Linq;
 using BCLExtensions;
@@ -78,6 +77,18 @@ namespace csmacnz.Coveralls
                     var document = XDocument.Load(fileName);
 
                     coverageData = new DynamicCodeCoverageParser().GenerateSourceFiles(document);
+                }
+                else if(args.IsProvided("--exportcodecoverage") && args.OptExportcodecoverage)
+                {
+                    var fileName = args.OptInput;
+                    if (!File.Exists(fileName))
+                    {
+                        ExitWithError("Input file '" + fileName + "' cannot be found");
+                    }
+
+                    var document = XDocument.Load(fileName);
+
+                    coverageData = new ExportCodeCoverageParser().GenerateSourceFiles(document);
                 }
                 else
                 {
