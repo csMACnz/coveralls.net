@@ -9,7 +9,7 @@ namespace csmacnz.Coveralls
         public const string Usage = @"csmacnz.Coveralls - a coveralls.io coverage publisher for .Net
 
 Usage:
-  csmacnz.Coveralls (--opencover | --dynamiccodecoverage | --monocov) -i ./opencovertests.xml (--repoToken <repoToken> | [--repoTokenVariable <repoTokenVariable>]) [-o ./opencovertests.json] [--dryrun] [--useRelativePaths [--basePath <path>] ] [--commitId <commitId> --commitBranch <commitBranch> [--commitAuthor <commitAuthor> --commitEmail <commitEmail> --commitMessage <commitMessage>] ] [--jobId <jobId>] [--serviceName <Name>] [--pullRequest <pullRequestId>] [--treatUploadErrorsAsWarnings]
+  csmacnz.Coveralls (--opencover | --dynamiccodecoverage | --monocov | --exportcodecoverage) -i ./opencovertests.xml (--repoToken <repoToken> | [--repoTokenVariable <repoTokenVariable>]) [-o ./opencovertests.json] [--dryrun] [--useRelativePaths [--basePath <path>] ] [--commitId <commitId> --commitBranch <commitBranch> [--commitAuthor <commitAuthor> --commitEmail <commitEmail> --commitMessage <commitMessage>] ] [--jobId <jobId>] [--serviceName <Name>] [--treatUploadErrorsAsWarnings]
   csmacnz.Coveralls --version
   csmacnz.Coveralls --help
 
@@ -23,6 +23,7 @@ Options:
  --basePath <path>                        When useRelativePaths and a basePath is provided, this path is used instead of the current working directory.
  --opencover                              Reads input as OpenCover data.
  --dynamiccodecoverage                    Reads input as the CodeCoverage.exe xml format.
+ --exportcodecoverage					  Reads input as the Visual Studio Coverage Export xml format
  --monocov                                Reads input as monocov results folder.
  --repoToken <repoToken>                  The coveralls.io repository token.
  --repoTokenVariable <repoTokenVariable>  The Environment Variable name where the coveralls.io repository token is available. [default: COVERALLS_REPO_TOKEN]
@@ -71,7 +72,8 @@ What it's for:
 
 		public bool OptOpencover { get { return _args["--opencover"].IsTrue; } }
 		public bool OptDynamiccodecoverage { get { return _args["--dynamiccodecoverage"].IsTrue; } }
-		public bool OptMonocov { get { return _args["--monocov"].IsTrue; } }
+        public bool OptExportcodecoverage { get { return _args["--exportcodecoverage"].IsTrue; } }
+        public bool OptMonocov { get { return _args["--monocov"].IsTrue; } }
 		public string OptInput { get { return _args["--input"].ToString(); } }
 		public string OptRepotoken { get { return _args["--repoToken"].ToString(); } }
 		public string OptRepotokenvariable { get { return _args["--repoTokenVariable"].ToString(); } }
