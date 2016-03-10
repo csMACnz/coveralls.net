@@ -9,7 +9,7 @@ namespace csmacnz.Coveralls
         public const string Usage = @"csmacnz.Coveralls - a coveralls.io coverage publisher for .Net
 
 Usage:
-  csmacnz.Coveralls (--opencover | --dynamiccodecoverage | --monocov | --exportcodecoverage) -i ./opencovertests.xml (--repoToken <repoToken> | [--repoTokenVariable <repoTokenVariable>]) [-o ./opencovertests.json] [--dryrun] [--useRelativePaths [--basePath <path>] ] [--commitId <commitId> --commitBranch <commitBranch> [--commitAuthor <commitAuthor> --commitEmail <commitEmail> --commitMessage <commitMessage>] ] [--jobId <jobId>] [--serviceName <Name>] [--treatUploadErrorsAsWarnings]
+  csmacnz.Coveralls (--opencover | --dynamiccodecoverage | --monocov | --exportcodecoverage) -i ./opencovertests.xml (--repoToken <repoToken> | [--repoTokenVariable <repoTokenVariable>]) [-o ./opencovertests.json] [--dryrun] [--useRelativePaths [--basePath <path>] ] [--commitId <commitId> --commitBranch <commitBranch> [--commitAuthor <commitAuthor> --commitEmail <commitEmail> --commitMessage <commitMessage>] ] [--jobId <jobId>] [--serviceName <Name>] [--pullRequest <pullRequestId>] [--treatUploadErrorsAsWarnings]
   csmacnz.Coveralls --version
   csmacnz.Coveralls --help
 
@@ -67,11 +67,6 @@ What it's for:
 
         public bool IsProvided(string parameter)
         {
-            if(!_args.ContainsKey(parameter))
-            {
-                return false;
-            }
-
             return _args[parameter] != null;
         }
 
