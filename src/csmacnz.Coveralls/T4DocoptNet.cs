@@ -67,6 +67,11 @@ What it's for:
 
         public bool IsProvided(string parameter)
         {
+            if(!_args.ContainsKey(parameter))
+            {
+                return false;
+            }
+
             return _args[parameter] != null;
         }
 
