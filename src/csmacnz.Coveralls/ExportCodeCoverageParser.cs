@@ -14,13 +14,26 @@ namespace csmacnz.Coveralls
 
                 foreach(var sourceFile in document.Root.Elements("SourceFileNames"))
                 {
-                    var id = sourceFile.Element("SourceFileID")?.Value;
-                    var fileName = sourceFile.Element("SourceFileName")?.Value;
+                    var idElement = sourceFile.Element("SourceFileID");
 
-                    if(id != null && fileName != null)
+                    if(idElement == null)
                     {
-                        sourceFilesInfo.Add(id, fileName);
+                        continue;
                     }
+
+                    var id = idElement.Value;
+
+                    var fileNameElement = sourceFile.Element("SourceFileName");
+
+                    if(fileNameElement == null)
+                    {
+                        continue;
+                    }
+
+                    var fileName = fileNameElement.Value;
+
+                    
+                    sourceFilesInfo.Add(id, fileName);
                 }
 
                 foreach(var module in document.Root.Elements("Module"))
@@ -44,14 +57,16 @@ namespace csmacnz.Coveralls
                             {
                                 foreach(var lines in method.Elements("Lines"))
                                 {
-                                    var sourceFileId = lines.Element("SourceFileID")?.Value;
+                                    var sourceFileIdElement = lines.Element("SourceFileID");
 
-                                    if(sourceFileId == null)
+                                    if(sourceFileIdElement == null)
                                     {
                                         continue;
                                     }
 
-                                    if(sourceFileId != fileId)
+                                    var sourceFileId = sourceFileIdElement.Value;
+
+                                    if (sourceFileId != fileId)
                                     {
                                         continue;
                                     }
