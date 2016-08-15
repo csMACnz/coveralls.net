@@ -9,7 +9,7 @@ namespace csmacnz.Coveralls
         public const string Usage = @"csmac.Coveralls - a coveralls.io coverage publisher for .Net
 
 Usage:
-  csmacnz.Coveralls (--opencover | --dynamiccodecoverage | --monocov) -i ./opencovertests.xml (--repoToken <repoToken> | [--repoTokenVariable <repoTokenVariable>]) [-o ./opencovertests.json] [--dryrun] [--useRelativePaths [--basePath <path>] ] [--commitId <commitId> --commitBranch <commitBranch> [--commitAuthor <commitAuthor> --commitEmail <commitEmail> --commitMessage <commitMessage>] ] [--jobId <jobId>] [--serviceName <Name>] [--treatUploadErrorsAsWarnings]
+  csmacnz.Coveralls (--opencover | --dynamiccodecoverage | --monocov | --chutzpah) -i ./opencovertests.xml (--repoToken <repoToken> | [--repoTokenVariable <repoTokenVariable>]) [-o ./opencovertests.json] [--dryrun] [--useRelativePaths [--basePath <path>] ] [--commitId <commitId> --commitBranch <commitBranch> [--commitAuthor <commitAuthor> --commitEmail <commitEmail> --commitMessage <commitMessage>] ] [--jobId <jobId>] [--serviceName <Name>] [--treatUploadErrorsAsWarnings]
   csmacnz.Coveralls --version
   csmacnz.Coveralls --help
 
@@ -24,6 +24,7 @@ Options:
  --opencover                              Reads input as OpenCover data.
  --dynamiccodecoverage                    Reads input as the CodeCoverage.exe xml format.
  --monocov                                Reads input as monocov results folder.
+ --chutzpah                               Reads input as chutzpah json data.
  --repoToken <repoToken>                  The coveralls.io repository token.
  --repoTokenVariable <repoTokenVariable>  The Environment Variable name where the coveralls.io repository token is available. [default: COVERALLS_REPO_TOKEN]
  --commitId <commitId>                    The git commit hash for the coverage report.
@@ -71,6 +72,7 @@ What its for:
 		public bool OptOpencover { get { return _args["--opencover"].IsTrue; } }
 		public bool OptDynamiccodecoverage { get { return _args["--dynamiccodecoverage"].IsTrue; } }
 		public bool OptMonocov { get { return _args["--monocov"].IsTrue; } }
+		public bool OptChutzpah { get { return _args["--chutzpah"].IsTrue; } }
 		public string OptInput { get { return _args["--input"].ToString(); } }
 		public string OptRepotoken { get { return _args["--repoToken"].ToString(); } }
 		public string OptRepotokenvariable { get { return _args["--repoTokenVariable"].ToString(); } }
