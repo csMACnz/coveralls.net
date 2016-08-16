@@ -3,7 +3,7 @@ using System.Net.Http;
 using Beefeater;
 using Newtonsoft.Json;
 
-namespace csmacnz.Coveralls
+namespace csmacnz.Coveralls.DataAccess
 {
     public class CoverallsService : ICoverallsService
     {
