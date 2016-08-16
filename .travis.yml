@@ -1,7 +1,11 @@
 language: csharp
 solution: ./src/csmacnz.Coveralls.sln
+sudo: false
 install:
   - export MONO_INTEGRATION_MODE=True
   - nuget restore ./src/csmacnz.Coveralls.sln
 script:
   - xbuild /p:Configuration=Release ./src/csmacnz.Coveralls.sln
+cache:
+  directories:
+  - ./src/packages

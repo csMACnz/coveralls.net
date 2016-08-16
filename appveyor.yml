@@ -7,6 +7,10 @@ environment:
     secure: eJdOjCT+V5sq+EWTsuBwx8r47EHFutwOxnA2+yhdA2E=
   COVERITY_EMAIL:
     secure: YNNLrvdTPJBtXcWskGnutoOOXbWeulhguf0c7iX9Gis=
+cache:
+- src\packages -> **\packages.config
+- C:\ProgramData\chocolatey\bin -> build.environment.ps1
+- C:\ProgramData\chocolatey\lib -> build.environment.ps1
 install:
 - ps: .\build.environment.ps1
 - ps: psake .\build.tasks.ps1 appveyor-install

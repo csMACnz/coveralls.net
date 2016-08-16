@@ -7,7 +7,7 @@
                 <h1>Statistics</h1>
                 <p>Total codebase size: <xsl:value-of select="//CodebaseCost"/></p>
                 <p>Code to analyze: <xsl:value-of select="//TotalDuplicatesCost"/></p>
-                <p>Total size of duplicated fragments: <xsl:value-of select="//CodebaseCost" /></p>
+                <p>Total size of duplicated fragments: <xsl:value-of select="//TotalFragmentsCost" /></p>
                 <h1>Detected Duplicates</h1>
                 <xsl:for-each select="//Duplicates/Duplicate">
                     <h2>Duplicated Code. Size: <xsl:value-of  select="@Cost"/></h2>
