@@ -4,9 +4,10 @@ using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Reflection;
-using System.Xml.Linq;
 using BCLExtensions;
 using Beefeater;
+using csmacnz.Coveralls.DataAccess;
+using csmacnz.Coveralls.Parsers;
 using Newtonsoft.Json;
 
 namespace csmacnz.Coveralls
@@ -16,30 +17,9 @@ namespace csmacnz.Coveralls
         public static void Main(string[] argv)
         {
             var args = new MainArgs(argv, exit: true, version: (string)GetDisplayVersion());
-            string repoToken;
-            if (args.IsProvided("--repoToken"))
-            {
-                repoToken = args.OptRepotoken;
-                if (repoToken.IsNullOrWhitespace())
-                {
-                    ExitWithError("parameter repoToken is required.");
-                }
-            }
-            else
-            {
-                var variable = args.OptRepotokenvariable;
-                if (variable.IsNullOrWhitespace())
-                {
-                    ExitWithError("parameter repoTokenVariable is required.");
-                }
 
-                repoToken = Environment.GetEnvironmentVariable(variable);
-                if (repoToken.IsNullOrWhitespace())
-                {
-                    ExitWithError("No token found in Environment Variable '{0}'.".FormatWith(variable));
-                }
+            ValidateInput(args);
 
-            }
             var outputFile = args.IsProvided("--output") ? args.OptOutput : string.Empty;
             if (!string.IsNullOrWhiteSpace(outputFile) && File.Exists(outputFile))
             {
@@ -47,101 +27,15 @@ namespace csmacnz.Coveralls
             }
 
             var pathProcessor = new PathProcessor(args.IsProvided("--basePath") ? args.OptBasepath : null);
+            var parser = new ParsersFactory(pathProcessor, new FileSystem()).Create(args);
+            List<CoverageFile> files = parser.GenerateSourceFiles(args.OptInput, args.OptUserelativepaths);
 
-            List<CoverageFile> files;
-            if (args.IsProvided("--monocov") && args.OptMonocov)
-            {
-                var fileName = args.OptInput;
-                if (!Directory.Exists(fileName))
-                {
-                    ExitWithError("Input file '" + fileName + "' cannot be found");
-                }
-                Dictionary<string, XDocument> documents =
-                    new DirectoryInfo(fileName).GetFiles()
-                        .Where(f => f.Name.EndsWith(".xml"))
-                        .ToDictionary(f => f.Name, f => XDocument.Load(f.FullName));
-
-                files = new MonoCoverParser(pathProcessor).GenerateSourceFiles(documents, args.OptUserelativepaths);
-            }
-            else if (args.IsProvided("--chutzpah") && args.OptChutzpah)
-            {
-                var fileName = args.OptInput;
-                if (!File.Exists(fileName))
-                {
-                    ExitWithError("Input file '" + fileName + "' cannot be found");
-                }
-                var jsonString = File.ReadAllText(fileName);
-                files = new ChutzpahJsonParser(pathProcessor).GenerateSourceFiles(jsonString, args.OptUserelativepaths);
-            }
-            else
-            {
-                List<FileCoverageData> coverageData;
-                if (args.IsProvided("--dynamiccodecoverage") && args.OptDynamiccodecoverage)
-                {
-                    var fileName = args.OptInput;
-                    if (!File.Exists(fileName))
-                    {
-                        ExitWithError("Input file '" + fileName + "' cannot be found");
-                    }
-
-                    var document = XDocument.Load(fileName);
-
-                    coverageData = new DynamicCodeCoverageParser().GenerateSourceFiles(document);
-                }
-                else if(args.IsProvided("--exportcodecoverage") && args.OptExportcodecoverage)
-                {
-                    var fileName = args.OptInput;
-                    if (!File.Exists(fileName))
-                    {
-                        ExitWithError("Input file '" + fileName + "' cannot be found");
-                    }
-
-                    var document = XDocument.Load(fileName);
-
-                    coverageData = new ExportCodeCoverageParser().GenerateSourceFiles(document);
-                }
-                else
-                {
-                    var fileName = args.OptInput;
-                    if (!File.Exists(fileName))
-                    {
-                        ExitWithError("Input file '" + fileName + "' cannot be found");
-                    }
-
-                    var document = XDocument.Load(fileName);
-
-                    coverageData = new OpenCoverParser().GenerateSourceFiles(document);
-                }
-
-                files = coverageData.Select(coverageFileData =>
-                {
-                    var coverageBuilder = new CoverageFileBuilder(coverageFileData);
-
-                    var path = coverageFileData.FullPath;
-                    if (args.OptUserelativepaths)
-                    {
-                        path = pathProcessor.ConvertPath(coverageFileData.FullPath);
-                    }
-                    path = pathProcessor.UnixifyPath(path);
-                    coverageBuilder.SetPath(path);
-
-                    var readAllText = new FileSystem().TryLoadFile(coverageFileData.FullPath);
-                    if (readAllText.HasValue)
-                    {
-                        coverageBuilder.AddSource((string)readAllText);
-                    }
-
-                    var coverageFile = coverageBuilder.CreateFile();
-                    return coverageFile;
-                }).ToList();
-            }
-
+            var repoToken = ResolveRepositoryToken(args);
             var gitData = ResolveGitData(args);
-
             var serviceJobId = ResolveServiceJobId(args);
             var pullRequestId = ResolvePullRequestId(args);
+            var serviceName = args.IsProvided("--serviceName") ? args.OptServicename : "coveralls.net";
 
-            string serviceName = args.IsProvided("--serviceName") ? args.OptServicename : "coveralls.net";
             var data = new CoverallData
             {
                 RepoToken = repoToken,
@@ -188,6 +82,57 @@ namespace csmacnz.Coveralls
         {
             Console.Error.WriteLine(message);
             Environment.Exit(1);
+        }
+
+        private static void ValidateInput(MainArgs args)
+        {
+            if (args.IsProvided("--monocov") && args.OptMonocov)
+            {
+                var fileName = args.OptInput;
+                if (!Directory.Exists(fileName))
+                {
+                    ExitWithError("Input directory '" + fileName + "' cannot be found");
+                }
+            }
+            else if (args.IsProvided("--chutzpah") && args.OptChutzpah ||
+                     args.IsProvided("--dynamiccodecoverage") && args.OptDynamiccodecoverage ||
+                     args.IsProvided("--exportcodecoverage") && args.OptExportcodecoverage ||
+                     args.IsProvided("--opencover") && args.OptOpencover)
+            {
+                var fileName = args.OptInput;
+                if (!File.Exists(fileName))
+                {
+                    ExitWithError("Input file '" + fileName + "' cannot be found");
+                }
+            }
+        }
+
+        private static string ResolveRepositoryToken(MainArgs args)
+        {
+            string repoToken;
+            if (args.IsProvided("--repoToken"))
+            {
+                repoToken = args.OptRepotoken;
+                if (repoToken.IsNullOrWhitespace())
+                {
+                    ExitWithError("parameter repoToken is required.");
+                }
+            }
+            else
+            {
+                var variable = args.OptRepotokenvariable;
+                if (variable.IsNullOrWhitespace())
+                {
+                    ExitWithError("parameter repoTokenVariable is required.");
+                }
+
+                repoToken = Environment.GetEnvironmentVariable(variable);
+                if (repoToken.IsNullOrWhitespace())
+                {
+                    ExitWithError("No token found in Environment Variable '{0}'.".FormatWith(variable));
+                }
+            }
+            return repoToken;
         }
 
         private static Option<string> ResolveServiceJobId(MainArgs args)

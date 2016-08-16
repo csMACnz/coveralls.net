@@ -1,12 +1,22 @@
 ﻿using System.Collections.Generic;
 using System.Xml.Linq;
 
-namespace csmacnz.Coveralls
+namespace csmacnz.Coveralls.Parsers
 {
-    public class ExportCodeCoverageParser
+    public class ExportCodeCoverageParser : IParser
     {
-        public List<FileCoverageData> GenerateSourceFiles(XDocument document)
+        private readonly PathProcessor _pathProcessor;
+        private readonly IFileSystem _fileSystem;
+
+        public ExportCodeCoverageParser(PathProcessor pathProcessor, IFileSystem fileSystem)
         {
+            _pathProcessor = pathProcessor;
+            _fileSystem = fileSystem;
+        }
+
+        public List<CoverageFile> GenerateSourceFiles(string filePath, bool useRelativePaths)
+        {
+            var document = _fileSystem.LoadDocument(filePath);
             var files = new List<FileCoverageData>();
             if(document.Root != null)
             {
@@ -111,7 +121,8 @@ namespace csmacnz.Coveralls
                     }
                 }
             }
-            return files;
+            var fileCoverageDataConverter = new FileCoverageDataConverter(_pathProcessor, _fileSystem);
+            return fileCoverageDataConverter.Convert(files, useRelativePaths);
         }
     }
 }

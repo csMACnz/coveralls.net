@@ -2,18 +2,23 @@
 using System.Reflection;
 using System.Xml;
 using System.Xml.Linq;
+using csmacnz.Coveralls.Parsers;
+using NSubstitute;
 using Xunit;
 
 namespace csmacnz.Coveralls.Tests
 {
     public class OpenCoverParserTests
     {
+        private IFileSystem _fileSystem;
+        private IParser _parser;
+
         [Fact]
         public void EmptyReportLoadsNoSourceFiles()
         {
-            var document = LoadDocumentFromResource("csmacnz.Coveralls.Tests.EmptyReport.xml");
+            InitializeWithResource("csmacnz.Coveralls.Tests.EmptyReport.xml");
 
-            var results = CreateOpenCoverParser().GenerateSourceFiles(document);
+            var results = _parser.GenerateSourceFiles("csmacnz.Coveralls.Tests.EmptyReport.xml", true);
 
             Assert.Equal(0, results.Count);
         }
@@ -21,9 +26,9 @@ namespace csmacnz.Coveralls.Tests
         [Fact]
         public void SingleFileReportLoadsSingleSourceFiles()
         {
-            var document = LoadDocumentFromResource("csmacnz.Coveralls.Tests.SingleFileReport.xml");
+            InitializeWithResource("csmacnz.Coveralls.Tests.SingleFileReport.xml");
 
-            var results = CreateOpenCoverParser().GenerateSourceFiles(document);
+            var results = _parser.GenerateSourceFiles("csmacnz.Coveralls.Tests.SingleFileReport.xml", false);
 
             Assert.Equal(1, results.Count);
         }
@@ -31,9 +36,9 @@ namespace csmacnz.Coveralls.Tests
         [Fact]
         public void SingleFileReportWithSingleMethodLineCoveredWithoutSourceLoadsCorrectly()
         {
-            var document = LoadDocumentFromResource("csmacnz.Coveralls.Tests.SingleFileReportOneLineCovered.xml");
+            InitializeWithResource("csmacnz.Coveralls.Tests.SingleFileReportOneLineCovered.xml");
 
-            var results = CreateOpenCoverParser().GenerateSourceFiles(document);
+            var results = _parser.GenerateSourceFiles("csmacnz.Coveralls.Tests.SingleFileReportOneLineCovered.xml", true);
 
             Assert.Equal(1, results[0].Coverage[8]);
         }
@@ -41,20 +46,17 @@ namespace csmacnz.Coveralls.Tests
         [Fact]
         public void SingleFileReportWithSingleMethodLineUncoveredWithoutSourceLoadsCorrectly()
         {
-            var document = LoadDocumentFromResource("csmacnz.Coveralls.Tests.SingleFileReportOneLineUncovered.xml");
+            InitializeWithResource("csmacnz.Coveralls.Tests.SingleFileReportOneLineUncovered.xml");
 
-            var results = CreateOpenCoverParser().GenerateSourceFiles(document);
+            var results = _parser.GenerateSourceFiles("csmacnz.Coveralls.Tests.SingleFileReportOneLineUncovered.xml", false);
 
             Assert.Equal(0, results[0].Coverage[8]);
         }
 
-        private OpenCoverParser CreateOpenCoverParser()
+        private void InitializeWithResource(string embeddedResource)
         {
-            return new OpenCoverParser();
-        }
-
-        private static XDocument LoadDocumentFromResource(string embeddedResource)
-        {
+            _fileSystem = Substitute.For<IFileSystem>();
+            _parser = new OpenCoverParser(new PathProcessor(""), _fileSystem);
             XDocument document;
             var executingAssembly = Assembly.GetExecutingAssembly();
             using (var stream = executingAssembly.GetManifestResourceStream(embeddedResource))
@@ -66,7 +68,7 @@ namespace csmacnz.Coveralls.Tests
                     document = XDocument.Load(reader);
                 }
             }
-            return document;
+            _fileSystem.LoadDocument(Arg.Any<string>()).Returns(document);
         }
 
     }

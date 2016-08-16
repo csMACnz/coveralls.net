@@ -72,25 +72,28 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="AppVeyorGitDataResolver.cs" />
-    <Compile Include="ChutzpahJsonParser.cs" />
+    <Compile Include="FileCoverageDataConverter.cs" />
+    <Compile Include="Parsers\ChutzpahJsonParser.cs" />
     <Compile Include="CommandLineGitDataResolver.cs" />
     <Compile Include="CoverageFile.cs" />
     <Compile Include="CoverageFileBuilder.cs" />
     <Compile Include="CoverallData.cs" />
-    <Compile Include="CoverallsService.cs" />
-    <Compile Include="ExportCodeCoverageParser.cs" />
+    <Compile Include="DataAccess\CoverallsService.cs" />
+    <Compile Include="Parsers\ExportCodeCoverageParser.cs" />
     <Compile Include="EnvironmentVariables.cs" />
     <Compile Include="Crypto.cs" />
     <Compile Include="FileCoverageData.cs" />
     <Compile Include="FileCoverageDataBuilder.cs" />
-    <Compile Include="FileSystem.cs" />
-    <Compile Include="ICoverallsService.cs" />
+    <Compile Include="DataAccess\FileSystem.cs" />
+    <Compile Include="DataAccess\ICoverallsService.cs" />
     <Compile Include="IEnvironment.cs" />
-    <Compile Include="IFileSystem.cs" />
+    <Compile Include="DataAccess\IFileSystem.cs" />
     <Compile Include="IGitDataResolver.cs" />
-    <Compile Include="MonoCoverParser.cs" />
-    <Compile Include="OpenCoverParser.cs" />
-    <Compile Include="PathStripper.cs" />
+    <Compile Include="Parsers\IParser.cs" />
+    <Compile Include="Parsers\MonoCoverParser.cs" />
+    <Compile Include="Parsers\OpenCoverParser.cs" />
+    <Compile Include="Parsers\ParsersFactory.cs" />
+    <Compile Include="PathProcessor.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="T4DocoptNet.cs">
@@ -98,7 +101,7 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>T4DocoptNet.tt</DependentUpon>
     </Compile>
-    <Compile Include="DynamicCodeCoverageParser.cs" />
+    <Compile Include="Parsers\DynamicCodeCoverageParser.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
