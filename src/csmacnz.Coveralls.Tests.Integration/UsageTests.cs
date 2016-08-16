@@ -33,7 +33,7 @@ namespace csmacnz.Coveralls.Tests.Integration
         {
             var results = CoverallsTestRunner.RunCoveralls("--version");
 
-            Assert.True(Regex.IsMatch(results.StandardOutput, @"\d+.\d+.\d+.\d+"));
+            Assert.True(Regex.IsMatch(results.StandardOutput, @"\d+.\d+.\d+.\d+"), "Version doesn't match regex: " + results.StandardOutput);
         }
 
         [Fact]
@@ -60,7 +60,7 @@ namespace csmacnz.Coveralls.Tests.Integration
             Assert.Contains("csmacnz.Coveralls --help", results.StandardOutput);
             Assert.Contains("Options:", results.StandardOutput);
             Assert.Contains("Options:", results.StandardOutput);
-            Assert.Contains("What its for:", results.StandardOutput);
+            Assert.Contains("What it's for:", results.StandardOutput);
         }
     }
 }

@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
 using System.Linq;
-using System.Net.Http;
 using System.Reflection;
 using System.Xml.Linq;
 using BCLExtensions;
@@ -89,6 +88,18 @@ namespace csmacnz.Coveralls
 
                     coverageData = new DynamicCodeCoverageParser().GenerateSourceFiles(document);
                 }
+                else if(args.IsProvided("--exportcodecoverage") && args.OptExportcodecoverage)
+                {
+                    var fileName = args.OptInput;
+                    if (!File.Exists(fileName))
+                    {
+                        ExitWithError("Input file '" + fileName + "' cannot be found");
+                    }
+
+                    var document = XDocument.Load(fileName);
+
+                    coverageData = new ExportCodeCoverageParser().GenerateSourceFiles(document);
+                }
                 else
                 {
                     var fileName = args.OptInput;
@@ -128,6 +139,7 @@ namespace csmacnz.Coveralls
             var gitData = ResolveGitData(args);
 
             var serviceJobId = ResolveServiceJobId(args);
+            var pullRequestId = ResolvePullRequestId(args);
 
             string serviceName = args.IsProvided("--serviceName") ? args.OptServicename : "coveralls.net";
             var data = new CoverallData
@@ -135,6 +147,7 @@ namespace csmacnz.Coveralls
                 RepoToken = repoToken,
                 ServiceJobId = serviceJobId.ValueOr("0"),
                 ServiceName = serviceName,
+                PullRequestId = pullRequestId.ValueOr(null),
                 SourceFiles = files.ToArray(),
                 Git = gitData.ValueOrDefault()
             };
@@ -161,7 +174,7 @@ namespace csmacnz.Coveralls
                 }
                 else
                 {
-                    Console.WriteLine("Data was sent successfully.");
+                    Console.WriteLine("Coverage data uploaded to coveralls.");
                 }
             }
         }
@@ -182,6 +195,14 @@ namespace csmacnz.Coveralls
             if (args.IsProvided("--jobId")) return args.OptJobid;
             var jobId = new EnvironmentVariables().GetEnvironmentVariable("APPVEYOR_JOB_ID");
             if (jobId.IsNotNullOrWhitespace()) return jobId;
+            return null;
+        }
+
+        private static Option<string> ResolvePullRequestId(MainArgs args)
+        {
+            if (args.IsProvided("--pullRequest")) return args.OptPullrequest;
+            var prId = new EnvironmentVariables().GetEnvironmentVariable("APPVEYOR_PULL_REQUEST_NUMBER");
+            if (prId.IsNotNullOrWhitespace()) return prId;
             return null;
         }
 
