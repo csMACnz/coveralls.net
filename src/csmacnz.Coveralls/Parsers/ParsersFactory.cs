@@ -1,10 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Dynamic;
-using System.IO;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.IO;
+using csmacnz.Coveralls.DataAccess;
 
 namespace csmacnz.Coveralls.Parsers
 {
@@ -18,6 +13,7 @@ namespace csmacnz.Coveralls.Parsers
             _pathProcessor = pathProcessor;
             _fileSystem = fileSystem;
         }
+
         public IParser Create(MainArgs args)
         {
             if (args.IsProvided("--monocov") && args.OptMonocov)
@@ -40,8 +36,36 @@ namespace csmacnz.Coveralls.Parsers
             {
                 return new OpenCoverParser(_pathProcessor, _fileSystem);
             }
+            if (args.IsProvided("--folder") && args.OptFolder)
+            {
+                return new FolderParser(_pathProcessor, _fileSystem);
+            }
             throw new InvalidDataException("Missing format parser!");
         }
 
+        public IParser Create(string path)
+        {
+            if (path.EndsWith("monocov") && _fileSystem.IsDirectory(path))
+            {
+                return new MonoCoverParser(_pathProcessor, _fileSystem);
+            }
+            if (path.EndsWith("chutzpah") && _fileSystem.IsFile(path))
+            {
+                return new ChutzpahJsonParser(_pathProcessor, _fileSystem);
+            }
+            if (path.EndsWith("dynamiccodecoverage") && _fileSystem.IsFile(path))
+            {
+                return new DynamicCodeCoverageParser(_pathProcessor, _fileSystem);
+            }
+            if (path.EndsWith("exportcodecoverage") && _fileSystem.IsFile(path))
+            {
+                return new ExportCodeCoverageParser(_pathProcessor, _fileSystem);
+            }
+            if (path.EndsWith("opencover") && _fileSystem.IsFile(path))
+            {
+                return new OpenCoverParser(_pathProcessor, _fileSystem);
+            }
+            return null;
+        }
     }
 }

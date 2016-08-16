@@ -86,12 +86,13 @@ namespace csmacnz.Coveralls
 
         private static void ValidateInput(MainArgs args)
         {
-            if (args.IsProvided("--monocov") && args.OptMonocov)
+            if (args.IsProvided("--monocov") && args.OptMonocov ||
+                args.IsProvided("--folder") && args.OptFolder)
             {
-                var fileName = args.OptInput;
-                if (!Directory.Exists(fileName))
+                var folder = args.OptInput;
+                if (!Directory.Exists(folder))
                 {
-                    ExitWithError("Input directory '" + fileName + "' cannot be found");
+                    ExitWithError("Input directory '" + folder + "' cannot be found");
                 }
             }
             else if (args.IsProvided("--chutzpah") && args.OptChutzpah ||

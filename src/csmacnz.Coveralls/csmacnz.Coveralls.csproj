@@ -89,6 +89,7 @@
     <Compile Include="IEnvironment.cs" />
     <Compile Include="DataAccess\IFileSystem.cs" />
     <Compile Include="IGitDataResolver.cs" />
+    <Compile Include="Parsers\FolderParser.cs" />
     <Compile Include="Parsers\IParser.cs" />
     <Compile Include="Parsers\MonoCoverParser.cs" />
     <Compile Include="Parsers\OpenCoverParser.cs" />

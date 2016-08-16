@@ -9,7 +9,7 @@ namespace csmacnz.Coveralls
         public const string Usage = @"csmacnz.Coveralls - a coveralls.io coverage publisher for .Net
 
 Usage:
-  csmacnz.Coveralls (--opencover | --dynamiccodecoverage | --exportcodecoverage | --monocov | --chutzpah ) -i ./opencovertests.xml (--repoToken <repoToken> | [--repoTokenVariable <repoTokenVariable>]) [-o ./opencovertests.json] [--dryrun] [--useRelativePaths [--basePath <path>] ] [--commitId <commitId> --commitBranch <commitBranch> [--commitAuthor <commitAuthor> --commitEmail <commitEmail> --commitMessage <commitMessage>] ] [--jobId <jobId>] [--serviceName <Name>] [--pullRequest <pullRequestId>] [--treatUploadErrorsAsWarnings]
+  csmacnz.Coveralls (--opencover | --dynamiccodecoverage | --exportcodecoverage | --monocov | --chutzpah | --folder) -i ./opencovertests.xml (--repoToken <repoToken> | [--repoTokenVariable <repoTokenVariable>]) [-o ./opencovertests.json] [--dryrun] [--useRelativePaths [--basePath <path>] ] [--commitId <commitId> --commitBranch <commitBranch> [--commitAuthor <commitAuthor> --commitEmail <commitEmail> --commitMessage <commitMessage>] ] [--jobId <jobId>] [--serviceName <Name>] [--pullRequest <pullRequestId>] [--treatUploadErrorsAsWarnings]
   csmacnz.Coveralls --version
   csmacnz.Coveralls --help
 
@@ -26,6 +26,10 @@ Options:
  --exportcodecoverage                     Reads input as the Visual Studio Coverage Export xml format
  --monocov                                Reads input as monocov results folder.
  --chutzpah                               Reads input as chutzpah json data.
+ --folder								  Reads input as a folder, files in that folder should have one of the extensions above.
+											for example: coverage.opencover will be parsed as opencover file and coverage.exportcodecoverage will be parsed as visual studio file.
+											you can use a folder called 'monocov' as internal folder as well.
+											this flag should be used when you want to send a merged report of multiple files.
  --repoToken <repoToken>                  The coveralls.io repository token.
  --repoTokenVariable <repoTokenVariable>  The Environment Variable name where the coveralls.io repository token is available. [default: COVERALLS_REPO_TOKEN]
  --commitId <commitId>                    The git commit hash for the coverage report.
@@ -76,6 +80,7 @@ What it's for:
 		public bool OptExportcodecoverage { get { return _args["--exportcodecoverage"].IsTrue; } }
 		public bool OptMonocov { get { return _args["--monocov"].IsTrue; } }
 		public bool OptChutzpah { get { return _args["--chutzpah"].IsTrue; } }
+		public bool OptFolder { get { return _args["--folder"].IsTrue; } }
 		public string OptInput { get { return _args["--input"].ToString(); } }
 		public string OptRepotoken { get { return _args["--repoToken"].ToString(); } }
 		public string OptRepotokenvariable { get { return _args["--repoTokenVariable"].ToString(); } }

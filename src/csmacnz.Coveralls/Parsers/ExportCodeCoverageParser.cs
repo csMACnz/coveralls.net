@@ -1,5 +1,5 @@
 ﻿using System.Collections.Generic;
-using System.Xml.Linq;
+using csmacnz.Coveralls.DataAccess;
 
 namespace csmacnz.Coveralls.Parsers
 {

@@ -3,7 +3,7 @@ using System.Linq;
 using System.Xml.Linq;
 using Beefeater;
 
-namespace csmacnz.Coveralls
+namespace csmacnz.Coveralls.DataAccess
 {
     public class FileSystem : IFileSystem
     {
@@ -44,6 +44,21 @@ namespace csmacnz.Coveralls
         public XDocument LoadDocument(string filePath)
         {
             return XDocument.Load(filePath);
+        }
+
+        public string[] GetFileSystemEntries(string path)
+        {
+            return Directory.GetFileSystemEntries(path);
+        }
+
+        public bool IsFile(string path)
+        {
+            return File.Exists(path);
+        }
+
+        public bool IsDirectory(string path)
+        {
+            return Directory.Exists(path);
         }
     }
 }
