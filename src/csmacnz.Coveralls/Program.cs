@@ -132,11 +132,14 @@ namespace csmacnz.Coveralls
             var pullRequestId = ResolvePullRequestId(args);
 
             string serviceName = args.IsProvided("--serviceName") ? args.OptServicename : "coveralls.net";
+            string serviceNumber = args.IsProvided("--serviceNumber") ? args.OptServicenumber : "";
+
             var data = new CoverallData
             {
                 RepoToken = repoToken,
                 ServiceJobId = serviceJobId.ValueOr("0"),
                 ServiceName = serviceName,
+                ServiceNumber = serviceNumber,
                 PullRequestId = pullRequestId.ValueOr(null),
                 SourceFiles = files.ToArray(),
                 Git = gitData.ValueOrDefault()
