@@ -9,7 +9,7 @@ namespace csmacnz.Coveralls
         public const string Usage = @"csmacnz.Coveralls - a coveralls.io coverage publisher for .Net
 
 Usage:
-  csmacnz.Coveralls (--opencover | --dynamiccodecoverage | --monocov | --exportcodecoverage) -i ./opencovertests.xml (--repoToken <repoToken> | [--repoTokenVariable <repoTokenVariable>]) [-o ./opencovertests.json] [--dryrun] [--useRelativePaths [--basePath <path>] ] [--commitId <commitId> --commitBranch <commitBranch> [--commitAuthor <commitAuthor> --commitEmail <commitEmail> --commitMessage <commitMessage>] ] [--jobId <jobId>] [--serviceName <Name>] [--pullRequest <pullRequestId>] [--treatUploadErrorsAsWarnings]
+  csmacnz.Coveralls (--opencover | --dynamiccodecoverage | --monocov | --exportcodecoverage | --chutzpah) -i ./opencovertests.xml (--repoToken <repoToken> | [--repoTokenVariable <repoTokenVariable>]) [-o ./opencovertests.json] [--dryrun] [--useRelativePaths [--basePath <path>] ] [--commitId <commitId> --commitBranch <commitBranch> [--commitAuthor <commitAuthor> --commitEmail <commitEmail> --commitMessage <commitMessage>] ] [--jobId <jobId>] [--serviceName <Name>] [--pullRequest <pullRequestId>] [--treatUploadErrorsAsWarnings]
   csmacnz.Coveralls --version
   csmacnz.Coveralls --help
 
@@ -25,6 +25,7 @@ Options:
  --dynamiccodecoverage                    Reads input as the CodeCoverage.exe xml format.
  --exportcodecoverage                     Reads input as the Visual Studio Coverage Export xml format
  --monocov                                Reads input as monocov results folder.
+ --chutzpah                               Reads input as chutzpah json data.
  --repoToken <repoToken>                  The coveralls.io repository token.
  --repoTokenVariable <repoTokenVariable>  The Environment Variable name where the coveralls.io repository token is available. [default: COVERALLS_REPO_TOKEN]
  --commitId <commitId>                    The git commit hash for the coverage report.
@@ -72,8 +73,9 @@ What it's for:
 
         public bool OptOpencover { get { return _args["--opencover"].IsTrue; } }
         public bool OptDynamiccodecoverage { get { return _args["--dynamiccodecoverage"].IsTrue; } }
-        public bool OptExportcodecoverage { get { return _args["--exportcodecoverage"].IsTrue; } }
         public bool OptMonocov { get { return _args["--monocov"].IsTrue; } }
+        public bool OptExportcodecoverage { get { return _args["--exportcodecoverage"].IsTrue; } }
+        public bool OptChutzpah { get { return _args["--chutzpah"].IsTrue; } }
         public string OptInput { get { return _args["--input"].ToString(); } }
         public string OptRepotoken { get { return _args["--repoToken"].ToString(); } }
         public string OptRepotokenvariable { get { return _args["--repoTokenVariable"].ToString(); } }

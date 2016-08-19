@@ -72,6 +72,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="AppVeyorGitDataResolver.cs" />
+    <Compile Include="ChutzpahJsonParser.cs" />
     <Compile Include="CommandLineGitDataResolver.cs" />
     <Compile Include="CoverageFile.cs" />
     <Compile Include="CoverageFileBuilder.cs" />

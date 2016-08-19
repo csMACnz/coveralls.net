@@ -63,6 +63,16 @@ namespace csmacnz.Coveralls
 
                 files = new MonoCoverParser(pathProcessor).GenerateSourceFiles(documents, args.OptUserelativepaths);
             }
+            else if (args.IsProvided("--chutzpah") && args.OptChutzpah)
+            {
+                var fileName = args.OptInput;
+                if (!File.Exists(fileName))
+                {
+                    ExitWithError("Input file '" + fileName + "' cannot be found");
+                }
+                var source = File.ReadAllText(fileName);
+                files = new ChutzpahJsonParser(pathProcessor).GenerateSourceFiles(source, args.OptUserelativepaths);
+            }
             else
             {
                 List<FileCoverageData> coverageData;
