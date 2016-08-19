@@ -1,5 +1,5 @@
 version: 0.0.{build}
-os: Windows Server 2012 R2
+os: Visual Studio 2015
 environment:
   COVERALLS_REPO_TOKEN:
     secure: /6Ynh8LMsDKryTdOsEc2zl0ePsN3ce+oYemlM6CFK3ChePYSavZmgIH1ENWE0ZDh
