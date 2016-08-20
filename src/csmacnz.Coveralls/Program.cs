@@ -200,6 +200,16 @@ namespace csmacnz.Coveralls
 
                     coverageData = new OpenCoverParser().GenerateSourceFiles(document);
                 }
+                else if (string.Equals(mode, "lcov", StringComparison.OrdinalIgnoreCase))
+                {
+                    if (!File.Exists(modeInput))
+                    {
+                        return LoadCoverageFilesError.InputFileNotFound;
+                    }
+                    var lines = File.ReadAllLines(modeInput);
+
+                    coverageData = new LcovParser().GenerateSourceFiles(lines, useRelativePaths);
+                }
                 else
                 {
                     return LoadCoverageFilesError.UnknownModeProvided;
@@ -257,6 +267,10 @@ namespace csmacnz.Coveralls
             else if (args.IsProvided("--opencover") && args.OptOpencover)
             {
                 return "opencover";
+            }
+            else if (args.IsProvided("--lcov") && args.OptLcov)
+            {
+                return "lcov";
             }
             ExitWithError("Unknown file process mode");
             return null; //Unreachable
