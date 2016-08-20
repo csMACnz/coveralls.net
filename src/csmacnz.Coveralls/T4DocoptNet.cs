@@ -9,7 +9,7 @@ namespace csmacnz.Coveralls
         public const string Usage = @"csmacnz.Coveralls - a coveralls.io coverage publisher for .Net
 
 Usage:
-  csmacnz.Coveralls (--opencover | --dynamiccodecoverage | --monocov | --exportcodecoverage) -i ./opencovertests.xml (--repoToken <repoToken> | [--repoTokenVariable <repoTokenVariable>]) [-o ./opencovertests.json] [--dryrun] [--useRelativePaths [--basePath <path>] ] [--commitId <commitId> --commitBranch <commitBranch> [--commitAuthor <commitAuthor> --commitEmail <commitEmail> --commitMessage <commitMessage>] ] [--jobId <jobId>] [--serviceName <Name>] [--pullRequest <pullRequestId>] [--treatUploadErrorsAsWarnings]
+  csmacnz.Coveralls (--opencover | --dynamiccodecoverage | --monocov | --exportcodecoverage) -i ./opencovertests.xml (--repoToken <repoToken> | [--repoTokenVariable <repoTokenVariable>]) [-o ./opencovertests.json] [--dryrun] [--useRelativePaths [--basePath <path>] ] [--commitId <commitId> --commitBranch <commitBranch> [--commitAuthor <commitAuthor> --commitEmail <commitEmail> --commitMessage <commitMessage>] ] [--jobId <jobId>] [--serviceName <Name>] [--serviceNumber <Number>] [--pullRequest <pullRequestId>] [--treatUploadErrorsAsWarnings]
   csmacnz.Coveralls --version
   csmacnz.Coveralls --help
 
@@ -34,6 +34,7 @@ Options:
  --commitMessage <commitMessage>          The git commit message for the coverage report.
  --jobId <jobId>                          The job Id to provide to coveralls.io. [default: 0]
  --serviceName <Name>                     The service-name for the coverage report. [default: coveralls.net]
+ --serviceNumber <Number>                 The service-number for the coverage report.
  --pullRequest <pullRequestId>            The github pull request id. Used for updating status on github PRs.
  -k, --treatUploadErrorsAsWarnings        Exit successfully if an upload error is encountered and this flag is set.
 
@@ -88,6 +89,7 @@ What it's for:
         public string OptCommitmessage { get { return _args["--commitMessage"].ToString(); } }
         public string OptJobid { get { return _args["--jobId"].ToString(); } }
         public string OptServicename { get { return _args["--serviceName"].ToString(); } }
+        public string OptServicenumber { get { return _args["--serviceNumber"].ToString(); } }
         public string OptPullrequest { get { return _args["--pullRequest"].ToString(); } }
         public bool OptTreatuploaderrorsaswarnings { get { return _args["--treatUploadErrorsAsWarnings"].IsTrue; } }
         public bool OptVersion { get { return _args["--version"].IsTrue; } }
