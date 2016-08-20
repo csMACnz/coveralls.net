@@ -16,7 +16,7 @@ T4DocopNet Version 0.1.0
 // by install.ps1. It can also be set manually to point
 // to the right path. 
 #>
-<#@ assembly name="$(SolutionDir)\packages\docopt.net.0.6.1.6\lib\net40\DocoptNet.dll"  #>
+<#@ assembly name="$(SolutionDir)\packages\docopt.net.0.6.1.9\lib\net40\DocoptNet.dll"  #>
 <#@ import namespace="System.Collections.Generic" #>
 <#@ import namespace="System.IO" #>
 <#@ import namespace="System.Linq" #>

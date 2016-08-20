@@ -9,15 +9,15 @@ namespace csmacnz.Coveralls
         public const string Usage = @"csmacnz.Coveralls - a coveralls.io coverage publisher for .Net
 
 Usage:
-  csmacnz.Coveralls (--opencover | --dynamiccodecoverage | --monocov | --exportcodecoverage) -i ./opencovertests.xml (--repoToken <repoToken> | [--repoTokenVariable <repoTokenVariable>]) [-o ./opencovertests.json] [--dryrun] [--useRelativePaths [--basePath <path>] ] [--commitId <commitId> --commitBranch <commitBranch> [--commitAuthor <commitAuthor> --commitEmail <commitEmail> --commitMessage <commitMessage>] ] [--jobId <jobId>] [--serviceName <Name>] [--pullRequest <pullRequestId>] [--treatUploadErrorsAsWarnings]
+  csmacnz.Coveralls (--opencover | --dynamiccodecoverage | --monocov | --exportcodecoverage | --chutzpah | --multiple) -i ./opencovertests.xml (--repoToken <repoToken> | [--repoTokenVariable <repoTokenVariable>]) [-o ./opencovertests.json] [--dryrun] [--useRelativePaths [--basePath <path>] ] [--commitId <commitId> --commitBranch <commitBranch> [--commitAuthor <commitAuthor> --commitEmail <commitEmail> --commitMessage <commitMessage>] ] [--jobId <jobId>] [--serviceName <Name>] [--pullRequest <pullRequestId>] [--treatUploadErrorsAsWarnings]
   csmacnz.Coveralls --version
   csmacnz.Coveralls --help
 
 Options:
  -h, --help                               Show this screen.
  --version                                Show version.
- -i <file>, --input <file>                The coverage source file location.
- -o <file>, --output <file>               The coverage results json will be written to this file it provided.
+ -i <file>, --input <file>                The coverage source file location. When --aggregate is used, this is a collection of inputs to publish together. The format is ""monocov=coverage.cov;chutzpah=chutzpah.json""
+ -o <file>, --output <file>               The coverage results json will be written to this file if provided.
  --dryrun                                 This flag will stop coverage results being posted to coveralls.io
  --useRelativePaths                       This flag, when provided, will attempt to strip the current working directory from the beginning of the source file path.
  --basePath <path>                        When useRelativePaths and a basePath is provided, this path is used instead of the current working directory.
@@ -25,6 +25,8 @@ Options:
  --dynamiccodecoverage                    Reads input as the CodeCoverage.exe xml format.
  --exportcodecoverage                     Reads input as the Visual Studio Coverage Export xml format
  --monocov                                Reads input as monocov results folder.
+ --chutzpah                               Reads input as chutzpah json data.
+ --multiple                               Provide multiple types and files. This mode requires -i to provide values in the format ""chutzpah=chutzpahFile.json;opencover=opencoverFile.xml""
  --repoToken <repoToken>                  The coveralls.io repository token.
  --repoTokenVariable <repoTokenVariable>  The Environment Variable name where the coveralls.io repository token is available. [default: COVERALLS_REPO_TOKEN]
  --commitId <commitId>                    The git commit hash for the coverage report.
@@ -72,8 +74,10 @@ What it's for:
 
         public bool OptOpencover { get { return _args["--opencover"].IsTrue; } }
         public bool OptDynamiccodecoverage { get { return _args["--dynamiccodecoverage"].IsTrue; } }
-        public bool OptExportcodecoverage { get { return _args["--exportcodecoverage"].IsTrue; } }
         public bool OptMonocov { get { return _args["--monocov"].IsTrue; } }
+        public bool OptExportcodecoverage { get { return _args["--exportcodecoverage"].IsTrue; } }
+        public bool OptChutzpah { get { return _args["--chutzpah"].IsTrue; } }
+        public bool OptMultiple { get { return _args["--multiple"].IsTrue; } }
         public string OptInput { get { return _args["--input"].ToString(); } }
         public string OptRepotoken { get { return _args["--repoToken"].ToString(); } }
         public string OptRepotokenvariable { get { return _args["--repoTokenVariable"].ToString(); } }

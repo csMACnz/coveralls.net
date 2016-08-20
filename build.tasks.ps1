@@ -1,3 +1,5 @@
+Framework 4.5.1
+
 properties {
     # build variables
     $framework = "4.5.1"		# .net framework version

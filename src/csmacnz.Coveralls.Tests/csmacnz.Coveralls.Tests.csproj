@@ -79,6 +79,7 @@
   </Choose>
   <ItemGroup>
     <Compile Include="AppVeyorGitDataResolverTests.cs" />
+    <Compile Include="ChutzpahJsonParserTests.cs" />
     <Compile Include="CoverageFileBuilderTests.cs" />
     <Compile Include="OpenCoverParserTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -106,6 +107,7 @@
     <EmbeddedResource Include="SingleFileReportSourceFile.txt" />
   </ItemGroup>
   <ItemGroup>
+    <EmbeddedResource Include="ChutzpahExample.json" />
     <None Include="packages.config" />
   </ItemGroup>
   <Choose>
