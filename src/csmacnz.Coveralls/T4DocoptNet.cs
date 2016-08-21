@@ -1,9 +1,12 @@
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 using DocoptNet;
 
 namespace csmacnz.Coveralls
 {
     // Generated class for Main.usage.txt
+    [SuppressMessage("ReSharper", "MergeConditionalExpression")]
+    [SuppressMessage("ReSharper", "ConvertPropertyToExpressionBody")]
     public class MainArgs
     {
         public const string Usage = @"csmacnz.Coveralls - a coveralls.io coverage publisher for .Net

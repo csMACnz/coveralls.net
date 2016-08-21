@@ -26,6 +26,7 @@ T4DocopNet Version 0.1.0
 #><#@ import namespace="EnvDTE80"
 #><#@ import namespace="Microsoft.VisualStudio.TextTemplating"
 #>using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 using DocoptNet;
 
 namespace <#= System.Runtime.Remoting.Messaging.CallContext.LogicalGetData("NamespaceHint") #>
@@ -38,6 +39,8 @@ namespace <#= System.Runtime.Remoting.Messaging.CallContext.LogicalGetData("Name
         var entry = new UsageFileEntry(file);
 #>
     // Generated class for <#= Path.GetFileName(entry.FileName) #>
+    [SuppressMessage("ReSharper", "MergeConditionalExpression")]
+    [SuppressMessage("ReSharper", "ConvertPropertyToExpressionBody")]
     public class <#= entry.Name #>Args
     {
         public const string Usage = @"<#= entry.Usage #>";
