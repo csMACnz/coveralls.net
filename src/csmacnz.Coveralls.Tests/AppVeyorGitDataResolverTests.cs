@@ -134,7 +134,7 @@ namespace csmacnz.Coveralls.Tests
 
     public class TestEnvironmentVariables : IEnvironmentVariables
     {
-        private Dictionary<string, string> _variables;
+        private readonly Dictionary<string, string> _variables;
 
         public TestEnvironmentVariables(Dictionary<string, string> variables)
         {

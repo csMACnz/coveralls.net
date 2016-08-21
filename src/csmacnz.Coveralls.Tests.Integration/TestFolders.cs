@@ -12,14 +12,11 @@ namespace csmacnz.Coveralls.Tests.Integration
     {
         public static readonly string UniqueId = DateTime.Now.ToString("s", CultureInfo.InvariantCulture).Replace(":", "");
  
-        public static string InputFolder
-        {
-            get { return Path.GetDirectoryName(new Uri(Assembly.GetExecutingAssembly().CodeBase).LocalPath); }
-        }
- 
+        public static string InputFolder => Path.GetDirectoryName(new Uri(Assembly.GetExecutingAssembly().CodeBase).LocalPath);
+
         public static string OutputFolder
         {
-            //a simple solution that puts everyting to the output folder directly would look like this:
+            //a simple solution that puts everything to the output folder directly would look like this:
             //get { return Directory.GetCurrentDirectory(); }
             get
             {
@@ -30,11 +27,8 @@ namespace csmacnz.Coveralls.Tests.Integration
             }
         }
  
-        public static string TempFolder
-        {
-            get { return Path.GetTempPath(); }
-        }
- 
+        public static string TempFolder => Path.GetTempPath();
+
         // very simple helper methods that can improve the test code readability
  
         public static string GetInputFilePath(string fileName)

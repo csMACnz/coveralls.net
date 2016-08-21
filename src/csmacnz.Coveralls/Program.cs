@@ -89,7 +89,7 @@ namespace csmacnz.Coveralls
                 var mode = GetMode(args);
                 if (!mode.HasValue)
                 {
-                    ExitWithError($"Unknown mode provided");
+                    ExitWithError("Unknown mode provided");
                 }
                 var coverageFiles = LoadCoverageFiles((CoverageMode)mode, pathProcessor, args.OptInput, args.OptUserelativepaths);
                 if (coverageFiles.Successful)

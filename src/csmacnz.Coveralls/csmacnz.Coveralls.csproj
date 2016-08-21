@@ -70,6 +70,7 @@
     <Compile Include="CommandLineGitDataResolver.cs" />
     <Compile Include="CoverageFile.cs" />
     <Compile Include="CoverageFileBuilder.cs" />
+    <Compile Include="CoverageMode.cs" />
     <Compile Include="CoverallData.cs" />
     <Compile Include="CoverallsService.cs" />
     <Compile Include="ExportCodeCoverageParser.cs" />

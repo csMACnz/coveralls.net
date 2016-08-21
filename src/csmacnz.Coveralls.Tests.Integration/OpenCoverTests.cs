@@ -59,6 +59,7 @@ namespace csmacnz.Coveralls.Tests.Integration
             var classFile =
                 doc.XPathSelectElements("//CoverageSession/Modules/Module/Files/File")
                     .FirstOrDefault(e => e.Attribute("fullPath").Value.EndsWith("Class1.cs"));
+            // ReSharper disable once PossibleNullReferenceException
             classFile.Attribute("fullPath").SetValue(classFilePath);
             doc.Save(coverageFilePath);
             return coverageFilePath;
@@ -66,12 +67,14 @@ namespace csmacnz.Coveralls.Tests.Integration
 
         private static CoverageRunResults DryRunCoverallsWithInputFile(string inputFilePath)
         {
-            return CoverallsTestRunner.RunCoveralls(string.Format("--opencover -i {0} --dryrun --repoToken MYTESTREPOTOKEN", inputFilePath));
+            return CoverallsTestRunner.RunCoveralls(
+                $"--opencover -i {inputFilePath} --dryrun --repoToken MYTESTREPOTOKEN");
         }
 
         private static CoverageRunResults DryRunCoverallsMultiModeWithInputFile(string inputFilePath)
         {
-            return CoverallsTestRunner.RunCoveralls(string.Format("--multiple -i opencover={0} --dryrun --repoToken MYTESTREPOTOKEN", inputFilePath));
+            return CoverallsTestRunner.RunCoveralls(
+                $"--multiple -i opencover={inputFilePath} --dryrun --repoToken MYTESTREPOTOKEN");
         }
     }
 }

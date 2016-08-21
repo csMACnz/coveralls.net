@@ -20,14 +20,20 @@ namespace csmacnz.Coveralls
                 matches = Regex.Match(line, @"^DA:(\d+),(\d+)");
                 if (matches.Success)
                 {
-                    var lineNumber = int.Parse(matches.Groups[1].Value);
-                    var coverageNumber = int.Parse(matches.Groups[2].Value);
-                    coverageBuilder.RecordCoverage(lineNumber, coverageNumber);
+                    if(coverageBuilder!= null) { 
+                        var lineNumber = int.Parse(matches.Groups[1].Value);
+                        var coverageNumber = int.Parse(matches.Groups[2].Value);
+                        coverageBuilder.RecordCoverage(lineNumber, coverageNumber);
+                    }
                     continue;
                 }
                 if (line.Equals("end_of_record"))
                 {
-                    files.Add(coverageBuilder.CreateFile());
+                    if (coverageBuilder != null)
+                    {
+                        files.Add(coverageBuilder.CreateFile());
+                        coverageBuilder = null;
+                    }
                 }
             }
             return files;

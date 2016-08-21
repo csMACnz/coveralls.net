@@ -31,7 +31,7 @@ namespace csmacnz.Coveralls
                             message = message.Substring(0, 200);
                         }
 
-                        return string.Format("{0} - {1}", response.StatusCode, message);
+                        return $"{response.StatusCode} - {message}";
                     }
                     return true;
                 }
