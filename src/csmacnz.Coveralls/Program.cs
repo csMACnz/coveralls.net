@@ -127,7 +127,7 @@ namespace csmacnz.Coveralls
             {
                 ExitWithError("Unknown mode provided");
             }
-            var coverageFiles = CoverageLoader.LoadCoverageFiles((CoverageMode) mode, pathProcessor, inputArgument, useRelativePaths);
+            var coverageFiles = new CoverageLoader(new FileSystem()).LoadCoverageFiles((CoverageMode) mode, pathProcessor, inputArgument, useRelativePaths);
             if (coverageFiles.Successful)
             {
                 files = coverageFiles.Value;

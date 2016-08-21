@@ -1,5 +1,6 @@
 ﻿using System;
 using System.IO;
+using System.Xml.Linq;
 using Beefeater;
 
 namespace csmacnz.Coveralls
@@ -11,6 +12,25 @@ namespace csmacnz.Coveralls
             if (File.Exists(filePath))
             {
                 return File.ReadAllText(filePath);
+            }
+            return null;
+        }
+
+        public Option<XDocument> TryLoadXDocumentFromFile(string filePath)
+        {
+            if (File.Exists(filePath))
+            {
+                return XDocument.Load(filePath);
+            }
+            return null;
+        }
+
+        //todo: not FileInfo
+        public Option<FileInfo[]> GetFiles(string directory)
+        {
+            if (Directory.Exists(directory))
+            {
+                return new DirectoryInfo(directory).GetFiles();
             }
             return null;
         }
@@ -27,6 +47,15 @@ namespace csmacnz.Coveralls
                 return false;
             }
             return true;
+        }
+
+        public Option<string[]> ReadAllLines(string filePath)
+        {
+            if (File.Exists(filePath))
+            {
+                return File.ReadAllLines(filePath);
+            }
+            return null;
         }
     }
 }
