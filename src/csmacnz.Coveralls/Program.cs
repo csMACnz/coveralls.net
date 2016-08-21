@@ -110,6 +110,7 @@ namespace csmacnz.Coveralls
             var serviceJobId = ResolveServiceJobId(args);
             var serviceNumber = ResolveServiceNumber(args);
             var pullRequestId = ResolvePullRequestId(args);
+            var parallel = args.IsProvided("--parallel") && args.OptParallel;
 
             var data = new CoverallData
             {
@@ -119,6 +120,7 @@ namespace csmacnz.Coveralls
                 ServiceNumber = serviceNumber.ValueOr(null),
                 PullRequestId = pullRequestId.ValueOr(null),
                 SourceFiles = files.ToArray(),
+                Parallel = parallel,
                 Git = gitData.ValueOrDefault()
             };
 

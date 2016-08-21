@@ -19,6 +19,9 @@ namespace csmacnz.Coveralls
         [JsonProperty("service_pull_request", DefaultValueHandling = DefaultValueHandling.Ignore)]
         public string PullRequestId { get; set; }
 
+        [JsonProperty("parallel", DefaultValueHandling = DefaultValueHandling.Ignore)]
+        public bool? Parallel { get; set; }
+
         [JsonProperty("source_files")]
         public CoverageFile[] SourceFiles { get; set; }
 
