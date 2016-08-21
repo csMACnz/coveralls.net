@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Xml.Linq;
@@ -30,7 +31,7 @@ namespace csmacnz.Coveralls.Tests
         public Option<FileInfo[]> GetFiles(string directory)
         {
             //TODO
-            throw new System.NotImplementedException();
+            throw new NotImplementedException();
         }
 
         public bool WriteFile(string outputFile, string fileData)

@@ -15,7 +15,8 @@ namespace csmacnz.Coveralls
             _fileSystem = fileSystem;
         }
 
-        public Result<List<CoverageFile>, LoadCoverageFilesError> LoadCoverageFiles(CoverageMode mode, PathProcessor pathProcessor, string modeInput, bool useRelativePaths)
+        public Result<List<CoverageFile>, LoadCoverageFilesError> LoadCoverageFiles(CoverageMode mode,
+            PathProcessor pathProcessor, string modeInput, bool useRelativePaths)
         {
             List<CoverageFile> files;
             if (mode == CoverageMode.MonoCov)
@@ -25,7 +26,8 @@ namespace csmacnz.Coveralls
                 {
                     return LoadCoverageFilesError.InputFileNotFound;
                 }
-                Dictionary<string, XDocument> documents = ((FileInfo[])folderFiles).Where(f => f.Name.EndsWith(".xml")).ToDictionary(f => f.Name, f => (XDocument)_fileSystem.TryLoadXDocumentFromFile(f.FullName));
+                var documents = ((FileInfo[]) folderFiles).Where(f => f.Name.EndsWith(".xml"))
+                    .ToDictionary(f => f.Name, f => (XDocument) _fileSystem.TryLoadXDocumentFromFile(f.FullName));
 
                 files = new MonoCoverParser(pathProcessor).GenerateSourceFiles(documents, useRelativePaths);
             }
@@ -57,7 +59,7 @@ namespace csmacnz.Coveralls
                         return LoadCoverageFilesError.InputFileNotFound;
                     }
 
-                    coverageData = new DynamicCodeCoverageParser().GenerateSourceFiles((XDocument)document);
+                    coverageData = new DynamicCodeCoverageParser().GenerateSourceFiles((XDocument) document);
                 }
                 else if (mode == CoverageMode.ExportCodeCoverage)
                 {
@@ -68,7 +70,7 @@ namespace csmacnz.Coveralls
                         return LoadCoverageFilesError.InputFileNotFound;
                     }
 
-                    coverageData = new ExportCodeCoverageParser().GenerateSourceFiles((XDocument)document);
+                    coverageData = new ExportCodeCoverageParser().GenerateSourceFiles((XDocument) document);
                 }
                 else if (mode == CoverageMode.OpenCover)
                 {
@@ -79,7 +81,7 @@ namespace csmacnz.Coveralls
                         return LoadCoverageFilesError.InputFileNotFound;
                     }
 
-                    coverageData = new OpenCoverParser().GenerateSourceFiles((XDocument)document);
+                    coverageData = new OpenCoverParser().GenerateSourceFiles((XDocument) document);
                 }
                 else if (mode == CoverageMode.LCov)
                 {
@@ -89,8 +91,8 @@ namespace csmacnz.Coveralls
                     {
                         return LoadCoverageFilesError.InputFileNotFound;
                     }
-                    
-                    coverageData = new LcovParser().GenerateSourceFiles((string[])lines, useRelativePaths);
+
+                    coverageData = new LcovParser().GenerateSourceFiles((string[]) lines, useRelativePaths);
                 }
                 else
                 {

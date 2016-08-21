@@ -49,7 +49,7 @@ namespace csmacnz.Coveralls.Tests.Integration
 
         private static string BuildReportWithOneFile()
         {
-            string sampleFolderPath = Path.Combine(RepositoryPaths.GetSamplesPath(), "opencover", "Sample2");
+            var sampleFolderPath = Path.Combine(RepositoryPaths.GetSamplesPath(), "opencover", "Sample2");
             var sampleCoverageFile = Path.Combine(sampleFolderPath, "SingleFileReport.xml");
             var sampleClassFile = Path.Combine(sampleFolderPath, "SingleFileReportSourceFile.txt");
             var coverageFilePath = TestFolders.GetTempFilePath(Guid.NewGuid() + ".xml");
