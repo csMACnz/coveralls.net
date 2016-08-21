@@ -2,32 +2,30 @@
 /*
 T4DocopNet Version 0.1.0
 */
-#>
-<#@ template language="C#" debug="true" hostspecific="true" #>
-<#@ assembly name="System.Core" #>
-<#@ assembly name="Microsoft.VisualStudio.Shell.Interop" #>
-<#@ assembly name="EnvDTE" #>
-<#@ assembly name="EnvDTE80" #>
-<#@ assembly name="VSLangProj" #>
-<#@ assembly name="System.Xml" #>
-<#@ assembly name="System.Xml.Linq" #>
-<#
+#><#@ template language="C#" debug="true" hostspecific="true"
+#><#@ assembly name="System.Core"
+#><#@ assembly name="Microsoft.VisualStudio.Shell.Interop"
+#><#@ assembly name="EnvDTE"
+#><#@ assembly name="EnvDTE80"
+#><#@ assembly name="VSLangProj"
+#><#@ assembly name="System.Xml"
+#><#@ assembly name="System.Xml.Linq"
+#><#
 // This directive will be updated at package install time
 // by install.ps1. It can also be set manually to point
 // to the right path. 
-#>
-<#@ assembly name="$(SolutionDir)\packages\docopt.net.0.6.1.9\lib\net40\DocoptNet.dll"  #>
-<#@ import namespace="System.Collections.Generic" #>
-<#@ import namespace="System.IO" #>
-<#@ import namespace="System.Linq" #>
-<#@ import namespace="DocoptNet" #>
-<#@ import namespace="System.Text" #>
-<#@ import namespace="System.Text.RegularExpressions" #>
-<#@ import namespace="Microsoft.VisualStudio.Shell.Interop" #>
-<#@ import namespace="EnvDTE" #>
-<#@ import namespace="EnvDTE80" #>
-<#@ import namespace="Microsoft.VisualStudio.TextTemplating" #>
-using System.Collections.Generic;
+#><#@ assembly name="$(SolutionDir)\packages\docopt.net.0.6.1.9\lib\net40\DocoptNet.dll"
+#><#@ import namespace="System.Collections.Generic"
+#><#@ import namespace="System.IO"
+#><#@ import namespace="System.Linq"
+#><#@ import namespace="DocoptNet"
+#><#@ import namespace="System.Text"
+#><#@ import namespace="System.Text.RegularExpressions"
+#><#@ import namespace="Microsoft.VisualStudio.Shell.Interop"
+#><#@ import namespace="EnvDTE"
+#><#@ import namespace="EnvDTE80"
+#><#@ import namespace="Microsoft.VisualStudio.TextTemplating"
+#>using System.Collections.Generic;
 using DocoptNet;
 
 namespace <#= System.Runtime.Remoting.Messaging.CallContext.LogicalGetData("NamespaceHint") #>

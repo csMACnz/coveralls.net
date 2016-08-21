@@ -1,30 +1,8 @@
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 using System.Collections.Generic;
 using DocoptNet;
 
 namespace csmacnz.Coveralls
 {
-
     // Generated class for Main.usage.txt
     public class MainArgs
     {
@@ -95,7 +73,7 @@ What it's for:
             return _args[parameter] != null;
         }
 
-public bool OptOpencover { get { return _args["--opencover"].IsTrue; } }
+		public bool OptOpencover { get { return _args["--opencover"].IsTrue; } }
 		public bool OptDynamiccodecoverage { get { return _args["--dynamiccodecoverage"].IsTrue; } }
 		public bool OptMonocov { get { return _args["--monocov"].IsTrue; } }
 		public bool OptExportcodecoverage { get { return _args["--exportcodecoverage"].IsTrue; } }
