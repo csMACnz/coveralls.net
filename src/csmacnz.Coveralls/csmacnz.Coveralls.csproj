@@ -82,6 +82,7 @@
     <Compile Include="IEnvironment.cs" />
     <Compile Include="IFileSystem.cs" />
     <Compile Include="IGitDataResolver.cs" />
+    <Compile Include="LcovParser.cs" />
     <Compile Include="MonoCoverParser.cs" />
     <Compile Include="OpenCoverParser.cs" />
     <Compile Include="PathStripper.cs" />
