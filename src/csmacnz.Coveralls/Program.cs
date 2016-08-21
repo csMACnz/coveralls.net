@@ -106,13 +106,20 @@ namespace csmacnz.Coveralls
             Debug.Assert(files != null);
             var gitData = ResolveGitData(args);
 
+            var serviceName = ResolveServiceName(args);
             var serviceJobId = ResolveServiceJobId(args);
+            var serviceNumber = ResolveServiceNumber(args);
             var pullRequestId = ResolvePullRequestId(args);
 
-            string serviceName = args.IsProvided("--serviceName") ? args.OptServicename : "coveralls.net";
             var data = new CoverallData
             {
-                RepoToken = repoToken, ServiceJobId = serviceJobId.ValueOr("0"), ServiceName = serviceName, PullRequestId = pullRequestId.ValueOr(null), SourceFiles = files.ToArray(), Git = gitData.ValueOrDefault()
+                RepoToken = repoToken,
+                ServiceJobId = serviceJobId.ValueOr("0"),
+                ServiceName = serviceName.ValueOr("coveralls.net"),
+                ServiceNumber = serviceNumber.ValueOr(null),
+                PullRequestId = pullRequestId.ValueOr(null),
+                SourceFiles = files.ToArray(),
+                Git = gitData.ValueOrDefault()
             };
 
             var fileData = JsonConvert.SerializeObject(data);
@@ -287,10 +294,26 @@ namespace csmacnz.Coveralls
             Environment.Exit(1);
         }
 
+        private static Option<string> ResolveServiceName(MainArgs args)
+        {
+            if (args.IsProvided("--serviceName")) return args.OptServicename;
+            var isAppVeyor = new EnvironmentVariables().GetEnvironmentVariable("APPVEYOR");
+            if (isAppVeyor == "True") return "appveyor";
+            return null;
+        }
+
         private static Option<string> ResolveServiceJobId(MainArgs args)
         {
             if (args.IsProvided("--jobId")) return args.OptJobid;
             var jobId = new EnvironmentVariables().GetEnvironmentVariable("APPVEYOR_JOB_ID");
+            if (jobId.IsNotNullOrWhitespace()) return jobId;
+            return null;
+        }
+
+        private static Option<string> ResolveServiceNumber(MainArgs args)
+        {
+            if (args.IsProvided("--serviceNumber")) return args.OptServicenumber;
+            var jobId = new EnvironmentVariables().GetEnvironmentVariable("APPVEYOR_BUILD_NUMBER");
             if (jobId.IsNotNullOrWhitespace()) return jobId;
             return null;
         }
