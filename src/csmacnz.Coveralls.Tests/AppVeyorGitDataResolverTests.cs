@@ -60,14 +60,15 @@ namespace csmacnz.Coveralls.Tests
 
             Assert.NotNull(gitData);
         }
+
         public class GenerateData
         {
-            private readonly GitData _gitData;
-            private readonly string _expectedId;
-            private readonly string _expectedName;
-            private readonly string _expectedEmail;
-            private readonly string _expectedMessage;
             private readonly string _expectedBranch;
+            private readonly string _expectedEmail;
+            private readonly string _expectedId;
+            private readonly string _expectedMessage;
+            private readonly string _expectedName;
+            private readonly GitData _gitData;
 
             public GenerateData()
             {

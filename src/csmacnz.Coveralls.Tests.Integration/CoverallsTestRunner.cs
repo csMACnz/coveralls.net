@@ -57,9 +57,9 @@ namespace csmacnz.Coveralls.Tests.Integration
 
             return new CoverageRunResults
             {
-                StandardOutput=results,
+                StandardOutput = results,
                 StandardError = errorsResults,
-                ExitCode=exitCode
+                ExitCode = exitCode
             };
         }
 

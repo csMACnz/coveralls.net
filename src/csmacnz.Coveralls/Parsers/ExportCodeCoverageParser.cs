@@ -8,15 +8,15 @@ namespace csmacnz.Coveralls
         public List<FileCoverageData> GenerateSourceFiles(XDocument document)
         {
             var files = new List<FileCoverageData>();
-            if(document.Root != null)
+            if (document.Root != null)
             {
                 var sourceFilesInfo = new Dictionary<string, string>();
 
-                foreach(var sourceFile in document.Root.Elements("SourceFileNames"))
+                foreach (var sourceFile in document.Root.Elements("SourceFileNames"))
                 {
                     var idElement = sourceFile.Element("SourceFileID");
 
-                    if(idElement == null)
+                    if (idElement == null)
                     {
                         continue;
                     }
@@ -25,20 +25,20 @@ namespace csmacnz.Coveralls
 
                     var fileNameElement = sourceFile.Element("SourceFileName");
 
-                    if(fileNameElement == null)
+                    if (fileNameElement == null)
                     {
                         continue;
                     }
 
                     var fileName = fileNameElement.Value;
 
-                    
+
                     sourceFilesInfo.Add(id, fileName);
                 }
 
-                foreach(var module in document.Root.Elements("Module"))
+                foreach (var module in document.Root.Elements("Module"))
                 {
-                    foreach(var sourceFileInfo in sourceFilesInfo)
+                    foreach (var sourceFileInfo in sourceFilesInfo)
                     {
                         var fileId = sourceFileInfo.Key;
                         var fullPath = sourceFileInfo.Value;
@@ -46,20 +46,20 @@ namespace csmacnz.Coveralls
                         var coverageBuilder = new FileCoverageDataBuilder(fullPath);
 
                         var namespaceTable = module.Element("NamespaceTable");
-                        if(namespaceTable == null)
+                        if (namespaceTable == null)
                         {
                             continue;
                         }
 
-                        foreach(var @class in namespaceTable.Elements("Class"))
+                        foreach (var @class in namespaceTable.Elements("Class"))
                         {
-                            foreach(var method in @class.Elements("Method"))
+                            foreach (var method in @class.Elements("Method"))
                             {
-                                foreach(var lines in method.Elements("Lines"))
+                                foreach (var lines in method.Elements("Lines"))
                                 {
                                     var sourceFileIdElement = lines.Element("SourceFileID");
 
-                                    if(sourceFileIdElement == null)
+                                    if (sourceFileIdElement == null)
                                     {
                                         continue;
                                     }
@@ -73,7 +73,7 @@ namespace csmacnz.Coveralls
 
                                     var sourceStartLineElement = lines.Element("LnStart");
 
-                                    if(sourceStartLineElement == null)
+                                    if (sourceStartLineElement == null)
                                     {
                                         continue;
                                     }
@@ -82,7 +82,7 @@ namespace csmacnz.Coveralls
 
                                     var sourceEndLineElement = lines.Element("LnEnd");
 
-                                    if(sourceEndLineElement == null)
+                                    if (sourceEndLineElement == null)
                                     {
                                         continue;
                                     }
@@ -92,7 +92,7 @@ namespace csmacnz.Coveralls
 
                                     var coveredElement = lines.Element("Coverage");
 
-                                    if(coveredElement == null)
+                                    if (coveredElement == null)
                                     {
                                         continue;
                                     }
@@ -100,7 +100,7 @@ namespace csmacnz.Coveralls
                                     // A value of 2 means completely covered
                                     var covered = coveredElement.Value == "2";
 
-                                    for(int lineNumber = sourceStartLine; lineNumber <= sourceEndLine; lineNumber++)
+                                    for (var lineNumber = sourceStartLine; lineNumber <= sourceEndLine; lineNumber++)
                                     {
                                         coverageBuilder.RecordCoverage(lineNumber, covered ? 1 : 0);
                                     }

@@ -1,6 +1,6 @@
-﻿using Newtonsoft.Json;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
+using Newtonsoft.Json;
 
 namespace csmacnz.Coveralls
 {
@@ -14,7 +14,7 @@ namespace csmacnz.Coveralls
 
         public double CoveragePercentage { get; set; }
     }
-    
+
     public class ChutzpahJsonParser
     {
         private readonly PathProcessor _pathProcessor;
@@ -23,18 +23,18 @@ namespace csmacnz.Coveralls
         {
             _pathProcessor = pathProcessor;
         }
-        
+
         public List<CoverageFile> GenerateSourceFiles(string content, bool useRelativePaths)
         {
             var files = new List<CoverageFile>();
-            
+
             var deserializedString = JsonConvert.DeserializeObject<dynamic>(content);
 
             foreach (var file in deserializedString)
             {
                 ChutzpahJsonFileItem item = JsonConvert.DeserializeObject<ChutzpahJsonFileItem>(file.Value.ToString());
 
-                string currentFilePath = item.FilePath;
+                var currentFilePath = item.FilePath;
 
                 if (item.LineExecutionCounts.Length == item.SourceLines.Length + 1)
                 {
@@ -48,7 +48,8 @@ namespace csmacnz.Coveralls
 
                 currentFilePath = _pathProcessor.UnixifyPath(currentFilePath);
 
-                files.Add(new CoverageFile(currentFilePath, Crypto.CalculateMD5Digest(string.Join(",", item.SourceLines)), item.LineExecutionCounts));
+                files.Add(new CoverageFile(currentFilePath,
+                    Crypto.CalculateMD5Digest(string.Join(",", item.SourceLines)), item.LineExecutionCounts));
             }
 
             return files;

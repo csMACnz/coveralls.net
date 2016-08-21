@@ -24,8 +24,9 @@ namespace csmacnz.Coveralls
                     AuthorName = _variables.GetEnvironmentVariable("APPVEYOR_REPO_COMMIT_AUTHOR") ?? string.Empty,
                     AuthorEmail = _variables.GetEnvironmentVariable("APPVEYOR_REPO_COMMIT_AUTHOR_EMAIL") ?? string.Empty,
                     CommitterName = _variables.GetEnvironmentVariable("APPVEYOR_REPO_COMMIT_AUTHOR") ?? string.Empty,
-                    ComitterEmail = _variables.GetEnvironmentVariable("APPVEYOR_REPO_COMMIT_AUTHOR_EMAIL") ?? string.Empty,
-                Message = _variables.GetEnvironmentVariable("APPVEYOR_REPO_COMMIT_MESSAGE") ?? string.Empty
+                    ComitterEmail =
+                        _variables.GetEnvironmentVariable("APPVEYOR_REPO_COMMIT_AUTHOR_EMAIL") ?? string.Empty,
+                    Message = _variables.GetEnvironmentVariable("APPVEYOR_REPO_COMMIT_MESSAGE") ?? string.Empty
                 },
                 Branch = _variables.GetEnvironmentVariable("APPVEYOR_REPO_BRANCH") ?? string.Empty
             };

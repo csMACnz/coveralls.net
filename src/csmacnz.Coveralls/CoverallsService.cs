@@ -43,7 +43,7 @@ namespace csmacnz.Coveralls
             try
             {
                 dynamic result = JsonConvert.DeserializeObject(content);
-                return (string)result.message;
+                return (string) result.message;
             }
             catch (Exception)
             {

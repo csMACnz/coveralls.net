@@ -20,7 +20,8 @@ namespace csmacnz.Coveralls
                 matches = Regex.Match(line, @"^DA:(\d+),(\d+)");
                 if (matches.Success)
                 {
-                    if(coverageBuilder!= null) { 
+                    if (coverageBuilder != null)
+                    {
                         var lineNumber = int.Parse(matches.Groups[1].Value);
                         var coverageNumber = int.Parse(matches.Groups[2].Value);
                         coverageBuilder.RecordCoverage(lineNumber, coverageNumber);

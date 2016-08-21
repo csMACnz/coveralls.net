@@ -15,7 +15,7 @@ namespace csmacnz.Coveralls.Tests
 
 
             var results = CreateChutzpahParser().GenerateSourceFiles(fileContents, false);
-            
+
             Assert.Equal(2, results.Count);
             Assert.Equal("D/path/to/file/file.ts", results.First().Name);
             Assert.Equal(36, results.First().Coverage[0]);
@@ -30,7 +30,7 @@ namespace csmacnz.Coveralls.Tests
 
             var basePath = @"D:\path\to";
             var results = CreateChutzpahParser(basePath).GenerateSourceFiles(fileContents, true);
-            
+
             Assert.Equal(2, results.Count);
             Assert.Equal("/file/file.ts", results.First().Name);
             Assert.Equal(36, results.First().Coverage[0]);
@@ -58,6 +58,5 @@ namespace csmacnz.Coveralls.Tests
             }
             return contents;
         }
-
     }
 }

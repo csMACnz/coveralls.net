@@ -68,6 +68,5 @@ namespace csmacnz.Coveralls.Tests
             }
             return document;
         }
-
     }
 }

@@ -60,7 +60,6 @@ namespace csmacnz.Coveralls
 
         [JsonProperty("message", DefaultValueHandling = DefaultValueHandling.Ignore)]
         public string Message { get; set; }
-
     }
 
     public sealed class GitRemotes

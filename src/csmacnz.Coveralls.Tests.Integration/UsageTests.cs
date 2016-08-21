@@ -12,6 +12,7 @@ namespace csmacnz.Coveralls.Tests.Integration
 
             Assert.NotEqual(0, results.ExitCode);
         }
+
         [Fact]
         public void InvalidArgument_ExitCodeNotSuccess()
         {
@@ -23,17 +24,20 @@ namespace csmacnz.Coveralls.Tests.Integration
         [Fact]
         public void FileDoesntExist()
         {
-            var results = CoverallsTestRunner.RunCoveralls("--opencover -i opencover.xml --dryrun --repoToken MYTESTREPOTOKEN");
+            var results =
+                CoverallsTestRunner.RunCoveralls("--opencover -i opencover.xml --dryrun --repoToken MYTESTREPOTOKEN");
 
             Assert.NotEqual(0, results.ExitCode);
             Assert.Contains("Input file 'opencover.xml' cannot be found", results.StandardError);
         }
+
         [Fact]
         public void Version()
         {
             var results = CoverallsTestRunner.RunCoveralls("--version");
 
-            Assert.True(Regex.IsMatch(results.StandardOutput, @"\d+.\d+.\d+.\d+"), "Version doesn't match regex: " + results.StandardOutput);
+            Assert.True(Regex.IsMatch(results.StandardOutput, @"\d+.\d+.\d+.\d+"),
+                "Version doesn't match regex: " + results.StandardOutput);
         }
 
         [Fact]

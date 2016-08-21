@@ -22,8 +22,8 @@ namespace csmacnz.Coveralls
                 var sourceElement = rootDocument.Root?.Element("source");
                 if (sourceElement != null)
                 {
-                    List<int?> coverage = new List<int?>();
-                    List<string> source = new List<string>();
+                    var coverage = new List<int?>();
+                    var source = new List<string>();
                     var filePath = sourceElement.Attribute("sourceFile").Value;
                     if (useRelativePaths)
                     {
@@ -37,11 +37,12 @@ namespace csmacnz.Coveralls
                         {
                             coverageCount = -1;
                         }
-                        coverage.Add(coverageCount == -1 ? null : (int?)coverageCount);
+                        coverage.Add(coverageCount == -1 ? null : (int?) coverageCount);
                         source.Add(line.Value);
                     }
 
-                    sourceFiles.Add(new CoverageFile(filePath, Crypto.CalculateMD5Digest(string.Join(",", source.ToArray())), coverage.ToArray()));
+                    sourceFiles.Add(new CoverageFile(filePath,
+                        Crypto.CalculateMD5Digest(string.Join(",", source.ToArray())), coverage.ToArray()));
                 }
             }
 
