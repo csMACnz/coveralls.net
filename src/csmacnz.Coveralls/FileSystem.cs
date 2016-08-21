@@ -1,4 +1,5 @@
-﻿using System.IO;
+﻿using System;
+using System.IO;
 using Beefeater;
 
 namespace csmacnz.Coveralls
@@ -12,6 +13,20 @@ namespace csmacnz.Coveralls
                 return File.ReadAllText(filePath);
             }
             return null;
+        }
+
+        public bool WriteFile(string outputFile, string fileData)
+        {
+            try
+            {
+                File.WriteAllText(outputFile, fileData);
+            }
+            catch (Exception)
+            {
+                //Maybe should give reason.
+                return false;
+            }
+            return true;
         }
     }
 }

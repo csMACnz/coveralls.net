@@ -50,6 +50,10 @@
       <HintPath>..\packages\docopt.net.0.6.1.9\lib\net40\DocoptNet.dll</HintPath>
       <Private>True</Private>
     </Reference>
+    <Reference Include="JetBrains.Annotations, Version=10.1.5.0, Culture=neutral, PublicKeyToken=1010a0d8d6380325, processorArchitecture=MSIL">
+      <HintPath>..\packages\JetBrains.Annotations.10.1.5\lib\net\JetBrains.Annotations.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="Newtonsoft.Json, Version=9.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
       <HintPath>..\packages\Newtonsoft.Json.9.0.1\lib\net45\Newtonsoft.Json.dll</HintPath>
       <Private>True</Private>
@@ -65,15 +69,17 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="AppVeyorGitDataResolver.cs" />
-    <Compile Include="ChutzpahJsonParser.cs" />
-    <Compile Include="CommandLineGitDataResolver.cs" />
+    <Compile Include="CoverageLoader.cs" />
+    <Compile Include="GitData\AppVeyorGitDataResolver.cs" />
+    <Compile Include="LoadCoverageFilesError.cs" />
+    <Compile Include="Parsers\ChutzpahJsonParser.cs" />
+    <Compile Include="GitData\CommandLineGitDataResolver.cs" />
     <Compile Include="CoverageFile.cs" />
     <Compile Include="CoverageFileBuilder.cs" />
     <Compile Include="CoverageMode.cs" />
     <Compile Include="CoverallData.cs" />
     <Compile Include="CoverallsService.cs" />
-    <Compile Include="ExportCodeCoverageParser.cs" />
+    <Compile Include="Parsers\ExportCodeCoverageParser.cs" />
     <Compile Include="EnvironmentVariables.cs" />
     <Compile Include="Crypto.cs" />
     <Compile Include="FileCoverageData.cs" />
@@ -82,10 +88,10 @@
     <Compile Include="ICoverallsService.cs" />
     <Compile Include="IEnvironment.cs" />
     <Compile Include="IFileSystem.cs" />
-    <Compile Include="IGitDataResolver.cs" />
-    <Compile Include="LcovParser.cs" />
-    <Compile Include="MonoCoverParser.cs" />
-    <Compile Include="OpenCoverParser.cs" />
+    <Compile Include="GitData\IGitDataResolver.cs" />
+    <Compile Include="Parsers\LcovParser.cs" />
+    <Compile Include="Parsers\MonoCoverParser.cs" />
+    <Compile Include="Parsers\OpenCoverParser.cs" />
     <Compile Include="PathStripper.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -94,7 +100,7 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>T4DocoptNet.tt</DependentUpon>
     </Compile>
-    <Compile Include="DynamicCodeCoverageParser.cs" />
+    <Compile Include="Parsers\DynamicCodeCoverageParser.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />

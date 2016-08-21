@@ -4,9 +4,9 @@ using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Reflection;
-using System.Xml.Linq;
 using BCLExtensions;
 using Beefeater;
+using JetBrains.Annotations;
 using Newtonsoft.Json;
 
 namespace csmacnz.Coveralls
@@ -48,7 +48,7 @@ namespace csmacnz.Coveralls
 
             var pathProcessor = new PathProcessor(args.IsProvided("--basePath") ? args.OptBasepath : null);
 
-            List<CoverageFile> files = null;
+            List<CoverageFile> files;
             if (args.IsProvided("--multiple") && args.OptMultiple)
             {
                 var modes = args.OptInput.Split(';');
@@ -59,57 +59,13 @@ namespace csmacnz.Coveralls
                     var rawMode = split[0];
                     var input = split[1];
                     var mode = GetMode(rawMode);
-                    if (!mode.HasValue)
-                    {
-                        ExitWithError($"Unknown mode provided with '--multiple': {modekeyvalue}");
-                    }
-                    var coverageFiles = LoadCoverageFiles((CoverageMode)mode, pathProcessor, input, args.OptUserelativepaths);
-                    if (coverageFiles.Successful)
-                    {
-                        files.AddRange(coverageFiles.Value);
-                    }
-                    else
-                    {
-                        switch (coverageFiles.Error)
-                        {
-                            case LoadCoverageFilesError.InputFileNotFound:
-                                ExitWithError($"Input file '{args.OptInput}' cannot be found");
-                                break;
-                            case LoadCoverageFilesError.ModeNotSupported:
-                                ExitWithError($"Could not process mode {mode}");
-                                break;
-                            default:
-                                throw new ArgumentOutOfRangeException();
-                        }
-                    }
+                    files.AddRange(LoadCoverageFiles(mode, pathProcessor, input, args.OptUserelativepaths));
                 }
             }
             else
             {
                 var mode = GetMode(args);
-                if (!mode.HasValue)
-                {
-                    ExitWithError("Unknown mode provided");
-                }
-                var coverageFiles = LoadCoverageFiles((CoverageMode)mode, pathProcessor, args.OptInput, args.OptUserelativepaths);
-                if (coverageFiles.Successful)
-                {
-                    files = coverageFiles.Value;
-                }
-                else
-                {
-                    switch (coverageFiles.Error)
-                    {
-                        case LoadCoverageFilesError.InputFileNotFound:
-                            ExitWithError($"Input file '{args.OptInput}' cannot be found");
-                            break;
-                        case LoadCoverageFilesError.ModeNotSupported:
-                            ExitWithError($"Could not process mode {mode}");
-                            break;
-                        default:
-                            throw new ArgumentOutOfRangeException();
-                    }
-                }
+                files = LoadCoverageFiles(mode, pathProcessor, args.OptInput, args.OptUserelativepaths);
             }
             Debug.Assert(files != null);
             var gitData = ResolveGitData(args);
@@ -139,128 +95,61 @@ namespace csmacnz.Coveralls
             }
             if (!args.OptDryrun)
             {
-                var uploadResult = new CoverallsService().Upload(fileData);
-                if (!uploadResult.Successful)
-                {
-                    var message = $"Failed to upload to coveralls\n{uploadResult.Error}";
-                    if (args.OptTreatuploaderrorsaswarnings)
-                    {
-                        Console.WriteLine(message);
-                    }
-                    else
-                    {
-                        ExitWithError(message);
-                    }
-                }
-                else
-                {
-                    Console.WriteLine("Coverage data uploaded to coveralls.");
-                }
+                UploadCoverage(fileData, args.OptTreatuploaderrorsaswarnings);
             }
         }
 
-        private static Result<List<CoverageFile>, LoadCoverageFilesError> LoadCoverageFiles(CoverageMode mode, PathProcessor pathProcessor, string modeInput, bool useRelativePaths)
+        private static void UploadCoverage(string fileData, bool treatErrorsAsWarnings)
         {
-            List<CoverageFile> files;
-            if (mode == CoverageMode.MonoCov)
+            var uploadResult = new CoverallsService().Upload(fileData);
+            if (!uploadResult.Successful)
             {
-                if (!Directory.Exists(modeInput))
+                var message = $"Failed to upload to coveralls\n{uploadResult.Error}";
+                if (treatErrorsAsWarnings)
                 {
-                    ExitWithError("Input file '" + modeInput + "' cannot be found");
+                    Console.WriteLine(message);
                 }
-                Dictionary<string, XDocument> documents = new DirectoryInfo(modeInput).GetFiles().Where(f => f.Name.EndsWith(".xml")).ToDictionary(f => f.Name, f => XDocument.Load(f.FullName));
-
-                files = new MonoCoverParser(pathProcessor).GenerateSourceFiles(documents, useRelativePaths);
-            }
-            else if (mode == CoverageMode.Chutzpah)
-            {
-                if (!File.Exists(modeInput))
+                else
                 {
-                    return LoadCoverageFilesError.InputFileNotFound;
+                    ExitWithError(message);
                 }
-                var source = File.ReadAllText(modeInput);
-                files = new ChutzpahJsonParser(pathProcessor).GenerateSourceFiles(source, useRelativePaths);
             }
             else
             {
-                List<FileCoverageData> coverageData;
-                if (mode == CoverageMode.DynamicCodeCoverage)
-                {
-                    if (!File.Exists(modeInput))
-                    {
-                        return LoadCoverageFilesError.InputFileNotFound;
-                    }
-
-                    var document = XDocument.Load(modeInput);
-
-                    coverageData = new DynamicCodeCoverageParser().GenerateSourceFiles(document);
-                }
-                else if (mode == CoverageMode.ExportCodeCoverage)
-                {
-                    if (!File.Exists(modeInput))
-                    {
-                        return LoadCoverageFilesError.InputFileNotFound;
-                    }
-
-                    var document = XDocument.Load(modeInput);
-
-                    coverageData = new ExportCodeCoverageParser().GenerateSourceFiles(document);
-                }
-                else if (mode == CoverageMode.OpenCover)
-                {
-                    if (!File.Exists(modeInput))
-                    {
-                        return LoadCoverageFilesError.InputFileNotFound;
-                    }
-
-                    var document = XDocument.Load(modeInput);
-
-                    coverageData = new OpenCoverParser().GenerateSourceFiles(document);
-                }
-                else if (mode == CoverageMode.LCov)
-                {
-                    if (!File.Exists(modeInput))
-                    {
-                        return LoadCoverageFilesError.InputFileNotFound;
-                    }
-                    var lines = File.ReadAllLines(modeInput);
-
-                    coverageData = new LcovParser().GenerateSourceFiles(lines, useRelativePaths);
-                }
-                else
-                {
-                    return LoadCoverageFilesError.ModeNotSupported;
-                }
-
-                files = coverageData.Select(coverageFileData =>
-                {
-                    var coverageBuilder = new CoverageFileBuilder(coverageFileData);
-
-                    var path = coverageFileData.FullPath;
-                    if (useRelativePaths)
-                    {
-                        path = pathProcessor.ConvertPath(coverageFileData.FullPath);
-                    }
-                    path = pathProcessor.UnixifyPath(path);
-                    coverageBuilder.SetPath(path);
-
-                    var readAllText = new FileSystem().TryLoadFile(coverageFileData.FullPath);
-                    if (readAllText.HasValue)
-                    {
-                        coverageBuilder.AddSource((string) readAllText);
-                    }
-
-                    var coverageFile = coverageBuilder.CreateFile();
-                    return coverageFile;
-                }).ToList();
+                Console.WriteLine("Coverage data uploaded to coveralls.");
             }
-            return files;
         }
 
-        private enum LoadCoverageFilesError
+        private static List<CoverageFile> LoadCoverageFiles(Option<CoverageMode> mode, PathProcessor pathProcessor, string inputArgument, bool useRelativePaths)
         {
-            InputFileNotFound,
-            ModeNotSupported
+            List<CoverageFile> files = null;
+            if (!mode.HasValue)
+            {
+                ExitWithError("Unknown mode provided");
+            }
+            var coverageFiles = CoverageLoader.LoadCoverageFiles((CoverageMode) mode, pathProcessor, inputArgument, useRelativePaths);
+            if (coverageFiles.Successful)
+            {
+                files = coverageFiles.Value;
+            }
+            else
+            {
+                switch (coverageFiles.Error)
+                {
+                    case LoadCoverageFilesError.InputFileNotFound:
+                        ExitWithError($"Input file '{inputArgument}' cannot be found");
+                        break;
+                    case LoadCoverageFilesError.ModeNotSupported:
+                        ExitWithError($"Could not process mode {mode}");
+                        break;
+                    case LoadCoverageFilesError.UnknownFilesMissingError:
+                        ExitWithError($"Unknown Error Finding files processing mode {mode}");
+                        break;
+                    default:
+                        throw new ArgumentOutOfRangeException();
+                }
+            }
+            return files;
         }
 
         private static Option<CoverageMode> GetMode(string mode)
@@ -329,7 +218,8 @@ namespace csmacnz.Coveralls
         {
             return FileVersionInfo.GetVersionInfo(Assembly.GetEntryAssembly().Location).ProductVersion;
         }
-
+        
+        [ContractAnnotation("=>halt")]
         private static void ExitWithError(string message)
         {
             Console.Error.WriteLine(message);
@@ -380,11 +270,7 @@ namespace csmacnz.Coveralls
 
         private static void WriteFileData(string fileData, string outputFile)
         {
-            try
-            {
-                File.WriteAllText(outputFile, fileData);
-            }
-            catch (Exception)
+            if (!new FileSystem().WriteFile(outputFile, fileData))
             {
                 Console.WriteLine("Failed to write data to output file '{0}'.", outputFile);
             }
