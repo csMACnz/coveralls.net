@@ -56,9 +56,14 @@ namespace csmacnz.Coveralls
                 foreach (var modekeyvalue in modes)
                 {
                     var split= modekeyvalue.Split('=');
-                    var mode = split[0];
+                    var rawMode = split[0];
                     var input = split[1];
-                    var coverageFiles = LoadCoverageFiles(mode, pathProcessor, input, args.OptUserelativepaths);
+                    var mode = GetMode(rawMode);
+                    if (!mode.HasValue)
+                    {
+                        ExitWithError($"Unknown mode provided with '--multiple': {modekeyvalue}");
+                    }
+                    var coverageFiles = LoadCoverageFiles((CoverageMode)mode, pathProcessor, input, args.OptUserelativepaths);
                     if (coverageFiles.Successful)
                     {
                         files.AddRange(coverageFiles.Value);
@@ -67,11 +72,11 @@ namespace csmacnz.Coveralls
                     {
                         switch (coverageFiles.Error)
                         {
-                            case LoadCoverageFilesError.UnknownModeProvided:
-                                ExitWithError($"Unknown mode provided with '--multiple': {modekeyvalue}");
-                                break;
                             case LoadCoverageFilesError.InputFileNotFound:
-                                ExitWithError("Input file '" + args.OptInput + "' cannot be found");
+                                ExitWithError($"Input file '{args.OptInput}' cannot be found");
+                                break;
+                            case LoadCoverageFilesError.ModeNotSupported:
+                                ExitWithError($"Could not process mode {mode}");
                                 break;
                             default:
                                 throw new ArgumentOutOfRangeException();
@@ -82,8 +87,11 @@ namespace csmacnz.Coveralls
             else
             {
                 var mode = GetMode(args);
-
-                var coverageFiles = LoadCoverageFiles(mode, pathProcessor, args.OptInput, args.OptUserelativepaths);
+                if (!mode.HasValue)
+                {
+                    ExitWithError($"Unknown mode provided");
+                }
+                var coverageFiles = LoadCoverageFiles((CoverageMode)mode, pathProcessor, args.OptInput, args.OptUserelativepaths);
                 if (coverageFiles.Successful)
                 {
                     files = coverageFiles.Value;
@@ -92,11 +100,11 @@ namespace csmacnz.Coveralls
                 {
                     switch (coverageFiles.Error)
                     {
-                        case LoadCoverageFilesError.UnknownModeProvided:
-                            ExitWithError($"Unknown mode provided: {mode}");
-                            break;
                         case LoadCoverageFilesError.InputFileNotFound:
-                            ExitWithError("Input file '" + args.OptInput + "' cannot be found");
+                            ExitWithError($"Input file '{args.OptInput}' cannot be found");
+                            break;
+                        case LoadCoverageFilesError.ModeNotSupported:
+                            ExitWithError($"Could not process mode {mode}");
                             break;
                         default:
                             throw new ArgumentOutOfRangeException();
@@ -151,10 +159,10 @@ namespace csmacnz.Coveralls
             }
         }
 
-        private static Result<List<CoverageFile>, LoadCoverageFilesError> LoadCoverageFiles(string mode, PathProcessor pathProcessor, string modeInput, bool useRelativePaths)
+        private static Result<List<CoverageFile>, LoadCoverageFilesError> LoadCoverageFiles(CoverageMode mode, PathProcessor pathProcessor, string modeInput, bool useRelativePaths)
         {
             List<CoverageFile> files;
-            if (string.Equals(mode, "monocov", StringComparison.OrdinalIgnoreCase))
+            if (mode == CoverageMode.MonoCov)
             {
                 if (!Directory.Exists(modeInput))
                 {
@@ -164,7 +172,7 @@ namespace csmacnz.Coveralls
 
                 files = new MonoCoverParser(pathProcessor).GenerateSourceFiles(documents, useRelativePaths);
             }
-            else if (string.Equals(mode, "chutzpah", StringComparison.OrdinalIgnoreCase))
+            else if (mode == CoverageMode.Chutzpah)
             {
                 if (!File.Exists(modeInput))
                 {
@@ -176,7 +184,7 @@ namespace csmacnz.Coveralls
             else
             {
                 List<FileCoverageData> coverageData;
-                if (string.Equals(mode, "dynamiccodecoverage", StringComparison.OrdinalIgnoreCase))
+                if (mode == CoverageMode.DynamicCodeCoverage)
                 {
                     if (!File.Exists(modeInput))
                     {
@@ -187,7 +195,7 @@ namespace csmacnz.Coveralls
 
                     coverageData = new DynamicCodeCoverageParser().GenerateSourceFiles(document);
                 }
-                else if (string.Equals(mode, "exportcodecoverage", StringComparison.OrdinalIgnoreCase))
+                else if (mode == CoverageMode.ExportCodeCoverage)
                 {
                     if (!File.Exists(modeInput))
                     {
@@ -198,7 +206,7 @@ namespace csmacnz.Coveralls
 
                     coverageData = new ExportCodeCoverageParser().GenerateSourceFiles(document);
                 }
-                else if (string.Equals(mode, "opencover", StringComparison.OrdinalIgnoreCase))
+                else if (mode == CoverageMode.OpenCover)
                 {
                     if (!File.Exists(modeInput))
                     {
@@ -209,7 +217,7 @@ namespace csmacnz.Coveralls
 
                     coverageData = new OpenCoverParser().GenerateSourceFiles(document);
                 }
-                else if (string.Equals(mode, "lcov", StringComparison.OrdinalIgnoreCase))
+                else if (mode == CoverageMode.LCov)
                 {
                     if (!File.Exists(modeInput))
                     {
@@ -221,7 +229,7 @@ namespace csmacnz.Coveralls
                 }
                 else
                 {
-                    return LoadCoverageFilesError.UnknownModeProvided;
+                    return LoadCoverageFilesError.ModeNotSupported;
                 }
 
                 files = coverageData.Select(coverageFileData =>
@@ -251,38 +259,70 @@ namespace csmacnz.Coveralls
 
         private enum LoadCoverageFilesError
         {
-            UnknownModeProvided,
-            InputFileNotFound
+            InputFileNotFound,
+            ModeNotSupported
         }
 
-        private static string GetMode(MainArgs args)
+        private static Option<CoverageMode> GetMode(string mode)
+        {
+            if (string.Equals(mode, "monocov", StringComparison.OrdinalIgnoreCase))
+            {
+                return CoverageMode.MonoCov;
+            }
+            else if (string.Equals(mode, "chutzpah", StringComparison.OrdinalIgnoreCase))
+            {
+                return CoverageMode.Chutzpah;
+            }
+            else if (string.Equals(mode, "dynamiccodecoverage", StringComparison.OrdinalIgnoreCase))
+            {
+                return CoverageMode.DynamicCodeCoverage;
+            }
+            else if (string.Equals(mode, "exportcodecoverage", StringComparison.OrdinalIgnoreCase))
+            {
+                return CoverageMode.ExportCodeCoverage;
+            }
+            else if (string.Equals(mode, "opencover", StringComparison.OrdinalIgnoreCase))
+            {
+                return CoverageMode.OpenCover;
+            }
+            else if (string.Equals(mode, "lcov", StringComparison.OrdinalIgnoreCase))
+            {
+                return CoverageMode.LCov;
+            }
+            else
+            {
+                return Option<CoverageMode>.None;
+            }
+        }
+
+        private static Option<CoverageMode> GetMode(MainArgs args)
         {
             if (args.IsProvided("--monocov") && args.OptMonocov)
             {
-                return "monocov";
+                return CoverageMode.MonoCov;
             }
             else if (args.IsProvided("--chutzpah") && args.OptChutzpah)
             {
-                return "chutzpah";
+                return CoverageMode.Chutzpah;
             }
             else if (args.IsProvided("--dynamiccodecoverage") && args.OptDynamiccodecoverage)
             {
-                return "dynamiccodecoverage";
+                return CoverageMode.DynamicCodeCoverage;
             }
             else if (args.IsProvided("--exportcodecoverage") && args.OptExportcodecoverage)
             {
-                return "exportcodecoverage";
+                return CoverageMode.ExportCodeCoverage;
             }
             else if (args.IsProvided("--opencover") && args.OptOpencover)
             {
-                return "opencover";
+                return CoverageMode.OpenCover;
             }
             else if (args.IsProvided("--lcov") && args.OptLcov)
             {
-                return "lcov";
+                return CoverageMode.LCov;
             }
-            ExitWithError("Unknown file process mode");
-            return null; //Unreachable
+            
+            return Option<CoverageMode>.None; //Unreachable
         }
 
         private static NotNull<string> GetDisplayVersion()
