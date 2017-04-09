@@ -23,6 +23,7 @@ coveralls.net
 [![Issue Stats](http://www.issuestats.com/github/csMACnz/coveralls.net/badge/pr)](http://www.issuestats.com/github/csMACnz/coveralls.net)
 [![Issue Stats](http://www.issuestats.com/github/csMACnz/coveralls.net/badge/issue)](http://www.issuestats.com/github/csMACnz/coveralls.net)
 
+
 [![Source Browser](https://img.shields.io/badge/Browse-Source-green.svg)](http://sourcebrowser.io/Browse/csMACnz/coveralls.net)
 [![Open Hub](https://img.shields.io/badge/Open-Hub-0185CA.svg)](https://www.openhub.net/p/coverallsdotnet)
 [![Documentation Status](https://readthedocs.org/projects/coverallsnet/badge/?version=latest)](https://readthedocs.org/projects/coverallsnet/?badge=latest)
@@ -57,6 +58,8 @@ Supported
 * [OpenCover](https://github.com/sawilde/opencover)
 * [Mono Code Coverage (monocov)](http://www.mono-project.com/docs/debug+profile/profile/code-coverage/)
 * [Visual Studio's Dynamic Coverage](http://msdn.microsoft.com/en-us/library/dd299398%28v=vs.90%29.aspx) (based on [ReportGenerator's support](https://reportgenerator.codeplex.com/wikipage?title=Visual%20Studio%20Coverage%20Tools),  using vstest.console.exe and CodeCoverage.exe)
+* lcov
+* [Chutzpah - A JavaScript Test Runner](https://github.com/mmanela/chutzpah)
 
 Full Supported, In Progress, and Future Support information can be found [Coverage Support](https://github.com/csMACnz/coveralls.net/wiki/Coverage-Support) wiki page
 
