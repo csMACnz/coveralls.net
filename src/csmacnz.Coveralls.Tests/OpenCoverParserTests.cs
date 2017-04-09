@@ -2,6 +2,7 @@
 using System.Reflection;
 using System.Xml;
 using System.Xml.Linq;
+using csmacnz.Coveralls.Parsers;
 using Xunit;
 
 namespace csmacnz.Coveralls.Tests

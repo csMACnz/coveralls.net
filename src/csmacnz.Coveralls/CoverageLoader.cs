@@ -3,6 +3,7 @@ using System.IO;
 using System.Linq;
 using System.Xml.Linq;
 using Beefeater;
+using csmacnz.Coveralls.Parsers;
 
 namespace csmacnz.Coveralls
 {

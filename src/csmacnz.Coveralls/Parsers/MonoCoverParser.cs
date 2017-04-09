@@ -2,7 +2,7 @@
 using System.Linq;
 using System.Xml.Linq;
 
-namespace csmacnz.Coveralls
+namespace csmacnz.Coveralls.Parsers
 {
     public class MonoCoverParser
     {

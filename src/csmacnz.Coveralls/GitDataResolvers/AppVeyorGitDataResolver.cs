@@ -1,4 +1,4 @@
-namespace csmacnz.Coveralls
+namespace csmacnz.Coveralls.GitDataResolvers
 {
     public class AppVeyorGitDataResolver : IGitDataResolver
     {

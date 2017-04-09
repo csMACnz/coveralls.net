@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using csmacnz.Coveralls.GitDataResolvers;
 using Xunit;
 
 namespace csmacnz.Coveralls.Tests
