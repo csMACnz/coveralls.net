@@ -1,9 +1,10 @@
 using System;
 using System.Net.Http;
 using Beefeater;
+using csmacnz.Coveralls.Ports;
 using Newtonsoft.Json;
 
-namespace csmacnz.Coveralls
+namespace csmacnz.Coveralls.Adapters
 {
     public class CoverallsService : ICoverallsService
     {

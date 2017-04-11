@@ -1,3 +1,6 @@
+using csmacnz.Coveralls.Data;
+using csmacnz.Coveralls.Ports;
+
 namespace csmacnz.Coveralls.GitDataResolvers
 {
     public class AppVeyorGitDataResolver : IGitDataResolver

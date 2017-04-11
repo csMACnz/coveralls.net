@@ -1,6 +1,6 @@
 using Beefeater;
 
-namespace csmacnz.Coveralls
+namespace csmacnz.Coveralls.Ports
 {
     public interface ICoverallsService
     {

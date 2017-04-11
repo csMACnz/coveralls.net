@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.IO;
 using BCLExtensions;
+using csmacnz.Coveralls.Data;
 
 namespace csmacnz.Coveralls
 {

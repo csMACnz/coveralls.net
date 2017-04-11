@@ -2,8 +2,9 @@
 using System.IO;
 using System.Xml.Linq;
 using Beefeater;
+using csmacnz.Coveralls.Ports;
 
-namespace csmacnz.Coveralls
+namespace csmacnz.Coveralls.Adapters
 {
     public class FileSystem : IFileSystem
     {

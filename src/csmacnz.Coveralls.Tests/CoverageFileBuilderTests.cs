@@ -1,4 +1,5 @@
 ﻿using System;
+using csmacnz.Coveralls.Data;
 using Xunit;
 
 namespace csmacnz.Coveralls.Tests

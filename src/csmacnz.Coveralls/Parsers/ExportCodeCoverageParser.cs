@@ -1,9 +1,10 @@
 ﻿using System.Collections.Generic;
 using System.Xml.Linq;
+using csmacnz.Coveralls.Data;
 
 namespace csmacnz.Coveralls.Parsers
 {
-    public class ExportCodeCoverageParser
+    public class ExportCodeCoverageParser: IXmlCoverageParser
     {
         public List<FileCoverageData> GenerateSourceFiles(XDocument document)
         {

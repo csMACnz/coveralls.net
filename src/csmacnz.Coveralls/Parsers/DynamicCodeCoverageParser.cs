@@ -1,10 +1,11 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using System.Xml.Linq;
+using csmacnz.Coveralls.Data;
 
 namespace csmacnz.Coveralls.Parsers
 {
-    public class DynamicCodeCoverageParser
+    public class DynamicCodeCoverageParser: IXmlCoverageParser
     {
         public List<FileCoverageData> GenerateSourceFiles(XDocument document)
         {

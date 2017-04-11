@@ -1,4 +1,5 @@
 ﻿using BCLExtensions;
+using csmacnz.Coveralls.Data;
 
 namespace csmacnz.Coveralls.GitDataResolvers
 {

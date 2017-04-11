@@ -1,6 +1,7 @@
 using System;
+using csmacnz.Coveralls.Ports;
 
-namespace csmacnz.Coveralls
+namespace csmacnz.Coveralls.Adapters
 {
     internal class EnvironmentVariables : IEnvironmentVariables
     {

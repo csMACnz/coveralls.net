@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace csmacnz.Coveralls
+namespace csmacnz.Coveralls.Data
 {
     public class FileCoverageData
     {

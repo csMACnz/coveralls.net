@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
+using csmacnz.Coveralls.Data;
 using csmacnz.Coveralls.GitDataResolvers;
+using csmacnz.Coveralls.Ports;
 using Xunit;
 
 namespace csmacnz.Coveralls.Tests

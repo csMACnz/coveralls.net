@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
+using csmacnz.Coveralls.Data;
 using Newtonsoft.Json;
 
 namespace csmacnz.Coveralls.Parsers

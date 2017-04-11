@@ -6,6 +6,8 @@ using System.Linq;
 using System.Reflection;
 using BCLExtensions;
 using Beefeater;
+using csmacnz.Coveralls.Adapters;
+using csmacnz.Coveralls.Data;
 using csmacnz.Coveralls.GitDataResolvers;
 using JetBrains.Annotations;
 using Newtonsoft.Json;

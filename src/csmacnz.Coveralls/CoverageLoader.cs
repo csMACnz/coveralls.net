@@ -3,7 +3,9 @@ using System.IO;
 using System.Linq;
 using System.Xml.Linq;
 using Beefeater;
+using csmacnz.Coveralls.Data;
 using csmacnz.Coveralls.Parsers;
+using csmacnz.Coveralls.Ports;
 
 namespace csmacnz.Coveralls
 {
@@ -27,8 +29,7 @@ namespace csmacnz.Coveralls
                 {
                     return LoadCoverageFilesError.InputFileNotFound;
                 }
-                var documents = ((FileInfo[]) folderFiles).Where(f => f.Name.EndsWith(".xml"))
-                    .ToDictionary(f => f.Name, f => (XDocument) _fileSystem.TryLoadXDocumentFromFile(f.FullName));
+                var documents = LoadXDocuments(folderFiles);
 
                 files = new MonoCoverParser(pathProcessor).GenerateSourceFiles(documents, useRelativePaths);
             }
@@ -48,86 +49,95 @@ namespace csmacnz.Coveralls
                     return LoadCoverageFilesError.InputFileNotFound;
                 }
             }
+            else if (mode == CoverageMode.LCov)
+            {
+                var lines = _fileSystem.ReadAllLines(modeInput);
+
+                if (lines.HasValue)
+                {
+                    return LoadCoverageFilesError.InputFileNotFound;
+                }
+
+                var coverageData = new LcovParser().GenerateSourceFiles((string[]) lines, useRelativePaths);
+
+                files = BuildCoverageFiles(pathProcessor, useRelativePaths, coverageData);
+            }
             else
             {
-                List<FileCoverageData> coverageData;
-                if (mode == CoverageMode.DynamicCodeCoverage)
-                {
-                    var document = _fileSystem.TryLoadXDocumentFromFile(modeInput);
-
-                    if (!document.HasValue)
-                    {
-                        return LoadCoverageFilesError.InputFileNotFound;
-                    }
-
-                    coverageData = new DynamicCodeCoverageParser().GenerateSourceFiles((XDocument) document);
-                }
-                else if (mode == CoverageMode.ExportCodeCoverage)
-                {
-                    var document = _fileSystem.TryLoadXDocumentFromFile(modeInput);
-
-                    if (!document.HasValue)
-                    {
-                        return LoadCoverageFilesError.InputFileNotFound;
-                    }
-
-                    coverageData = new ExportCodeCoverageParser().GenerateSourceFiles((XDocument) document);
-                }
-                else if (mode == CoverageMode.OpenCover)
-                {
-                    var document = _fileSystem.TryLoadXDocumentFromFile(modeInput);
-
-                    if (!document.HasValue)
-                    {
-                        return LoadCoverageFilesError.InputFileNotFound;
-                    }
-
-                    coverageData = new OpenCoverParser().GenerateSourceFiles((XDocument) document);
-                }
-                else if (mode == CoverageMode.LCov)
-                {
-                    var lines = _fileSystem.ReadAllLines(modeInput);
-
-                    if (lines.HasValue)
-                    {
-                        return LoadCoverageFilesError.InputFileNotFound;
-                    }
-
-                    coverageData = new LcovParser().GenerateSourceFiles((string[]) lines, useRelativePaths);
-                }
-                else
+                //common xml-based single file formats
+                var xmlParser = LoadXmlParser(mode);
+                if (xmlParser == null)
                 {
                     return LoadCoverageFilesError.ModeNotSupported;
                 }
 
-                //This needs attention, since this is optional if source is on public github
-                files = coverageData.Select(coverageFileData =>
+                var document = _fileSystem.TryLoadXDocumentFromFile(modeInput);
+
+                if (!document.HasValue)
                 {
-                    var coverageBuilder = new CoverageFileBuilder(coverageFileData);
+                    return LoadCoverageFilesError.InputFileNotFound;
+                }
 
-                    var path = coverageFileData.FullPath;
-                    if (useRelativePaths)
-                    {
-                        path = pathProcessor.ConvertPath(coverageFileData.FullPath);
-                    }
-                    path = pathProcessor.UnixifyPath(path);
-                    coverageBuilder.SetPath(path);
+                var coverageData = xmlParser.GenerateSourceFiles((XDocument) document);
 
-                    var readAllText = _fileSystem.TryLoadFile(coverageFileData.FullPath);
-                    if (readAllText.HasValue)
-                    {
-                        coverageBuilder.AddSource((string) readAllText);
-                    }
-
-                    var coverageFile = coverageBuilder.CreateFile();
-                    return coverageFile;
-                }).ToList();
+                files = BuildCoverageFiles(pathProcessor, useRelativePaths, coverageData);
             }
+
             if (files == null)
             {
                 return LoadCoverageFilesError.UnknownFilesMissingError;
             }
             return files;
+        }
+
+        private Dictionary<string, XDocument> LoadXDocuments(Option<FileInfo[]> folderFiles)
+        {
+            return ((FileInfo[]) folderFiles).Where(f => f.Name.EndsWith(".xml"))
+                .ToDictionary(f => f.Name, f => (XDocument) _fileSystem.TryLoadXDocumentFromFile(f.FullName));
+        }
+
+        private List<CoverageFile> BuildCoverageFiles(PathProcessor pathProcessor, bool useRelativePaths,
+            List<FileCoverageData> coverageData)
+        {
+            //This needs attention, since this is optional if source is on public github
+            var files = coverageData.Select(coverageFileData =>
+            {
+                var coverageBuilder = new CoverageFileBuilder(coverageFileData);
+
+                var path = coverageFileData.FullPath;
+                if (useRelativePaths)
+                {
+                    path = pathProcessor.ConvertPath(coverageFileData.FullPath);
+                }
+                path = pathProcessor.UnixifyPath(path);
+                coverageBuilder.SetPath(path);
+
+                var readAllText = _fileSystem.TryLoadFile(coverageFileData.FullPath);
+                if (readAllText.HasValue)
+                {
+                    coverageBuilder.AddSource((string) readAllText);
+                }
+
+                var coverageFile = coverageBuilder.CreateFile();
+                return coverageFile;
+            }).ToList();
+            return files;
+        }
+
+
+        private IXmlCoverageParser LoadXmlParser(CoverageMode mode)
+        {
+            switch (mode)
+            {
+                case CoverageMode.OpenCover:
+                    return new OpenCoverParser();
+                case CoverageMode.DynamicCodeCoverage:
+                    return new DynamicCodeCoverageParser();
+                case CoverageMode.ExportCodeCoverage:
+                    return new ExportCodeCoverageParser();
+                default:
+                    return null;
+            }
         }
     }
 }
