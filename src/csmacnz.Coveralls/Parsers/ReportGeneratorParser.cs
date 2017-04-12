@@ -23,4 +23,5 @@ namespace csmacnz.Coveralls.Parsers
 
             return sourceFiles;
         }
+    }
 }
