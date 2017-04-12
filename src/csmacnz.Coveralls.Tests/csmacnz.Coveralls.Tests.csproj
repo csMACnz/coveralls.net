@@ -81,6 +81,7 @@
     <Compile Include="AppVeyorGitDataResolverTests.cs" />
     <Compile Include="ChutzpahJsonParserTests.cs" />
     <Compile Include="CoverageFileBuilderTests.cs" />
+    <Compile Include="ReportGeneratorParserTests.cs" />
     <Compile Include="OpenCoverParserTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="TestFileSystem.cs" />
@@ -110,8 +111,14 @@
     <EmbeddedResource Include="ChutzpahExample.json" />
     <None Include="packages.config" />
   </ItemGroup>
+  <ItemGroup />
   <ItemGroup>
-    <Folder Include="ReportGeneratorSample\" />
+    <EmbeddedResource Include="ReportGeneratorSample\GameOfLife.xUnit.Tests_GameOfLife.xUnit.Tests.WorldTests.xml" />
+    <EmbeddedResource Include="ReportGeneratorSample\GameOfLife_GameOfLife.Game.xml" />
+    <EmbeddedResource Include="ReportGeneratorSample\GameOfLife_GameOfLife.Program.xml" />
+    <EmbeddedResource Include="ReportGeneratorSample\GameOfLife_GameOfLife.World.xml" />
+    <EmbeddedResource Include="ReportGeneratorSample\GameOfLife_GameOfLife.WorldBuilder.xml" />
+    <EmbeddedResource Include="ReportGeneratorSample\Summary.xml" />
   </ItemGroup>
   <Choose>
     <When Condition="'$(VisualStudioVersion)' == '10.0' And '$(IsCodedUITest)' == 'True'">
