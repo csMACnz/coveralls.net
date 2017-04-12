@@ -96,6 +96,7 @@
     <Compile Include="PathProcessor.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Parsers\ReportGeneratorParser.cs" />
     <Compile Include="T4DocoptNet.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>

@@ -1,0 +1,107 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<CoverageReport scope="GameOfLife.WorldBuilder">
+  <Summary>
+    <Class>GameOfLife.WorldBuilder</Class>
+    <Assembly>GameOfLife</Assembly>
+    <Files>
+      <File>C:\dev\Coveralls.net-Samples\src\GameOfLife\WorldBuilder.cs</File>
+    </Files>
+    <Coveredlines>0</Coveredlines>
+    <Uncoveredlines>39</Uncoveredlines>
+    <Coverablelines>39</Coverablelines>
+    <Totallines>65</Totallines>
+    <Linecoverage>0%</Linecoverage>
+    <Branchcoverage>0%</Branchcoverage>
+  </Summary>
+  <Metrics>
+    <BuildBlinkerWorld>
+      <Cyclomaticcomplexity>1</Cyclomaticcomplexity>
+      <Sequencecoverage>0</Sequencecoverage>
+      <Branchcoverage>0</Branchcoverage>
+    </BuildBlinkerWorld>
+    <BuildToadWorld>
+      <Cyclomaticcomplexity>1</Cyclomaticcomplexity>
+      <Sequencecoverage>0</Sequencecoverage>
+      <Branchcoverage>0</Branchcoverage>
+    </BuildToadWorld>
+    <BuildBeaconWorld>
+      <Cyclomaticcomplexity>1</Cyclomaticcomplexity>
+      <Sequencecoverage>0</Sequencecoverage>
+      <Branchcoverage>0</Branchcoverage>
+    </BuildBeaconWorld>
+    <BuildRandomWorld>
+      <Cyclomaticcomplexity>5</Cyclomaticcomplexity>
+      <Sequencecoverage>0</Sequencecoverage>
+      <Branchcoverage>0</Branchcoverage>
+    </BuildRandomWorld>
+  </Metrics>
+  <Files>
+    <File name="C:\dev\Coveralls.net-Samples\src\GameOfLife\WorldBuilder.cs">
+      <LineAnalysis line="1" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="using System;" />
+      <LineAnalysis line="2" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="using System.Linq;" />
+      <LineAnalysis line="3" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="" />
+      <LineAnalysis line="4" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="namespace GameOfLife" />
+      <LineAnalysis line="5" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="{" />
+      <LineAnalysis line="6" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="    public static class WorldBuilder" />
+      <LineAnalysis line="7" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="    {" />
+      <LineAnalysis line="8" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="        private const int DefaultWidth = 10;" />
+      <LineAnalysis line="9" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="        private const int DefaultHeight = 10;" />
+      <LineAnalysis line="10" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="" />
+      <LineAnalysis line="11" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="        public static World BuildBlinkerWorld()" />
+      <LineAnalysis line="12" visits="0" coverage="NotCovered" coveredbranches="" totalbranches="" content="        {" />
+      <LineAnalysis line="13" visits="0" coverage="NotCovered" coveredbranches="" totalbranches="" content="            var world = new bool[DefaultHeight, DefaultWidth];" />
+      <LineAnalysis line="14" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="" />
+      <LineAnalysis line="15" visits="0" coverage="NotCovered" coveredbranches="" totalbranches="" content="            world[5, 4] = true;" />
+      <LineAnalysis line="16" visits="0" coverage="NotCovered" coveredbranches="" totalbranches="" content="            world[5, 5] = true;" />
+      <LineAnalysis line="17" visits="0" coverage="NotCovered" coveredbranches="" totalbranches="" content="            world[5, 6] = true;" />
+      <LineAnalysis line="18" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="" />
+      <LineAnalysis line="19" visits="0" coverage="NotCovered" coveredbranches="" totalbranches="" content="            return new World(world);" />
+      <LineAnalysis line="20" visits="0" coverage="NotCovered" coveredbranches="" totalbranches="" content="        }" />
+      <LineAnalysis line="21" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="" />
+      <LineAnalysis line="22" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="        public static World BuildToadWorld()" />
+      <LineAnalysis line="23" visits="0" coverage="NotCovered" coveredbranches="" totalbranches="" content="        {" />
+      <LineAnalysis line="24" visits="0" coverage="NotCovered" coveredbranches="" totalbranches="" content="            var world = new bool[DefaultHeight, DefaultWidth];" />
+      <LineAnalysis line="25" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="" />
+      <LineAnalysis line="26" visits="0" coverage="NotCovered" coveredbranches="" totalbranches="" content="            world[5, 4] = true;" />
+      <LineAnalysis line="27" visits="0" coverage="NotCovered" coveredbranches="" totalbranches="" content="            world[5, 5] = true;" />
+      <LineAnalysis line="28" visits="0" coverage="NotCovered" coveredbranches="" totalbranches="" content="            world[5, 6] = true;" />
+      <LineAnalysis line="29" visits="0" coverage="NotCovered" coveredbranches="" totalbranches="" content="            world[6, 3] = true;" />
+      <LineAnalysis line="30" visits="0" coverage="NotCovered" coveredbranches="" totalbranches="" content="            world[6, 4] = true;" />
+      <LineAnalysis line="31" visits="0" coverage="NotCovered" coveredbranches="" totalbranches="" content="            world[6, 5] = true;" />
+      <LineAnalysis line="32" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="" />
+      <LineAnalysis line="33" visits="0" coverage="NotCovered" coveredbranches="" totalbranches="" content="            return new World(world);" />
+      <LineAnalysis line="34" visits="0" coverage="NotCovered" coveredbranches="" totalbranches="" content="        }" />
+      <LineAnalysis line="35" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="" />
+      <LineAnalysis line="36" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="        public static World BuildBeaconWorld()" />
+      <LineAnalysis line="37" visits="0" coverage="NotCovered" coveredbranches="" totalbranches="" content="        {" />
+      <LineAnalysis line="38" visits="0" coverage="NotCovered" coveredbranches="" totalbranches="" content="            var world = new bool[DefaultHeight, DefaultWidth];" />
+      <LineAnalysis line="39" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="" />
+      <LineAnalysis line="40" visits="0" coverage="NotCovered" coveredbranches="" totalbranches="" content="            world[3, 3] = true;" />
+      <LineAnalysis line="41" visits="0" coverage="NotCovered" coveredbranches="" totalbranches="" content="            world[3, 4] = true;" />
+      <LineAnalysis line="42" visits="0" coverage="NotCovered" coveredbranches="" totalbranches="" content="            world[4, 3] = true;" />
+      <LineAnalysis line="43" visits="0" coverage="NotCovered" coveredbranches="" totalbranches="" content="            world[5, 6] = true;" />
+      <LineAnalysis line="44" visits="0" coverage="NotCovered" coveredbranches="" totalbranches="" content="            world[6, 5] = true;" />
+      <LineAnalysis line="45" visits="0" coverage="NotCovered" coveredbranches="" totalbranches="" content="            world[6, 6] = true;" />
+      <LineAnalysis line="46" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="" />
+      <LineAnalysis line="47" visits="0" coverage="NotCovered" coveredbranches="" totalbranches="" content="            return new World(world);" />
+      <LineAnalysis line="48" visits="0" coverage="NotCovered" coveredbranches="" totalbranches="" content="        }" />
+      <LineAnalysis line="49" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="" />
+      <LineAnalysis line="50" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="        public static World BuildRandomWorld()" />
+      <LineAnalysis line="51" visits="0" coverage="NotCovered" coveredbranches="" totalbranches="" content="        {" />
+      <LineAnalysis line="52" visits="0" coverage="NotCovered" coveredbranches="" totalbranches="" content="            var world = new bool[DefaultHeight, DefaultWidth];" />
+      <LineAnalysis line="53" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="" />
+      <LineAnalysis line="54" visits="0" coverage="NotCovered" coveredbranches="" totalbranches="" content="            var random = new Random((int)DateTime.Now.Ticks % Int32.MaxValue);" />
+      <LineAnalysis line="55" visits="0" coverage="NotCovered" coveredbranches="0" totalbranches="2" content="            foreach (int row in Enumerable.Range(0, DefaultHeight))" />
+      <LineAnalysis line="56" visits="0" coverage="NotCovered" coveredbranches="" totalbranches="" content="            {" />
+      <LineAnalysis line="57" visits="0" coverage="NotCovered" coveredbranches="0" totalbranches="2" content="                foreach (int col in Enumerable.Range(0, DefaultWidth))" />
+      <LineAnalysis line="58" visits="0" coverage="NotCovered" coveredbranches="" totalbranches="" content="                {" />
+      <LineAnalysis line="59" visits="0" coverage="NotCovered" coveredbranches="" totalbranches="" content="                    world[row, col] = random.Next(2) == 1;" />
+      <LineAnalysis line="60" visits="0" coverage="NotCovered" coveredbranches="" totalbranches="" content="                }" />
+      <LineAnalysis line="61" visits="0" coverage="NotCovered" coveredbranches="" totalbranches="" content="            }" />
+      <LineAnalysis line="62" visits="0" coverage="NotCovered" coveredbranches="" totalbranches="" content="            return new World(world);" />
+      <LineAnalysis line="63" visits="0" coverage="NotCovered" coveredbranches="" totalbranches="" content="        }" />
+      <LineAnalysis line="64" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="    }" />
+      <LineAnalysis line="65" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="}" />
+    </File>
+  </Files>
+</CoverageReport>

@@ -1,0 +1,27 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<CoverageReport scope="Summary">
+  <Summary>
+    <Generatedon>11/04/2017 - 11:43:35</Generatedon>
+    <Parser>OpenCoverParser</Parser>
+    <Assemblies>2</Assemblies>
+    <Classes>5</Classes>
+    <Files>5</Files>
+    <Coveredlines>18</Coveredlines>
+    <Uncoveredlines>101</Uncoveredlines>
+    <Coverablelines>119</Coverablelines>
+    <Totallines>209</Totallines>
+    <Linecoverage>15.1%</Linecoverage>
+    <Branchcoverage>0%</Branchcoverage>
+  </Summary>
+  <Assemblies>
+    <Assembly name="GameOfLife" classes="4" coverage="7.3" coveredlines="8" coverablelines="109" totallines="180" branchcoverage="0" coveredbranches="0" totalbranches="36">
+      <Class name="GameOfLife.Game" coverage="0" coveredlines="0" coverablelines="50" totallines="64" branchcoverage="0" coveredbranches="0" totalbranches="32" />
+      <Class name="GameOfLife.Program" coverage="0" coveredlines="0" coverablelines="9" totallines="29" branchcoverage="" coveredbranches="0" totalbranches="0" />
+      <Class name="GameOfLife.World" coverage="72.7" coveredlines="8" coverablelines="11" totallines="22" branchcoverage="" coveredbranches="0" totalbranches="0" />
+      <Class name="GameOfLife.WorldBuilder" coverage="0" coveredlines="0" coverablelines="39" totallines="65" branchcoverage="0" coveredbranches="0" totalbranches="4" />
+    </Assembly>
+    <Assembly name="GameOfLife.xUnit.Tests" classes="1" coverage="100" coveredlines="10" coverablelines="10" totallines="29" branchcoverage="" coveredbranches="0" totalbranches="0">
+      <Class name="GameOfLife.xUnit.Tests.WorldTests" coverage="100" coveredlines="10" coverablelines="10" totallines="29" branchcoverage="" coveredbranches="0" totalbranches="0" />
+    </Assembly>
+  </Assemblies>
+</CoverageReport>

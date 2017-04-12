@@ -33,6 +33,17 @@ namespace csmacnz.Coveralls
 
                 files = new MonoCoverParser(pathProcessor).GenerateSourceFiles(documents, useRelativePaths);
             }
+            else if (mode == CoverageMode.ReportGenerator)
+            {
+                var folderFiles = _fileSystem.GetFiles(modeInput);
+                if (!folderFiles.HasValue)
+                {
+                    return LoadCoverageFilesError.InputFileNotFound;
+                }
+                var documents = LoadXDocuments(folderFiles);
+
+                files = new ReportGeneratorParser(pathProcessor).GenerateSourceFiles(documents, useRelativePaths);
+            }
             else if (mode == CoverageMode.Chutzpah)
             {
                 if (!File.Exists(modeInput))
