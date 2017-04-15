@@ -2,6 +2,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Xml.Linq;
 using csmacnz.Coveralls.Data;
+using System.Net;
 
 namespace csmacnz.Coveralls.Parsers
 {
@@ -38,8 +39,18 @@ namespace csmacnz.Coveralls.Parsers
                             var totalbranches = lineAnalysis.Attribute("totalbranches").Value;
                             var content = lineAnalysis.Attribute("content").Value;
 
-                            source.Add(content);
-                            coverage.Add(null);
+                            source.Add(WebUtility.HtmlDecode(content));
+
+                            int? coverageCount = null;
+                            if (coverageMode == "Covered" || coverageMode == "NotCovered")
+                            {
+                                var actualVisits = int.Parse(visits);
+                                if (actualVisits != -1)
+                                {
+                                    coverageCount = actualVisits;
+                                }
+                            }
+                            coverage.Add(coverageCount);
                         }
 
                         var sourceDigest = Crypto.CalculateMD5Digest(string.Join(",", source.ToArray()));

@@ -5,6 +5,7 @@ using System.Xml.Linq;
 using csmacnz.Coveralls.Parsers;
 using Xunit;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace csmacnz.Coveralls.Tests
 {
@@ -26,6 +27,17 @@ namespace csmacnz.Coveralls.Tests
             var results = CreateReportGeneratorParser().GenerateSourceFiles(documents, false);
 
             Assert.NotNull(results);
+            Assert.Equal(5, results.Count);
+            Assert.Equal(@"C:\dev\Coveralls.net-Samples\src\GameOfLife.xUnit.Tests\WorldTests.cs", results[0].Name);
+            Assert.Equal(10, results[0].Coverage.Sum());
+            Assert.Equal(@"C:\dev\Coveralls.net-Samples\src\GameOfLife\Game.cs", results[1].Name);
+            Assert.Equal(0, results[1].Coverage.Sum());
+            Assert.Equal(@"C:\dev\Coveralls.net-Samples\src\GameOfLife\Program.cs", results[2].Name);
+            Assert.Equal(0, results[2].Coverage.Sum());
+            Assert.Equal(@"C:\dev\Coveralls.net-Samples\src\GameOfLife\World.cs", results[3].Name);
+            Assert.Equal(18, results[3].Coverage.Sum());
+            Assert.Equal(@"C:\dev\Coveralls.net-Samples\src\GameOfLife\WorldBuilder.cs", results[4].Name);
+            Assert.Equal(0, results[4].Coverage.Sum());
         }
         
         private ReportGeneratorParser CreateReportGeneratorParser()
