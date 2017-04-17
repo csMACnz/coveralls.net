@@ -18,16 +18,9 @@ namespace csmacnz.Coveralls.Parsers
 
     public class ChutzpahJsonParser
     {
-        private readonly PathProcessor _pathProcessor;
-
-        public ChutzpahJsonParser(PathProcessor pathProcessor)
+        public List<FileCoverageData> GenerateSourceFiles(string content)
         {
-            _pathProcessor = pathProcessor;
-        }
-
-        public List<CoverageFile> GenerateSourceFiles(string content, bool useRelativePaths)
-        {
-            var files = new List<CoverageFile>();
+            var files = new List<FileCoverageData>();
 
             var deserializedString = JsonConvert.DeserializeObject<dynamic>(content);
 
@@ -42,15 +35,7 @@ namespace csmacnz.Coveralls.Parsers
                     item.LineExecutionCounts = item.LineExecutionCounts.Skip(1).ToArray(); // fix chutzpah issue.
                 }
 
-                if (useRelativePaths)
-                {
-                    currentFilePath = _pathProcessor.ConvertPath(currentFilePath);
-                }
-
-                currentFilePath = _pathProcessor.UnixifyPath(currentFilePath);
-
-                files.Add(new CoverageFile(currentFilePath,
-                    Crypto.CalculateMD5Digest(string.Join(",", item.SourceLines)), item.LineExecutionCounts));
+                files.Add(new FileCoverageData(currentFilePath, item.LineExecutionCounts, item.SourceLines));
             }
 
             return files;

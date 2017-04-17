@@ -14,9 +14,9 @@ namespace csmacnz.Coveralls.Parsers
             _pathProcessor = pathProcessor;
         }
 
-        public List<CoverageFile> GenerateSourceFiles(Dictionary<string, XDocument> documents, bool useRelativePaths)
+        public List<FileCoverageData> GenerateSourceFiles(Dictionary<string, XDocument> documents)
         {
-            var sourceFiles = new List<CoverageFile>();
+            var sourceFiles = new List<FileCoverageData>();
             foreach (var fileName in documents.Keys.Where(k => k.StartsWith("class-") && k.EndsWith(".xml")))
             {
                 var rootDocument = documents[fileName];
@@ -26,11 +26,7 @@ namespace csmacnz.Coveralls.Parsers
                     var coverage = new List<int?>();
                     var source = new List<string>();
                     var filePath = sourceElement.Attribute("sourceFile").Value;
-                    if (useRelativePaths)
-                    {
-                        filePath = _pathProcessor.ConvertPath(filePath);
-                    }
-
+                    
                     foreach (var line in sourceElement.Elements("l"))
                     {
                         int coverageCount;
@@ -42,8 +38,7 @@ namespace csmacnz.Coveralls.Parsers
                         source.Add(line.Value);
                     }
 
-                    sourceFiles.Add(new CoverageFile(filePath,
-                        Crypto.CalculateMD5Digest(string.Join(",", source.ToArray())), coverage.ToArray()));
+                    sourceFiles.Add(new FileCoverageData(filePath, coverage.ToArray(), source.ToArray()));
                 }
             }
 

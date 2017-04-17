@@ -21,7 +21,7 @@ namespace csmacnz.Coveralls
         public Result<List<CoverageFile>, LoadCoverageFilesError> LoadCoverageFiles(CoverageMode mode,
             PathProcessor pathProcessor, string modeInput, bool useRelativePaths)
         {
-            List<CoverageFile> files;
+            List<FileCoverageData> coverageData;
             if (mode == CoverageMode.MonoCov)
             {
                 var folderFiles = _fileSystem.GetFiles(modeInput);
@@ -31,7 +31,7 @@ namespace csmacnz.Coveralls
                 }
                 var documents = LoadXDocuments(folderFiles);
 
-                files = new MonoCoverParser(pathProcessor).GenerateSourceFiles(documents, useRelativePaths);
+                coverageData = new MonoCoverParser(pathProcessor).GenerateSourceFiles(documents);
             }
             else if (mode == CoverageMode.ReportGenerator)
             {
@@ -42,9 +42,7 @@ namespace csmacnz.Coveralls
                 }
                 var documents = LoadXDocuments(folderFiles);
 
-                var coverageData = new ReportGeneratorParser(pathProcessor).GenerateSourceFiles(documents);
-
-                files = BuildCoverageFiles(pathProcessor, useRelativePaths, coverageData);
+                coverageData = new ReportGeneratorParser().GenerateSourceFiles(documents);
             }
             else if (mode == CoverageMode.Chutzpah)
             {
@@ -53,14 +51,11 @@ namespace csmacnz.Coveralls
                     return LoadCoverageFilesError.InputFileNotFound;
                 }
                 var source = _fileSystem.TryLoadFile(modeInput);
-                if (source.HasValue)
-                {
-                    files = new ChutzpahJsonParser(pathProcessor).GenerateSourceFiles((string) source, useRelativePaths);
-                }
-                else
+                if (!source.HasValue)
                 {
                     return LoadCoverageFilesError.InputFileNotFound;
                 }
+                coverageData = new ChutzpahJsonParser().GenerateSourceFiles((string)source);
             }
             else if (mode == CoverageMode.LCov)
             {
@@ -71,9 +66,7 @@ namespace csmacnz.Coveralls
                     return LoadCoverageFilesError.InputFileNotFound;
                 }
 
-                var coverageData = new LcovParser().GenerateSourceFiles((string[]) lines, useRelativePaths);
-
-                files = BuildCoverageFiles(pathProcessor, useRelativePaths, coverageData);
+                coverageData = new LcovParser().GenerateSourceFiles((string[])lines, useRelativePaths);
             }
             else
             {
@@ -91,15 +84,14 @@ namespace csmacnz.Coveralls
                     return LoadCoverageFilesError.InputFileNotFound;
                 }
 
-                var coverageData = xmlParser.GenerateSourceFiles((XDocument) document);
-
-                files = BuildCoverageFiles(pathProcessor, useRelativePaths, coverageData);
+                coverageData = xmlParser.GenerateSourceFiles((XDocument)document);
             }
-
-            if (files == null)
+            if (coverageData == null)
             {
                 return LoadCoverageFilesError.UnknownFilesMissingError;
             }
+            var files = BuildCoverageFiles(pathProcessor, useRelativePaths, coverageData);
+
             return files;
         }
 
@@ -109,8 +101,7 @@ namespace csmacnz.Coveralls
                 .ToDictionary(f => f.Name, f => (XDocument) _fileSystem.TryLoadXDocumentFromFile(f.FullName));
         }
 
-        private List<CoverageFile> BuildCoverageFiles(PathProcessor pathProcessor, bool useRelativePaths,
-            List<FileCoverageData> coverageData)
+        private List<CoverageFile> BuildCoverageFiles(PathProcessor pathProcessor, bool useRelativePaths, List<FileCoverageData> coverageData)
         {
             //This needs attention, since this is optional if source is on public github
             var files = coverageData.Select(coverageFileData =>

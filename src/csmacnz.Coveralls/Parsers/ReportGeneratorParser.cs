@@ -8,13 +8,6 @@ namespace csmacnz.Coveralls.Parsers
 {
     public class ReportGeneratorParser
     {
-        private readonly PathProcessor _pathProcessor;
-
-        public ReportGeneratorParser(PathProcessor pathProcessor)
-        {
-            _pathProcessor = pathProcessor;
-        }
-
         public List<FileCoverageData> GenerateSourceFiles(Dictionary<string, XDocument> documents)
         {
             var files = new List<FileCoverageData>();

@@ -42,7 +42,7 @@ namespace csmacnz.Coveralls.Tests
         
         private ReportGeneratorParser CreateReportGeneratorParser()
         {
-            return new ReportGeneratorParser(new PathProcessor(""));
+            return new ReportGeneratorParser();
         }
 
         private static XDocument LoadDocumentFromResource(string embeddedResource)
