@@ -15,9 +15,9 @@ namespace csmacnz.Coveralls.Parsers
             _pathProcessor = pathProcessor;
         }
 
-        public List<CoverageFile> GenerateSourceFiles(Dictionary<string, XDocument> documents, bool useRelativePaths)
+        public List<FileCoverageData> GenerateSourceFiles(Dictionary<string, XDocument> documents)
         {
-            var sourceFiles = new List<CoverageFile>();
+            var files = new List<FileCoverageData>();
             foreach (var fileName in documents.Keys.Where(k => k != "Summary.xml"))
             {
                 var rootDocument = documents[fileName];
@@ -28,6 +28,7 @@ namespace csmacnz.Coveralls.Parsers
                     foreach (var fileElement in filesElement.Elements("File"))
                     {
                         var filePath = fileElement.Attribute("name").Value;
+
                         var source = new List<string>();
                         var coverage = new List<int?>();
                         foreach (var lineAnalysis in fileElement.Elements("LineAnalysis"))
@@ -53,13 +54,13 @@ namespace csmacnz.Coveralls.Parsers
                             coverage.Add(coverageCount);
                         }
 
-                        var sourceDigest = Crypto.CalculateMD5Digest(string.Join(",", source.ToArray()));
-                        var coverageFile = new CoverageFile(filePath, sourceDigest, coverage.ToArray());
-                        sourceFiles.Add(coverageFile);
+                        var coverageData = new FileCoverageData(filePath, coverage.ToArray(), source.ToArray());
+
+                        files.Add(coverageData);
                     }
                 }
             }
-            return sourceFiles;
+            return files;
         }
     }
 }

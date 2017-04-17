@@ -2,6 +2,7 @@
 using System.IO;
 using BCLExtensions;
 using csmacnz.Coveralls.Data;
+using System.Linq;
 
 namespace csmacnz.Coveralls
 {
@@ -16,6 +17,15 @@ namespace csmacnz.Coveralls
             data.EnsureIsNotNull("data");
             _coverage = data.Coverage;
             _filePath = data.FullPath;
+            if (data.Source?.Any() == true)
+            {
+                _sourceLines = data.Source.Select(l => l ?? string.Empty).ToList();
+            }
+        }
+
+        public bool HasSource()
+        {
+            return _sourceLines?.Any() == true;
         }
 
         public void AddSource(string source)

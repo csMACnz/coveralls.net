@@ -42,7 +42,9 @@ namespace csmacnz.Coveralls
                 }
                 var documents = LoadXDocuments(folderFiles);
 
-                files = new ReportGeneratorParser(pathProcessor).GenerateSourceFiles(documents, useRelativePaths);
+                var coverageData = new ReportGeneratorParser(pathProcessor).GenerateSourceFiles(documents);
+
+                files = BuildCoverageFiles(pathProcessor, useRelativePaths, coverageData);
             }
             else if (mode == CoverageMode.Chutzpah)
             {
@@ -123,10 +125,13 @@ namespace csmacnz.Coveralls
                 path = pathProcessor.UnixifyPath(path);
                 coverageBuilder.SetPath(path);
 
-                var readAllText = _fileSystem.TryLoadFile(coverageFileData.FullPath);
-                if (readAllText.HasValue)
+                if (!coverageBuilder.HasSource())
                 {
-                    coverageBuilder.AddSource((string) readAllText);
+                    var readAllText = _fileSystem.TryLoadFile(coverageFileData.FullPath);
+                    if (readAllText.HasValue)
+                    {
+                        coverageBuilder.AddSource((string)readAllText);
+                    }
                 }
 
                 var coverageFile = coverageBuilder.CreateFile();

@@ -24,19 +24,19 @@ namespace csmacnz.Coveralls.Tests
                 ["C:\\test\\Summary.xml"] = LoadDocumentFromResource("csmacnz.Coveralls.Tests.ReportGeneratorSample.Summary.xml"),
             };
 
-            var results = CreateReportGeneratorParser().GenerateSourceFiles(documents, false);
+            var results = CreateReportGeneratorParser().GenerateSourceFiles(documents);
 
             Assert.NotNull(results);
             Assert.Equal(5, results.Count);
-            Assert.Equal(@"C:\dev\Coveralls.net-Samples\src\GameOfLife.xUnit.Tests\WorldTests.cs", results[0].Name);
+            Assert.Equal(@"C:\dev\Coveralls.net-Samples\src\GameOfLife.xUnit.Tests\WorldTests.cs", results[0].FullPath);
             Assert.Equal(10, results[0].Coverage.Sum());
-            Assert.Equal(@"C:\dev\Coveralls.net-Samples\src\GameOfLife\Game.cs", results[1].Name);
+            Assert.Equal(@"C:\dev\Coveralls.net-Samples\src\GameOfLife\Game.cs", results[1].FullPath);
             Assert.Equal(0, results[1].Coverage.Sum());
-            Assert.Equal(@"C:\dev\Coveralls.net-Samples\src\GameOfLife\Program.cs", results[2].Name);
+            Assert.Equal(@"C:\dev\Coveralls.net-Samples\src\GameOfLife\Program.cs", results[2].FullPath);
             Assert.Equal(0, results[2].Coverage.Sum());
-            Assert.Equal(@"C:\dev\Coveralls.net-Samples\src\GameOfLife\World.cs", results[3].Name);
+            Assert.Equal(@"C:\dev\Coveralls.net-Samples\src\GameOfLife\World.cs", results[3].FullPath);
             Assert.Equal(18, results[3].Coverage.Sum());
-            Assert.Equal(@"C:\dev\Coveralls.net-Samples\src\GameOfLife\WorldBuilder.cs", results[4].Name);
+            Assert.Equal(@"C:\dev\Coveralls.net-Samples\src\GameOfLife\WorldBuilder.cs", results[4].FullPath);
             Assert.Equal(0, results[4].Coverage.Sum());
         }
         
