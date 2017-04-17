@@ -14,7 +14,7 @@ namespace csmacnz.Coveralls.Tests
         {
             var fileContents = LoadFromResource("csmacnz.Coveralls.Tests.ChutzpahExample.json");
 
-            var results = CreateChutzpahParser().GenerateSourceFiles(fileContents);
+            var results = ChutzpahJsonParser.GenerateSourceFiles(fileContents);
 
             Assert.Equal(2, results.Count);
             Assert.Equal(@"D:\path\to\file\file.ts", results.First().FullPath);
@@ -22,12 +22,7 @@ namespace csmacnz.Coveralls.Tests
             Assert.Equal(10, results.First().Coverage[5]);
             Assert.Equal(null, results.First().Coverage[7]);
         }
-
-        private ChutzpahJsonParser CreateChutzpahParser()
-        {
-            return new ChutzpahJsonParser();
-        }
-
+        
         private static string LoadFromResource(string embeddedResource)
         {
             var executingAssembly = Assembly.GetExecutingAssembly();

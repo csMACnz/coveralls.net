@@ -16,9 +16,9 @@ namespace csmacnz.Coveralls.Parsers
         public double CoveragePercentage { get; set; }
     }
 
-    public class ChutzpahJsonParser
+    public static class ChutzpahJsonParser
     {
-        public List<FileCoverageData> GenerateSourceFiles(string content)
+        public static List<FileCoverageData> GenerateSourceFiles(string content)
         {
             var files = new List<FileCoverageData>();
 

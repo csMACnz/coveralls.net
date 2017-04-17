@@ -31,7 +31,7 @@ namespace csmacnz.Coveralls
                 }
                 var documents = LoadXDocuments(folderFiles);
 
-                coverageData = new MonoCoverParser(pathProcessor).GenerateSourceFiles(documents);
+                coverageData = MonoCoverParser.GenerateSourceFiles(documents);
             }
             else if (mode == CoverageMode.ReportGenerator)
             {
@@ -42,7 +42,7 @@ namespace csmacnz.Coveralls
                 }
                 var documents = LoadXDocuments(folderFiles);
 
-                coverageData = new ReportGeneratorParser().GenerateSourceFiles(documents);
+                coverageData = ReportGeneratorParser.GenerateSourceFiles(documents);
             }
             else if (mode == CoverageMode.Chutzpah)
             {
@@ -55,7 +55,7 @@ namespace csmacnz.Coveralls
                 {
                     return LoadCoverageFilesError.InputFileNotFound;
                 }
-                coverageData = new ChutzpahJsonParser().GenerateSourceFiles((string)source);
+                coverageData = ChutzpahJsonParser.GenerateSourceFiles((string)source);
             }
             else if (mode == CoverageMode.LCov)
             {
@@ -66,7 +66,7 @@ namespace csmacnz.Coveralls
                     return LoadCoverageFilesError.InputFileNotFound;
                 }
 
-                coverageData = new LcovParser().GenerateSourceFiles((string[])lines, useRelativePaths);
+                coverageData = LcovParser.GenerateSourceFiles((string[])lines);
             }
             else
             {

@@ -4,9 +4,9 @@ using csmacnz.Coveralls.Data;
 
 namespace csmacnz.Coveralls.Parsers
 {
-    public class LcovParser
+    public static class LcovParser
     {
-        public List<FileCoverageData> GenerateSourceFiles(string[] lines, bool useRelativePaths)
+        public static List<FileCoverageData> GenerateSourceFiles(string[] lines)
         {
             FileCoverageDataBuilder coverageBuilder = null;
             var files = new List<FileCoverageData>();

@@ -24,7 +24,7 @@ namespace csmacnz.Coveralls.Tests
                 ["C:\\test\\Summary.xml"] = LoadDocumentFromResource("csmacnz.Coveralls.Tests.ReportGeneratorSample.Summary.xml"),
             };
 
-            var results = CreateReportGeneratorParser().GenerateSourceFiles(documents);
+            var results = ReportGeneratorParser.GenerateSourceFiles(documents);
 
             Assert.NotNull(results);
             Assert.Equal(5, results.Count);
@@ -40,11 +40,6 @@ namespace csmacnz.Coveralls.Tests
             Assert.Equal(0, results[4].Coverage.Sum());
         }
         
-        private ReportGeneratorParser CreateReportGeneratorParser()
-        {
-            return new ReportGeneratorParser();
-        }
-
         private static XDocument LoadDocumentFromResource(string embeddedResource)
         {
             XDocument document;

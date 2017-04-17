@@ -5,16 +5,9 @@ using csmacnz.Coveralls.Data;
 
 namespace csmacnz.Coveralls.Parsers
 {
-    public class MonoCoverParser
+    public static class MonoCoverParser
     {
-        private readonly PathProcessor _pathProcessor;
-
-        public MonoCoverParser(PathProcessor pathProcessor)
-        {
-            _pathProcessor = pathProcessor;
-        }
-
-        public List<FileCoverageData> GenerateSourceFiles(Dictionary<string, XDocument> documents)
+        public static List<FileCoverageData> GenerateSourceFiles(Dictionary<string, XDocument> documents)
         {
             var sourceFiles = new List<FileCoverageData>();
             foreach (var fileName in documents.Keys.Where(k => k.StartsWith("class-") && k.EndsWith(".xml")))

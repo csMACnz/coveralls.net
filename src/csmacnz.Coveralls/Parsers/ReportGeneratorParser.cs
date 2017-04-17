@@ -6,9 +6,9 @@ using System.Net;
 
 namespace csmacnz.Coveralls.Parsers
 {
-    public class ReportGeneratorParser
+    public static class ReportGeneratorParser
     {
-        public List<FileCoverageData> GenerateSourceFiles(Dictionary<string, XDocument> documents)
+        public static List<FileCoverageData> GenerateSourceFiles(Dictionary<string, XDocument> documents)
         {
             var files = new List<FileCoverageData>();
             foreach (var fileName in documents.Keys.Where(k => k != "Summary.xml"))
