@@ -4,9 +4,9 @@ using csmacnz.Coveralls.Data;
 
 namespace csmacnz.Coveralls.Parsers
 {
-    public class ExportCodeCoverageParser: IXmlCoverageParser
+    public static class ExportCodeCoverageParser
     {
-        public List<FileCoverageData> GenerateSourceFiles(XDocument document)
+        public static List<FileCoverageData> GenerateSourceFiles(XDocument document)
         {
             var files = new List<FileCoverageData>();
             if (document.Root != null)

@@ -2,6 +2,7 @@
 using System.Linq;
 using csmacnz.Coveralls.Data;
 using Newtonsoft.Json;
+using System;
 
 namespace csmacnz.Coveralls.Parsers
 {
@@ -18,11 +19,11 @@ namespace csmacnz.Coveralls.Parsers
 
     public static class ChutzpahJsonParser
     {
-        public static List<FileCoverageData> GenerateSourceFiles(string content)
+        public static List<FileCoverageData> GenerateSourceFiles(string[] content)
         {
             var files = new List<FileCoverageData>();
 
-            var deserializedString = JsonConvert.DeserializeObject<dynamic>(content);
+            var deserializedString = JsonConvert.DeserializeObject<dynamic>(string.Join(Environment.NewLine, content));
 
             foreach (var file in deserializedString)
             {

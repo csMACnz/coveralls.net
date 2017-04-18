@@ -4,6 +4,7 @@ using System.Linq;
 using System.Reflection;
 using csmacnz.Coveralls.Parsers;
 using Xunit;
+using System.Collections.Generic;
 
 namespace csmacnz.Coveralls.Tests
 {
@@ -23,20 +24,24 @@ namespace csmacnz.Coveralls.Tests
             Assert.Equal(null, results.First().Coverage[7]);
         }
         
-        private static string LoadFromResource(string embeddedResource)
+        private static string[] LoadFromResource(string embeddedResource)
         {
             var executingAssembly = Assembly.GetExecutingAssembly();
-            string contents;
+            List<string> contents = new List<string>();
             using (var stream = executingAssembly.GetManifestResourceStream(embeddedResource))
             {
                 Assert.NotNull(stream);
                 Debug.Assert(stream != null, "stream != null");
                 using (var reader = new StreamReader(stream))
                 {
-                    contents = reader.ReadToEnd();
+                    string line;
+                    while ((line = reader.ReadLine()) != null)
+                    {
+                        contents.Add(line);
+                    }
                 }
             }
-            return contents;
+            return contents.ToArray();
         }
     }
 }

@@ -5,9 +5,9 @@ using csmacnz.Coveralls.Data;
 
 namespace csmacnz.Coveralls.Parsers
 {
-    public class DynamicCodeCoverageParser: IXmlCoverageParser
+    public static class DynamicCodeCoverageParser
     {
-        public List<FileCoverageData> GenerateSourceFiles(XDocument document)
+        public static List<FileCoverageData> GenerateSourceFiles(XDocument document)
         {
             var files = new List<FileCoverageData>();
             var xElement = document.Root?.Element("modules");

@@ -10,6 +10,6 @@ namespace csmacnz.Coveralls.Ports
         Option<XDocument> TryLoadXDocumentFromFile(string filePath);
         Option<FileInfo[]> GetFiles(string directory);
         bool WriteFile(string outputFile, string fileData);
-        Option<string[]> ReadAllLines(string filePath);
+        Option<string[]> TryReadAllLinesFromFile(string filePath);
     }
 }

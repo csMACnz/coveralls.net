@@ -14,7 +14,7 @@ namespace csmacnz.Coveralls.Tests
         {
             var document = LoadDocumentFromResource("csmacnz.Coveralls.Tests.EmptyReport.xml");
 
-            var results = CreateOpenCoverParser().GenerateSourceFiles(document);
+            var results = OpenCoverParser.GenerateSourceFiles(document);
 
             Assert.Equal(0, results.Count);
         }
@@ -24,7 +24,7 @@ namespace csmacnz.Coveralls.Tests
         {
             var document = LoadDocumentFromResource("csmacnz.Coveralls.Tests.SingleFileReport.xml");
 
-            var results = CreateOpenCoverParser().GenerateSourceFiles(document);
+            var results = OpenCoverParser.GenerateSourceFiles(document);
 
             Assert.Equal(1, results.Count);
         }
@@ -34,7 +34,7 @@ namespace csmacnz.Coveralls.Tests
         {
             var document = LoadDocumentFromResource("csmacnz.Coveralls.Tests.SingleFileReportOneLineCovered.xml");
 
-            var results = CreateOpenCoverParser().GenerateSourceFiles(document);
+            var results = OpenCoverParser.GenerateSourceFiles(document);
 
             Assert.Equal(1, results[0].Coverage[8]);
         }
@@ -44,16 +44,11 @@ namespace csmacnz.Coveralls.Tests
         {
             var document = LoadDocumentFromResource("csmacnz.Coveralls.Tests.SingleFileReportOneLineUncovered.xml");
 
-            var results = CreateOpenCoverParser().GenerateSourceFiles(document);
+            var results = OpenCoverParser.GenerateSourceFiles(document);
 
             Assert.Equal(0, results[0].Coverage[8]);
         }
-
-        private OpenCoverParser CreateOpenCoverParser()
-        {
-            return new OpenCoverParser();
-        }
-
+        
         private static XDocument LoadDocumentFromResource(string embeddedResource)
         {
             XDocument document;

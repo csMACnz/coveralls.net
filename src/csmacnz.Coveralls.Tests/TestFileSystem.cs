@@ -41,7 +41,7 @@ namespace csmacnz.Coveralls.Tests
             return true;
         }
 
-        public Option<string[]> ReadAllLines(string filePath)
+        public Option<string[]> TryReadAllLinesFromFile(string filePath)
         {
             if (_files.ContainsKey(filePath))
             {

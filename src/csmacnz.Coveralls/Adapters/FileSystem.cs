@@ -50,7 +50,7 @@ namespace csmacnz.Coveralls.Adapters
             return true;
         }
 
-        public Option<string[]> ReadAllLines(string filePath)
+        public Option<string[]> TryReadAllLinesFromFile(string filePath)
         {
             if (File.Exists(filePath))
             {
