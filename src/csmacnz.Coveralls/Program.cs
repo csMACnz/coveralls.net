@@ -9,6 +9,7 @@ using Beefeater;
 using csmacnz.Coveralls.Adapters;
 using csmacnz.Coveralls.Data;
 using csmacnz.Coveralls.GitDataResolvers;
+using csmacnz.Coveralls.Ports;
 using JetBrains.Annotations;
 using Newtonsoft.Json;
 
@@ -18,21 +19,28 @@ namespace csmacnz.Coveralls
     {
         private readonly IConsole _console;
         private readonly string _version;
+        private static IFileSystem _fileSystem;
 
-        public Program(IConsole console, string version)
+        public Program(IConsole console, IFileSystem fileSystem, string version)
         {
             _console = console;
+            _fileSystem = fileSystem;
             _version = version;
         }
 
         public static void Main(string[] argv)
         {
             var console = new StandardConsole();
-            var result = new Program(console, GetDisplayVersion()).Run(argv);
+            var result = new Program(console, new FileSystem(), GetDisplayVersion()).Run(argv);
             if (result.HasValue)
             {
                 Environment.Exit(result.Value);
             }
+        }
+
+        private static NotNull<string> GetDisplayVersion()
+        {
+            return FileVersionInfo.GetVersionInfo(Assembly.GetEntryAssembly().Location).ProductVersion;
         }
 
         public int? Run(string[] argv)
@@ -186,7 +194,7 @@ namespace csmacnz.Coveralls
             {
                 ExitWithError("Unknown mode provided");
             }
-            var coverageFiles = new CoverageLoader(new FileSystem()).LoadCoverageFiles((CoverageMode)mode,
+            var coverageFiles = new CoverageLoader(_fileSystem).LoadCoverageFiles((CoverageMode)mode,
                 pathProcessor, inputArgument, useRelativePaths);
             if (coverageFiles.Successful)
             {
@@ -269,11 +277,6 @@ namespace csmacnz.Coveralls
             }
 
             return Option<CoverageMode>.None; //Unreachable
-        }
-
-        private static NotNull<string> GetDisplayVersion()
-        {
-            return FileVersionInfo.GetVersionInfo(Assembly.GetEntryAssembly().Location).ProductVersion;
         }
 
         [ContractAnnotation("=>halt")]
