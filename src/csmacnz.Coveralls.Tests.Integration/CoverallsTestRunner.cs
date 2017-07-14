@@ -10,7 +10,7 @@ namespace csmacnz.Coveralls.Tests.Integration
     {
         private const string CoverallsExe = "csmacnz.Coveralls.exe";
 
-        public static CoverageRunResults RunCoveralls(string arguments)
+        public static CoverallsRunResults RunCoveralls(string arguments)
         {
             var exePath = Path.Combine(GetCoverallsExePath(), CoverallsExe);
             var argumentsToUse = arguments;
@@ -55,7 +55,7 @@ namespace csmacnz.Coveralls.Tests.Integration
                 exitCode = process.ExitCode;
             }
 
-            return new CoverageRunResults
+            return new CoverallsRunResults
             {
                 StandardOutput = results,
                 StandardError = errorsResults,

@@ -1,7 +1,7 @@
 ﻿using System.Text.RegularExpressions;
 using Xunit;
 
-namespace csmacnz.Coveralls.Tests.Integration
+namespace csmacnz.Coveralls.Tests
 {
     public class UsageTests
     {

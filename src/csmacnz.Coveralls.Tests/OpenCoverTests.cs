@@ -6,7 +6,7 @@ using System.Xml.Linq;
 using System.Xml.XPath;
 using Xunit;
 
-namespace csmacnz.Coveralls.Tests.Integration
+namespace csmacnz.Coveralls.Tests
 {
     public class OpenCoverTests
     {

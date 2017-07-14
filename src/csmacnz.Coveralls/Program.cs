@@ -16,54 +16,88 @@ namespace csmacnz.Coveralls
 {
     public class Program
     {
+        private readonly IConsole _console;
+        private readonly string _version;
+
+        public Program(IConsole console, string version)
+        {
+            _console = console;
+            _version = version;
+        }
+
         public static void Main(string[] argv)
         {
-            var args = new MainArgs(argv, exit: true, version: (string) GetDisplayVersion());
-
-            var repoToken = ResolveRepoToken(args);
-
-            var outputFile = ResolveOutpuFile(args);
-
-            //Main Processing
-            var files = BuildCoverageFiles(args);
-
-            var gitData = ResolveGitData(args);
-
-            var serviceName = ResolveServiceName(args);
-            var serviceJobId = ResolveServiceJobId(args);
-            var serviceNumber = ResolveServiceNumber(args);
-            var pullRequestId = ResolvePullRequestId(args);
-            var parallel = args.IsProvided("--parallel") && args.OptParallel;
-
-            var data = new CoverallData
+            var console = new StandardConsole();
+            var result = new Program(console, GetDisplayVersion()).Run(argv);
+            if (result.HasValue)
             {
-                RepoToken = repoToken,
-                ServiceJobId = serviceJobId.ValueOr("0"),
-                ServiceName = serviceName.ValueOr("coveralls.net"),
-                ServiceNumber = serviceNumber.ValueOr(null),
-                PullRequestId = pullRequestId.ValueOr(null),
-                SourceFiles = files.ToArray(),
-                Parallel = parallel,
-                Git = gitData.ValueOrDefault()
-            };
-
-            var fileData = JsonConvert.SerializeObject(data);
-            if (!string.IsNullOrWhiteSpace(outputFile))
-            {
-                WriteFileData(fileData, outputFile);
-            }
-            if (!args.OptDryrun)
-            {
-                UploadCoverage(fileData, args.OptTreatuploaderrorsaswarnings);
+                Environment.Exit(result.Value);
             }
         }
 
-        private static string ResolveOutpuFile(MainArgs args)
+        public int? Run(string[] argv)
         {
-            var outputFile = args.IsProvided("--output") ? args.OptOutput : string.Empty;
+            try
+            {
+                var args = new MainArgs(argv, version: _version);
+                if (args.Failed)
+                {
+                    _console.WriteLine(args.FailMessage);
+                    return args.FailErrorCode;
+                }
+
+                var repoToken = ResolveRepoToken(args);
+
+                var outputFile = ResolveOutpuFile(args);
+
+                //Main Processing
+                var files = BuildCoverageFiles(args);
+
+                var gitData = ResolveGitData(args);
+
+                var serviceName = ResolveServiceName(args);
+                var serviceJobId = ResolveServiceJobId(args);
+                var serviceNumber = ResolveServiceNumber(args);
+                var pullRequestId = ResolvePullRequestId(args);
+                var parallel = args.IsProvided("--parallel") && args.OptParallel;
+
+                var data = new CoverallData
+                {
+                    RepoToken = repoToken,
+                    ServiceJobId = serviceJobId.ValueOr("0"),
+                    ServiceName = serviceName.ValueOr("coveralls.net"),
+                    ServiceNumber = serviceNumber.ValueOr(null),
+                    PullRequestId = pullRequestId.ValueOr(null),
+                    SourceFiles = files.ToArray(),
+                    Parallel = parallel,
+                    Git = gitData.ValueOrDefault()
+                };
+
+                var fileData = JsonConvert.SerializeObject(data);
+                if (!string.IsNullOrWhiteSpace(outputFile))
+                {
+                    WriteFileData(fileData, outputFile);
+                }
+                if (!args.OptDryrun)
+                {
+                    UploadCoverage(fileData, args.OptTreatuploaderrorsaswarnings);
+                }
+                return null;
+
+            }
+            catch (ExitException ex)
+            {
+                _console.WriteErrorLine(ex.Message);
+                return 1;
+            }
+        }
+
+        private string ResolveOutpuFile(MainArgs args)
+        {
+            var outputFile = args.IsProvided("--output") ? args.OptOutput : string.Empty;   
             if (!string.IsNullOrWhiteSpace(outputFile) && File.Exists(outputFile))
             {
-                Console.WriteLine("output file '{0}' already exists and will be overwritten.", outputFile);
+                _console.WriteLine($"output file '{outputFile}' already exists and will be overwritten.");
             }
             return outputFile;
         }
@@ -123,7 +157,7 @@ namespace csmacnz.Coveralls
             return files;
         }
 
-        private static void UploadCoverage(string fileData, bool treatErrorsAsWarnings)
+        private void UploadCoverage(string fileData, bool treatErrorsAsWarnings)
         {
             var uploadResult = new CoverallsService().Upload(fileData);
             if (!uploadResult.Successful)
@@ -131,7 +165,7 @@ namespace csmacnz.Coveralls
                 var message = $"Failed to upload to coveralls\n{uploadResult.Error}";
                 if (treatErrorsAsWarnings)
                 {
-                    Console.WriteLine(message);
+                    _console.WriteLine(message);
                 }
                 else
                 {
@@ -140,7 +174,7 @@ namespace csmacnz.Coveralls
             }
             else
             {
-                Console.WriteLine("Coverage data uploaded to coveralls.");
+                _console.WriteLine("Coverage data uploaded to coveralls.");
             }
         }
 
@@ -152,7 +186,7 @@ namespace csmacnz.Coveralls
             {
                 ExitWithError("Unknown mode provided");
             }
-            var coverageFiles = new CoverageLoader(new FileSystem()).LoadCoverageFiles((CoverageMode) mode,
+            var coverageFiles = new CoverageLoader(new FileSystem()).LoadCoverageFiles((CoverageMode)mode,
                 pathProcessor, inputArgument, useRelativePaths);
             if (coverageFiles.Successful)
             {
@@ -245,8 +279,7 @@ namespace csmacnz.Coveralls
         [ContractAnnotation("=>halt")]
         private static void ExitWithError(string message)
         {
-            Console.Error.WriteLine(message);
-            Environment.Exit(1);
+            throw new ExitException(message);
         }
 
         private static Option<string> ResolveServiceName(MainArgs args)
@@ -292,12 +325,30 @@ namespace csmacnz.Coveralls
             return providers.Where(p => p.CanProvideData()).Select(p => p.GenerateData()).FirstOrDefault();
         }
 
-        private static void WriteFileData(string fileData, string outputFile)
+        private void WriteFileData(string fileData, string outputFile)
         {
             if (!new FileSystem().WriteFile(outputFile, fileData))
             {
-                Console.WriteLine("Failed to write data to output file '{0}'.", outputFile);
+                _console.WriteLine($"Failed to write data to output file '{outputFile}'.");
             }
+        }
+    }
+
+    public interface IConsole
+    {
+        void WriteLine(string message);
+        void WriteErrorLine(string message);
+    }
+
+    public class StandardConsole : IConsole
+    {
+        public void WriteLine(string message)
+        {
+            Console.WriteLine(message);
+        }
+        public void WriteErrorLine(string message)
+        {
+            Console.Error.WriteLine(message);
         }
     }
 }

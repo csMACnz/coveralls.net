@@ -62,11 +62,21 @@ What it's for:
             ICollection<string> argv,
             bool help = true,
             object version = null,
-            bool optionsFirst = false,
-            bool exit = false)
+            bool optionsFirst = false)
         {
-            _args = new Docopt().Apply(Usage, argv, help, version, optionsFirst, exit);
+            var docOpt = new Docopt();
+            docOpt.PrintExit += (sender, args) =>
+            {
+                Failed = true;
+                FailMessage = args.Message;
+                FailErrorCode = args.ErrorCode;
+            };
+            _args = docOpt.Apply(Usage, argv, help, version, optionsFirst, true);
         }
+
+        public bool Failed { get; private set; }
+        public string FailMessage { get; private set; }
+        public int FailErrorCode { get; private set; }
 
         public IDictionary<string, ValueObject> Args
         {
@@ -78,32 +88,32 @@ What it's for:
             return _args[parameter] != null;
         }
 
-		public bool OptOpencover { get { return _args["--opencover"].IsTrue; } }
-		public bool OptDynamiccodecoverage { get { return _args["--dynamiccodecoverage"].IsTrue; } }
-		public bool OptMonocov { get { return _args["--monocov"].IsTrue; } }
-		public bool OptExportcodecoverage { get { return _args["--exportcodecoverage"].IsTrue; } }
-		public bool OptChutzpah { get { return _args["--chutzpah"].IsTrue; } }
-		public bool OptLcov { get { return _args["--lcov"].IsTrue; } }
-		public bool OptMultiple { get { return _args["--multiple"].IsTrue; } }
-		public string OptInput { get { return null == _args["--input"] ? null : _args["--input"].ToString(); } }
-		public string OptRepotoken { get { return null == _args["--repoToken"] ? null : _args["--repoToken"].ToString(); } }
-		public string OptRepotokenvariable { get { return null == _args["--repoTokenVariable"] ? null : _args["--repoTokenVariable"].ToString(); } }
-		public string OptOutput { get { return null == _args["--output"] ? null : _args["--output"].ToString(); } }
-		public bool OptDryrun { get { return _args["--dryrun"].IsTrue; } }
-		public bool OptUserelativepaths { get { return _args["--useRelativePaths"].IsTrue; } }
-		public string OptBasepath { get { return null == _args["--basePath"] ? null : _args["--basePath"].ToString(); } }
-		public string OptCommitid { get { return null == _args["--commitId"] ? null : _args["--commitId"].ToString(); } }
-		public string OptCommitbranch { get { return null == _args["--commitBranch"] ? null : _args["--commitBranch"].ToString(); } }
-		public string OptCommitauthor { get { return null == _args["--commitAuthor"] ? null : _args["--commitAuthor"].ToString(); } }
-		public string OptCommitemail { get { return null == _args["--commitEmail"] ? null : _args["--commitEmail"].ToString(); } }
-		public string OptCommitmessage { get { return null == _args["--commitMessage"] ? null : _args["--commitMessage"].ToString(); } }
-		public string OptJobid { get { return null == _args["--jobId"] ? null : _args["--jobId"].ToString(); } }
-		public string OptServicename { get { return null == _args["--serviceName"] ? null : _args["--serviceName"].ToString(); } }
-		public string OptServicenumber { get { return null == _args["--serviceNumber"] ? null : _args["--serviceNumber"].ToString(); } }
-		public string OptPullrequest { get { return null == _args["--pullRequest"] ? null : _args["--pullRequest"].ToString(); } }
-		public bool OptTreatuploaderrorsaswarnings { get { return _args["--treatUploadErrorsAsWarnings"].IsTrue; } }
-		public bool OptParallel { get { return _args["--parallel"].IsTrue; } }
-		public bool OptVersion { get { return _args["--version"].IsTrue; } }
-		public bool OptHelp { get { return _args["--help"].IsTrue; } }
+        public bool OptOpencover { get { return _args["--opencover"].IsTrue; } }
+        public bool OptDynamiccodecoverage { get { return _args["--dynamiccodecoverage"].IsTrue; } }
+        public bool OptMonocov { get { return _args["--monocov"].IsTrue; } }
+        public bool OptExportcodecoverage { get { return _args["--exportcodecoverage"].IsTrue; } }
+        public bool OptChutzpah { get { return _args["--chutzpah"].IsTrue; } }
+        public bool OptLcov { get { return _args["--lcov"].IsTrue; } }
+        public bool OptMultiple { get { return _args["--multiple"].IsTrue; } }
+        public string OptInput { get { return null == _args["--input"] ? null : _args["--input"].ToString(); } }
+        public string OptRepotoken { get { return null == _args["--repoToken"] ? null : _args["--repoToken"].ToString(); } }
+        public string OptRepotokenvariable { get { return null == _args["--repoTokenVariable"] ? null : _args["--repoTokenVariable"].ToString(); } }
+        public string OptOutput { get { return null == _args["--output"] ? null : _args["--output"].ToString(); } }
+        public bool OptDryrun { get { return _args["--dryrun"].IsTrue; } }
+        public bool OptUserelativepaths { get { return _args["--useRelativePaths"].IsTrue; } }
+        public string OptBasepath { get { return null == _args["--basePath"] ? null : _args["--basePath"].ToString(); } }
+        public string OptCommitid { get { return null == _args["--commitId"] ? null : _args["--commitId"].ToString(); } }
+        public string OptCommitbranch { get { return null == _args["--commitBranch"] ? null : _args["--commitBranch"].ToString(); } }
+        public string OptCommitauthor { get { return null == _args["--commitAuthor"] ? null : _args["--commitAuthor"].ToString(); } }
+        public string OptCommitemail { get { return null == _args["--commitEmail"] ? null : _args["--commitEmail"].ToString(); } }
+        public string OptCommitmessage { get { return null == _args["--commitMessage"] ? null : _args["--commitMessage"].ToString(); } }
+        public string OptJobid { get { return null == _args["--jobId"] ? null : _args["--jobId"].ToString(); } }
+        public string OptServicename { get { return null == _args["--serviceName"] ? null : _args["--serviceName"].ToString(); } }
+        public string OptServicenumber { get { return null == _args["--serviceNumber"] ? null : _args["--serviceNumber"].ToString(); } }
+        public string OptPullrequest { get { return null == _args["--pullRequest"] ? null : _args["--pullRequest"].ToString(); } }
+        public bool OptTreatuploaderrorsaswarnings { get { return _args["--treatUploadErrorsAsWarnings"].IsTrue; } }
+        public bool OptParallel { get { return _args["--parallel"].IsTrue; } }
+        public bool OptVersion { get { return _args["--version"].IsTrue; } }
+        public bool OptHelp { get { return _args["--help"].IsTrue; } }
     }
 }

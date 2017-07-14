@@ -70,6 +70,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="CoverageLoader.cs" />
+    <Compile Include="ExitException.cs" />
     <Compile Include="GitDataResolvers\AppVeyorGitDataResolver.cs" />
     <Compile Include="Parsers\IXmlCoverageParser.cs" />
     <Compile Include="Data\LoadCoverageFilesError.cs" />

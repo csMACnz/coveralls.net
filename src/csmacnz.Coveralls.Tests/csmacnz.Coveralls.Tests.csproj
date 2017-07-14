@@ -80,11 +80,19 @@
   <ItemGroup>
     <Compile Include="AppVeyorGitDataResolverTests.cs" />
     <Compile Include="ChutzpahJsonParserTests.cs" />
+    <Compile Include="CLIArgsParser.cs" />
+    <Compile Include="CLIArgsParserTests.cs" />
     <Compile Include="CoverageFileBuilderTests.cs" />
+    <Compile Include="CoverallsRunResults.cs" />
+    <Compile Include="CoverallsTestRunner.cs" />
+    <Compile Include="OpenCoverTests.cs" />
     <Compile Include="ReportGeneratorParserTests.cs" />
     <Compile Include="OpenCoverParserTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="RepositoryPaths.cs" />
     <Compile Include="TestFileSystem.cs" />
+    <Compile Include="TestFolders.cs" />
+    <Compile Include="UsageTests.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\csmacnz.Coveralls\csmacnz.Coveralls.csproj">

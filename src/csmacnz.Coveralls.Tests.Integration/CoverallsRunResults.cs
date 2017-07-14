@@ -1,6 +1,6 @@
 ﻿namespace csmacnz.Coveralls.Tests.Integration
 {
-    public class CoverageRunResults
+    public class CoverallsRunResults
     {
         public string StandardOutput { get; set; }
         public string StandardError { get; set; }
