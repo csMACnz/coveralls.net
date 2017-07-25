@@ -21,21 +21,6 @@
     <GenerateAssemblyInformationalVersionAttribute>false</GenerateAssemblyInformationalVersionAttribute>
   </PropertyGroup>
 
-<ItemGroup>
-  <None Remove="Reports\ChutzpahExample.json" />
-  <None Remove="Reports\EmptyReport.xml" />
-  <None Remove="Reports\ReportGeneratorSample\GameOfLife.xUnit.Tests_GameOfLife.xUnit.Tests.WorldTests.xml" />
-  <None Remove="Reports\ReportGeneratorSample\GameOfLife_GameOfLife.Game.xml" />
-  <None Remove="Reports\ReportGeneratorSample\GameOfLife_GameOfLife.Program.xml" />
-  <None Remove="Reports\ReportGeneratorSample\GameOfLife_GameOfLife.World.xml" />
-  <None Remove="Reports\ReportGeneratorSample\GameOfLife_GameOfLife.WorldBuilder.xml" />
-  <None Remove="Reports\ReportGeneratorSample\Summary.xml" />
-  <None Remove="Reports\SingleFileReport.xml" />
-  <None Remove="Reports\SingleFileReportOneLineCovered.xml" />
-  <None Remove="Reports\SingleFileReportOneLineUncovered.xml" />
-  <None Remove="Reports\SingleFileReportSourceFile.txt" />
-</ItemGroup>
-
   <ItemGroup>
     <PackageReference Include="csMACnz.EmbedRes" Version="1.0.4" />
     <PackageReference Include="Microsoft.NET.Test.Sdk" Version="15.0.0" />
