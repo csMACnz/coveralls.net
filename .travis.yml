@@ -7,5 +7,7 @@ install:
   - export LINUX_INTEGRATION_MODE=True
   - dotnet restore ./csmacnz.Coveralls.sln
 script:
-  - dotnet build ./csmacnz.Coveralls.sln
-  - dotnet test ./src/csmacnz.Coveralls.Tests/csmacnz.Coveralls.Tests.csproj
+  - dotnet build ./csmacnz.Coveralls.sln -c Release
+  - dotnet test ./src/csmacnz.Coveralls.Tests/csmacnz.Coveralls.Tests.csproj -c Release
+  - dotnet publish ./src/csmacnz.Coveralls/csmacnz.Coveralls.csproj -f netcoreapp1.1 -c Release -o "Package/Archive/ubuntu" -r ubuntu.14.04-x64
+  - dotnet test ./src/csmacnz.Coveralls.Tests.Integration/csmacnz.Coveralls.Tests.Integration.csproj -c Release
