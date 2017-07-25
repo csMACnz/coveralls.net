@@ -196,5 +196,3 @@ coveralls.coverity.*.zip
 coveralls.net.*.zip
 coveralls.net.*.nupkg
 opencovertests.xml
-*Report.xml
-*Report.html
