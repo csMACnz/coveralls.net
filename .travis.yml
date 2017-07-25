@@ -4,7 +4,7 @@ dotnet: 1.0.4
 dist: trusty
 sudo: false
 install:
-  - export MONO_INTEGRATION_MODE=True
+  - export LINUX_INTEGRATION_MODE=True
   - dotnet restore ./csmacnz.Coveralls.sln
 script:
   - dotnet build ./csmacnz.Coveralls.sln

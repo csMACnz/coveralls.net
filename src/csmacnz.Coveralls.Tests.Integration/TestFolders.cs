@@ -15,7 +15,7 @@ namespace csmacnz.Coveralls.Tests.Integration
             .Replace(":", "");
 
         public static string InputFolder
-            => Path.GetDirectoryName(new Uri(Assembly.GetExecutingAssembly().CodeBase).LocalPath);
+            => Path.GetDirectoryName(new Uri(typeof(CoverallsTestRunner).GetTypeInfo().Assembly.CodeBase).LocalPath);
 
         public static string OutputFolder
         {

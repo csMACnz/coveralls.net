@@ -6,7 +6,7 @@ namespace csmacnz.Coveralls.Tests.Integration
     {
         public static string GetSamplesPath()
         {
-            return Path.Combine("..", "..", "..", "..", "CoverageSamples");
+            return Path.Combine("..", "..", "..", "..", "..", "CoverageSamples");
         }
     }
 }

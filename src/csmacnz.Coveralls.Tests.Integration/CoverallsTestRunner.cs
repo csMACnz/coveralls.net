@@ -8,26 +8,22 @@ namespace csmacnz.Coveralls.Tests.Integration
 {
     public static class CoverallsTestRunner
     {
-        private const string CoverallsExe = "csmacnz.Coveralls.exe";
-
         public static CoverallsRunResults RunCoveralls(string arguments)
         {
-            var exePath = Path.Combine(GetCoverallsExePath(), CoverallsExe);
-            var argumentsToUse = arguments;
-            var fileNameToUse = exePath;
-            if (Environment.GetEnvironmentVariable("MONO_INTEGRATION_MODE") == "True")
-            {
-                fileNameToUse = GetMonoPath();
+            var applicationPath = GetCoverallsDll();
+            var argumentsToUse = applicationPath + " " + arguments;
 
-                argumentsToUse = exePath + " " + arguments;
-            }
+            //TODO
+            //if (Environment.GetEnvironmentVariable("LINUX_INTEGRATION_MODE") == "True")
+            //{
+            
+            //}
 
             var process = new Process();
             var startInfo = new ProcessStartInfo
             {
-                WindowStyle = ProcessWindowStyle.Hidden,
-                FileName = fileNameToUse,
-                Arguments = argumentsToUse,
+                FileName = "dotnet",
+                Arguments = "exec " + argumentsToUse,
                 UseShellExecute = false,
                 RedirectStandardOutput = true,
                 RedirectStandardError = true,
@@ -62,26 +58,15 @@ namespace csmacnz.Coveralls.Tests.Integration
                 ExitCode = exitCode
             };
         }
-
-        private static string GetMonoPath()
-        {
-            var monoApp = "mono";
-            var monoPath = Environment.GetEnvironmentVariable("MONO_INTEGRATION_MONOPATH");
-            if (!string.IsNullOrWhiteSpace(monoPath))
-            {
-                monoApp = monoPath + Path.DirectorySeparatorChar + "mono";
-            }
-            return monoApp;
-        }
-
-        private static string GetCoverallsExePath()
+        
+        private static string GetCoverallsDll()
         {
 #if DEBUG
             var configuration = "Debug";
 #else
             var configuration = "Release";
 #endif
-            return Path.Combine("..", "..", "..", "csmacnz.Coveralls", "bin", configuration);
+            return Path.Combine("..", "..", "..", "..", "csmacnz.Coveralls", "bin", configuration, "netcoreapp1.1", "csmacnz.Coveralls.dll");
         }
     }
 }
