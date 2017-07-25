@@ -267,7 +267,7 @@ task pack-only {
     dotnet pack -c $configuration -o $package_dir $app_project
 }
 
-task postbuild -depends coverage-only, integration, mono-integration, coveralls-only, inspect, dupfinder, archive-only, pack-only
+task postbuild -depends archive-only, pack-only, coverage-only, integration, mono-integration, inspect, dupfinder
 
 task appveyor-install -depends GitVersion, RestoreNuGetPackages
 
