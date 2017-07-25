@@ -62,7 +62,10 @@ namespace csmacnz.Coveralls.Tests
                 doc.XPathSelectElements("//CoverageSession/Modules/Module/Files/File")
                     .FirstOrDefault(e => e.Attribute("fullPath").Value.EndsWith("Class1.cs"));
             classFile.Attribute("fullPath").SetValue(classFilePath);
-            doc.Save(coverageFilePath);
+            using (var stream = File.OpenWrite(coverageFilePath))
+            {
+                doc.Save(stream);
+            }
             return coverageFilePath;
         }
 

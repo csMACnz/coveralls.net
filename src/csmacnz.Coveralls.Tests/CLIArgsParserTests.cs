@@ -49,7 +49,7 @@ namespace csmacnz.CLIArgsParser.Tests
         [InlineData("\n ", "\n")]
         [InlineData(" \n", "\n")]
         [InlineData(" \n ", "\n")]
-        public void SingleValue_SingleLengthArgsArray(string input, string expected)
+        public void SingleCharWithWhitespace_SingleLengthArgsArray(string input, string expected)
         {
             var result = ArgsParser.Parse(input);
             Assert.Collection(

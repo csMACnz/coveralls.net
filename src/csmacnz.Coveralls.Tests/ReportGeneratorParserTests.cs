@@ -1,7 +1,4 @@
-﻿using System.Diagnostics;
-using System.Reflection;
-using System.Xml;
-using System.Xml.Linq;
+﻿using System.Xml.Linq;
 using csmacnz.Coveralls.Parsers;
 using Xunit;
 using System.Collections.Generic;
@@ -16,12 +13,12 @@ namespace csmacnz.Coveralls.Tests
         {
             var documents = new Dictionary<string, XDocument>
             {
-                ["C:\\test\\GameOfLife.xUnit.Tests_GameOfLife.xUnit.Tests.WorldTests.xml"] = LoadDocumentFromResource("csmacnz.Coveralls.Tests.ReportGeneratorSample.GameOfLife.xUnit.Tests_GameOfLife.xUnit.Tests.WorldTests.xml"),
-                ["C:\\test\\GameOfLife_GameOfLife.Game.xml"] = LoadDocumentFromResource("csmacnz.Coveralls.Tests.ReportGeneratorSample.GameOfLife_GameOfLife.Game.xml"),
-                ["C:\\test\\GameOfLife_GameOfLife.Program.xml"] = LoadDocumentFromResource("csmacnz.Coveralls.Tests.ReportGeneratorSample.GameOfLife_GameOfLife.Program.xml"),
-                ["C:\\test\\GameOfLife_GameOfLife.World.xml"] = LoadDocumentFromResource("csmacnz.Coveralls.Tests.ReportGeneratorSample.GameOfLife_GameOfLife.World.xml"),
-                ["C:\\test\\GameOfLife_GameOfLife.WorldBuilder.xml"] = LoadDocumentFromResource("csmacnz.Coveralls.Tests.ReportGeneratorSample.GameOfLife_GameOfLife.WorldBuilder.xml"),
-                ["C:\\test\\Summary.xml"] = LoadDocumentFromResource("csmacnz.Coveralls.Tests.ReportGeneratorSample.Summary.xml"),
+                ["C:\\test\\GameOfLife.xUnit.Tests_GameOfLife.xUnit.Tests.WorldTests.xml"] = XDocument.Parse(Reports.ReportGeneratorSample.GameOfLife_xUnit_Tests_GameOfLife_xUnit_Tests_WorldTests),
+                ["C:\\test\\GameOfLife_GameOfLife.Game.xml"] = XDocument.Parse(Reports.ReportGeneratorSample.GameOfLife_GameOfLife_Game),
+                ["C:\\test\\GameOfLife_GameOfLife.Program.xml"] = XDocument.Parse(Reports.ReportGeneratorSample.GameOfLife_GameOfLife_Program),
+                ["C:\\test\\GameOfLife_GameOfLife.World.xml"] = XDocument.Parse(Reports.ReportGeneratorSample.GameOfLife_GameOfLife_World),
+                ["C:\\test\\GameOfLife_GameOfLife.WorldBuilder.xml"] = XDocument.Parse(Reports.ReportGeneratorSample.GameOfLife_GameOfLife_WorldBuilder),
+                ["C:\\test\\Summary.xml"] = XDocument.Parse(Reports.ReportGeneratorSample.Summary),
             };
 
             var results = ReportGeneratorParser.GenerateSourceFiles(documents);
@@ -38,22 +35,6 @@ namespace csmacnz.Coveralls.Tests
             Assert.Equal(18, results[3].Coverage.Sum());
             Assert.Equal(@"C:\dev\Coveralls.net-Samples\src\GameOfLife\WorldBuilder.cs", results[4].FullPath);
             Assert.Equal(0, results[4].Coverage.Sum());
-        }
-        
-        private static XDocument LoadDocumentFromResource(string embeddedResource)
-        {
-            XDocument document;
-            var executingAssembly = Assembly.GetExecutingAssembly();
-            using (var stream = executingAssembly.GetManifestResourceStream(embeddedResource))
-            {
-                Assert.NotNull(stream);
-                Debug.Assert(stream != null, "stream != null");
-                using (var reader = XmlReader.Create(stream))
-                {
-                    document = XDocument.Load(reader);
-                }
-            }
-            return document;
         }
     }
 }

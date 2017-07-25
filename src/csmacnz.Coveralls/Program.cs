@@ -40,7 +40,10 @@ namespace csmacnz.Coveralls
 
         private static NotNull<string> GetDisplayVersion()
         {
-            return FileVersionInfo.GetVersionInfo(Assembly.GetEntryAssembly().Location).ProductVersion;
+            return Assembly
+                .GetEntryAssembly()
+                .GetCustomAttribute<AssemblyFileVersionAttribute>()
+                .Version;
         }
 
         public int? Run(string[] argv)

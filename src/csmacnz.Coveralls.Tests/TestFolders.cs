@@ -15,7 +15,7 @@ namespace csmacnz.Coveralls.Tests
             .Replace(":", "");
 
         public static string InputFolder
-            => Path.GetDirectoryName(new Uri(Assembly.GetExecutingAssembly().CodeBase).LocalPath);
+            => Path.GetDirectoryName(new Uri(typeof(ChutzpahJsonParserTests).GetTypeInfo().Assembly.CodeBase).LocalPath);
 
         public static string OutputFolder
         {

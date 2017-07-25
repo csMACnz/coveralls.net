@@ -1,7 +1,4 @@
-﻿using System.Diagnostics;
-using System.Reflection;
-using System.Xml;
-using System.Xml.Linq;
+﻿using System.Xml.Linq;
 using csmacnz.Coveralls.Parsers;
 using Xunit;
 
@@ -12,7 +9,7 @@ namespace csmacnz.Coveralls.Tests
         [Fact]
         public void EmptyReportLoadsNoSourceFiles()
         {
-            var document = LoadDocumentFromResource("csmacnz.Coveralls.Tests.EmptyReport.xml");
+            var document = XDocument.Parse(Reports.EmptyReport);
 
             var results = OpenCoverParser.GenerateSourceFiles(document);
 
@@ -22,7 +19,7 @@ namespace csmacnz.Coveralls.Tests
         [Fact]
         public void SingleFileReportLoadsSingleSourceFiles()
         {
-            var document = LoadDocumentFromResource("csmacnz.Coveralls.Tests.SingleFileReport.xml");
+            var document = XDocument.Parse(Reports.SingleFileReport);
 
             var results = OpenCoverParser.GenerateSourceFiles(document);
 
@@ -32,7 +29,7 @@ namespace csmacnz.Coveralls.Tests
         [Fact]
         public void SingleFileReportWithSingleMethodLineCoveredWithoutSourceLoadsCorrectly()
         {
-            var document = LoadDocumentFromResource("csmacnz.Coveralls.Tests.SingleFileReportOneLineCovered.xml");
+            var document = XDocument.Parse(Reports.SingleFileReportOneLineCovered);
 
             var results = OpenCoverParser.GenerateSourceFiles(document);
 
@@ -42,27 +39,11 @@ namespace csmacnz.Coveralls.Tests
         [Fact]
         public void SingleFileReportWithSingleMethodLineUncoveredWithoutSourceLoadsCorrectly()
         {
-            var document = LoadDocumentFromResource("csmacnz.Coveralls.Tests.SingleFileReportOneLineUncovered.xml");
+            var document = XDocument.Parse(Reports.SingleFileReportOneLineUncovered);
 
             var results = OpenCoverParser.GenerateSourceFiles(document);
 
             Assert.Equal(0, results[0].Coverage[8]);
-        }
-        
-        private static XDocument LoadDocumentFromResource(string embeddedResource)
-        {
-            XDocument document;
-            var executingAssembly = Assembly.GetExecutingAssembly();
-            using (var stream = executingAssembly.GetManifestResourceStream(embeddedResource))
-            {
-                Assert.NotNull(stream);
-                Debug.Assert(stream != null, "stream != null");
-                using (var reader = XmlReader.Create(stream))
-                {
-                    document = XDocument.Load(reader);
-                }
-            }
-            return document;
         }
     }
 }
