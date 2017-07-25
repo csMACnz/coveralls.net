@@ -8,6 +8,7 @@
     <AssemblyTitle>csmacnz.Coveralls</AssemblyTitle>
     <TargetFramework>netcoreapp1.1</TargetFramework>
     <RuntimeFrameworkVersion>1.1.1</RuntimeFrameworkVersion>
+    <RuntimeIdentifiers>win7-x64;ubuntu.14.04-x64</RuntimeIdentifiers>
     <NeutralLanguage>en-NZ</NeutralLanguage>
     <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
     <VersionPrefix>0.0.1</VersionPrefix>
@@ -41,6 +42,7 @@
     <PackageReference Include="BCLExtensions" Version="1.2.0" />
     <PackageReference Include="Beefeater" Version="0.3.0" />
     <PackageReference Include="docopt.net" Version="0.6.1.9" />
+    <PackageReference Include="System.Collections.NonGeneric" Version="4.3.0" />
     <PackageReference Include="JetBrains.Annotations" Version="11.0.0" />
     <PackageReference Include="Newtonsoft.Json" Version="9.0.1" />
   </ItemGroup>

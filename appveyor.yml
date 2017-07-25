@@ -8,21 +8,20 @@ environment:
   COVERITY_EMAIL:
     secure: YNNLrvdTPJBtXcWskGnutoOOXbWeulhguf0c7iX9Gis=
 cache:
-- src\packages -> **\packages.config
 - C:\ProgramData\chocolatey\bin -> build.environment.ps1
 - C:\ProgramData\chocolatey\lib -> build.environment.ps1
 install:
 - ps: .\build.environment.ps1
-- ps: psake .\build.tasks.ps1 appveyor-install
+- ps: psake appveyor-install
 build_script:
-- ps: psake .\build.tasks.ps1 appveyor-build
+- ps: psake appveyor-build
 test_script:
-- ps: psake .\build.tasks.ps1 appveyor-test
+- ps: psake appveyor-test
 artifacts:
-- path: opencovertests.xml
+- path: TestResults/opencovertests.xml
   name: opencovertests.xml
-- path: coveralls.net.*.zip
-- path: coveralls.net.*.nupkg
+- path: Package/coveralls.net.*.zip
+- path: Package/coveralls.net.*.nupkg
 deploy:
 - provider: GitHub
   release: $(GitVersion_SemVer)

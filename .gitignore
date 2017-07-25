@@ -190,6 +190,8 @@ Package/
 
 #Build Artifacts
 cov-int/
+BuildPackages/
+TestResults/
 coveralls.coverity.*.zip
 coveralls.net.*.zip
 coveralls.net.*.nupkg

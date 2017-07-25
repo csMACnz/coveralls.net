@@ -1,11 +1,11 @@
 language: csharp
-solution: ./src/csmacnz.Coveralls.sln
+mono: none
+dotnet: 1.0.4
+dist: trusty
 sudo: false
 install:
   - export MONO_INTEGRATION_MODE=True
-  - nuget restore ./src/csmacnz.Coveralls.sln
+  - dotnet restore ./csmacnz.Coveralls.sln
 script:
-  - xbuild /p:Configuration=Release ./src/csmacnz.Coveralls.sln
-cache:
-  directories:
-  - ./src/packages
+  - dotnet build ./csmacnz.Coveralls.sln
+  - dotnet test ./src/csmacnz.Coveralls.Tests/csmacnz.Coveralls.Tests.csproj
