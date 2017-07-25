@@ -197,6 +197,7 @@ task dupfinder -depends InstallReSharperCLI {
 
 task inspect -depends InstallReSharperCLI {
     $inspectcode = GetInspectCodePath $build_packages_dir
+    $env:MSBuildSDKsPath="C:\Program Files\dotnet\sdk\1.0.4\Sdks"
     exec { cmd /c $inspectcode /o="$test_results_dir\resharperReport.xml" $sln_file 2`> nul }
     [xml]$stats = Get-Content $test_results_dir\resharperReport.xml
     $anyErrors = $FALSE;
