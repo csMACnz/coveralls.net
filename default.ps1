@@ -157,7 +157,7 @@ task test-coveralls -depends archive, coverage {
     exec { & ".\Package\Archive\windows\csmacnz.Coveralls.exe" --opencover -i "$test_results_dir\Coverage.xml" --useRelativePaths --dryrun -o "$test_results_dir\coverallsTestOutput.json" --repoToken "NOTAREALTOKEN" }
 }
 
-task coveralls-only -depends InstallCoveralls -precondition { return -not $env:APPVEYOR_PULL_REQUEST_NUMBER } {
+task coveralls-only -precondition { return -not $env:APPVEYOR_PULL_REQUEST_NUMBER } {
     exec { & ".\Package\Archive\windows\csmacnz.Coveralls.exe" --opencover -i "$test_results_dir\Coverage.xml" --treatUploadErrorsAsWarnings }
 }
 
