@@ -10,20 +10,22 @@ namespace csmacnz.Coveralls.Tests.Integration
     {
         public static CoverallsRunResults RunCoveralls(string arguments)
         {
+            var applicationProcess = "dotnet";
             var applicationPath = GetCoverallsDll();
-            var argumentsToUse = applicationPath + " " + arguments;
-
-            //TODO
-            //if (Environment.GetEnvironmentVariable("LINUX_INTEGRATION_MODE") == "True")
-            //{
+            var argumentsToUse = "exec " + applicationPath + " " + arguments;
             
-            //}
+            var exePath = Environment.GetEnvironmentVariable("COVERALLSNET_EXEPATH");
+            if (!string.IsNullOrWhiteSpace(exePath))
+            {
+                applicationProcess = exePath;
+                argumentsToUse = arguments;
+            }
 
             var process = new Process();
             var startInfo = new ProcessStartInfo
             {
-                FileName = "dotnet",
-                Arguments = "exec " + argumentsToUse,
+                FileName = applicationProcess,
+                Arguments = argumentsToUse,
                 UseShellExecute = false,
                 RedirectStandardOutput = true,
                 RedirectStandardError = true,

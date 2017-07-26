@@ -126,18 +126,6 @@ task unit-test {
     dotnet test .\src\csmacnz.Coveralls.Tests\csmacnz.Coveralls.Tests.csproj
 }
 
-task integration {
-    $env:LINUX_INTEGRATION_MODE = ""
-    #todo
-    #iex "& $script:xunit "".\src\csmacnz.Coveralls.Tests.Integration\bin\$configuration\csmacnz.Coveralls.Tests.Integration.dll"" -noshadow $script:testOptions"
-}
-
-task mono-integration {
-    $env:LINUX_INTEGRATION_MODE = "True"
-    #todo
-    #iex "& $script:xunit "".\src\csmacnz.Coveralls.Tests.Integration\bin\$configuration\csmacnz.Coveralls.Tests.Integration.dll"" -noshadow $script:testOptions"
-}
-
 task coverage -depends build, coverage-only
 
 task coverage-only -depends InstallOpenCover {
@@ -267,7 +255,17 @@ task pack-only {
     dotnet pack -c $configuration -o $package_dir $app_project
 }
 
-task postbuild -depends archive-only, pack-only, coverage-only, integration, mono-integration, inspect, dupfinder
+task integration {
+    $env:COVERALLSNET_EXEPATH = ""
+    dotnet test .\src\csmacnz.Coveralls.Tests.Integration\csmacnz.Coveralls.Tests.Integration.csproj
+}
+
+task integration-on-package -depends archive-only {
+    $env:COVERALLSNET_EXEPATH = "$base_dir\Package\Archive\windows\csmacnz.Coveralls.exe"
+    dotnet test .\src\csmacnz.Coveralls.Tests.Integration\csmacnz.Coveralls.Tests.Integration.csproj
+}
+
+task postbuild -depends archive-only, pack-only, coverage-only, integration, integration-on-package, inspect, dupfinder
 
 task appveyor-install -depends GitVersion, RestoreNuGetPackages
 
