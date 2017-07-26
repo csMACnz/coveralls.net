@@ -18,8 +18,8 @@ build_script:
 test_script:
 - ps: psake appveyor-test
 artifacts:
-- path: TestResults/opencovertests.xml
-  name: opencovertests.xml
+- path: TestResults/Coverage.xml
+  name: Coverage.xml
 - path: Package/coveralls.net.*.zip
 - path: Package/coveralls.net.*.nupkg
 deploy:
