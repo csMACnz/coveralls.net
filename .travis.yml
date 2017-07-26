@@ -4,7 +4,7 @@ dotnet: 1.0.4
 dist: trusty
 sudo: false
 install:
-  - export COVERALLSNET_EXEPATH=Package/Archive/ubuntu/csmacnz.Coveralls.exe
+  - export COVERALLSNET_EXEPATH=/home/travis/build/csMACnz/coveralls.net/Package/Archive/ubuntu/csmacnz.Coveralls.exe
   - dotnet restore ./csmacnz.Coveralls.sln
 script:
   - dotnet build ./csmacnz.Coveralls.sln -c Release
