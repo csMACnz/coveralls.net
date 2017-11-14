@@ -12,11 +12,11 @@ namespace csmacnz.Coveralls
 {
     public class CoverageLoader
     {
-        private readonly IFileSystem _fileSystem;
+        private readonly IFileLoader _fileLoader;
 
-        public CoverageLoader(IFileSystem fileSystem)
+        public CoverageLoader(IFileLoader fileLoader)
         {
-            _fileSystem = fileSystem;
+            _fileLoader = fileLoader;
         }
 
         public Result<List<CoverageFile>, LoadCoverageFilesError> LoadCoverageFiles(CoverageMode mode,
@@ -84,7 +84,7 @@ namespace csmacnz.Coveralls
 
         private Option<List<FileCoverageData>> LoadData(string modeInput, Func<Dictionary<string, XDocument>, List<FileCoverageData>> generateFunc)
         {
-            var folderFiles = _fileSystem.GetFiles(modeInput);
+            var folderFiles = _fileLoader.GetFiles(modeInput);
             if (!folderFiles.HasValue)
             {
                 return Option<List<FileCoverageData>>.None;
@@ -96,7 +96,7 @@ namespace csmacnz.Coveralls
 
         private Option<List<FileCoverageData>> LoadData(string modeInput, Func<string[], List<FileCoverageData>> generateFunc)
         {
-            var lines = _fileSystem.TryReadAllLinesFromFile(modeInput);
+            var lines = _fileLoader.TryReadAllLinesFromFile(modeInput);
 
             if (!lines.HasValue)
             {
@@ -108,19 +108,20 @@ namespace csmacnz.Coveralls
 
         private Option<List<FileCoverageData>> LoadData(string modeInput, Func<XDocument, List<FileCoverageData>> generateFunc)
         {
-            var document = _fileSystem.TryLoadXDocumentFromFile(modeInput);
+            var document = _fileLoader.TryLoadFile(modeInput);
 
             if (!document.HasValue)
             {
                 return Option<List<FileCoverageData>>.None;
             }
 
-            return generateFunc((XDocument)document);
+            return generateFunc(XDocument.Parse((string)document));
         }
+
         private Dictionary<string, XDocument> LoadXDocuments(Option<FileInfo[]> folderFiles)
         {
             return ((FileInfo[]) folderFiles).Where(f => f.Name.EndsWith(".xml"))
-                .ToDictionary(f => f.Name, f => (XDocument) _fileSystem.TryLoadXDocumentFromFile(f.FullName));
+                .ToDictionary(f => f.Name, f => XDocument.Parse((string) _fileLoader.TryLoadFile(f.FullName)));
         }
 
         private List<CoverageFile> BuildCoverageFiles(PathProcessor pathProcessor, bool useRelativePaths, List<FileCoverageData> coverageData)
@@ -140,7 +141,7 @@ namespace csmacnz.Coveralls
 
                 if (!coverageBuilder.HasSource())
                 {
-                    var readAllText = _fileSystem.TryLoadFile(coverageFileData.FullPath);
+                    var readAllText = _fileLoader.TryLoadFile(coverageFileData.FullPath);
                     if (readAllText.HasValue)
                     {
                         coverageBuilder.AddSource((string)readAllText);

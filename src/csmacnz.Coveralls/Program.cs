@@ -1,7 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Diagnostics;
-using System.IO;
 using System.Linq;
 using System.Reflection;
 using BCLExtensions;
@@ -11,7 +9,6 @@ using csmacnz.Coveralls.Data;
 using csmacnz.Coveralls.GitDataResolvers;
 using csmacnz.Coveralls.Ports;
 using JetBrains.Annotations;
-using Newtonsoft.Json;
 
 namespace csmacnz.Coveralls
 {
@@ -57,44 +54,19 @@ namespace csmacnz.Coveralls
                     return args.FailErrorCode;
                 }
 
-                var repoToken = ResolveRepoToken(args);
-
-                var outputFile = ResolveOutpuFile(args);
-
-                //Main Processing
-                var files = BuildCoverageFiles(args);
-
                 var gitData = ResolveGitData(args);
 
-                var serviceName = ResolveServiceName(args);
-                var serviceJobId = ResolveServiceJobId(args);
-                var serviceNumber = ResolveServiceNumber(args);
-                var pullRequestId = ResolvePullRequestId(args);
-                var parallel = args.IsProvided("--parallel") && args.OptParallel;
+                var settings = LoadSettings(args);
 
-                var data = new CoverallData
-                {
-                    RepoToken = repoToken,
-                    ServiceJobId = serviceJobId.ValueOr("0"),
-                    ServiceName = serviceName.ValueOr("coveralls.net"),
-                    ServiceNumber = serviceNumber.ValueOr(null),
-                    PullRequestId = pullRequestId.ValueOr(null),
-                    SourceFiles = files.ToArray(),
-                    Parallel = parallel,
-                    Git = gitData.ValueOrDefault()
-                };
+                var metadata = CoverageMetadataResolver.Resolve(args);
 
-                var fileData = JsonConvert.SerializeObject(data);
-                if (!string.IsNullOrWhiteSpace(outputFile))
+                var app = new CoverallsPublisher(_console, _fileSystem);
+                var result = app.Run(settings, gitData.ValueOrDefault(), metadata);
+                if (!result.Successful)
                 {
-                    WriteFileData(fileData, outputFile);
-                }
-                if (!args.OptDryrun)
-                {
-                    UploadCoverage(fileData, args.OptTreatuploaderrorsaswarnings);
+                    ExitWithError(result.Error);
                 }
                 return null;
-
             }
             catch (ExitException ex)
             {
@@ -103,14 +75,29 @@ namespace csmacnz.Coveralls
             }
         }
 
-        private string ResolveOutpuFile(MainArgs args)
+        private static Option<GitData> ResolveGitData(MainArgs args)
         {
-            var outputFile = args.IsProvided("--output") ? args.OptOutput : string.Empty;   
-            if (!string.IsNullOrWhiteSpace(outputFile) && File.Exists(outputFile))
+            var providers = new List<IGitDataResolver>
             {
-                _console.WriteLine($"output file '{outputFile}' already exists and will be overwritten.");
-            }
-            return outputFile;
+                new CommandLineGitDataResolver(args),
+                new AppVeyorGitDataResolver(new EnvironmentVariables())
+            };
+
+            return providers.Where(p => p.CanProvideData()).Select(p => p.GenerateData()).FirstOrDefault();
+        }
+
+        private static ConfigurationSettings LoadSettings(MainArgs args)
+        {
+            return new ConfigurationSettings
+            {
+                RepoToken = ResolveRepoToken(args),
+                OutputFile = args.IsProvided("--output") ? args.OptOutput : string.Empty,
+                DryRun = args.OptDryrun,
+                TreatUploadErrorsAsWarnings = args.OptTreatuploaderrorsaswarnings,
+                UseRelativePaths = args.OptUserelativepaths,
+                BasePath = args.IsProvided("--basePath") ? args.OptBasepath : null,
+                CoverageSources = ParseCoverageSources(args)
+            };
         }
 
         private static string ResolveRepoToken(MainArgs args)
@@ -141,86 +128,35 @@ namespace csmacnz.Coveralls
             return repoToken;
         }
 
-        private static List<CoverageFile> BuildCoverageFiles(MainArgs args)
+        private static List<CoverageSource> ParseCoverageSources(MainArgs args)
         {
-            var pathProcessor = new PathProcessor(args.IsProvided("--basePath") ? args.OptBasepath : null);
-
-            List<CoverageFile> files;
+            List<CoverageSource> results = new List<CoverageSource>();
             if (args.IsProvided("--multiple") && args.OptMultiple)
             {
                 var modes = args.OptInput.Split(';');
-                files = new List<CoverageFile>();
                 foreach (var modekeyvalue in modes)
                 {
                     var split = modekeyvalue.Split('=');
                     var rawMode = split[0];
                     var input = split[1];
                     var mode = GetMode(rawMode);
-                    files.AddRange(LoadCoverageFiles(mode, pathProcessor, input, args.OptUserelativepaths));
+                    if (!mode.HasValue)
+                    {
+                        ExitWithError("Unknown mode provided");
+                    }
+                    results.Add(new CoverageSource((CoverageMode)mode, input));
                 }
             }
             else
             {
                 var mode = GetMode(args);
-                files = LoadCoverageFiles(mode, pathProcessor, args.OptInput, args.OptUserelativepaths);
-            }
-            Debug.Assert(files != null);
-            return files;
-        }
-
-        private void UploadCoverage(string fileData, bool treatErrorsAsWarnings)
-        {
-            var uploadResult = new CoverallsService().Upload(fileData);
-            if (!uploadResult.Successful)
-            {
-                var message = $"Failed to upload to coveralls\n{uploadResult.Error}";
-                if (treatErrorsAsWarnings)
+                if (!mode.HasValue)
                 {
-                    _console.WriteLine(message);
+                    ExitWithError("Unknown mode provided");
                 }
-                else
-                {
-                    ExitWithError(message);
-                }
+                results.Add(new CoverageSource((CoverageMode)mode, args.OptInput));
             }
-            else
-            {
-                _console.WriteLine("Coverage data uploaded to coveralls.");
-            }
-        }
-
-        private static List<CoverageFile> LoadCoverageFiles(Option<CoverageMode> mode, PathProcessor pathProcessor,
-            string inputArgument, bool useRelativePaths)
-        {
-            List<CoverageFile> files = null;
-            if (!mode.HasValue)
-            {
-                ExitWithError("Unknown mode provided");
-            }
-            var coverageFiles = new CoverageLoader(_fileSystem).LoadCoverageFiles((CoverageMode)mode,
-                pathProcessor, inputArgument, useRelativePaths);
-            if (coverageFiles.Successful)
-            {
-                files = coverageFiles.Value;
-            }
-            else
-            {
-                switch (coverageFiles.Error)
-                {
-                    case LoadCoverageFilesError.InputFileNotFound:
-                        ExitWithError($"Input file '{inputArgument}' cannot be found");
-                        break;
-                    case LoadCoverageFilesError.ModeNotSupported:
-                        ExitWithError($"Could not process mode {mode}");
-                        break;
-                    case LoadCoverageFilesError.UnknownFilesMissingError:
-                        ExitWithError($"Unknown Error Finding files processing mode {mode}");
-                        break;
-                    default:
-                        throw new ArgumentOutOfRangeException();
-                }
-            }
-            return files;
+            return results;
         }
 
         private static Option<CoverageMode> GetMode(string mode)
@@ -286,75 +222,6 @@ namespace csmacnz.Coveralls
         private static void ExitWithError(string message)
         {
             throw new ExitException(message);
-        }
-
-        private static Option<string> ResolveServiceName(MainArgs args)
-        {
-            if (args.IsProvided("--serviceName")) return args.OptServicename;
-            var isAppVeyor = new EnvironmentVariables().GetEnvironmentVariable("APPVEYOR");
-            if (isAppVeyor == "True") return "appveyor";
-            return null;
-        }
-
-        private static Option<string> ResolveServiceJobId(MainArgs args)
-        {
-            if (args.IsProvided("--jobId")) return args.OptJobid;
-            var jobId = new EnvironmentVariables().GetEnvironmentVariable("APPVEYOR_JOB_ID");
-            if (jobId.IsNotNullOrWhitespace()) return jobId;
-            return null;
-        }
-
-        private static Option<string> ResolveServiceNumber(MainArgs args)
-        {
-            if (args.IsProvided("--serviceNumber")) return args.OptServicenumber;
-            var jobId = new EnvironmentVariables().GetEnvironmentVariable("APPVEYOR_BUILD_NUMBER");
-            if (jobId.IsNotNullOrWhitespace()) return jobId;
-            return null;
-        }
-
-        private static Option<string> ResolvePullRequestId(MainArgs args)
-        {
-            if (args.IsProvided("--pullRequest")) return args.OptPullrequest;
-            var prId = new EnvironmentVariables().GetEnvironmentVariable("APPVEYOR_PULL_REQUEST_NUMBER");
-            if (prId.IsNotNullOrWhitespace()) return prId;
-            return null;
-        }
-
-        private static Option<GitData> ResolveGitData(MainArgs args)
-        {
-            var providers = new List<IGitDataResolver>
-            {
-                new CommandLineGitDataResolver(args),
-                new AppVeyorGitDataResolver(new EnvironmentVariables())
-            };
-
-            return providers.Where(p => p.CanProvideData()).Select(p => p.GenerateData()).FirstOrDefault();
-        }
-
-        private void WriteFileData(string fileData, string outputFile)
-        {
-            if (!new FileSystem().WriteFile(outputFile, fileData))
-            {
-                _console.WriteLine($"Failed to write data to output file '{outputFile}'.");
-            }
-        }
-    }
-
-    public interface IConsole
-    {
-        void WriteLine(string message);
-        void WriteErrorLine(string message);
-    }
-
-    public class StandardConsole : IConsole
-    {
-        public void WriteLine(string message)
-        {
-            Console.WriteLine(message);
-        }
-        public void WriteErrorLine(string message)
-        {
-            Console.Error.WriteLine(message);
         }
     }
 }

@@ -1,7 +1,6 @@
 using System;
 using System.Collections.Generic;
 using System.IO;
-using System.Xml.Linq;
 using Beefeater;
 using csmacnz.Coveralls.Ports;
 
@@ -16,15 +15,6 @@ namespace csmacnz.Coveralls.Tests
             if (_files.ContainsKey(filePath))
             {
                 return _files[filePath];
-            }
-            return null;
-        }
-
-        public Option<XDocument> TryLoadXDocumentFromFile(string filePath)
-        {
-            if (_files.ContainsKey(filePath))
-            {
-                return XDocument.Parse(_files[filePath]);
             }
             return null;
         }

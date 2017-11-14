@@ -1,6 +1,5 @@
 ﻿using System;
 using System.IO;
-using System.Xml.Linq;
 using Beefeater;
 using csmacnz.Coveralls.Ports;
 
@@ -16,16 +15,7 @@ namespace csmacnz.Coveralls.Adapters
             }
             return null;
         }
-
-        public Option<XDocument> TryLoadXDocumentFromFile(string filePath)
-        {
-            if (File.Exists(filePath))
-            {
-                return XDocument.Load(filePath);
-            }
-            return null;
-        }
-
+        
         //todo: not FileInfo
         public Option<FileInfo[]> GetFiles(string directory)
         {

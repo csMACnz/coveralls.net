@@ -1,4 +1,3 @@
-
 coveralls.net
 =============
 
@@ -28,14 +27,12 @@ coveralls.net
 [![Open Hub](https://img.shields.io/badge/Open-Hub-0185CA.svg)](https://www.openhub.net/p/coverallsdotnet)
 [![Documentation Status](https://readthedocs.org/projects/coverallsnet/badge/?version=latest)](https://readthedocs.org/projects/coverallsnet/?badge=latest)
 
-
-
 Coveralls uploader for .Net Code coverage of your C# source code. Should work with any code files that get reported with the supported coverage tools, but the primary focus is CSharp.
 
 Install
 -------
 
-This is available on nuget at https://www.nuget.org/packages/coveralls.net. To install coveralls.net you can find it by searching for `coveralls.net` in the visual studio nuget extension, or install by run this command in the Package Manager Console
+This is available on nuget at [www.nuget.org/packages/coveralls.net](https://www.nuget.org/packages/coveralls.net). To install coveralls.net you can find it by searching for `coveralls.net` in the visual studio nuget extension, or install by run this command in the Package Manager Console
 
     PM> Install-Package coveralls.net
 
@@ -58,8 +55,10 @@ Supported
 * [OpenCover](https://github.com/sawilde/opencover)
 * [Mono Code Coverage (monocov)](http://www.mono-project.com/docs/debug+profile/profile/code-coverage/)
 * [Visual Studio's Dynamic Coverage](http://msdn.microsoft.com/en-us/library/dd299398%28v=vs.90%29.aspx) (based on [ReportGenerator's support](https://reportgenerator.codeplex.com/wikipage?title=Visual%20Studio%20Coverage%20Tools),  using vstest.console.exe and CodeCoverage.exe)
+* Visual Studio Coverage Export xml format
 * lcov
 * [Chutzpah - A JavaScript Test Runner](https://github.com/mmanela/chutzpah)
+* [ReportGenerator](http://danielpalme.github.io/ReportGenerator/)
 
 Full Supported, In Progress, and Future Support information can be found [Coverage Support](https://github.com/csMACnz/coveralls.net/wiki/Coverage-Support) wiki page
 
@@ -76,7 +75,8 @@ You can ask questions and get updates using the twitter account [coveralls.net (
 Contributers
 ------------
 
-Mark Clearwater (Primary Owner)
+Mark Clearwater (Owner)
+
 * [@csMACnz](https://twitter.com/csmacnz) on twitter
 * [csMACnz](https://github.com/csMACnz) on github
 * <csmacnz@csmac.co.nz> on email

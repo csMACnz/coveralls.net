@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using csmacnz.CLIArgsParser;
 using csmacnz.Coveralls.Adapters;
+using csmacnz.Coveralls.Ports;
 
 namespace csmacnz.Coveralls.Tests
 {
