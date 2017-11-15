@@ -31,4 +31,10 @@
     <PackageReference Include="Newtonsoft.Json" Version="9.0.1" />
   </ItemGroup>
 
+  <ItemGroup>
+    <AdditionalFiles Update="C:\Dev\coveralls.net\/stylecop.json">
+      <CopyToOutputDirectory>false</CopyToOutputDirectory>
+    </AdditionalFiles>
+  </ItemGroup>
+
 </Project>
