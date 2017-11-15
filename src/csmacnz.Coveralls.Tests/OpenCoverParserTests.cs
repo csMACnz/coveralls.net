@@ -13,7 +13,7 @@ namespace csmacnz.Coveralls.Tests
 
             var results = OpenCoverParser.GenerateSourceFiles(document);
 
-            Assert.Equal(0, results.Count);
+            Assert.Empty(results);
         }
 
         [Fact]
@@ -23,7 +23,7 @@ namespace csmacnz.Coveralls.Tests
 
             var results = OpenCoverParser.GenerateSourceFiles(document);
 
-            Assert.Equal(1, results.Count);
+            Assert.Single(results);
         }
 
         [Fact]

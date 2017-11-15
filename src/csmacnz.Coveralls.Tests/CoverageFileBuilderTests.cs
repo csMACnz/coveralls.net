@@ -59,7 +59,7 @@ namespace csmacnz.Coveralls.Tests
             public void ThenCoverageIsEmpty()
             {
                 Assert.NotNull(_coverageFile.Coverage);
-                Assert.Equal(1, _coverageFile.Coverage.Length);
+                Assert.Single(_coverageFile.Coverage);
                 Assert.Null(_coverageFile.Coverage[0]);
             }
         }
