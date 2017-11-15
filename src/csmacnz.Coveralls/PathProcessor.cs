@@ -1,4 +1,4 @@
-using System.IO;
+﻿using System.IO;
 using BCLExtensions;
 
 namespace csmacnz.Coveralls
@@ -24,9 +24,9 @@ namespace csmacnz.Coveralls
             return path;
         }
 
-        public string UnixifyPath(string filePath)
+        public static string UnixifyPath(string filePath)
         {
-            return filePath.Replace('\\', '/').Replace(":", "");
+            return filePath.Replace('\\', '/').Replace(":", string.Empty);
         }
     }
 }

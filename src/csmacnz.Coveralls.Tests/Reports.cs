@@ -4,7 +4,7 @@ using csMACnz.EmbedRes;
 
 namespace csmacnz.Coveralls.Tests
 {
-    public class Reports
+    public static class Reports
     {
         public static string ChutzpahExample => GetJsonContents();
 

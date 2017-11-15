@@ -12,15 +12,13 @@ namespace csmacnz.Coveralls.Tests
     internal static class TestFolders
     {
         public static readonly string UniqueId = DateTime.Now.ToString("s", CultureInfo.InvariantCulture)
-            .Replace(":", "");
+            .Replace(":", string.Empty);
 
         public static string InputFolder
             => Path.GetDirectoryName(new Uri(typeof(ChutzpahJsonParserTests).GetTypeInfo().Assembly.CodeBase).LocalPath);
 
         public static string OutputFolder
         {
-            // a simple solution that puts everything to the output folder directly would look like this:
-            // get { return Directory.GetCurrentDirectory(); }
             get
             {
                 var outputFolder = Path.Combine(Directory.GetCurrentDirectory(), UniqueId);

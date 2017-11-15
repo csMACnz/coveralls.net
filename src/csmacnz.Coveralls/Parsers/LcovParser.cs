@@ -32,13 +32,10 @@ namespace csmacnz.Coveralls.Parsers
                     continue;
                 }
 
-                if (line.Equals("end_of_record"))
+                if (line.Equals("end_of_record") && coverageBuilder != null)
                 {
-                    if (coverageBuilder != null)
-                    {
-                        files.Add(coverageBuilder.CreateFile());
-                        coverageBuilder = null;
-                    }
+                    files.Add(coverageBuilder.CreateFile());
+                    coverageBuilder = null;
                 }
             }
 

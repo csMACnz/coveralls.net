@@ -21,24 +21,23 @@ namespace csmacnz.Coveralls.Tests.Integration
                 argumentsToUse = arguments;
             }
 
-            var process = new Process();
-            var startInfo = new ProcessStartInfo
-            {
-                FileName = applicationProcess,
-                Arguments = argumentsToUse,
-                UseShellExecute = false,
-                RedirectStandardOutput = true,
-                RedirectStandardError = true,
-                StandardOutputEncoding = Encoding.UTF8,
-                StandardErrorEncoding = Encoding.UTF8
-            };
-            process.StartInfo = startInfo;
-
             string results;
             string errorsResults;
             int exitCode;
-            using (process)
+            using (var process = new Process())
             {
+                var startInfo = new ProcessStartInfo
+                {
+                    FileName = applicationProcess,
+                    Arguments = argumentsToUse,
+                    UseShellExecute = false,
+                    RedirectStandardOutput = true,
+                    RedirectStandardError = true,
+                    StandardOutputEncoding = Encoding.UTF8,
+                    StandardErrorEncoding = Encoding.UTF8
+                };
+                process.StartInfo = startInfo;
+
                 process.Start();
 
                 results = process.StandardOutput.ReadToEnd();

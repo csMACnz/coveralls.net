@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using BCLExtensions;
@@ -14,7 +15,7 @@ namespace csmacnz.Coveralls
 
         public CoverageFileBuilder(FileCoverageData data)
         {
-            data.EnsureIsNotNull("data");
+            data.EnsureIsNotNull(nameof(data));
             _coverage = data.Coverage;
             _filePath = data.FullPath;
             if (data.Source?.Any() == true)
@@ -58,7 +59,7 @@ namespace csmacnz.Coveralls
                 _coverage.CopyTo(coverage, 0);
             }
 
-            var sourceDigest = Crypto.CalculateMd5Digest(string.Join("\n", _sourceLines?.ToArray() ?? new string[0]));
+            var sourceDigest = Crypto.CalculateMd5Digest(string.Join("\n", _sourceLines?.ToArray() ?? Array.Empty<string>()));
             return new CoverageFile(_filePath, sourceDigest, coverage);
         }
     }

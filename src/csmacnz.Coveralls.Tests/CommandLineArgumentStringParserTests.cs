@@ -1,13 +1,13 @@
 ﻿using Xunit;
 
-namespace csmacnz.CLIArgsParser.Tests
+namespace csmacnz.CommandLineArgumentStringParser.Tests
 {
-    public class CLIArgsParserTests
+    public class CommandLineArgumentStringParserTests
     {
         [Fact]
         public void EmptyString_EmptyArgsArray()
         {
-            var input = "";
+            var input = string.Empty;
             var result = ArgsParser.Parse(input);
             Assert.Empty(result);
         }

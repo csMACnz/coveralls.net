@@ -2,7 +2,7 @@
 
 namespace csmacnz.Coveralls.Tests
 {
-    public class RepositoryPaths
+    public static class RepositoryPaths
     {
         public static string GetSamplesPath()
         {

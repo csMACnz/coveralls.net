@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using csmacnz.Coveralls.Data;
@@ -14,7 +14,7 @@ namespace csmacnz.Coveralls
         {
             if (string.IsNullOrWhiteSpace(filePath))
             {
-                throw new ArgumentException("filePath");
+                throw new ArgumentException($"Parameter '{nameof(filePath)}' must have a value (and not be empty string).", nameof(filePath));
             }
 
             _filePath = filePath;

@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
+using BCLExtensions;
 using Beefeater;
 using csmacnz.Coveralls.Adapters;
 using csmacnz.Coveralls.Data;
@@ -13,7 +14,7 @@ namespace csmacnz.Coveralls
     public class CoverallsPublisher
     {
         private readonly IConsole _console;
-        private static IFileSystem _fileSystem;
+        private readonly IFileSystem _fileSystem;
 
         public CoverallsPublisher(IConsole console, IFileSystem fileSystem)
         {
@@ -21,7 +22,7 @@ namespace csmacnz.Coveralls
             _fileSystem = fileSystem;
         }
 
-        public Result<SuccessResult, string> Run(
+        public Result<Unit, string> Run(
             ConfigurationSettings settings,
             GitData gitData,
             CoverageMetadata metadata)
@@ -66,7 +67,7 @@ namespace csmacnz.Coveralls
                 }
             }
 
-            return SuccessResult.Value;
+            return Unit.Default;
         }
 
         private string ResolveOutpuFile(ConfigurationSettings settings)
@@ -88,7 +89,7 @@ namespace csmacnz.Coveralls
             }
         }
 
-        private static Result<List<CoverageFile>, string> BuildCoverageFiles(ConfigurationSettings args)
+        private Result<List<CoverageFile>, string> BuildCoverageFiles(ConfigurationSettings args)
         {
             var pathProcessor = new PathProcessor(args.BasePath);
 
@@ -105,11 +106,11 @@ namespace csmacnz.Coveralls
                 files.AddRange(coverageFiles.Value);
             }
 
-            Debug.Assert(files != null);
+            Debug.Assert(files != null, "Files should always be returned.");
             return files;
         }
 
-        private Result<SuccessResult, string> UploadCoverage(string fileData)
+        private Result<Unit, string> UploadCoverage(string fileData)
         {
             var uploadResult = new CoverallsService().Upload(fileData);
             if (!uploadResult.Successful)
@@ -119,10 +120,10 @@ namespace csmacnz.Coveralls
             }
 
             _console.WriteLine("Coverage data uploaded to coveralls.");
-            return SuccessResult.Value;
+            return Unit.Default;
         }
 
-        private static Result<List<CoverageFile>, string> LoadCoverageFiles(
+        private Result<List<CoverageFile>, string> LoadCoverageFiles(
             CoverageMode mode,
             PathProcessor pathProcessor,
             string inputArgument,
@@ -146,7 +147,7 @@ namespace csmacnz.Coveralls
                     case LoadCoverageFilesError.UnknownFilesMissingError:
                         return $"Unknown Error Finding files processing mode {mode}";
                     default:
-                        throw new ArgumentOutOfRangeException(nameof(coverageFiles.Error));
+                        throw new NotSupportedException($"Unknown value '{coverageFiles.Error}' returned from 'LoadCoverageFiles'.");
                 }
             }
 

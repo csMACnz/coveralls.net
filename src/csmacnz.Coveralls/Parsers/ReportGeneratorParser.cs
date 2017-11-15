@@ -25,11 +25,8 @@ namespace csmacnz.Coveralls.Parsers
                         var coverage = new List<int?>();
                         foreach (var lineAnalysis in fileElement.Elements("LineAnalysis"))
                         {
-                            var line = lineAnalysis.Attribute("line").Value;
                             var visits = lineAnalysis.Attribute("visits").Value;
-                            var coverageMode = lineAnalysis.Attribute("coverage").Value;
-                            var coveredbranches = lineAnalysis.Attribute("coveredbranches").Value;
-                            var totalbranches = lineAnalysis.Attribute("totalbranches").Value;
+                            var coverageMode = lineAnalysis.Attribute($"coverage").Value;
                             var content = lineAnalysis.Attribute("content").Value;
 
                             source.Add(WebUtility.HtmlDecode(content));

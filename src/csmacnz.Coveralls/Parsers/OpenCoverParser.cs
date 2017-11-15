@@ -44,7 +44,7 @@ namespace csmacnz.Coveralls.Parsers
                                                         var sequencePoint in
                                                             sequencePointsElement.Elements("SequencePoint"))
                                                     {
-                                                        var sequenceFileid = sequencePoint.Attribute("fileid").Value;
+                                                        var sequenceFileid = sequencePoint.Attribute($"fileid").Value;
                                                         if (fileid == sequenceFileid)
                                                         {
                                                             var sourceLine =

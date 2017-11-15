@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Text;
 
-namespace csmacnz.CLIArgsParser
+namespace csmacnz.CommandLineArgumentStringParser
 {
     public static class ArgsParser
     {

@@ -9,22 +9,12 @@ namespace csmacnz.Coveralls.Data
         {
             if (string.IsNullOrEmpty(name))
             {
-                throw new ArgumentException("name");
-            }
-
-            if (sourceDigest == null)
-            {
-                throw new ArgumentException("sourceDigest");
-            }
-
-            if (coverage == null)
-            {
-                throw new ArgumentException("coverage");
+                throw new ArgumentException($"Parameter '{nameof(name)}' must have a value (and not be empty string).", nameof(name));
             }
 
             Name = name;
-            SourceDigest = sourceDigest;
-            Coverage = coverage;
+            SourceDigest = sourceDigest ?? throw new ArgumentNullException(nameof(sourceDigest));
+            Coverage = coverage ?? throw new ArgumentNullException(nameof(coverage));
         }
 
         [JsonProperty("name")]

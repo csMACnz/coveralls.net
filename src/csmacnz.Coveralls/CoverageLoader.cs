@@ -7,6 +7,7 @@ using Beefeater;
 using csmacnz.Coveralls.Data;
 using csmacnz.Coveralls.Parsers;
 using csmacnz.Coveralls.Ports;
+using JetBrains.Annotations;
 
 namespace csmacnz.Coveralls
 {
@@ -75,7 +76,7 @@ namespace csmacnz.Coveralls
                 return LoadCoverageFilesError.InputFileNotFound;
             }
 
-            var coverageData = (List<FileCoverageData>)result;
+            List<FileCoverageData> coverageData = (List<FileCoverageData>)result;
 
             if (coverageData == null)
             {
@@ -85,8 +86,13 @@ namespace csmacnz.Coveralls
             return coverageData;
         }
 
-        private Option<List<FileCoverageData>> LoadData(string modeInput, Func<Dictionary<string, XDocument>, List<FileCoverageData>> generateFunc)
+        private Option<List<FileCoverageData>> LoadData(string modeInput, [NotNull] Func<Dictionary<string, XDocument>, List<FileCoverageData>> generateFunc)
         {
+            if (generateFunc == null)
+            {
+                throw new ArgumentNullException(nameof(generateFunc));
+            }
+
             var folderFiles = _fileLoader.GetFiles(modeInput);
             if (!folderFiles.HasValue)
             {
@@ -100,6 +106,11 @@ namespace csmacnz.Coveralls
 
         private Option<List<FileCoverageData>> LoadData(string modeInput, Func<string[], List<FileCoverageData>> generateFunc)
         {
+            if (generateFunc == null)
+            {
+                throw new ArgumentNullException(nameof(generateFunc));
+            }
+
             var lines = _fileLoader.TryReadAllLinesFromFile(modeInput);
 
             if (!lines.HasValue)
@@ -112,6 +123,11 @@ namespace csmacnz.Coveralls
 
         private Option<List<FileCoverageData>> LoadData(string modeInput, Func<XDocument, List<FileCoverageData>> generateFunc)
         {
+            if (generateFunc == null)
+            {
+                throw new ArgumentNullException(nameof(generateFunc));
+            }
+
             var document = _fileLoader.TryLoadFile(modeInput);
 
             if (!document.HasValue)
@@ -140,7 +156,7 @@ namespace csmacnz.Coveralls
                 {
                     path = pathProcessor.ConvertPath(coverageFileData.FullPath);
                 }
-                path = pathProcessor.UnixifyPath(path);
+                path = PathProcessor.UnixifyPath(path);
                 coverageBuilder.SetPath(path);
 
                 if (!coverageBuilder.HasSource())

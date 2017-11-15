@@ -14,16 +14,11 @@ namespace csmacnz.Coveralls.Data
         {
             if (string.IsNullOrEmpty(fullPath))
             {
-                throw new ArgumentException("fullPath");
-            }
-
-            if (coverage == null)
-            {
-                throw new ArgumentException("coverage");
+                throw new ArgumentException($"Parameter '{nameof(fullPath)}' must have a value (and not be empty string).", nameof(fullPath));
             }
 
             FullPath = fullPath;
-            Coverage = coverage;
+            Coverage = coverage ?? throw new ArgumentNullException(nameof(coverage));
             Source = source?.Any() == true ? source : null;
         }
 

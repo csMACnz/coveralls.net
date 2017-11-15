@@ -6,17 +6,6 @@ using Newtonsoft.Json;
 
 namespace csmacnz.Coveralls.Parsers
 {
-    public class ChutzpahJsonFileItem
-    {
-        public string FilePath { get; set; }
-
-        public int?[] LineExecutionCounts { get; set; }
-
-        public string[] SourceLines { get; set; }
-
-        public double CoveragePercentage { get; set; }
-    }
-
     public static class ChutzpahJsonParser
     {
         public static List<FileCoverageData> GenerateSourceFiles(string[] content)

@@ -1,8 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
-using csmacnz.CLIArgsParser;
+using csmacnz.CommandLineArgumentStringParser;
 using csmacnz.Coveralls.Adapters;
-using csmacnz.Coveralls.Ports;
 
 namespace csmacnz.Coveralls.Tests
 {
@@ -23,25 +21,5 @@ namespace csmacnz.Coveralls.Tests
                 ExitCode = exitCode
             };
         }
-    }
-
-    public class TestConsole : IConsole
-    {
-        private readonly List<string> _errors = new List<string>();
-        private readonly List<string> _standardOut = new List<string>();
-
-        public void WriteLine(string message)
-        {
-            _standardOut.Add(message);
-        }
-
-        public void WriteErrorLine(string message)
-        {
-            _errors.Add(message);
-        }
-
-        public string[] Errors => _errors.ToArray();
-
-        public string[] StandardOut => _standardOut.ToArray();
     }
 }

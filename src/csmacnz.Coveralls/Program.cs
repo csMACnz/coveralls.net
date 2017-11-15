@@ -16,7 +16,7 @@ namespace csmacnz.Coveralls
     {
         private readonly IConsole _console;
         private readonly string _version;
-        private static IFileSystem _fileSystem;
+        private readonly IFileSystem _fileSystem;
 
         public Program(IConsole console, IFileSystem fileSystem, string version)
         {

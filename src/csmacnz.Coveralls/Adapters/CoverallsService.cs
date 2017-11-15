@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Net.Http;
+using BCLExtensions;
 using Beefeater;
 using csmacnz.Coveralls.Ports;
 using Newtonsoft.Json;
@@ -8,10 +9,12 @@ namespace csmacnz.Coveralls.Adapters
 {
     public class CoverallsService : ICoverallsService
     {
-        private static readonly string RequestUri = @"https://coveralls.io/api/v1/jobs";
+        // TODO(markc): make this configurable, especially if private servers are used.
+#pragma warning disable S1075 // URIs should not be hardcoded
+        private static readonly Uri RequestUri = new Uri("https://coveralls.io/api/v1/jobs");
+#pragma warning restore S1075 // URIs should not be hardcoded
 
-        // TODO(csMACnz): change from bool to Unit or a simplified Result<TError> as a thing?
-        public Result<bool, string> Upload(string fileData)
+        public Result<Unit, string> Upload(string fileData)
         {
             using (HttpContent stringContent = new StringContent(fileData))
             {
@@ -35,7 +38,7 @@ namespace csmacnz.Coveralls.Adapters
                         return $"{response.StatusCode} - {message}";
                     }
 
-                    return true;
+                    return Unit.Default;
                 }
             }
         }
