@@ -9,10 +9,18 @@ namespace csmacnz.Coveralls.Data
             : this(fullPath, coverage, null)
         {
         }
+
         public FileCoverageData(string fullPath, int?[] coverage, string[] source)
         {
-            if (string.IsNullOrEmpty(fullPath)) throw new ArgumentException("fullPath");
-            if (coverage == null) throw new ArgumentException("coverage");
+            if (string.IsNullOrEmpty(fullPath))
+            {
+                throw new ArgumentException("fullPath");
+            }
+
+            if (coverage == null)
+            {
+                throw new ArgumentException("coverage");
+            }
 
             FullPath = fullPath;
             Coverage = coverage;

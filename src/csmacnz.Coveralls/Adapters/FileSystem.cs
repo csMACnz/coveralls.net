@@ -13,16 +13,18 @@ namespace csmacnz.Coveralls.Adapters
             {
                 return File.ReadAllText(filePath);
             }
+
             return null;
         }
-        
-        //todo: not FileInfo
+
+        // todo: not FileInfo
         public Option<FileInfo[]> GetFiles(string directory)
         {
             if (Directory.Exists(directory))
             {
                 return new DirectoryInfo(directory).GetFiles();
             }
+
             return null;
         }
 
@@ -34,9 +36,10 @@ namespace csmacnz.Coveralls.Adapters
             }
             catch (Exception)
             {
-                //Maybe should give reason.
+                // Maybe should give reason.
                 return false;
             }
+
             return true;
         }
 
@@ -46,6 +49,7 @@ namespace csmacnz.Coveralls.Adapters
             {
                 return File.ReadAllLines(filePath);
             }
+
             return null;
         }
     }

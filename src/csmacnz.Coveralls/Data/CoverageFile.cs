@@ -7,9 +7,20 @@ namespace csmacnz.Coveralls.Data
     {
         public CoverageFile(string name, string sourceDigest, int?[] coverage)
         {
-            if (string.IsNullOrEmpty(name)) throw new ArgumentException("name");
-            if (sourceDigest == null) throw new ArgumentException("sourceDigest");
-            if (coverage == null) throw new ArgumentException("coverage");
+            if (string.IsNullOrEmpty(name))
+            {
+                throw new ArgumentException("name");
+            }
+
+            if (sourceDigest == null)
+            {
+                throw new ArgumentException("sourceDigest");
+            }
+
+            if (coverage == null)
+            {
+                throw new ArgumentException("coverage");
+            }
 
             Name = name;
             SourceDigest = sourceDigest;

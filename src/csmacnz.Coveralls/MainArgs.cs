@@ -1,12 +1,8 @@
-using System.Collections.Generic;
-using System.Diagnostics.CodeAnalysis;
+﻿using System.Collections.Generic;
 using DocoptNet;
 
 namespace csmacnz.Coveralls
 {
-    // Generated class for Main.usage.txt
-    [SuppressMessage("ReSharper", "MergeConditionalExpression")]
-    [SuppressMessage("ReSharper", "ConvertPropertyToExpressionBody")]
     public class MainArgs
     {
         public const string Usage = @"csmacnz.Coveralls - a coveralls.io coverage publisher for .Net
@@ -56,6 +52,7 @@ What it's for:
  Reads your .Net code coverage output data and submits it to
  coveralls.io's service. This can be used by your build scripts
  or with a CI builder server.";
+
         private readonly IDictionary<string, ValueObject> _args;
 
         public MainArgs(
@@ -75,45 +72,70 @@ What it's for:
         }
 
         public bool Failed { get; private set; }
+
         public string FailMessage { get; private set; }
+
         public int FailErrorCode { get; private set; }
 
-        public IDictionary<string, ValueObject> Args
-        {
-            get { return _args; }
-        }
+        public IDictionary<string, ValueObject> Args => _args;
 
         public bool IsProvided(string parameter)
         {
             return _args[parameter] != null;
         }
 
-        public bool OptOpencover { get { return _args["--opencover"].IsTrue; } }
-        public bool OptDynamiccodecoverage { get { return _args["--dynamiccodecoverage"].IsTrue; } }
-        public bool OptMonocov { get { return _args["--monocov"].IsTrue; } }
-        public bool OptExportcodecoverage { get { return _args["--exportcodecoverage"].IsTrue; } }
-        public bool OptChutzpah { get { return _args["--chutzpah"].IsTrue; } }
-        public bool OptLcov { get { return _args["--lcov"].IsTrue; } }
-        public bool OptMultiple { get { return _args["--multiple"].IsTrue; } }
-        public string OptInput { get { return _args["--input"]?.ToString(); } }
-        public string OptRepotoken { get { return _args["--repoToken"]?.ToString(); } }
-        public string OptRepotokenvariable { get { return _args["--repoTokenVariable"]?.ToString(); } }
-        public string OptOutput { get { return _args["--output"]?.ToString(); } }
-        public bool OptDryrun { get { return _args["--dryrun"].IsTrue; } }
-        public bool OptUserelativepaths { get { return _args["--useRelativePaths"].IsTrue; } }
-        public string OptBasepath { get { return _args["--basePath"]?.ToString(); } }
-        public string OptCommitid { get { return _args["--commitId"]?.ToString(); } }
-        public string OptCommitbranch { get { return _args["--commitBranch"]?.ToString(); } }
-        public string OptCommitauthor { get { return _args["--commitAuthor"]?.ToString(); } }
-        public string OptCommitemail { get { return _args["--commitEmail"]?.ToString(); } }
-        public string OptCommitmessage { get { return _args["--commitMessage"]?.ToString(); } }
-        public string OptJobid { get { return _args["--jobId"]?.ToString(); } }
-        public string OptServicename { get { return _args["--serviceName"]?.ToString(); } }
-        public string OptServicenumber { get { return _args["--serviceNumber"]?.ToString(); } }
-        public string OptPullrequest { get { return _args["--pullRequest"]?.ToString(); } }
-        public bool OptTreatuploaderrorsaswarnings { get { return _args["--treatUploadErrorsAsWarnings"].IsTrue; } }
-        public bool OptParallel { get { return _args["--parallel"].IsTrue; } }
-        public bool OptVersion { get { return _args["--version"].IsTrue; } }
-        public bool OptHelp { get { return _args["--help"].IsTrue; } }
+        public bool OptOpencover => _args["--opencover"].IsTrue;
+
+        public bool OptDynamiccodecoverage => _args["--dynamiccodecoverage"].IsTrue;
+
+        public bool OptMonocov => _args["--monocov"].IsTrue;
+
+        public bool OptExportcodecoverage => _args["--exportcodecoverage"].IsTrue;
+
+        public bool OptChutzpah => _args["--chutzpah"].IsTrue;
+
+        public bool OptLcov => _args["--lcov"].IsTrue;
+
+        public bool OptMultiple => _args["--multiple"].IsTrue;
+
+        public string OptInput => _args["--input"]?.ToString();
+
+        public string OptRepotoken => _args["--repoToken"]?.ToString();
+
+        public string OptRepotokenvariable => _args["--repoTokenVariable"]?.ToString();
+
+        public string OptOutput => _args["--output"]?.ToString();
+
+        public bool OptDryrun => _args["--dryrun"].IsTrue;
+
+        public bool OptUserelativepaths => _args["--useRelativePaths"].IsTrue;
+
+        public string OptBasepath => _args["--basePath"]?.ToString();
+
+        public string OptCommitid => _args["--commitId"]?.ToString();
+
+        public string OptCommitbranch => _args["--commitBranch"]?.ToString();
+
+        public string OptCommitauthor => _args["--commitAuthor"]?.ToString();
+
+        public string OptCommitemail => _args["--commitEmail"]?.ToString();
+
+        public string OptCommitmessage => _args["--commitMessage"]?.ToString();
+
+        public string OptJobid => _args["--jobId"]?.ToString();
+
+        public string OptServicename => _args["--serviceName"]?.ToString();
+
+        public string OptServicenumber => _args["--serviceNumber"]?.ToString();
+
+        public string OptPullrequest => _args["--pullRequest"]?.ToString();
+
+        public bool OptTreatuploaderrorsaswarnings => _args["--treatUploadErrorsAsWarnings"].IsTrue;
+
+        public bool OptParallel => _args["--parallel"].IsTrue;
+
+        public bool OptVersion => _args["--version"].IsTrue;
+
+        public bool OptHelp => _args["--help"].IsTrue;
     }
 }

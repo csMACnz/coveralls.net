@@ -12,6 +12,7 @@ namespace csmacnz.Coveralls.Parsers
             var files = new List<FileCoverageData>();
             var xElement = document.Root?.Element("modules");
             if (xElement != null)
+            {
                 foreach (var module in xElement.Elements("module"))
                 {
                     var filesElement = module.Element("source_files");
@@ -41,10 +42,11 @@ namespace csmacnz.Coveralls.Parsers
                                                 var sourceEndLine = int.Parse(range.Attribute("end_line").Value);
                                                 var covered = range.Attribute("covered").Value == "yes";
 
-                                                foreach (
-                                                    var lineNumber in
-                                                        Enumerable.Range(sourceStartLine,
-                                                            sourceEndLine - sourceStartLine + 1))
+                                                var sourceLineNumbers = Enumerable.Range(
+                                                    sourceStartLine,
+                                                    sourceEndLine - sourceStartLine + 1);
+
+                                                foreach (var lineNumber in sourceLineNumbers)
                                                 {
                                                     coverageBuilder.RecordCoverage(lineNumber, covered ? 1 : 0);
                                                 }
@@ -53,10 +55,13 @@ namespace csmacnz.Coveralls.Parsers
                                     }
                                 }
                             }
+
                             files.Add(coverageBuilder.CreateFile());
                         }
                     }
                 }
+            }
+
             return files;
         }
     }

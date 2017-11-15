@@ -20,9 +20,9 @@ namespace csmacnz.Coveralls
             {
                 return path.Substring(currentWorkingDirectory.Length);
             }
+
             return path;
         }
-
 
         public string UnixifyPath(string filePath)
         {

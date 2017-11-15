@@ -1,3 +1,4 @@
+﻿using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -6,7 +7,6 @@ using Beefeater;
 using csmacnz.Coveralls.Data;
 using csmacnz.Coveralls.Parsers;
 using csmacnz.Coveralls.Ports;
-using System;
 
 namespace csmacnz.Coveralls
 {
@@ -19,14 +19,17 @@ namespace csmacnz.Coveralls
             _fileLoader = fileLoader;
         }
 
-        public Result<List<CoverageFile>, LoadCoverageFilesError> LoadCoverageFiles(CoverageMode mode,
-            PathProcessor pathProcessor, string modeInput, bool useRelativePaths)
+        public Result<List<CoverageFile>, LoadCoverageFilesError> LoadCoverageFiles(
+            CoverageMode mode,
+            PathProcessor pathProcessor,
+            string modeInput,
+            bool useRelativePaths)
         {
             var loadResult = LoadCoverageData(mode, modeInput);
             if (loadResult.Successful)
             {
                 List<FileCoverageData> coverageData = loadResult.Value;
-                
+
                 var files = BuildCoverageFiles(pathProcessor, useRelativePaths, coverageData);
 
                 return files;
@@ -89,6 +92,7 @@ namespace csmacnz.Coveralls
             {
                 return Option<List<FileCoverageData>>.None;
             }
+
             var documents = LoadXDocuments(folderFiles);
 
             return generateFunc(documents);
@@ -120,13 +124,13 @@ namespace csmacnz.Coveralls
 
         private Dictionary<string, XDocument> LoadXDocuments(Option<FileInfo[]> folderFiles)
         {
-            return ((FileInfo[]) folderFiles).Where(f => f.Name.EndsWith(".xml"))
-                .ToDictionary(f => f.Name, f => XDocument.Parse((string) _fileLoader.TryLoadFile(f.FullName)));
+            return ((FileInfo[])folderFiles).Where(f => f.Name.EndsWith(".xml"))
+                .ToDictionary(f => f.Name, f => XDocument.Parse((string)_fileLoader.TryLoadFile(f.FullName)));
         }
 
         private List<CoverageFile> BuildCoverageFiles(PathProcessor pathProcessor, bool useRelativePaths, List<FileCoverageData> coverageData)
         {
-            //This needs attention, since this is optional if source is on public github
+            // This needs attention, since this is optional if source is on public github
             var files = coverageData.Select(coverageFileData =>
             {
                 var coverageBuilder = new CoverageFileBuilder(coverageFileData);

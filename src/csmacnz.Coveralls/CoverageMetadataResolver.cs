@@ -24,38 +24,68 @@ namespace csmacnz.Coveralls
             };
         }
 
-
         private static Option<string> ResolveServiceName(MainArgs args)
         {
-            if (args.IsProvided("--serviceName")) return args.OptServicename;
+            if (args.IsProvided("--serviceName"))
+            {
+                return args.OptServicename;
+            }
+
             var isAppVeyor = new EnvironmentVariables().GetEnvironmentVariable("APPVEYOR");
-            if (isAppVeyor == "True") return "appveyor";
+            if (isAppVeyor == "True")
+            {
+                return "appveyor";
+            }
+
             return null;
         }
 
         private static Option<string> ResolveServiceJobId(MainArgs args)
         {
-            if (args.IsProvided("--jobId")) return args.OptJobid;
+            if (args.IsProvided("--jobId"))
+            {
+                return args.OptJobid;
+            }
+
             var jobId = new EnvironmentVariables().GetEnvironmentVariable("APPVEYOR_JOB_ID");
-            if (jobId.IsNotNullOrWhitespace()) return jobId;
+            if (jobId.IsNotNullOrWhitespace())
+            {
+                return jobId;
+            }
+
             return null;
         }
 
         private static Option<string> ResolveServiceNumber(MainArgs args)
         {
-            if (args.IsProvided("--serviceNumber")) return args.OptServicenumber;
+            if (args.IsProvided("--serviceNumber"))
+            {
+                return args.OptServicenumber;
+            }
+
             var jobId = new EnvironmentVariables().GetEnvironmentVariable("APPVEYOR_BUILD_NUMBER");
-            if (jobId.IsNotNullOrWhitespace()) return jobId;
+            if (jobId.IsNotNullOrWhitespace())
+            {
+                return jobId;
+            }
+
             return null;
         }
 
         private static Option<string> ResolvePullRequestId(MainArgs args)
         {
-            if (args.IsProvided("--pullRequest")) return args.OptPullrequest;
+            if (args.IsProvided("--pullRequest"))
+            {
+                return args.OptPullrequest;
+            }
+
             var prId = new EnvironmentVariables().GetEnvironmentVariable("APPVEYOR_PULL_REQUEST_NUMBER");
-            if (prId.IsNotNullOrWhitespace()) return prId;
+            if (prId.IsNotNullOrWhitespace())
+            {
+                return prId;
+            }
+
             return null;
         }
-
     }
 }

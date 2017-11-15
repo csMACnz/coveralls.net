@@ -9,6 +9,7 @@ namespace csmacnz.Coveralls.Adapters
         {
             Console.WriteLine(message);
         }
+
         public void WriteErrorLine(string message)
         {
             Console.Error.WriteLine(message);

@@ -48,7 +48,6 @@ namespace csmacnz.Coveralls.Tests
             Assert.Equal(0, results.ExitCode);
         }
 
-        [SuppressMessage("ReSharper", "PossibleNullReferenceException")]
         private static string BuildReportWithOneFile()
         {
             var sampleFolderPath = Path.Combine(RepositoryPaths.GetSamplesPath(), "opencover", "Sample2");
@@ -66,6 +65,7 @@ namespace csmacnz.Coveralls.Tests
             {
                 doc.Save(stream);
             }
+
             return coverageFilePath;
         }
 

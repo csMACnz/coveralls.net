@@ -18,6 +18,7 @@ namespace csmacnz.Coveralls.Parsers
                     coverageBuilder = new FileCoverageDataBuilder(matches.Groups[1].Value);
                     continue;
                 }
+
                 matches = Regex.Match(line, @"^DA:(\d+),(\d+)");
                 if (matches.Success)
                 {
@@ -27,8 +28,10 @@ namespace csmacnz.Coveralls.Parsers
                         var coverageNumber = int.Parse(matches.Groups[2].Value);
                         coverageBuilder.RecordCoverage(lineNumber, coverageNumber);
                     }
+
                     continue;
                 }
+
                 if (line.Equals("end_of_record"))
                 {
                     if (coverageBuilder != null)
@@ -38,6 +41,7 @@ namespace csmacnz.Coveralls.Parsers
                     }
                 }
             }
+
             return files;
         }
     }

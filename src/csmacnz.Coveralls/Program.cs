@@ -66,6 +66,7 @@ namespace csmacnz.Coveralls
                 {
                     ExitWithError(result.Error);
                 }
+
                 return null;
             }
             catch (ExitException ex)
@@ -125,6 +126,7 @@ namespace csmacnz.Coveralls
                     ExitWithError("No token found in Environment Variable '{0}'.".FormatWith(variable));
                 }
             }
+
             return repoToken;
         }
 
@@ -144,6 +146,7 @@ namespace csmacnz.Coveralls
                     {
                         ExitWithError("Unknown mode provided");
                     }
+
                     results.Add(new CoverageSource((CoverageMode)mode, input));
                 }
             }
@@ -154,8 +157,10 @@ namespace csmacnz.Coveralls
                 {
                     ExitWithError("Unknown mode provided");
                 }
+
                 results.Add(new CoverageSource((CoverageMode)mode, args.OptInput));
             }
+
             return results;
         }
 
@@ -165,26 +170,32 @@ namespace csmacnz.Coveralls
             {
                 return CoverageMode.MonoCov;
             }
+
             if (string.Equals(mode, "chutzpah", StringComparison.OrdinalIgnoreCase))
             {
                 return CoverageMode.Chutzpah;
             }
+
             if (string.Equals(mode, "dynamiccodecoverage", StringComparison.OrdinalIgnoreCase))
             {
                 return CoverageMode.DynamicCodeCoverage;
             }
+
             if (string.Equals(mode, "exportcodecoverage", StringComparison.OrdinalIgnoreCase))
             {
                 return CoverageMode.ExportCodeCoverage;
             }
+
             if (string.Equals(mode, "opencover", StringComparison.OrdinalIgnoreCase))
             {
                 return CoverageMode.OpenCover;
             }
+
             if (string.Equals(mode, "lcov", StringComparison.OrdinalIgnoreCase))
             {
                 return CoverageMode.LCov;
             }
+
             return Option<CoverageMode>.None;
         }
 
@@ -194,28 +205,33 @@ namespace csmacnz.Coveralls
             {
                 return CoverageMode.MonoCov;
             }
+
             if (args.IsProvided("--chutzpah") && args.OptChutzpah)
             {
                 return CoverageMode.Chutzpah;
             }
+
             if (args.IsProvided("--dynamiccodecoverage") && args.OptDynamiccodecoverage)
             {
                 return CoverageMode.DynamicCodeCoverage;
             }
+
             if (args.IsProvided("--exportcodecoverage") && args.OptExportcodecoverage)
             {
                 return CoverageMode.ExportCodeCoverage;
             }
+
             if (args.IsProvided("--opencover") && args.OptOpencover)
             {
                 return CoverageMode.OpenCover;
             }
+
             if (args.IsProvided("--lcov") && args.OptLcov)
             {
                 return CoverageMode.LCov;
             }
 
-            return Option<CoverageMode>.None; //Unreachable
+            return Option<CoverageMode>.None; // Unreachable
         }
 
         [ContractAnnotation("=>halt")]

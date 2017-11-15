@@ -16,6 +16,7 @@ namespace csmacnz.Coveralls
             {
                 throw new ArgumentException("filePath");
             }
+
             _filePath = filePath;
         }
 
@@ -28,7 +29,7 @@ namespace csmacnz.Coveralls
         {
             var length = _coverage.Any() ? _coverage.Max(c => c.Key) + 1 : 1;
             var coverage = Enumerable.Range(0, length)
-                .Select(index => _coverage.ContainsKey(index) ? (int?) _coverage[index] : null)
+                .Select(index => _coverage.ContainsKey(index) ? (int?)_coverage[index] : null)
                 .ToArray();
             return new FileCoverageData(_filePath, coverage);
         }

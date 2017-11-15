@@ -60,12 +60,14 @@ namespace csmacnz.Coveralls.Parsers
                                         }
                                     }
                                 }
+
                                 files.Add(coverageBuilder.CreateFile());
                             }
                         }
                     }
                 }
             }
+
             return files;
         }
     }

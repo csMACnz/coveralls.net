@@ -33,7 +33,6 @@ namespace csmacnz.Coveralls.Parsers
 
                     var fileName = fileNameElement.Value;
 
-
                     sourceFilesInfo.Add(id, fileName);
                 }
 
@@ -90,7 +89,6 @@ namespace csmacnz.Coveralls.Parsers
 
                                     var sourceEndLine = int.Parse(sourceEndLineElement.Value);
 
-
                                     var coveredElement = lines.Element("Coverage");
 
                                     if (coveredElement == null)
@@ -108,10 +106,12 @@ namespace csmacnz.Coveralls.Parsers
                                 }
                             }
                         }
+
                         files.Add(coverageBuilder.CreateFile());
                     }
                 }
             }
+
             return files;
         }
     }

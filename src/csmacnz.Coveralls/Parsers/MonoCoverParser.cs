@@ -19,7 +19,7 @@ namespace csmacnz.Coveralls.Parsers
                     var coverage = new List<int?>();
                     var source = new List<string>();
                     var filePath = sourceElement.Attribute("sourceFile").Value;
-                    
+
                     foreach (var line in sourceElement.Elements("l"))
                     {
                         int coverageCount;
@@ -27,14 +27,14 @@ namespace csmacnz.Coveralls.Parsers
                         {
                             coverageCount = -1;
                         }
-                        coverage.Add(coverageCount == -1 ? null : (int?) coverageCount);
+
+                        coverage.Add(coverageCount == -1 ? null : (int?)coverageCount);
                         source.Add(line.Value);
                     }
 
                     sourceFiles.Add(new FileCoverageData(filePath, coverage.ToArray(), source.ToArray()));
                 }
             }
-
 
             return sourceFiles;
         }

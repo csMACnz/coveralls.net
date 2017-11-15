@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Net.Http;
 using Beefeater;
 using csmacnz.Coveralls.Ports;
@@ -10,7 +10,7 @@ namespace csmacnz.Coveralls.Adapters
     {
         private static readonly string RequestUri = @"https://coveralls.io/api/v1/jobs";
 
-        //TODO(csMACnz): change from bool to Unit or a simplified Result<TError> as a thing?
+        // TODO(csMACnz): change from bool to Unit or a simplified Result<TError> as a thing?
         public Result<bool, string> Upload(string fileData)
         {
             using (HttpContent stringContent = new StringContent(fileData))
@@ -34,6 +34,7 @@ namespace csmacnz.Coveralls.Adapters
 
                         return $"{response.StatusCode} - {message}";
                     }
+
                     return true;
                 }
             }
@@ -44,7 +45,7 @@ namespace csmacnz.Coveralls.Adapters
             try
             {
                 dynamic result = JsonConvert.DeserializeObject(content);
-                return (string) result.message;
+                return (string)result.message;
             }
             catch (Exception)
             {

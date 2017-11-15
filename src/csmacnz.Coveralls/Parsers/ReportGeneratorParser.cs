@@ -1,8 +1,8 @@
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
+using System.Net;
 using System.Xml.Linq;
 using csmacnz.Coveralls.Data;
-using System.Net;
 
 namespace csmacnz.Coveralls.Parsers
 {
@@ -17,7 +17,6 @@ namespace csmacnz.Coveralls.Parsers
                 var filesElement = rootDocument.Root?.Element("Files");
                 if (filesElement != null)
                 {
-
                     foreach (var fileElement in filesElement.Elements("File"))
                     {
                         var filePath = fileElement.Attribute("name").Value;
@@ -44,6 +43,7 @@ namespace csmacnz.Coveralls.Parsers
                                     coverageCount = actualVisits;
                                 }
                             }
+
                             coverage.Add(coverageCount);
                         }
 
@@ -53,6 +53,7 @@ namespace csmacnz.Coveralls.Parsers
                     }
                 }
             }
+
             return files;
         }
     }

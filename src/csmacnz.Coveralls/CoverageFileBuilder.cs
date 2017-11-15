@@ -1,8 +1,8 @@
 ﻿using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using BCLExtensions;
 using csmacnz.Coveralls.Data;
-using System.Linq;
 
 namespace csmacnz.Coveralls
 {
@@ -39,6 +39,7 @@ namespace csmacnz.Coveralls
                     lines.Add(nextLine);
                 }
             }
+
             _sourceLines = lines;
         }
 
@@ -57,7 +58,7 @@ namespace csmacnz.Coveralls
                 _coverage.CopyTo(coverage, 0);
             }
 
-            var sourceDigest = Crypto.CalculateMD5Digest(string.Join("\n", _sourceLines?.ToArray() ?? new string[0]));
+            var sourceDigest = Crypto.CalculateMd5Digest(string.Join("\n", _sourceLines?.ToArray() ?? new string[0]));
             return new CoverageFile(_filePath, sourceDigest, coverage);
         }
     }

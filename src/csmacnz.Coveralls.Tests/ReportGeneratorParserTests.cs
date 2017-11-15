@@ -1,8 +1,8 @@
-﻿using System.Xml.Linq;
+﻿using System.Collections.Generic;
+using System.Linq;
+using System.Xml.Linq;
 using csmacnz.Coveralls.Parsers;
 using Xunit;
-using System.Collections.Generic;
-using System.Linq;
 
 namespace csmacnz.Coveralls.Tests
 {

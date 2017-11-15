@@ -3,7 +3,7 @@ using Beefeater;
 
 namespace csmacnz.Coveralls.Ports
 {
-    public interface IFileSystem: IFileStorer, IFileLoader
+    public interface IFileSystem : IFileStorer, IFileLoader
     {
     }
 
@@ -15,7 +15,9 @@ namespace csmacnz.Coveralls.Ports
     public interface IFileLoader
     {
         Option<FileInfo[]> GetFiles(string directory);
+
         Option<string[]> TryReadAllLinesFromFile(string filePath);
+
         Option<string> TryLoadFile(string filePath);
     }
 }

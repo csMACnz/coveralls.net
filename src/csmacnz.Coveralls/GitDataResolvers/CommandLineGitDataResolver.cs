@@ -41,6 +41,7 @@ namespace csmacnz.Coveralls.GitDataResolvers
                     Branch = _args.OptCommitbranch ?? string.Empty
                 };
             }
+
             return gitData;
         }
     }

@@ -16,18 +16,19 @@ namespace csmacnz.Coveralls.Tests
             {
                 return _files[filePath];
             }
+
             return null;
         }
 
         public Option<FileInfo[]> GetFiles(string directory)
         {
-            //TODO
+            // TODO
             throw new NotImplementedException();
         }
 
         public bool WriteFile(string outputFile, string fileData)
         {
-            //todo: configure toggle
+            // todo: configure toggle
             return true;
         }
 
@@ -37,6 +38,7 @@ namespace csmacnz.Coveralls.Tests
             {
                 return _files[filePath].Split('\n');
             }
+
             return null;
         }
 

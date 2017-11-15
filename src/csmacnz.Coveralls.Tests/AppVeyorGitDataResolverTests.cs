@@ -24,7 +24,7 @@ namespace csmacnz.Coveralls.Tests
         {
             IEnvironmentVariables variables = new TestEnvironmentVariables(new Dictionary<string, string>
             {
-                {"APPVEYOR", "False"}
+                { "APPVEYOR", "False" }
             });
 
             var sut = new AppVeyorGitDataResolver(variables);
@@ -39,7 +39,7 @@ namespace csmacnz.Coveralls.Tests
         {
             IEnvironmentVariables variables = new TestEnvironmentVariables(new Dictionary<string, string>
             {
-                {"APPVEYOR", "True"}
+                { "APPVEYOR", "True" }
             });
 
             var sut = new AppVeyorGitDataResolver(variables);
@@ -54,7 +54,7 @@ namespace csmacnz.Coveralls.Tests
         {
             IEnvironmentVariables variables = new TestEnvironmentVariables(new Dictionary<string, string>
             {
-                {"APPVEYOR", "True"}
+                { "APPVEYOR", "True" }
             });
 
             var sut = new AppVeyorGitDataResolver(variables);
@@ -83,12 +83,12 @@ namespace csmacnz.Coveralls.Tests
 
                 IEnvironmentVariables variables = new TestEnvironmentVariables(new Dictionary<string, string>
                 {
-                    {"APPVEYOR", "True"},
-                    {"APPVEYOR_REPO_COMMIT", _expectedId},
-                    {"APPVEYOR_REPO_COMMIT_AUTHOR", _expectedName},
-                    {"APPVEYOR_REPO_COMMIT_AUTHOR_EMAIL", _expectedEmail},
-                    {"APPVEYOR_REPO_COMMIT_MESSAGE", _expectedMessage},
-                    {"APPVEYOR_REPO_BRANCH", _expectedBranch}
+                    { "APPVEYOR", "True" },
+                    { "APPVEYOR_REPO_COMMIT", _expectedId },
+                    { "APPVEYOR_REPO_COMMIT_AUTHOR", _expectedName },
+                    { "APPVEYOR_REPO_COMMIT_AUTHOR_EMAIL", _expectedEmail },
+                    { "APPVEYOR_REPO_COMMIT_MESSAGE", _expectedMessage },
+                    { "APPVEYOR_REPO_BRANCH", _expectedBranch }
                 });
 
                 var sut = new AppVeyorGitDataResolver(variables);
@@ -119,14 +119,12 @@ namespace csmacnz.Coveralls.Tests
                 Assert.Equal(_expectedEmail, _gitData.Head.ComitterEmail);
             }
 
-
             [Fact]
             public void MessageSetCorrectly()
             {
                 Assert.NotNull(_gitData.Head);
                 Assert.Equal(_expectedMessage, _gitData.Head.Message);
             }
-
 
             [Fact]
             public void BranchSetCorrectly()

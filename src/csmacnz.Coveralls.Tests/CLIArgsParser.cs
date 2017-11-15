@@ -1,4 +1,4 @@
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Text;
 
 namespace csmacnz.CLIArgsParser
@@ -12,7 +12,7 @@ namespace csmacnz.CLIArgsParser
             var inquote = false;
             var currentIndex = 0;
 
-            for (;;)
+            while (true)
             {
                 if (currentIndex != rawArgs.Length)
                 {
@@ -29,7 +29,7 @@ namespace csmacnz.CLIArgsParser
 
                 StringBuilder currentResult = new StringBuilder();
 
-                for (;;)
+                while (true)
                 {
                     var copychar = true;
                     var numslash = 0;
@@ -54,6 +54,7 @@ namespace csmacnz.CLIArgsParser
                                 inquote = !inquote;
                             }
                         }
+
                         numslash /= 2;
                     }
 
@@ -72,10 +73,13 @@ namespace csmacnz.CLIArgsParser
                     {
                         currentResult.Append(rawArgs[currentIndex]);
                     }
+
                     currentIndex++;
                 }
+
                 result.Add(currentResult.ToString());
             }
+
             return result.ToArray();
         }
     }

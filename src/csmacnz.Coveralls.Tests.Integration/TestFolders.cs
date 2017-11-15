@@ -19,13 +19,16 @@ namespace csmacnz.Coveralls.Tests.Integration
 
         public static string OutputFolder
         {
-            //a simple solution that puts everything to the output folder directly would look like this:
-            //get { return Directory.GetCurrentDirectory(); }
+            // a simple solution that puts everything to the output folder directly would look like this:
+            // get { return Directory.GetCurrentDirectory(); }
             get
             {
                 var outputFolder = Path.Combine(Directory.GetCurrentDirectory(), UniqueId);
                 if (!Directory.Exists(outputFolder))
+                {
                     Directory.CreateDirectory(outputFolder);
+                }
+
                 return outputFolder;
             }
         }
@@ -33,7 +36,6 @@ namespace csmacnz.Coveralls.Tests.Integration
         public static string TempFolder => Path.GetTempPath();
 
         // very simple helper methods that can improve the test code readability
-
         public static string GetInputFilePath(string fileName)
         {
             return Path.GetFullPath(Path.Combine(InputFolder, fileName));

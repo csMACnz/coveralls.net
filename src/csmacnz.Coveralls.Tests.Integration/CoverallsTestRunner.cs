@@ -13,7 +13,7 @@ namespace csmacnz.Coveralls.Tests.Integration
             var applicationProcess = "dotnet";
             var applicationPath = GetCoverallsDll();
             var argumentsToUse = "exec " + applicationPath + " " + arguments;
-            
+
             var exePath = Environment.GetEnvironmentVariable("COVERALLSNET_EXEPATH");
             if (!string.IsNullOrWhiteSpace(exePath))
             {
@@ -50,6 +50,7 @@ namespace csmacnz.Coveralls.Tests.Integration
                 {
                     throw new XunitException($"Test execution time exceeded: {timeoutInMilliseconds}ms");
                 }
+
                 exitCode = process.ExitCode;
             }
 
@@ -60,7 +61,7 @@ namespace csmacnz.Coveralls.Tests.Integration
                 ExitCode = exitCode
             };
         }
-        
+
         private static string GetCoverallsDll()
         {
 #if DEBUG

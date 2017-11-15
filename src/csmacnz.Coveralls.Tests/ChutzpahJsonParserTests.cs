@@ -10,7 +10,7 @@ namespace csmacnz.Coveralls.Tests
         [Fact]
         public void GenerateSourceFiles_CorrectCoverage()
         {
-            var fileContents = Reports.ChutzpahExample.Split(new[] {Environment.NewLine}, StringSplitOptions.None);
+            var fileContents = Reports.ChutzpahExample.Split(new[] { Environment.NewLine }, StringSplitOptions.None);
 
             var results = ChutzpahJsonParser.GenerateSourceFiles(fileContents);
 

@@ -1,4 +1,4 @@
-using Xunit;
+﻿using Xunit;
 
 namespace csmacnz.CLIArgsParser.Tests
 {
@@ -95,31 +95,31 @@ namespace csmacnz.CLIArgsParser.Tests
                 v =>
                 {
                     Assert.Equal("-bdf", v);
-                },v =>
+                }, v =>
                 {
                     Assert.Equal("Foo", v);
-                },v =>
+                }, v =>
                 {
                     Assert.Equal("-a", v);
-                },v =>
+                }, v =>
                 {
                     Assert.Equal("bar baz", v);
-                },v =>
+                }, v =>
                 {
                     Assert.Equal("-l", v);
-                },v =>
+                }, v =>
                 {
                     Assert.Equal("a", v);
-                },v =>
+                }, v =>
                 {
                     Assert.Equal("fizz", v);
-                },v =>
+                }, v =>
                 {
                     Assert.Equal("buzz", v);
-                },v =>
+                }, v =>
                 {
                     Assert.Equal("hello world", v);
-                },v =>
+                }, v =>
                 {
                     Assert.Equal("fibonacci", v);
                 });

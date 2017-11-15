@@ -25,7 +25,7 @@ namespace csmacnz.Coveralls.Tests
         }
     }
 
-    public class TestConsole: IConsole
+    public class TestConsole : IConsole
     {
         private readonly List<string> _errors = new List<string>();
         private readonly List<string> _standardOut = new List<string>();
@@ -39,7 +39,9 @@ namespace csmacnz.Coveralls.Tests
         {
             _errors.Add(message);
         }
+
         public string[] Errors => _errors.ToArray();
+
         public string[] StandardOut => _standardOut.ToArray();
     }
 }

@@ -36,7 +36,8 @@ namespace csmacnz.Coveralls.Tests
         {
             var results = CoverallsTestRunner.RunCoveralls("--version");
 
-            Assert.True(Regex.IsMatch(results.StandardOutput, @"\d+.\d+.\d+.\d+"),
+            Assert.True(
+                Regex.IsMatch(results.StandardOutput, @"\d+.\d+.\d+.\d+"),
                 "Version doesn't match regex: " + results.StandardOutput);
         }
 

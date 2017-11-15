@@ -1,10 +1,11 @@
-using System;
+﻿using System;
 
 namespace csmacnz.Coveralls
 {
     public class ExitException : Exception
     {
-        public ExitException(string message) : base(message)
+        public ExitException(string message)
+            : base(message)
         {
         }
     }

@@ -22,18 +22,19 @@ namespace csmacnz.Coveralls
         }
 
         public Result<SuccessResult, string> Run(
-            ConfigurationSettings settings, 
+            ConfigurationSettings settings,
             GitData gitData,
             CoverageMetadata metadata)
         {
             var outputFile = ResolveOutpuFile(settings);
 
-            //Main Processing
+            // Main Processing
             var files = BuildCoverageFiles(settings);
             if (!files.Successful)
             {
                 return files.Error;
             }
+
             var data = new CoverallData
             {
                 RepoToken = settings.RepoToken,
@@ -64,6 +65,7 @@ namespace csmacnz.Coveralls
                     return uploadResult.Error;
                 }
             }
+
             return SuccessResult.Value;
         }
 
@@ -74,6 +76,7 @@ namespace csmacnz.Coveralls
             {
                 _console.WriteLine($"output file '{outputFile}' already exists and will be overwritten.");
             }
+
             return outputFile;
         }
 
@@ -101,6 +104,7 @@ namespace csmacnz.Coveralls
 
                 files.AddRange(coverageFiles.Value);
             }
+
             Debug.Assert(files != null);
             return files;
         }
@@ -113,6 +117,7 @@ namespace csmacnz.Coveralls
                 var message = $"Failed to upload to coveralls\n{uploadResult.Error}";
                 return message;
             }
+
             _console.WriteLine("Coverage data uploaded to coveralls.");
             return SuccessResult.Value;
         }
@@ -124,8 +129,12 @@ namespace csmacnz.Coveralls
             bool useRelativePaths)
         {
             var loader = new CoverageLoader(_fileSystem);
-            var coverageFiles = loader.LoadCoverageFiles(mode,
-                pathProcessor, inputArgument, useRelativePaths);
+            var coverageFiles = loader.LoadCoverageFiles(
+                mode,
+                pathProcessor,
+                inputArgument,
+                useRelativePaths);
+
             if (!coverageFiles.Successful)
             {
                 switch (coverageFiles.Error)
