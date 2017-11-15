@@ -1,0 +1,15 @@
+{
+  "settings": {
+    "orderingRules": {
+      "elementOrder": [
+        "kind",
+        "accessibility",
+        "static",
+        "readonly"
+      ],
+      "systemUsingDirectivesFirst": true,
+      "usingDirectivesPlacement": "outsideNamespace",
+      "blankLinesBetweenUsingGroups": "omit"
+    }
+  }
+}

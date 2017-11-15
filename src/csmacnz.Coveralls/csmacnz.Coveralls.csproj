@@ -1,20 +1,13 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
-
   <PropertyGroup>
     <OutputType>Exe</OutputType>
-    <Product>coveralls.net</Product>
     <RootNamespace>csmacnz.Coveralls</RootNamespace>
     <AssemblyName>csmacnz.Coveralls</AssemblyName>
     <AssemblyTitle>csmacnz.Coveralls</AssemblyTitle>
     <TargetFramework>netcoreapp1.1</TargetFramework>
     <RuntimeFrameworkVersion>1.1.1</RuntimeFrameworkVersion>
     <RuntimeIdentifiers>win7-x64;ubuntu.14.04-x64</RuntimeIdentifiers>
-    <NeutralLanguage>en-NZ</NeutralLanguage>
-    <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
-    <VersionPrefix>0.0.1</VersionPrefix>
-    <Copyright>Copyright © csMACnz 2017</Copyright>
     <Title>coveralls.net - Coveralls.io uploader for .NET Code Coverage</Title>
-    <Authors>dev-markc</Authors>
     <Description>Coveralls.io uploader for .NET Code Coverage. Supports opencover and visual studio's codecoverage.exe on windows, and monocov for mono</Description>
     <PackageId>coveralls.net</PackageId>
     <PackageRequireLicenseAcceptance>false</PackageRequireLicenseAcceptance>
@@ -23,15 +16,6 @@
     <PackageIconUrl>http://img.csmac.nz/coverallsNet-256.png</PackageIconUrl>
     <PackageTags>Code-Coverage Coveralls opencover monocov codecoverage.exe coveralls.io Reporting Runner</PackageTags>
     <IsTool>true</IsTool>
-    <GenerateAssemblyCompanyAttribute>false</GenerateAssemblyCompanyAttribute>
-    <GenerateAssemblyProductAttribute>false</GenerateAssemblyProductAttribute>
-    <GenerateAssemblyTitleAttribute>false</GenerateAssemblyTitleAttribute>
-    <GenerateAssemblyCopyrightAttribute>false</GenerateAssemblyCopyrightAttribute>
-    <GenerateAssemblyDescriptionAttribute>false</GenerateAssemblyDescriptionAttribute>
-    <GenerateAssemblyConfigurationAttribute>false</GenerateAssemblyConfigurationAttribute>
-    <GenerateAssemblyVersionAttribute>false</GenerateAssemblyVersionAttribute>
-    <GenerateAssemblyFileVersionAttribute>false</GenerateAssemblyFileVersionAttribute>
-    <GenerateAssemblyInformationalVersionAttribute>false</GenerateAssemblyInformationalVersionAttribute>
   </PropertyGroup>
 
   <PropertyGroup>

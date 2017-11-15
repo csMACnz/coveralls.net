@@ -1,0 +1,257 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<RuleSet Name="Shared Ruleset" Description=" " ToolsVersion="15.0">
+  <!-- https://msdn.microsoft.com/en-us/library/dd264939.aspx -->
+  <Rules AnalyzerId="Microsoft.ApiDesignGuidelines.Analyzers" RuleNamespace="Microsoft.ApiDesignGuidelines.Analyzers">
+    <!-- async must use ConfigureAwait(false) -->
+    <Rule Id="CA2007" Action="None" />
+    <!-- Uri properties should not be strings -->
+    <Rule Id="CA1056" Action="None" />
+    <!-- Normalize strings to uppercase -->
+    <Rule Id="CA1308" Action="None" />
+
+    <!-- fix -->
+    
+    <!--CA1032: Add the right constructor to Exception -->
+    <Rule Id="CA1032" Action="Info" />
+    
+    <!--CA1034: Do not nest type ReportGeneratorSample. Alternatively, change its accessibility so that it is not externally visible.-->
+    <Rule Id="CA1034" Action="Info" />
+
+    <!--CA1052: Type 'SuccessResult' is a static holder type but is neither static nor NotInheritable-->
+    <Rule Id="CA1052" Action="Info" />
+
+    <!--CA1305: The behavior of 'int.Parse(string)' could vary-->
+    <Rule Id="CA1305" Action="Info" />
+
+    <!--CA1307: The behavior of 'string.EndsWith(string)' could vary-->
+    <Rule Id="CA1307" Action="Info" />
+
+    <!--CA1707: Remove the underscores from member name -->
+    <Rule Id="CA1707" Action="Info" />
+
+    <!--CA1802: Mark this field as 'const' instead.-->
+    <Rule Id="CA1802" Action="Info" />
+
+    <!--CA1825: Avoid unnecessary zero-length array allocations.-->
+    <Rule Id="CA1825" Action="Info" />
+
+    <!--CA2227: Collection properties should be read only -->
+    <Rule Id="CA2227" Action="Info" />
+
+    <!--CA2208: Method LoadCoverageFiles passes 'Error' as the paramName argument-->
+    <Rule Id="CA2208" Action="Info" />
+
+    <!--CA2234: Use Uri version of HttpClient methods -->
+    <Rule Id="CA2234" Action="Info" />
+
+    <!--CA5351: Do not use insecure cryptographic algorithm MD5. -->
+    <Rule Id="CA5351" Action="Info" />
+  </Rules>
+  <Rules AnalyzerId="StyleCop.Analyzers" RuleNamespace="StyleCop.Analyzers">
+    <!--SA0001: XML comment analysis is disabled due to project configuration-->
+    <Rule Id="SA0001" Action="None" />
+
+    <!--SA1101: Prefix local calls with this -->
+    <Rule Id="SA1101" Action="None" />
+    
+    <!--SA1300: Element 'csmacnz' should begin with an uppercase letter-->
+    <Rule Id="SA1300" Action="None" />
+
+    <!--SA1413: Use trailing comma in multi-line initializers-->
+    <Rule Id="SA1413" Action="None" />
+
+    <!--SA1600 Elements should be documented-->
+    <Rule Id="SA1600" Action="None" />
+
+    <!--SA1601 Partial elements should be documented-->
+    <Rule Id="SA1601" Action="None" />
+
+    <!--SA1602 Enumeration items should be documented-->
+    <Rule Id="SA1602" Action="None" />
+
+    <!--SA1633: The file header is missing or not located at the top of the file.-->
+    <Rule Id="SA1633" Action="None" />
+        
+
+    <!-- 
+    <Rule Id="SA1600" Action="None" />
+    <Rule Id="SA1200" Action="None" />
+    
+    <Rule Id="SA1309" Action="None" />
+    
+    <Rule Id="SA1118" Action="Info" />
+    <Rule Id="SA1602" Action="None" /> -->
+
+
+    <!--Add Correct Stylecop rules -->
+
+    <!--SA1200: Using directive should appear within a namespace declaration-->
+    <Rule Id="SA1200" Action="Info" /><!--Sylecop config to fix-->
+
+    <!--SA1201: A property should not follow a method-->
+    <Rule Id="SA1201" Action="Info" />
+
+    <!--SA1202: 'public' members should come before 'private' members-->
+    <Rule Id="SA1202" Action="Info" />
+    
+    <!--SA1204: Static members should appear before non-static members-->
+    <Rule Id="SA1204" Action="Info" />
+    
+
+    <!-- turn on -->
+    
+    <!--SA1001: Commas should be followed by whitespace.-->
+    <Rule Id="SA1001" Action="Info" />
+
+    <!--SA1002: Semicolons should be followed by a space.-->
+    <Rule Id="SA1002" Action="Info" />
+
+    <!--SA1003: Operator '(FileInfo[])' should not be followed by whitespace-->
+    <Rule Id="SA1003" Action="Info" />
+    
+    <!--SA1005: Single line comment should begin with a space.-->
+    <Rule Id="SA1005" Action="Info" />
+
+    <!--SA1009: Closing parenthesis should not be followed by a space.-->
+    <Rule Id="SA1005" Action="Info" />
+
+    <!--SA1009: Closing parenthesis should not be followed by a space.-->
+    <Rule Id="SA1009" Action="Info" />
+
+    <!--SA1012: Opening brace should be followed by a space.-->
+    <Rule Id="SA1012" Action="Info" />
+
+    <!--SA1013: Closing brace should be preceded by a space. -->
+    <Rule Id="SA1013" Action="Info" />
+
+    <!--SA1024: Colon Spacing.-->
+    <Rule Id="SA1024" Action="Info" />
+
+    <!--SA1028: Code should not contain trailing whitespace-->
+    <Rule Id="SA1028" Action="Info" />
+
+    <!--SA1122: Use string.Empty for empty strings-->
+    <Rule Id="SA1122" Action="Info" />
+    
+    <!--SA1116: The parameters should begin on the line after the declaration, whenever the parameter span across multiple lines-->
+    <Rule Id="SA1116" Action="Info" />
+
+    <!--SA1117: The parameters should all be placed on the same line or each parameter should be placed on its own line.-->
+    <Rule Id="SA1117" Action="Info" />
+
+    <!--SA1128: Put constructor initializers on their own line -->
+    <Rule Id="SA1128" Action="Info" />
+    
+    <!--SA1208: Using directive for 'System.Net' should appear before directive-->
+    <Rule Id="SA1208" Action="Info" />
+    
+    <!--SA1210: Using directives should be ordered alphabetically by the namespaces. -->
+    <Rule Id="SA1210" Action="Info" />
+
+    <!--SA1309: Field '_args' should not begin with an underscore -->
+    <Rule Id="SA1309" Action="Info" />
+
+    <!--SA1402: File may only contain a single type-->
+    <Rule Id="SA1402" Action="Info" />
+
+    <!--SA1404: Code analysis suppression should have justification-->
+    <Rule Id="SA1404" Action="Info" />
+
+    <!--SA1405: Debug.Assert should provide message text-->
+    <Rule Id="SA1405" Action="Info" />
+    
+    <!--SA1502: Element should not be on a single line-->
+    <Rule Id="SA1502" Action="Info" />
+
+    <!--SA1503: Braces should not be omitted-->
+    <Rule Id="SA1503" Action="Info" />
+
+    <!--SA1505: An opening brace should not be followed by a blank line.-->
+    <Rule Id="SA1505" Action="Info" />
+
+    <!--SA1507: Code should not contain multiple blank lines in a row -->
+    <Rule Id="SA1507" Action="Info" />
+
+    <!--SA1508: A closing brace should not be preceded by a blank line.-->
+    <Rule Id="SA1508" Action="Info" />
+
+    <!--SA1512: Single-line comments should not be followed by blank line-->
+    <Rule Id="SA1512" Action="Info" />
+
+    <!--SA1513: Closing brace should be followed by blank line-->
+    <Rule Id="SA1513" Action="Info" />
+
+    <!--SA1516: Elements should be separated by blank line-->
+    <Rule Id="SA1516" Action="Info" />
+
+    <!--SA1519: Braces should not be omitted from multi-line child statement-->
+    <Rule Id="SA1519" Action="Info" />
+
+    <!--SA1649: File name should match first type name.-->
+    <Rule Id="SA1649" Action="Info" />
+
+  </Rules>
+  <Rules AnalyzerId="CodeCracker.CSharp" RuleNamespace="CodeCracker.CSharp">
+
+    <!--CC0001: Use 'var' instead of specifying the type name.-->
+    <Rule Id="CC0001" Action="None" />
+    
+    <!--<Rule Id="CC0008" Action="Hidden" />
+    <Rule Id="CC0021" Action="Info" />
+    <Rule Id="CC0022" Action="Info" />
+    <Rule Id="CC0031" Action="Hidden" />
+    <Rule Id="CC0091" Action="Info" />
+    <Rule Id="CC0105" Action="None" /> -->
+
+
+    <!-- fix -->
+    <!--CC0021: Use 'nameof(fileid)' instead of specifying the program element name.-->
+    <Rule Id="CC0021" Action="Info" />
+
+    <!--CC0022: Process should be disposed.-->
+    <Rule Id="CC0022" Action="Info" />
+
+    <!--CC0031: Verify if delegate 'generateFunc' is null before invoking it. -->
+    <Rule Id="CC0031" Action="Info" />
+
+    <!--CC0091: Make 'UnixifyPath' method static. -->
+    <Rule Id="CC0091" Action="Info" />
+  </Rules>
+  <Rules AnalyzerId="SonarAnalyzer.CSharp" RuleNamespace="SonarAnalyzer.CSharp">
+    <!-- <Rule Id="S112" Action="Info" />
+    <Rule Id="S1075" Action="Info" />
+    <Rule Id="S2259" Action="None" /> -->
+
+    <!--fix-->
+
+    <!-- S101: Rename class to match camel case naming rules,-->
+    <Rule Id="S101" Action="Info" />
+
+    <!--S125: Remove this commented out code.-->
+    <Rule Id="S125" Action="Info" />
+
+    <!--S1066: Merge this if statement with the enclosing one. -->
+    <Rule Id="S1066" Action="Info" />
+
+    <!--S1075: Refactor your code not to use hardcoded absolute paths or URIs.-->
+    <Rule Id="S1075" Action="Info" />
+
+    <!--S1118: Add a 'protected' constructor or the 'static' keyword to the class declaration.-->
+    <Rule Id="S1118" Action="Info" />
+
+    <!--S1481: Remove this unused 'totalbranches' local variable.-->
+    <Rule Id="S1481" Action="Info" />
+
+    <!--S2583: Change this condition so that it does not always evaluate to 'false'-->
+    <Rule Id="S2583" Action="Info" />
+
+    <!--S3010: Remove this assignment of '_fileSystem' or initialize it statically.-->
+    <Rule Id="S3010" Action="Info" />
+
+    <!--S3928: The parameter name 'Error' is not declared in the argument list. -->
+    <Rule Id="S3928" Action="Info" />
+  </Rules>
+  <Rules AnalyzerId="Microsoft.CodeQuality.Analyzers" RuleNamespace="Microsoft.CodeQuality.Analyzers">
+    <!-- <Rule Id="CA1721" Action="Info" /> -->
+  </Rules>
+</RuleSet>
