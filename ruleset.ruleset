@@ -53,6 +53,12 @@
 
     <!--SA1101: Prefix local calls with this -->
     <Rule Id="SA1101" Action="None" />
+
+    <!--SA1201: A property should not follow a method-->
+    <Rule Id="SA1201" Action="Info" />
+    
+    <!--SA1204: Static members should appear before non-static members-->
+    <Rule Id="SA1204" Action="Info" />
     
     <!--SA1300: Element 'csmacnz' should begin with an uppercase letter-->
     <Rule Id="SA1300" Action="None" />
@@ -82,21 +88,6 @@
     <Rule Id="SA1118" Action="Info" />
     <Rule Id="SA1602" Action="None" /> -->
 
-
-    <!--Add Correct Stylecop rules -->
-
-    <!--SA1200: Using directive should appear within a namespace declaration-->
-    <Rule Id="SA1200" Action="Info" /><!--Sylecop config to fix-->
-
-    <!--SA1201: A property should not follow a method-->
-    <Rule Id="SA1201" Action="Info" />
-
-    <!--SA1202: 'public' members should come before 'private' members-->
-    <Rule Id="SA1202" Action="Info" />
-    
-    <!--SA1204: Static members should appear before non-static members-->
-    <Rule Id="SA1204" Action="Info" />
-    
 
     <!-- turn on -->
     
@@ -141,7 +132,10 @@
 
     <!--SA1128: Put constructor initializers on their own line -->
     <Rule Id="SA1128" Action="Info" />
-    
+
+    <!--SA1202: 'public' members should come before 'private' members-->
+    <Rule Id="SA1202" Action="Info" />
+        
     <!--SA1208: Using directive for 'System.Net' should appear before directive-->
     <Rule Id="SA1208" Action="Info" />
     
