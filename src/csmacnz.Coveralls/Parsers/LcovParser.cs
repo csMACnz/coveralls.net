@@ -1,4 +1,6 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
+using System.Globalization;
 using System.Text.RegularExpressions;
 using csmacnz.Coveralls.Data;
 
@@ -24,15 +26,15 @@ namespace csmacnz.Coveralls.Parsers
                 {
                     if (coverageBuilder != null)
                     {
-                        var lineNumber = int.Parse(matches.Groups[1].Value);
-                        var coverageNumber = int.Parse(matches.Groups[2].Value);
+                        var lineNumber = int.Parse(matches.Groups[1].Value, CultureInfo.InvariantCulture);
+                        var coverageNumber = int.Parse(matches.Groups[2].Value, CultureInfo.InvariantCulture);
                         coverageBuilder.RecordCoverage(lineNumber, coverageNumber);
                     }
 
                     continue;
                 }
 
-                if (line.Equals("end_of_record") && coverageBuilder != null)
+                if (line.Equals("end_of_record", StringComparison.Ordinal) && coverageBuilder != null)
                 {
                     files.Add(coverageBuilder.CreateFile());
                     coverageBuilder = null;

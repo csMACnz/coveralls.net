@@ -89,16 +89,17 @@ namespace csmacnz.Coveralls
 
         private static ConfigurationSettings LoadSettings(MainArgs args)
         {
-            return new ConfigurationSettings
+            var settings = new ConfigurationSettings
             {
                 RepoToken = ResolveRepoToken(args),
                 OutputFile = args.IsProvided("--output") ? args.OptOutput : string.Empty,
                 DryRun = args.OptDryrun,
                 TreatUploadErrorsAsWarnings = args.OptTreatuploaderrorsaswarnings,
                 UseRelativePaths = args.OptUserelativepaths,
-                BasePath = args.IsProvided("--basePath") ? args.OptBasepath : null,
-                CoverageSources = ParseCoverageSources(args)
+                BasePath = args.IsProvided("--basePath") ? args.OptBasepath : null
             };
+            settings.CoverageSources.AddRange(ParseCoverageSources(args));
+            return settings;
         }
 
         private static string ResolveRepoToken(MainArgs args)

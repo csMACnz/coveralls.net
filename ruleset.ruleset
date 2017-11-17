@@ -10,19 +10,8 @@
     <Rule Id="CA1308" Action="None" />
     
     <!--CA1032: Add the right constructor to Exception -->
-    <!-- seems fine for custom exceptions on this applications-->
+    <!-- seems fine for custom exceptions on this application-->
     <Rule Id="CA1032" Action="Info" />
-
-    <!-- fix -->
-
-    <!--CA1305: The behavior of 'int.Parse(string)' could vary-->
-    <Rule Id="CA1305" Action="Info" />
-
-    <!--CA1307: The behavior of 'string.EndsWith(string)' could vary-->
-    <Rule Id="CA1307" Action="Info" />
-
-    <!--CA2227: Collection properties should be read only -->
-    <Rule Id="CA2227" Action="Info" />
 
   </Rules>
   <Rules AnalyzerId="StyleCop.Analyzers" RuleNamespace="StyleCop.Analyzers">
@@ -32,17 +21,20 @@
     <!--SA1101: Prefix local calls with this -->
     <Rule Id="SA1101" Action="None" />
 
-    <!--SA1201: A property should not follow a method-->
-    <Rule Id="SA1201" Action="Info" />
+    <!--SA1201: Elements Should appear in the correct order-->
+    <Rule Id="SA1201" Action="None" />
     
+    <!--SA1202: Elements Must Be Ordered By Access -->
+    <Rule Id="SA1202" Action="None" />
+
     <!--SA1204: Static members should appear before non-static members-->
-    <Rule Id="SA1204" Action="Info" />
+    <Rule Id="SA1204" Action="None" />
     
     <!--SA1300: Element 'csmacnz' should begin with an uppercase letter-->
     <Rule Id="SA1300" Action="None" />
 
     <!--SA1309: Field '_args' should not begin with an underscore -->
-    <Rule Id="SA1309" Action="Info" />
+    <Rule Id="SA1309" Action="None" />
 
     <!--SA1413: Use trailing comma in multi-line initializers-->
     <Rule Id="SA1413" Action="None" />
@@ -58,13 +50,7 @@
 
     <!--SA1633: The file header is missing or not located at the top of the file.-->
     <Rule Id="SA1633" Action="None" />
-        
-
-    <!-- turn on -->
     
-    <!--SA1202: 'public' members should come before 'private' members-->
-    <Rule Id="SA1202" Action="Info" />
-
   </Rules>
   <Rules AnalyzerId="CodeCracker.CSharp" RuleNamespace="CodeCracker.CSharp">
 

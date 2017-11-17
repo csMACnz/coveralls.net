@@ -14,7 +14,7 @@ namespace csmacnz.Coveralls
 
         public string BasePath { get; set; }
 
-        public List<CoverageSource> CoverageSources { get; set; }
+        public List<CoverageSource> CoverageSources { get; } = new List<CoverageSource>();
 
         public string RepoToken { get; set; }
     }

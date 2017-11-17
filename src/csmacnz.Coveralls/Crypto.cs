@@ -1,4 +1,5 @@
-﻿using System.Linq;
+﻿using System.Globalization;
+using System.Linq;
 using System.Security.Cryptography;
 using System.Text;
 using Beefeater;
@@ -15,7 +16,9 @@ namespace csmacnz.Coveralls
             var inputBytes = Encoding.ASCII.GetBytes(data);
             var hash = md5.ComputeHash(inputBytes);
 
-            return hash.Select(b => b.ToString("X2")).Aggregate((current, next) => current + next);
+            return hash
+                .Select(b => b.ToString("X2", CultureInfo.InvariantCulture))
+                .Aggregate((current, next) => current + next);
         }
     }
 }

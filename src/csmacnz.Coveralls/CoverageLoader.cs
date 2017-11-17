@@ -140,7 +140,7 @@ namespace csmacnz.Coveralls
 
         private Dictionary<string, XDocument> LoadXDocuments(Option<FileInfo[]> folderFiles)
         {
-            return ((FileInfo[])folderFiles).Where(f => f.Name.EndsWith(".xml"))
+            return ((FileInfo[])folderFiles).Where(f => f.Name.EndsWith(".xml", StringComparison.Ordinal))
                 .ToDictionary(f => f.Name, f => XDocument.Parse((string)_fileLoader.TryLoadFile(f.FullName)));
         }
 

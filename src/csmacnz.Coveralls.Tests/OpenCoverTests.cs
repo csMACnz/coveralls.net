@@ -59,7 +59,7 @@ namespace csmacnz.Coveralls.Tests
             var doc = XDocument.Load(sampleCoverageFile);
             var classFile =
                 doc.XPathSelectElements("//CoverageSession/Modules/Module/Files/File")
-                    .FirstOrDefault(e => e.Attribute("fullPath").Value.EndsWith("Class1.cs"));
+                    .FirstOrDefault(e => e.Attribute("fullPath").Value.EndsWith("Class1.cs", StringComparison.Ordinal));
             classFile.Attribute("fullPath").SetValue(classFilePath);
             using (var stream = File.OpenWrite(coverageFilePath))
             {

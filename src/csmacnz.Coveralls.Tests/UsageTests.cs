@@ -1,4 +1,5 @@
-﻿using System.Text.RegularExpressions;
+﻿using System;
+using System.Text.RegularExpressions;
 using Xunit;
 
 namespace csmacnz.Coveralls.Tests
@@ -28,7 +29,7 @@ namespace csmacnz.Coveralls.Tests
                 CoverallsTestRunner.RunCoveralls("--opencover -i opencover.xml --dryrun --repoToken MYTESTREPOTOKEN");
 
             Assert.NotEqual(0, results.ExitCode);
-            Assert.Contains("Input file 'opencover.xml' cannot be found", results.StandardError);
+            Assert.Contains("Input file 'opencover.xml' cannot be found", results.StandardError, StringComparison.Ordinal);
         }
 
         [Fact]
@@ -61,11 +62,11 @@ namespace csmacnz.Coveralls.Tests
 
         private static void ContainsStandardUsageText(CoverallsRunResults results)
         {
-            Assert.Contains("Usage:", results.StandardOutput);
-            Assert.Contains("csmacnz.Coveralls --help", results.StandardOutput);
-            Assert.Contains("Options:", results.StandardOutput);
-            Assert.Contains("Options:", results.StandardOutput);
-            Assert.Contains("What it's for:", results.StandardOutput);
+            Assert.Contains("Usage:", results.StandardOutput, StringComparison.Ordinal);
+            Assert.Contains("csmacnz.Coveralls --help", results.StandardOutput, StringComparison.Ordinal);
+            Assert.Contains("Options:", results.StandardOutput, StringComparison.Ordinal);
+            Assert.Contains("Options:", results.StandardOutput, StringComparison.Ordinal);
+            Assert.Contains("What it's for:", results.StandardOutput, StringComparison.Ordinal);
         }
     }
 }

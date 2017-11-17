@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Globalization;
 using System.Xml.Linq;
 using csmacnz.Coveralls.Data;
 
@@ -48,9 +49,9 @@ namespace csmacnz.Coveralls.Parsers
                                                         if (fileid == sequenceFileid)
                                                         {
                                                             var sourceLine =
-                                                                int.Parse(sequencePoint.Attribute("sl").Value);
+                                                                int.Parse(sequencePoint.Attribute("sl").Value, CultureInfo.InvariantCulture);
                                                             var visitCount =
-                                                                int.Parse(sequencePoint.Attribute("vc").Value);
+                                                                int.Parse(sequencePoint.Attribute("vc").Value, CultureInfo.InvariantCulture);
 
                                                             coverageBuilder.RecordCoverage(sourceLine, visitCount);
                                                         }

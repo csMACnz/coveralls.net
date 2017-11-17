@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using System.Xml.Linq;
 using csmacnz.Coveralls.Data;
@@ -38,8 +39,8 @@ namespace csmacnz.Coveralls.Parsers
                                             var rangeFileId = range.Attribute("source_id").Value;
                                             if (fileid == rangeFileId)
                                             {
-                                                var sourceStartLine = int.Parse(range.Attribute("start_line").Value);
-                                                var sourceEndLine = int.Parse(range.Attribute("end_line").Value);
+                                                var sourceStartLine = int.Parse(range.Attribute("start_line").Value, CultureInfo.InvariantCulture);
+                                                var sourceEndLine = int.Parse(range.Attribute("end_line").Value, CultureInfo.InvariantCulture);
                                                 var covered = range.Attribute("covered").Value == "yes";
 
                                                 var sourceLineNumbers = Enumerable.Range(

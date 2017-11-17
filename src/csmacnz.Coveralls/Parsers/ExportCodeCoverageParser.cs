@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Globalization;
 using System.Xml.Linq;
 using csmacnz.Coveralls.Data;
 
@@ -78,7 +79,7 @@ namespace csmacnz.Coveralls.Parsers
                                         continue;
                                     }
 
-                                    var sourceStartLine = int.Parse(sourceStartLineElement.Value);
+                                    var sourceStartLine = int.Parse(sourceStartLineElement.Value, CultureInfo.InvariantCulture);
 
                                     var sourceEndLineElement = lines.Element("LnEnd");
 
@@ -87,7 +88,7 @@ namespace csmacnz.Coveralls.Parsers
                                         continue;
                                     }
 
-                                    var sourceEndLine = int.Parse(sourceEndLineElement.Value);
+                                    var sourceEndLine = int.Parse(sourceEndLineElement.Value, CultureInfo.InvariantCulture);
 
                                     var coveredElement = lines.Element("Coverage");
 

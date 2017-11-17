@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using System.Net;
 using System.Xml.Linq;
@@ -34,7 +35,7 @@ namespace csmacnz.Coveralls.Parsers
                             int? coverageCount = null;
                             if (coverageMode == "Covered" || coverageMode == "NotCovered")
                             {
-                                var actualVisits = int.Parse(visits);
+                                var actualVisits = int.Parse(visits, CultureInfo.InvariantCulture);
                                 if (actualVisits != -1)
                                 {
                                     coverageCount = actualVisits;

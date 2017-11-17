@@ -1,4 +1,5 @@
-﻿using System.IO;
+﻿using System;
+using System.IO;
 using BCLExtensions;
 
 namespace csmacnz.Coveralls
@@ -16,7 +17,7 @@ namespace csmacnz.Coveralls
         {
             var currentWorkingDirectory = _basePath.ToLower();
 
-            if (path.ToLower().StartsWith(currentWorkingDirectory))
+            if (path.ToLower().StartsWith(currentWorkingDirectory, StringComparison.Ordinal))
             {
                 return path.Substring(currentWorkingDirectory.Length);
             }
