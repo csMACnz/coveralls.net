@@ -8,7 +8,7 @@ namespace csmacnz.Coveralls
         public const string Usage = @"csmacnz.Coveralls - a coveralls.io coverage publisher for .Net
 
 Usage:
-  csmacnz.Coveralls (--opencover | --dynamiccodecoverage | --monocov | --exportcodecoverage | --chutzpah | --lcov | --multiple) -i ./opencovertests.xml (--repoToken <repoToken> | [--repoTokenVariable <repoTokenVariable>]) [-o ./opencovertests.json] [--dryrun] [--useRelativePaths [--basePath <path>] ] [--commitId <commitId> --commitBranch <commitBranch> [--commitAuthor <commitAuthor> --commitEmail <commitEmail> --commitMessage <commitMessage>] ] [--jobId <jobId>] [--serviceName <Name>] [--serviceNumber <Number>] [--pullRequest <pullRequestId>] [--treatUploadErrorsAsWarnings] [--parallel]
+  csmacnz.Coveralls (--opencover | --dynamiccodecoverage | --monocov | --exportcodecoverage | --chutzpah | --lcov | --ncover | --multiple) -i ./opencovertests.xml (--repoToken <repoToken> | [--repoTokenVariable <repoTokenVariable>]) [-o ./opencovertests.json] [--dryrun] [--useRelativePaths [--basePath <path>] ] [--commitId <commitId> --commitBranch <commitBranch> [--commitAuthor <commitAuthor> --commitEmail <commitEmail> --commitMessage <commitMessage>] ] [--jobId <jobId>] [--serviceName <Name>] [--serviceNumber <Number>] [--pullRequest <pullRequestId>] [--treatUploadErrorsAsWarnings] [--parallel]
   csmacnz.Coveralls --version
   csmacnz.Coveralls --help
 
@@ -26,6 +26,7 @@ Options:
  --monocov                                Reads input as monocov results folder.
  --chutzpah                               Reads input as chutzpah json data.
  --lcov									  Reads input as lcov format.
+ --ncover								  Reads input as NCover format.
  --multiple                               Provide multiple types and files. This mode requires -i to provide values in the format ""chutzpah=chutzpahFile.json;opencover=opencoverFile.xml""
  --parallel                               If using the parallel builds. If sent, it will wait for the webhook before completing the build.
  --repoToken <repoToken>                  The coveralls.io repository token.
@@ -95,6 +96,8 @@ What it's for:
         public bool OptChutzpah => _args["--chutzpah"].IsTrue;
 
         public bool OptLcov => _args["--lcov"].IsTrue;
+
+        public bool OptNCover => _args["--ncover"].IsTrue;
 
         public bool OptMultiple => _args["--multiple"].IsTrue;
 

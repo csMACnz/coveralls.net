@@ -57,6 +57,7 @@ Supported
 * [Visual Studio's Dynamic Coverage](http://msdn.microsoft.com/en-us/library/dd299398%28v=vs.90%29.aspx) (based on [ReportGenerator's support](https://reportgenerator.codeplex.com/wikipage?title=Visual%20Studio%20Coverage%20Tools),  using vstest.console.exe and CodeCoverage.exe)
 * Visual Studio Coverage Export xml format
 * lcov
+* NCover (classic 1.5.x format, at least)
 * [Chutzpah - A JavaScript Test Runner](https://github.com/mmanela/chutzpah)
 * [ReportGenerator](http://danielpalme.github.io/ReportGenerator/)
 

@@ -8,6 +8,7 @@ namespace csmacnz.Coveralls.Data
         Chutzpah,
         DynamicCodeCoverage,
         ExportCodeCoverage,
-        ReportGenerator
+        ReportGenerator,
+        NCover
     }
 }

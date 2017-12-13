@@ -58,6 +58,9 @@ namespace csmacnz.Coveralls
                 case CoverageMode.LCov:
                     result = LoadData(modeInput, LcovParser.GenerateSourceFiles);
                     break;
+                case CoverageMode.NCover:
+                    result = LoadData(modeInput, NCoverParser.GenerateSourceFiles);
+                    break;
                 case CoverageMode.OpenCover:
                     result = LoadData(modeInput, OpenCoverParser.GenerateSourceFiles);
                     break;
