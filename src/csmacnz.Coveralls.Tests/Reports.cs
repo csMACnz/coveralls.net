@@ -10,11 +10,17 @@ namespace csmacnz.Coveralls.Tests
 
         public static string EmptyReport => GetXmlContents();
 
+        public static string EmptyReportNcover => GetXmlContents();
+
         public static string SingleFileReport => GetXmlContents();
 
         public static string SingleFileReportOneLineCovered => GetXmlContents();
 
         public static string SingleFileReportOneLineUncovered => GetXmlContents();
+
+        public static string SingleFileReportOneLineCoveredNcover => GetXmlContents();
+
+        public static string SingleFileReportOneLineUncoveredNcover => GetXmlContents();
 
         public static string SingleFileReportSourceFile => GetFileContents("SingleFileReportSourceFile.txt");
 
