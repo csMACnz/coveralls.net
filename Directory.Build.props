@@ -26,7 +26,7 @@
   </PropertyGroup>
   
   <ItemGroup>
-    <PackageReference Include="Microsoft.CodeAnalysis.FxCopAnalyzers" Version="2.3.0-beta1" PrivateAssets="All" />
+    <PackageReference Include="Microsoft.CodeAnalysis.FxCopAnalyzers" Version="2.6.0-beta2" PrivateAssets="All" />
     <PackageReference Include="SonarAnalyzer.CSharp" Version="6.6.0.3969" PrivateAssets="All" />
     <PackageReference Include="codecracker.CSharp" Version="1.0.3" PrivateAssets="All" />
     <PackageReference Include="StyleCop.Analyzers" Version="1.1.0-beta004" PrivateAssets="All" />
