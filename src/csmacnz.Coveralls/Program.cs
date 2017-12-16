@@ -197,6 +197,11 @@ namespace csmacnz.Coveralls
                 return CoverageMode.LCov;
             }
 
+            if (string.Equals(mode, "ncover", StringComparison.OrdinalIgnoreCase))
+            {
+                return CoverageMode.NCover;
+            }
+
             return Option<CoverageMode>.None;
         }
 
@@ -230,6 +235,11 @@ namespace csmacnz.Coveralls
             if (args.IsProvided("--lcov") && args.OptLcov)
             {
                 return CoverageMode.LCov;
+            }
+
+            if (args.IsProvided("--ncover") && args.OptNCover)
+            {
+                return CoverageMode.NCover;
             }
 
             return Option<CoverageMode>.None; // Unreachable
