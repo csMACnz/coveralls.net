@@ -42,7 +42,7 @@ task InstallGitVersion -depends BootstrapNuget {
 }
 
 task InstallReSharperCLI -depends BootstrapNuget {
-    InstallNugetPackage "JetBrains.ReSharper.CommandLineTools" 2017.1.20170613.162720 $build_packages_dir
+    InstallNugetPackage "JetBrains.ReSharper.CommandLineTools" 2017.3.0 $build_packages_dir
 }
 
 task GitVersion -depends InstallGitVersion {
