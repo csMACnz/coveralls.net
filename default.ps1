@@ -147,7 +147,7 @@ task coveralls-only -precondition { return -not $env:APPVEYOR_PULL_REQUEST_NUMBE
 
 task dupfinder -depends InstallReSharperCLI {
     $dupfinder = GetDupFinderPath $build_packages_dir
-    exec { cmd /c $dupfinder /o="$test_results_dir\duplicateReport.xml" /show-text $base_dir\src\**\*.cs 2`> nul }
+    exec { cmd /c $dupfinder /o="$test_results_dir\duplicateReport.xml" /e="$base_dir\src\**\obj\**.cs" /show-text $base_dir\src\**\*.cs 2`> nul }
     [xml]$stats = Get-Content $test_results_dir\duplicateReport.xml
     $anyDuplicates = $FALSE;
 

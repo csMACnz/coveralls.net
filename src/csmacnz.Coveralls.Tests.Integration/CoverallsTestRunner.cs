@@ -68,7 +68,7 @@ namespace csmacnz.Coveralls.Tests.Integration
 #else
             var configuration = "Release";
 #endif
-            return Path.Combine("..", "..", "..", "..", "csmacnz.Coveralls", "bin", configuration, "netcoreapp1.1", "csmacnz.Coveralls.dll");
+            return Path.Combine("..", "..", "..", "..", "csmacnz.Coveralls", "bin", configuration, "netcoreapp2.0", "csmacnz.Coveralls.dll");
         }
     }
 }
