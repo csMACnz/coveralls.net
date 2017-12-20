@@ -12,7 +12,7 @@ namespace csmacnz.Coveralls.Tests.Integration
     internal static class TestFolders
     {
         public static readonly string UniqueId = DateTime.Now.ToString("s", CultureInfo.InvariantCulture)
-            .Replace(":", string.Empty);
+            .Replace(":", string.Empty, StringComparison.InvariantCulture);
 
         public static string InputFolder
             => Path.GetDirectoryName(new Uri(typeof(CoverallsTestRunner).GetTypeInfo().Assembly.CodeBase).LocalPath);

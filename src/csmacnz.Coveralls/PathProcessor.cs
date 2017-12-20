@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Globalization;
 using System.IO;
 using BCLExtensions;
 
@@ -15,9 +16,9 @@ namespace csmacnz.Coveralls
 
         public string ConvertPath(string path)
         {
-            var currentWorkingDirectory = _basePath.ToLower();
+            var currentWorkingDirectory = _basePath.ToLower(CultureInfo.InvariantCulture);
 
-            if (path.ToLower().StartsWith(currentWorkingDirectory, StringComparison.Ordinal))
+            if (path.ToLower(CultureInfo.InvariantCulture).StartsWith(currentWorkingDirectory, StringComparison.InvariantCulture))
             {
                 return path.Substring(currentWorkingDirectory.Length);
             }
@@ -27,7 +28,7 @@ namespace csmacnz.Coveralls
 
         public static string UnixifyPath(string filePath)
         {
-            return filePath.Replace('\\', '/').Replace(":", string.Empty);
+            return filePath.Replace("\\", "/", StringComparison.InvariantCulture).Replace(":", string.Empty, StringComparison.InvariantCulture);
         }
     }
 }

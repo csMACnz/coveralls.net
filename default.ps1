@@ -29,10 +29,6 @@ task BootstrapNuget {
     BootstrapNuget "nuget" $build_packages_dir
 }
 
-task RestoreNuGetPackages {
-    exec { dotnet restore $sln_file }
-}
-
 task InstallOpenCover -depends BootstrapNuget {
     InstallNugetPackage "OpenCover" 4.6.519 $build_packages_dir
 }
@@ -241,8 +237,10 @@ task archive-only {
         Remove-Item $archive_filename
     }
     mkdir $archive_dir
-    dotnet publish $app_project -f netcoreapp1.1 -c $configuration -o "$archive_dir\windows" -r win7-x64
-    dotnet publish $app_project -f netcoreapp1.1 -c $configuration -o "$archive_dir\ubuntu" -r ubuntu.14.04-x64
+    dotnet publish $app_project -f netcoreapp2.0 -c $configuration -o "$archive_dir\windows" -r win7-x64
+    dotnet publish $app_project -f netcoreapp2.0 -c $configuration -o "$archive_dir\ubuntu" -r ubuntu.14.04-x64
+    dotnet publish $app_project -f netcoreapp2.0 -c $configuration -o "$archive_dir\osx" -r osx.10.11-x64
+    
     
     Add-Type -assembly "system.io.compression.filesystem"
 
@@ -252,7 +250,14 @@ task archive-only {
 task pack -depends build, pack-only
 
 task pack-only {
-    dotnet pack -c $configuration -o $package_dir $app_project
+    if(Test-Path $nuget_pack_dir) {
+        Remove-Item $nuget_pack_dir -r
+    }
+    mkdir $nuget_pack_dir
+    Copy-Item .\coveralls.net.nuspec $nuget_pack_dir
+    dotnet publish $app_project -c $configuration -o "$nuget_pack_dir\Coveralls\tools"
+    #cd $nuget_pack_dir
+    nuget pack "$nuget_pack_dir\coveralls.net.nuspec" -BasePath $nuget_pack_dir -Version $script:nugetVersion -MinClientVersion 2.8 -OutputDirectory $package_dir
 }
 
 task integration {
@@ -267,7 +272,7 @@ task integration-on-package -depends archive-only {
 
 task postbuild -depends archive-only, pack-only, coverage-only, integration, integration-on-package, inspect, dupfinder
 
-task appveyor-install -depends GitVersion, RestoreNuGetPackages
+task appveyor-install -depends GitVersion
 
 task appveyor-build -depends build
 
