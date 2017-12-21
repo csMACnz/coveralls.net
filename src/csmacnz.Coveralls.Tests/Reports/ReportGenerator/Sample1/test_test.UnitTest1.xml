@@ -1,0 +1,41 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<CoverageReport scope="test.UnitTest1">
+  <Summary>
+    <Class>test.UnitTest1</Class>
+    <Assembly>test</Assembly>
+    <Files>
+      <File>C:\dev\temp\myapp\test\UnitTest1.cs</File>
+    </Files>
+    <Coveredlines>2</Coveredlines>
+    <Uncoveredlines>0</Uncoveredlines>
+    <Coverablelines>2</Coverablelines>
+    <Totallines>14</Totallines>
+    <Linecoverage>100%</Linecoverage>
+  </Summary>
+  <Metrics>
+    <Test1>
+      <Cyclomaticcomplexity>1</Cyclomaticcomplexity>
+      <NPathcomplexity>0</NPathcomplexity>
+      <Sequencecoverage>100</Sequencecoverage>
+      <Branchcoverage>100</Branchcoverage>
+    </Test1>
+  </Metrics>
+  <Files>
+    <File name="C:\dev\temp\myapp\test\UnitTest1.cs">
+      <LineAnalysis line="1" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="using System;" />
+      <LineAnalysis line="2" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="using Xunit;" />
+      <LineAnalysis line="3" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="" />
+      <LineAnalysis line="4" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="namespace test" />
+      <LineAnalysis line="5" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="{" />
+      <LineAnalysis line="6" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="    public class UnitTest1" />
+      <LineAnalysis line="7" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="    {" />
+      <LineAnalysis line="8" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="        [Fact]" />
+      <LineAnalysis line="9" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="        public void Test1()" />
+      <LineAnalysis line="10" visits="1" coverage="Covered" coveredbranches="" totalbranches="" content="        {" />
+      <LineAnalysis line="11" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="" />
+      <LineAnalysis line="12" visits="1" coverage="Covered" coveredbranches="" totalbranches="" content="        }" />
+      <LineAnalysis line="13" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="    }" />
+      <LineAnalysis line="14" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="}" />
+    </File>
+  </Files>
+</CoverageReport>

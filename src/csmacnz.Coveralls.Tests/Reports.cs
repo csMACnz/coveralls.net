@@ -20,21 +20,36 @@ namespace csmacnz.Coveralls.Tests
 
         public static class ReportGeneratorSample
         {
-            public static string GameOfLife_xUnit_Tests_GameOfLife_xUnit_Tests_WorldTests => GetReportGeneratorContents("GameOfLife.xUnit.Tests_GameOfLife.xUnit.Tests.WorldTests");
-
-            public static string GameOfLife_GameOfLife_Game => GetReportGeneratorContents("GameOfLife_GameOfLife.Game");
-
-            public static string GameOfLife_GameOfLife_Program => GetReportGeneratorContents("GameOfLife_GameOfLife.Program");
-
-            public static string GameOfLife_GameOfLife_World => GetReportGeneratorContents("GameOfLife_GameOfLife.World");
-
-            public static string GameOfLife_GameOfLife_WorldBuilder => GetReportGeneratorContents("GameOfLife_GameOfLife.WorldBuilder");
-
-            public static string Summary => GetReportGeneratorContents("Summary");
-
-            public static string GetReportGeneratorContents(string resourceName)
+            public static class Sample1
             {
-                return Reports.GetFileContents($"ReportGeneratorSample.{resourceName}.xml");
+                public static string Summary => GetReportGeneratorContents("Summary");
+
+                public static string Test_test_UnitTest1 => GetReportGeneratorContents("test_test.UnitTest1");
+
+                public static string GetReportGeneratorContents(string resourceName)
+                {
+                    return Reports.GetFileContents($"ReportGenerator.Sample1.{resourceName}.xml");
+                }
+            }
+
+            public static class Sample2
+            {
+                public static string GameOfLife_xUnit_Tests_GameOfLife_xUnit_Tests_WorldTests => GetReportGeneratorContents("GameOfLife.xUnit.Tests_GameOfLife.xUnit.Tests.WorldTests");
+
+                public static string GameOfLife_GameOfLife_Game => GetReportGeneratorContents("GameOfLife_GameOfLife.Game");
+
+                public static string GameOfLife_GameOfLife_Program => GetReportGeneratorContents("GameOfLife_GameOfLife.Program");
+
+                public static string GameOfLife_GameOfLife_World => GetReportGeneratorContents("GameOfLife_GameOfLife.World");
+
+                public static string GameOfLife_GameOfLife_WorldBuilder => GetReportGeneratorContents("GameOfLife_GameOfLife.WorldBuilder");
+
+                public static string Summary => GetReportGeneratorContents("Summary");
+
+                public static string GetReportGeneratorContents(string resourceName)
+                {
+                    return Reports.GetFileContents($"ReportGenerator.Sample2.{resourceName}.xml");
+                }
             }
         }
 

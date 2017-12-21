@@ -1,0 +1,20 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<CoverageReport scope="Summary">
+  <Summary>
+    <Generatedon>21/12/17 - 18:43:05</Generatedon>
+    <Parser>OpenCoverParser</Parser>
+    <Assemblies>1</Assemblies>
+    <Classes>1</Classes>
+    <Files>1</Files>
+    <Coveredlines>2</Coveredlines>
+    <Uncoveredlines>0</Uncoveredlines>
+    <Coverablelines>2</Coverablelines>
+    <Totallines>14</Totallines>
+    <Linecoverage>100%</Linecoverage>
+  </Summary>
+  <Coverage>
+    <Assembly name="test" classes="1" coverage="100" coveredlines="2" coverablelines="2" totallines="14" branchcoverage="" coveredbranches="0" totalbranches="0">
+      <Class name="test.UnitTest1" coverage="100" coveredlines="2" coverablelines="2" totallines="14" branchcoverage="" coveredbranches="0" totalbranches="0" />
+    </Assembly>
+  </Coverage>
+</CoverageReport>

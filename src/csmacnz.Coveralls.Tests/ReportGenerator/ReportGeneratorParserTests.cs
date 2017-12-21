@@ -13,12 +13,12 @@ namespace csmacnz.Coveralls.Tests.ReportGenerator
         {
             var documents = new Dictionary<string, XDocument>
             {
-                ["C:\\test\\GameOfLife.xUnit.Tests_GameOfLife.xUnit.Tests.WorldTests.xml"] = XDocument.Parse(Reports.ReportGeneratorSample.GameOfLife_xUnit_Tests_GameOfLife_xUnit_Tests_WorldTests),
-                ["C:\\test\\GameOfLife_GameOfLife.Game.xml"] = XDocument.Parse(Reports.ReportGeneratorSample.GameOfLife_GameOfLife_Game),
-                ["C:\\test\\GameOfLife_GameOfLife.Program.xml"] = XDocument.Parse(Reports.ReportGeneratorSample.GameOfLife_GameOfLife_Program),
-                ["C:\\test\\GameOfLife_GameOfLife.World.xml"] = XDocument.Parse(Reports.ReportGeneratorSample.GameOfLife_GameOfLife_World),
-                ["C:\\test\\GameOfLife_GameOfLife.WorldBuilder.xml"] = XDocument.Parse(Reports.ReportGeneratorSample.GameOfLife_GameOfLife_WorldBuilder),
-                ["C:\\test\\Summary.xml"] = XDocument.Parse(Reports.ReportGeneratorSample.Summary),
+                ["C:\\test\\GameOfLife.xUnit.Tests_GameOfLife.xUnit.Tests.WorldTests.xml"] = XDocument.Parse(Reports.ReportGeneratorSample.Sample2.GameOfLife_xUnit_Tests_GameOfLife_xUnit_Tests_WorldTests),
+                ["C:\\test\\GameOfLife_GameOfLife.Game.xml"] = XDocument.Parse(Reports.ReportGeneratorSample.Sample2.GameOfLife_GameOfLife_Game),
+                ["C:\\test\\GameOfLife_GameOfLife.Program.xml"] = XDocument.Parse(Reports.ReportGeneratorSample.Sample2.GameOfLife_GameOfLife_Program),
+                ["C:\\test\\GameOfLife_GameOfLife.World.xml"] = XDocument.Parse(Reports.ReportGeneratorSample.Sample2.GameOfLife_GameOfLife_World),
+                ["C:\\test\\GameOfLife_GameOfLife.WorldBuilder.xml"] = XDocument.Parse(Reports.ReportGeneratorSample.Sample2.GameOfLife_GameOfLife_WorldBuilder),
+                ["C:\\test\\Summary.xml"] = XDocument.Parse(Reports.ReportGeneratorSample.Sample2.Summary),
             };
 
             var results = ReportGeneratorParser.GenerateSourceFiles(documents);

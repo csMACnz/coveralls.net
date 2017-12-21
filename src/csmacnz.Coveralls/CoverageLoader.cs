@@ -89,14 +89,14 @@ namespace csmacnz.Coveralls
             return coverageData;
         }
 
-        private Option<List<FileCoverageData>> LoadData(string modeInput, [NotNull] Func<Dictionary<string, XDocument>, List<FileCoverageData>> generateFunc)
+        private Option<List<FileCoverageData>> LoadData(string directory, [NotNull] Func<Dictionary<string, XDocument>, List<FileCoverageData>> generateFunc)
         {
             if (generateFunc == null)
             {
                 throw new ArgumentNullException(nameof(generateFunc));
             }
 
-            var folderFiles = _fileLoader.GetFiles(modeInput);
+            var folderFiles = _fileLoader.GetFiles(directory);
             if (!folderFiles.HasValue)
             {
                 return Option<List<FileCoverageData>>.None;

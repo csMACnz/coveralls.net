@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using Beefeater;
 using csmacnz.Coveralls.Ports;
 
@@ -27,8 +28,15 @@ namespace csmacnz.Coveralls.Tests.TestAdapters
 
         public Option<FileInfo[]> GetFiles(string directory)
         {
-            // TODO
-            throw new NotImplementedException();
+            if (_files.Any())
+            {
+                return _files
+                    .Where(kvp => kvp.Key.StartsWith(directory, StringComparison.OrdinalIgnoreCase))
+                    .Select(kvp => new FileInfo(kvp.Key))
+                    .ToArray();
+            }
+
+            return null;
         }
 
         public bool WriteFile(string outputFile, string fileData)

@@ -202,6 +202,11 @@ namespace csmacnz.Coveralls
                 return CoverageMode.NCover;
             }
 
+            if (string.Equals(mode, "reportgenerator", StringComparison.OrdinalIgnoreCase))
+            {
+                return CoverageMode.ReportGenerator;
+            }
+
             return Option<CoverageMode>.None;
         }
 
@@ -240,6 +245,11 @@ namespace csmacnz.Coveralls
             if (args.IsProvided("--ncover") && args.OptNCover)
             {
                 return CoverageMode.NCover;
+            }
+
+            if (args.IsProvided("--reportgenerator") && args.OptReportGenerator)
+            {
+                return CoverageMode.ReportGenerator;
             }
 
             return Option<CoverageMode>.None; // Unreachable
