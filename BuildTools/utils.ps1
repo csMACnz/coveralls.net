@@ -52,6 +52,13 @@ function GetOpenCoverPath {
     return (Resolve-Path "$packageFolder\OpenCover.*\tools\OpenCover.Console.exe").ToString()
 }
 
+function GetReportGeneratorPath {
+    param(
+    [Parameter(Mandatory=$true)][string]$packageFolder
+)
+    return (Resolve-Path "$packageFolder\ReportGenerator.*\tools\ReportGenerator.exe").ToString()
+}
+
 function GetCoverityPath {
     param(
     [Parameter(Mandatory=$true)][string]$packageFolder
