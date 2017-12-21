@@ -1,8 +1,5 @@
 ﻿using System;
 using System.IO;
-using System.Linq;
-using System.Xml.Linq;
-using System.Xml.XPath;
 using csmacnz.Coveralls.Tests.TestAdapters;
 using csmacnz.Coveralls.Tests.TestHelpers;
 using Xunit;
@@ -11,6 +8,20 @@ namespace csmacnz.Coveralls.Tests.OpenCover
 {
     public class ReportGeneratorTests
     {
+        [Fact]
+        public void MissingFolder_RunsWithCorrectErrorMessage()
+        {
+            var fileSystem = new TestFileSystem();
+            var directoryPath = TestFileSystem.GenerateRandomAbsolutePath("reports", "Sample1");
+
+            var results = DryRunCoverallsWithInputFile(directoryPath, fileSystem);
+
+            Assert.Equal(1, results.ExitCode);
+            Assert.Equal(
+                $"Input file '{directoryPath}' cannot be found",
+                results.StandardError);
+        }
+
         [Fact]
         public void EmptyReport_RunsSuccessfully()
         {
