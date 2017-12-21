@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using csmacnz.Coveralls.Ports;
 
-namespace csmacnz.Coveralls.Tests
+namespace csmacnz.Coveralls.Tests.TestAdapters
 {
     public class TestConsole : IConsole
     {

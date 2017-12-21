@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Text.RegularExpressions;
+using csmacnz.Coveralls.Tests.TestHelpers;
 using Xunit;
 
 namespace csmacnz.Coveralls.Tests

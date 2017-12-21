@@ -29,21 +29,11 @@
   </ItemGroup>
 
   <ItemGroup>
-    <EmbeddedResource Include="Reports\ChutzpahExample.json" />
-    <EmbeddedResource Include="Reports\EmptyReport.xml" />
-    <EmbeddedResource Include="Reports\EmptyReportNcover.xml" />
-    <EmbeddedResource Include="Reports\ReportGeneratorSample\GameOfLife.xUnit.Tests_GameOfLife.xUnit.Tests.WorldTests.xml" />
-    <EmbeddedResource Include="Reports\ReportGeneratorSample\GameOfLife_GameOfLife.Game.xml" />
-    <EmbeddedResource Include="Reports\ReportGeneratorSample\GameOfLife_GameOfLife.Program.xml" />
-    <EmbeddedResource Include="Reports\ReportGeneratorSample\GameOfLife_GameOfLife.World.xml" />
-    <EmbeddedResource Include="Reports\ReportGeneratorSample\GameOfLife_GameOfLife.WorldBuilder.xml" />
-    <EmbeddedResource Include="Reports\ReportGeneratorSample\Summary.xml" />
-    <EmbeddedResource Include="Reports\SingleFileReport.xml" />
-    <EmbeddedResource Include="Reports\SingleFileReportOneLineCovered.xml" />
-    <EmbeddedResource Include="Reports\SingleFileReportOneLineCoveredNcover.xml" />
-    <EmbeddedResource Include="Reports\SingleFileReportOneLineUncovered.xml" />
-    <EmbeddedResource Include="Reports\SingleFileReportOneLineUncoveredNcover.xml" />
-    <EmbeddedResource Include="Reports\SingleFileReportSourceFile.txt" />
+    <EmbeddedResource Include="Reports\**" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Reports\Chutzpah\" />
   </ItemGroup>
 
 </Project>

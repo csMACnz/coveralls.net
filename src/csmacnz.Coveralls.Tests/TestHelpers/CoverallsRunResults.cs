@@ -1,4 +1,4 @@
-﻿namespace csmacnz.Coveralls.Tests
+﻿namespace csmacnz.Coveralls.Tests.TestHelpers
 {
     public class CoverallsRunResults
     {

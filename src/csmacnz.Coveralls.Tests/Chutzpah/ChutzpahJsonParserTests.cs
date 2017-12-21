@@ -3,14 +3,14 @@ using System.Linq;
 using csmacnz.Coveralls.Parsers;
 using Xunit;
 
-namespace csmacnz.Coveralls.Tests
+namespace csmacnz.Coveralls.Tests.Chutzpah
 {
     public class ChutzpahJsonParserTests
     {
         [Fact]
         public void GenerateSourceFiles_CorrectCoverage()
         {
-            var fileContents = Reports.ChutzpahExample.Split(new[] { Environment.NewLine }, StringSplitOptions.None);
+            var fileContents = Reports.ChutzpahSample.ChutzpahExample.Split(new[] { Environment.NewLine }, StringSplitOptions.None);
 
             var results = ChutzpahJsonParser.GenerateSourceFiles(fileContents);
 

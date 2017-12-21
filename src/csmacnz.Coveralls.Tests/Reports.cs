@@ -6,39 +6,16 @@ namespace csmacnz.Coveralls.Tests
 {
     public static class Reports
     {
-        public static string ChutzpahExample => GetJsonContents();
-
-        public static string EmptyReport => GetXmlContents();
-
-        public static string EmptyReportNcover => GetXmlContents();
-
-        public static string SingleFileReport => GetXmlContents();
-
-        public static string SingleFileReportOneLineCovered => GetXmlContents();
-
-        public static string SingleFileReportOneLineUncovered => GetXmlContents();
-
-        public static string SingleFileReportOneLineCoveredNcover => GetXmlContents();
-
-        public static string SingleFileReportOneLineUncoveredNcover => GetXmlContents();
-
-        public static string SingleFileReportSourceFile => GetFileContents("SingleFileReportSourceFile.txt");
-
-        public static string GetJsonContents([CallerMemberName] string resourceName = null)
-        {
-            return GetFileContents($"{resourceName}.json");
-        }
-
-        public static string GetXmlContents([CallerMemberName] string resourceName = null)
-        {
-            return GetFileContents($"{resourceName}.xml");
-        }
-
         public static string GetFileContents(string resourceName)
         {
             return ResourceLoader.GetContentFromFolderMatchingTypeName(
                 targetTypeInfo: typeof(Reports).GetTypeInfo(),
                 resourceFilename: resourceName);
+        }
+
+        public static class ChutzpahSample
+        {
+            public static string ChutzpahExample => Reports.GetFileContents("Chutzpah.ChutzpahExample.json");
         }
 
         public static class ReportGeneratorSample
@@ -58,6 +35,48 @@ namespace csmacnz.Coveralls.Tests
             public static string GetReportGeneratorContents(string resourceName)
             {
                 return Reports.GetFileContents($"ReportGeneratorSample.{resourceName}.xml");
+            }
+        }
+
+        public static class NCoverSamples
+        {
+            public static string EmptyReport => GetNCoverContents("Sample1.EmptyReport.xml");
+
+            public static class SingleFileReportOneLineCovered
+            {
+                public static string Report => GetNCoverContents("Sample2.SingleFileReportOneLineCovered.xml");
+
+                public static string SourceFile => GetNCoverContents("Sample2.SingleFileReportSourceFile.txt");
+            }
+
+            public static string SingleFileReportOneLineUncovered => GetNCoverContents("Sample3.SingleFileReportOneLineUncovered.Xml");
+
+            public static string GetNCoverContents(string resourceName)
+            {
+                return Reports.GetFileContents($"NCover.{resourceName}");
+            }
+        }
+
+        public static class OpenCoverSamples
+        {
+            public static string EmptyReport => GetOpenCoverXmlContents();
+
+            public static string SingleFileReport => GetOpenCoverXmlContents();
+
+            public static string SingleFileReportOneLineCovered => GetOpenCoverXmlContents();
+
+            public static string SingleFileReportOneLineUncovered => GetOpenCoverXmlContents();
+
+            public static string SingleFileReportSourceFile => GetOpenCoverContents("SingleFileReportSourceFile.txt");
+
+            public static string GetOpenCoverXmlContents([CallerMemberName] string resourceName = null)
+            {
+                return GetOpenCoverContents($"{resourceName}.xml");
+            }
+
+            public static string GetOpenCoverContents(string resourceName)
+            {
+                return Reports.GetFileContents($"OpenCover.{resourceName}");
             }
         }
     }

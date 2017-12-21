@@ -1,15 +1,15 @@
-using System.Xml.Linq;
+﻿using System.Xml.Linq;
 using csmacnz.Coveralls.Parsers;
 using Xunit;
 
-namespace csmacnz.Coveralls.Tests
+namespace csmacnz.Coveralls.Tests.NCover
 {
     public class NCoverParserTests
     {
         [Fact]
         public void EmptyReportLoadsNoSourceFiles()
         {
-            var document = XDocument.Parse(Reports.EmptyReportNcover);
+            var document = XDocument.Parse(Reports.NCoverSamples.EmptyReport);
 
             var results = NCoverParser.GenerateSourceFiles(document);
 
@@ -19,7 +19,7 @@ namespace csmacnz.Coveralls.Tests
         [Fact]
         public void SingleFileReportLoadsSingleSourceFiles()
         {
-            var document = XDocument.Parse(Reports.SingleFileReportOneLineCoveredNcover);
+            var document = XDocument.Parse(Reports.NCoverSamples.SingleFileReportOneLineCovered.Report);
 
             var results = NCoverParser.GenerateSourceFiles(document);
 
@@ -29,7 +29,7 @@ namespace csmacnz.Coveralls.Tests
         [Fact]
         public void SingleFileReportWithSingleMethodLineCoveredWithoutSourceLoadsCorrectly()
         {
-            var document = XDocument.Parse(Reports.SingleFileReportOneLineCoveredNcover);
+            var document = XDocument.Parse(Reports.NCoverSamples.SingleFileReportOneLineCovered.Report);
 
             var results = NCoverParser.GenerateSourceFiles(document);
 
@@ -39,7 +39,7 @@ namespace csmacnz.Coveralls.Tests
         [Fact]
         public void SingleFileReportWithSingleMethodLineUncoveredWithoutSourceLoadsCorrectly()
         {
-            var document = XDocument.Parse(Reports.SingleFileReportOneLineUncoveredNcover);
+            var document = XDocument.Parse(Reports.NCoverSamples.SingleFileReportOneLineUncovered);
 
             var results = NCoverParser.GenerateSourceFiles(document);
 

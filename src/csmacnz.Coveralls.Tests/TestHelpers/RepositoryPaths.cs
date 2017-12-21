@@ -1,6 +1,6 @@
 ﻿using System.IO;
 
-namespace csmacnz.Coveralls.Tests
+namespace csmacnz.Coveralls.Tests.TestHelpers
 {
     public static class RepositoryPaths
     {

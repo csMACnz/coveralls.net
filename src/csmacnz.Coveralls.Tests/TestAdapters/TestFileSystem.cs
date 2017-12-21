@@ -1,10 +1,10 @@
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.IO;
 using Beefeater;
 using csmacnz.Coveralls.Ports;
 
-namespace csmacnz.Coveralls.Tests
+namespace csmacnz.Coveralls.Tests.TestAdapters
 {
     public class TestFileSystem : IFileSystem
     {
@@ -18,6 +18,11 @@ namespace csmacnz.Coveralls.Tests
             }
 
             return null;
+        }
+
+        public static string GenerateRandomAbsolutePath(params string[] paths)
+        {
+            return Path.Combine(Path.GetFullPath(@"\"), Path.GetRandomFileName(), Path.Combine(paths));
         }
 
         public Option<FileInfo[]> GetFiles(string directory)

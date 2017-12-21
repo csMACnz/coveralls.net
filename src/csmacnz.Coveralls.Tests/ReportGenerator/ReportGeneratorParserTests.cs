@@ -4,7 +4,7 @@ using System.Xml.Linq;
 using csmacnz.Coveralls.Parsers;
 using Xunit;
 
-namespace csmacnz.Coveralls.Tests
+namespace csmacnz.Coveralls.Tests.ReportGenerator
 {
     public class ReportGeneratorParserTests
     {

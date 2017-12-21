@@ -2,14 +2,14 @@
 using csmacnz.Coveralls.Parsers;
 using Xunit;
 
-namespace csmacnz.Coveralls.Tests
+namespace csmacnz.Coveralls.Tests.OpenCover
 {
     public class OpenCoverParserTests
     {
         [Fact]
         public void EmptyReportLoadsNoSourceFiles()
         {
-            var document = XDocument.Parse(Reports.EmptyReport);
+            var document = XDocument.Parse(Reports.OpenCoverSamples.EmptyReport);
 
             var results = OpenCoverParser.GenerateSourceFiles(document);
 
@@ -19,7 +19,7 @@ namespace csmacnz.Coveralls.Tests
         [Fact]
         public void SingleFileReportLoadsSingleSourceFiles()
         {
-            var document = XDocument.Parse(Reports.SingleFileReport);
+            var document = XDocument.Parse(Reports.OpenCoverSamples.SingleFileReport);
 
             var results = OpenCoverParser.GenerateSourceFiles(document);
 
@@ -29,7 +29,7 @@ namespace csmacnz.Coveralls.Tests
         [Fact]
         public void SingleFileReportWithSingleMethodLineCoveredWithoutSourceLoadsCorrectly()
         {
-            var document = XDocument.Parse(Reports.SingleFileReportOneLineCovered);
+            var document = XDocument.Parse(Reports.OpenCoverSamples.SingleFileReportOneLineCovered);
 
             var results = OpenCoverParser.GenerateSourceFiles(document);
 
@@ -39,7 +39,7 @@ namespace csmacnz.Coveralls.Tests
         [Fact]
         public void SingleFileReportWithSingleMethodLineUncoveredWithoutSourceLoadsCorrectly()
         {
-            var document = XDocument.Parse(Reports.SingleFileReportOneLineUncovered);
+            var document = XDocument.Parse(Reports.OpenCoverSamples.SingleFileReportOneLineUncovered);
 
             var results = OpenCoverParser.GenerateSourceFiles(document);
 
