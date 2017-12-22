@@ -16,7 +16,7 @@ namespace csmacnz.Coveralls.Tests.Integration
             var emptyFilePath = Path.Combine(RepositoryPaths.GetSamplesPath(), "opencover", "Sample1", "EmptyReport.xml");
             var results = DryRunCoverallsWithInputFile(emptyFilePath);
 
-            Assert.Equal(0, results.ExitCode);
+            CoverallsAssert.RanSuccessfully(results);
         }
 
         [Fact]
@@ -25,7 +25,7 @@ namespace csmacnz.Coveralls.Tests.Integration
             var emptyFilePath = Path.Combine(RepositoryPaths.GetSamplesPath(), "opencover", "Sample1", "EmptyReport.xml");
             var results = DryRunCoverallsMultiModeWithInputFile(emptyFilePath);
 
-            Assert.Equal(0, results.ExitCode);
+            CoverallsAssert.RanSuccessfully(results);
         }
 
         [Fact]
@@ -35,7 +35,7 @@ namespace csmacnz.Coveralls.Tests.Integration
 
             var results = DryRunCoverallsWithInputFile(coverageFilePath);
 
-            Assert.Equal(0, results.ExitCode);
+            CoverallsAssert.RanSuccessfully(results);
         }
 
         [Fact]
@@ -45,7 +45,7 @@ namespace csmacnz.Coveralls.Tests.Integration
 
             var results = DryRunCoverallsMultiModeWithInputFile(coverageFilePath);
 
-            Assert.Equal(0, results.ExitCode);
+            CoverallsAssert.RanSuccessfully(results);
         }
 
         private static string BuildReportWithOneFile()

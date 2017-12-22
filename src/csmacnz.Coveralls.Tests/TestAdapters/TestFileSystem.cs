@@ -11,11 +11,14 @@ namespace csmacnz.Coveralls.Tests.TestAdapters
     {
         private readonly Dictionary<string, string> _files = new Dictionary<string, string>();
 
+        public string BasePath { get; } = GenerateRandomAbsolutePath("WorkingDir");
+
         public Option<string> TryLoadFile(string filePath)
         {
-            if (_files.ContainsKey(filePath))
+            var pathKey = resolvePathKey(filePath);
+            if (_files.ContainsKey(pathKey))
             {
-                return _files[filePath];
+                return _files[pathKey];
             }
 
             return null;
@@ -30,8 +33,9 @@ namespace csmacnz.Coveralls.Tests.TestAdapters
         {
             if (_files.Any())
             {
+                var directoryAsPathKey = resolvePathKey(directory);
                 return _files
-                    .Where(kvp => kvp.Key.StartsWith(directory, StringComparison.OrdinalIgnoreCase))
+                    .Where(kvp => kvp.Key.StartsWith(directoryAsPathKey, StringComparison.OrdinalIgnoreCase))
                     .Select(kvp => new FileInfo(kvp.Key))
                     .ToArray();
             }
@@ -41,7 +45,8 @@ namespace csmacnz.Coveralls.Tests.TestAdapters
 
         public bool WriteFile(string outputFile, string fileData)
         {
-            // todo: configure toggle
+            AddFile(outputFile, fileData);
+
             return true;
         }
 
@@ -57,7 +62,17 @@ namespace csmacnz.Coveralls.Tests.TestAdapters
 
         public void AddFile(string path, string contents)
         {
-            _files[path] = contents;
+            _files[resolvePathKey(path)] = contents;
+        }
+
+        private string resolvePathKey(string path)
+        {
+            if (!Path.IsPathRooted(path))
+            {
+                path = Path.Combine(BasePath, path);
+            }
+
+            return Path.GetFullPath(path);
         }
     }
 }

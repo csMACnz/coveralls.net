@@ -32,7 +32,7 @@ namespace csmacnz.Coveralls.Tests.OpenCover
 
             var results = DryRunCoverallsWithInputFile(directoryPath, fileSystem);
 
-            Assert.Equal(0, results.ExitCode);
+            CoverallsAssert.RanSuccessfully(results);
         }
 
         [Fact]
@@ -45,7 +45,7 @@ namespace csmacnz.Coveralls.Tests.OpenCover
 
             var results = DryRunCoverallsMultiModeWithInputFile(directoryPath, fileSystem);
 
-            Assert.Equal(0, results.ExitCode);
+            CoverallsAssert.RanSuccessfully(results);
         }
 
         private static CoverallsRunResults DryRunCoverallsWithInputFile(

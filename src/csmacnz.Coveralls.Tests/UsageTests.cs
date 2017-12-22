@@ -48,7 +48,7 @@ namespace csmacnz.Coveralls.Tests
         {
             var results = CoverallsTestRunner.RunCoveralls("--help");
 
-            Assert.Equal(0, results.ExitCode);
+            CoverallsAssert.RanSuccessfully(results);
             ContainsStandardUsageText(results);
         }
 
@@ -57,7 +57,7 @@ namespace csmacnz.Coveralls.Tests
         {
             var results = CoverallsTestRunner.RunCoveralls("-h");
 
-            Assert.Equal(0, results.ExitCode);
+            CoverallsAssert.RanSuccessfully(results);
             ContainsStandardUsageText(results);
         }
 

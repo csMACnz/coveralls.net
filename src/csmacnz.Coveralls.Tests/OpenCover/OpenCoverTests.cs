@@ -12,27 +12,45 @@ namespace csmacnz.Coveralls.Tests.OpenCover
     public class OpenCoverTests
     {
         [Fact]
+        public void EmptyReport_GivenAnOutput_OutputsSamplePost()
+        {
+            var fileSystem = new TestFileSystem();
+            var outfile = "TestingOutput.xml";
+            var filePath = TestFileSystem.GenerateRandomAbsolutePath("opencover", "Sample1", "EmptyReport.xml");
+            fileSystem.AddFile(filePath, Reports.OpenCoverSamples.EmptyReport);
+
+            var results = CoverallsTestRunner.RunCoveralls(
+                $"--opencover -i {filePath} --dryrun --output {outfile} --repoToken MYTESTREPOTOKEN",
+                fileSystem);
+
+            CoverallsAssert.RanSuccessfully(results);
+            var savedFile = fileSystem.TryLoadFile(outfile);
+            Assert.True(savedFile.HasValue, "Expected file to exist in fileSystem");
+            Assert.Contains(@"{""repo_token"":""MYTESTREPOTOKEN"",""service_job_id"":""0"",""service_name"":""coveralls.net"",""parallel"":false,""source_files"":[]}", savedFile.ValueOr(" "), StringComparison.Ordinal);
+        }
+
+        [Fact]
         public void EmptyReport_RunsSuccessfully()
         {
             var fileSystem = new TestFileSystem();
-            var filePath = Path.Combine(RepositoryPaths.GetSamplesPath(), "opencover", "Sample1", "EmptyReport.xml");
+            var filePath = TestFileSystem.GenerateRandomAbsolutePath("opencover", "Sample1", "EmptyReport.xml");
             fileSystem.AddFile(filePath, Reports.OpenCoverSamples.EmptyReport);
 
             var results = DryRunCoverallsWithInputFile(filePath, fileSystem);
 
-            Assert.Equal(0, results.ExitCode);
+            CoverallsAssert.RanSuccessfully(results);
         }
 
         [Fact]
         public void EmptyReport_MultipleMode_RunsSuccessfully()
         {
             var fileSystem = new TestFileSystem();
-            var filePath = Path.Combine(RepositoryPaths.GetSamplesPath(), "opencover", "Sample1", "EmptyReport.xml");
+            var filePath = TestFileSystem.GenerateRandomAbsolutePath("opencover", "Sample1", "EmptyReport.xml");
             fileSystem.AddFile(filePath, Reports.OpenCoverSamples.EmptyReport);
 
             var results = DryRunCoverallsMultiModeWithInputFile(filePath, fileSystem);
 
-            Assert.Equal(0, results.ExitCode);
+            CoverallsAssert.RanSuccessfully(results);
         }
 
         [Fact]
@@ -42,7 +60,7 @@ namespace csmacnz.Coveralls.Tests.OpenCover
 
             var results = DryRunCoverallsWithInputFile(coverageFilePath, fileSystem);
 
-            Assert.Equal(0, results.ExitCode);
+            CoverallsAssert.RanSuccessfully(results);
         }
 
         [Fact]
@@ -52,7 +70,7 @@ namespace csmacnz.Coveralls.Tests.OpenCover
 
             var results = DryRunCoverallsMultiModeWithInputFile(coverageFilePath, fileSystem);
 
-            Assert.Equal(0, results.ExitCode);
+            CoverallsAssert.RanSuccessfully(results);
         }
 
         private static (TestFileSystem, string basePath) BuildReportWithOneFile()

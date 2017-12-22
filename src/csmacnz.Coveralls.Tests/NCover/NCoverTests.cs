@@ -20,7 +20,7 @@ namespace csmacnz.Coveralls.Tests.NCover
 
             var results = DryRunCoverallsWithInputFile(filePath, fileSystem);
 
-            Assert.Equal(0, results.ExitCode);
+            CoverallsAssert.RanSuccessfully(results);
         }
 
         [Fact]
@@ -32,7 +32,7 @@ namespace csmacnz.Coveralls.Tests.NCover
 
             var results = DryRunCoverallsMultiModeWithInputFile(filePath, fileSystem);
 
-            Assert.Equal(0, results.ExitCode);
+            CoverallsAssert.RanSuccessfully(results);
         }
 
         [Fact]
@@ -42,7 +42,7 @@ namespace csmacnz.Coveralls.Tests.NCover
 
             var results = DryRunCoverallsWithInputFile(coverageFilePath, fileSystem);
 
-            Assert.Equal(0, results.ExitCode);
+            CoverallsAssert.RanSuccessfully(results);
         }
 
         [Fact]
@@ -52,7 +52,7 @@ namespace csmacnz.Coveralls.Tests.NCover
 
             var results = DryRunCoverallsMultiModeWithInputFile(coverageFilePath, fileSystem);
 
-            Assert.Equal(0, results.ExitCode);
+            CoverallsAssert.RanSuccessfully(results);
         }
 
         private static (TestFileSystem, string basePath) BuildReportWithOneFile()
