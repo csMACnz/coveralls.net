@@ -28,13 +28,13 @@ namespace csmacnz.Coveralls.Tests.Monocov
             Assert.Contains(@"""service_name"":""coveralls.net""", savedFileData, StringComparison.Ordinal);
             Assert.Contains(@"""parallel"":false", savedFileData, StringComparison.Ordinal);
             var jObject = AssertValidJson(savedFileData);
-            Assert.Equal("MYTESTREPOTOKEN", TryGetValue(jObject, "repo_token"));
-            Assert.Equal("0", TryGetValue(jObject, "service_job_id"));
-            Assert.Equal("coveralls.net", TryGetValue(jObject, "service_name"));
-            Assert.False(jObject.TryGetValue("parallel", out var isParallel) ? (bool?)isParallel : null);
+            Assert.Equal("MYTESTREPOTOKEN", jObject.Value<string>("repo_token"));
+            Assert.Equal("0", jObject.Value<string>("service_job_id"));
+            Assert.Equal("coveralls.net", jObject.Value<string>("service_name"));
+            Assert.False(jObject.Value<bool?>("parallel"));
 
             Assert.Collection(
-                jObject.TryGetValue("source_files", out var sourceFiles) ? ((JArray)sourceFiles) : null,
+                (JArray)jObject.GetValue("source_files", StringComparison.Ordinal),
                 i => AssertIsValidCoverageFileData(i, "GameOfLife/Game.cs"),
                 i => AssertIsValidCoverageFileData(i, "GameOfLife/Program.cs"),
                 i => AssertIsValidCoverageFileData(i, "GameOfLife/World.cs"),
@@ -99,15 +99,10 @@ namespace csmacnz.Coveralls.Tests.Monocov
                 testFileSystem);
         }
 
-        private static string TryGetValue(JObject jObject, string name)
-        {
-            return jObject.TryGetValue(name, out var token) ? (string)token : "<MISSING>";
-        }
-
         private static void AssertIsValidCoverageFileData(JToken i, string fileName)
         {
             Assert.NotNull(i);
-            Assert.Equal($"/home/travis/build/csMACnz/Coveralls.net-Samples/src/{fileName}", ((JObject)i).TryGetValue("name", out var value) ? (string)value : null);
+            Assert.Equal($"/home/travis/build/csMACnz/Coveralls.net-Samples/src/{fileName}", ((JObject)i).Value<string>("name"));
         }
 
         private static JObject AssertValidJson(string savedFileData)
