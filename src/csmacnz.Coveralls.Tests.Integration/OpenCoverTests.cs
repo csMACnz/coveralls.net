@@ -13,7 +13,7 @@ namespace csmacnz.Coveralls.Tests.Integration
         [Fact]
         public void EmptyReport_RunsSuccessfully()
         {
-            var emptyFilePath = Path.Combine(RepositoryPaths.GetSamplesPath(), "opencover", "EmptyReport.xml");
+            var emptyFilePath = Path.Combine(RepositoryPaths.GetSamplesPath(), "OpenCover", "EmptyReport.xml");
             var results = DryRunCoverallsWithInputFile(emptyFilePath);
 
             CoverallsAssert.RanSuccessfully(results);
@@ -22,7 +22,7 @@ namespace csmacnz.Coveralls.Tests.Integration
         [Fact]
         public void EmptyReport_MultipleMode_RunsSuccessfully()
         {
-            var emptyFilePath = Path.Combine(RepositoryPaths.GetSamplesPath(), "opencover", "EmptyReport.xml");
+            var emptyFilePath = Path.Combine(RepositoryPaths.GetSamplesPath(), "OpenCover", "EmptyReport.xml");
             var results = DryRunCoverallsMultiModeWithInputFile(emptyFilePath);
 
             CoverallsAssert.RanSuccessfully(results);
