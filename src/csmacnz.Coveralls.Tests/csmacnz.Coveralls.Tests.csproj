@@ -32,9 +32,4 @@
     <EmbeddedResource Include="Reports\**" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="Reports\Chutzpah\" />
-    <Folder Include="Reports\ReportGenerator\" />
-  </ItemGroup>
-
 </Project>

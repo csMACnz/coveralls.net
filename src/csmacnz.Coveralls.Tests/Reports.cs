@@ -94,5 +94,41 @@ namespace csmacnz.Coveralls.Tests
                 return Reports.GetFileContents($"OpenCover.{resourceName}");
             }
         }
+
+        public static class MonoCovSamples
+        {
+            public static class Sample1
+            {
+                public static string Class_GameOfLife_Game => GetSample1Contents("class-GameOfLife.Game.xml");
+
+                public static string Class_GameOfLife_Program => GetSample1Contents("class-GameOfLife.Program.xml");
+
+                public static string Class_GameOfLife_World => GetSample1Contents("class-GameOfLife.World.xml");
+
+                public static string Class_GameOfLife_WorldBuilder => GetSample1Contents("class-GameOfLife.WorldBuilder.xml");
+
+                public static string Class_GameOfLife_Xunit_Tests_WorldTests => GetSample1Contents("class-GameOfLife.xUnit.Tests.WorldTests.xml");
+
+                public static string Namespace_GameOfLife => GetSample1Contents("namespace-GameOfLife.xml");
+
+                public static string Namespace_GameOfLife_Xunit_Tests => GetSample1Contents("namespace-GameOfLife.xUnit.Tests.xml");
+
+                public static string Namespace_GameOfLife_Xunit => GetSample1Contents("namespace-GameOfLife.xUnit.xml");
+
+                public static string Project => GetSample1Contents("project.xml");
+
+                public static string Style => GetSample1Contents("style.xsl");
+
+                public static string GetSample1Contents(string resourceName)
+                {
+                    return MonoCovSamples.GetMonoCovContents($"Sample1.{resourceName}");
+                }
+            }
+
+            public static string GetMonoCovContents(string resourceName)
+            {
+                return Reports.GetFileContents($"Monocov.{resourceName}");
+            }
+        }
     }
 }

@@ -13,7 +13,7 @@ namespace csmacnz.Coveralls.Tests.Integration
         [Fact]
         public void EmptyReport_RunsSuccessfully()
         {
-            var emptyFilePath = Path.Combine(RepositoryPaths.GetSamplesPath(), "opencover", "Sample1", "EmptyReport.xml");
+            var emptyFilePath = Path.Combine(RepositoryPaths.GetSamplesPath(), "opencover", "EmptyReport.xml");
             var results = DryRunCoverallsWithInputFile(emptyFilePath);
 
             CoverallsAssert.RanSuccessfully(results);
@@ -22,7 +22,7 @@ namespace csmacnz.Coveralls.Tests.Integration
         [Fact]
         public void EmptyReport_MultipleMode_RunsSuccessfully()
         {
-            var emptyFilePath = Path.Combine(RepositoryPaths.GetSamplesPath(), "opencover", "Sample1", "EmptyReport.xml");
+            var emptyFilePath = Path.Combine(RepositoryPaths.GetSamplesPath(), "opencover", "EmptyReport.xml");
             var results = DryRunCoverallsMultiModeWithInputFile(emptyFilePath);
 
             CoverallsAssert.RanSuccessfully(results);
@@ -50,7 +50,7 @@ namespace csmacnz.Coveralls.Tests.Integration
 
         private static string BuildReportWithOneFile()
         {
-            var sampleFolderPath = Path.Combine(RepositoryPaths.GetSamplesPath(), "opencover", "Sample2");
+            var sampleFolderPath = Path.Combine(RepositoryPaths.GetSamplesPath(), "OpenCover");
             var sampleCoverageFile = Path.Combine(sampleFolderPath, "SingleFileReport.xml");
             var sampleClassFile = Path.Combine(sampleFolderPath, "SingleFileReportSourceFile.txt");
             var coverageFilePath = TestFolders.GetTempFilePath(Guid.NewGuid() + ".xml");
