@@ -8,7 +8,11 @@
     <Rule Id="CA1056" Action="None" />
     <!-- Normalize strings to uppercase -->
     <Rule Id="CA1308" Action="None" />
-    
+    <!-- Properties should not return arrays -->
+    <Rule Id="CA1819" Action="None" />
+    <!-- Mark member as static -->
+    <Rule Id="CA1822" Action="Error" />
+
     <!--CA1032: Add the right constructor to Exception -->
     <!-- seems fine for custom exceptions on this application-->
     <Rule Id="CA1032" Action="Info" />

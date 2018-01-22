@@ -1,5 +1,5 @@
 ﻿using System;
-using csmacnz.CommandLineArgumentStringParser;
+using csMACnz.Caps;
 using csmacnz.Coveralls.Tests.TestAdapters;
 
 namespace csmacnz.Coveralls.Tests.TestHelpers
