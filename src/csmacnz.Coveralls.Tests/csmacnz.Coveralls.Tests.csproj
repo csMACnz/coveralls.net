@@ -13,7 +13,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="csMACnz.Caps" Version="1.0.4" />
+    <PackageReference Include="csMACnz.Caps" Version="1.0.7" />
     <PackageReference Include="csMACnz.EmbedRes" Version="1.0.8" />
     <PackageReference Include="Microsoft.NET.Test.Sdk" Version="15.5.0" />
     <PackageReference Include="System.Xml.XPath.XDocument" Version="4.3.0" />
