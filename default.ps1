@@ -1,8 +1,8 @@
 properties {
     # build variables
     $configuration = "Release"	# build configuration
-    $script:version = "0.9.0-unstable0003"
-    $script:nugetVersion = "0.9.0-unstable0003"
+    $script:version = "0.9.0-unstable0005"
+    $script:nugetVersion = "0.9.0-unstable0005"
 
     # directories
     $base_dir = . resolve-path .\
@@ -271,11 +271,7 @@ task pack-only {
     if(Test-Path $nuget_pack_dir) {
         Remove-Item $nuget_pack_dir -r
     }
-    mkdir $nuget_pack_dir
-    Copy-Item .\coveralls.net.nuspec $nuget_pack_dir
-    dotnet publish $app_project -c $configuration -o "$nuget_pack_dir\Coveralls\tools"
-    #cd $nuget_pack_dir
-    nuget pack "$nuget_pack_dir\coveralls.net.nuspec" -BasePath $nuget_pack_dir -Version $script:nugetVersion -MinClientVersion 2.8 -OutputDirectory $package_dir
+    dotnet pack --output $package_dir /p:PackageVersion=$script:nugetVersion
 }
 
 task integration {

@@ -14,7 +14,8 @@
     <PackageProjectUrl>https://github.com/csmacnz/coveralls.net</PackageProjectUrl>
     <PackageIconUrl>http://img.csmac.nz/coverallsNet-256.png</PackageIconUrl>
     <PackageTags>Code-Coverage Coveralls opencover monocov codecoverage.exe coveralls.io Reporting Runner</PackageTags>
-    <ToolCommandName>coveralls.net</ToolCommandName>
+    <PackageRequireLicenseAcceptance>false</PackageRequireLicenseAcceptance>
+    <ToolCommandName>csmacnz.Coveralls</ToolCommandName>
     <PackAsTool>true</PackAsTool>
   </PropertyGroup>
 
