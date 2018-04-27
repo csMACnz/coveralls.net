@@ -11,8 +11,6 @@ cache:
 - C:\ProgramData\chocolatey\bin -> build.environment.ps1
 - C:\ProgramData\chocolatey\lib -> build.environment.ps1
 install:
-- cmd: curl -O https://download.microsoft.com/download/2/9/3/293BC432-348C-4D1C-B628-5AC8AB7FA162/dotnet-sdk-2.1.3-win-x64.exe
-- cmd: dotnet-sdk-2.1.3-win-x64.exe /install /quiet /norestart /log install.log
 - ps: .\build.environment.ps1
 - ps: psake appveyor-install
 build_script:
