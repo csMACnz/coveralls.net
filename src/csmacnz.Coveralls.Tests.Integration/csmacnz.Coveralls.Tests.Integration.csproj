@@ -3,8 +3,7 @@
 <PropertyGroup>
     <Description>Integration Tests for csmacnz.Coveralls</Description>
     <AssemblyTitle>Integration Tests for csmacnz.Coveralls</AssemblyTitle>
-    <TargetFrameworks>netcoreapp2.0</TargetFrameworks>
-    <RuntimeFrameworkVersion>2.0.4</RuntimeFrameworkVersion>
+    <TargetFrameworks>netcoreapp2.1</TargetFrameworks>
     <AssemblyName>csmacnz.Coveralls.Tests.Integration</AssemblyName>
     <PackageId>csmacnz.Coveralls.Tests.Integration</PackageId>
     <PackageLicenseUrl>https://github.com/csMACnz/BCLExtensions/blob/master/LICENSE</PackageLicenseUrl>

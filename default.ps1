@@ -3,8 +3,8 @@ Framework 4.5.1
 properties {
     # build variables
     $configuration = "Release"	# build configuration
-    $script:version = "0.5.0.0"
-    $script:nugetVersion = "0.5.0.0"
+    $script:version = "0.9.0-unstable0001"
+    $script:nugetVersion = "0.9.0-unstable0001"
 
     # directories
     $base_dir = . resolve-path .\
@@ -258,10 +258,9 @@ task archive-only {
         Remove-Item $archive_filename
     }
     mkdir $archive_dir
-    dotnet publish $app_project -f netcoreapp2.0 -c $configuration -o "$archive_dir\windows" -r win7-x64
-    dotnet publish $app_project -f netcoreapp2.0 -c $configuration -o "$archive_dir\ubuntu" -r ubuntu.14.04-x64
-    dotnet publish $app_project -f netcoreapp2.0 -c $configuration -o "$archive_dir\osx" -r osx.10.11-x64
-    
+    dotnet publish $app_project -f netcoreapp2.1 -c $configuration -o "$archive_dir\windows" -r win-x64
+    dotnet publish $app_project -f netcoreapp2.1 -c $configuration -o "$archive_dir\linux" -r linux-x64
+    dotnet publish $app_project -f netcoreapp2.1 -c $configuration -o "$archive_dir\osx" -r osx-x64
     
     Add-Type -assembly "system.io.compression.filesystem"
 
