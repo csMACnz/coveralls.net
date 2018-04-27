@@ -1,10 +1,8 @@
-Framework 4.5.1
-
 properties {
     # build variables
     $configuration = "Release"	# build configuration
-    $script:version = "0.9.0-unstable0001"
-    $script:nugetVersion = "0.9.0-unstable0001"
+    $script:version = "0.9.0-unstable0002"
+    $script:nugetVersion = "0.9.0-unstable0002"
 
     # directories
     $base_dir = . resolve-path .\
