@@ -32,17 +32,42 @@ Coveralls uploader for .Net Code coverage of your C# source code. Should work wi
 Install
 -------
 
-This is available on nuget at [www.nuget.org/packages/coveralls.net](https://www.nuget.org/packages/coveralls.net). To install coveralls.net you can find it by searching for `coveralls.net` in the visual studio nuget extension, or install by run this command in the Package Manager Console
+### The new way ####
 
-    PM> Install-Package coveralls.net
+The new way is using the dotnet SDK 2.1 tools. This can be installed from version 0.9.0.
+
+``` powershell
+dotnet tool install -g coveralls.net --version 0.9.0
+```
+
+To run the new version, simply use the command:
+
+``` powershell
+dotnet coveralls.net <args>
+```
+
+#### The old way ####
+
+Version 0.7.0 is available on nuget at [www.nuget.org/packages/coveralls.net](https://www.nuget.org/packages/coveralls.net). This is a full .Net Framework exe that even runs on mono.
+
+To install coveralls.net you can find it by searching for `coveralls.net` in the visual studio nuget extension, or install by running this command in the Package Manager Console.
+
+``` powershell
+PM> Install-Package coveralls.net -Version 0.7.0
+```
+
+You can get help for this older version using:
+
+``` powershell
+csmacnz.coveralls.exe --help
+```
+
+For more information, checkout the old version readme: https://github.com/csMACnz/coveralls.net/blob/release-0.7.0/README.md
 
 How To Use
 ----------
 
 Head over to the [wiki](https://github.com/csMACnz/coveralls.net/wiki) for user guidance on how it works.
-You can also run the following command for in-app usage guidance:
-
-    csmacnz.coveralls.exe --help
 
 Samples
 -------
