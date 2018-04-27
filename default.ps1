@@ -1,8 +1,8 @@
 properties {
     # build variables
     $configuration = "Release"	# build configuration
-    $script:version = "0.9.0-unstable0002"
-    $script:nugetVersion = "0.9.0-unstable0002"
+    $script:version = "0.9.0-unstable0003"
+    $script:nugetVersion = "0.9.0-unstable0003"
 
     # directories
     $base_dir = . resolve-path .\
