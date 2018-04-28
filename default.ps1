@@ -248,12 +248,23 @@ task inspect -depends InstallReSharperCLI {
 task archive -depends build, archive-only
 
 task archive-only {
-    $archive_filename = "$package_dir\coveralls.net.$script:nugetVersion.zip"
+    $archive_filename_prefix = "$package_dir\coveralls.net.$script:nugetVersion"
+    $linux_archive_filename = "$archive_filename_prefix-linux.zip"
+    $windows_archive_filename = "$archive_filename_prefix-windows.zip"
+    $osx_archive_filename = "$archive_filename_prefix-osx.zip"
     if(Test-Path $archive_dir) {
         Remove-Item $archive_dir -r
     }
-    if(Test-Path $archive_filename) {
-        Remove-Item $archive_filename
+    if(Test-Path $linux_archive_filename) {
+        Remove-Item $linux_archive_filename
+    }
+    
+    if(Test-Path $windows_archive_filename) {
+        Remove-Item $windows_archive_filename
+    }
+    
+    if(Test-Path $osx_archive_filename) {
+        Remove-Item $osx_archive_filename
     }
     mkdir $archive_dir
     dotnet publish $app_project -f netcoreapp2.1 -c $configuration -o "$archive_dir\windows" -r win-x64
@@ -262,7 +273,9 @@ task archive-only {
     
     Add-Type -assembly "system.io.compression.filesystem"
 
-    [io.compression.zipfile]::CreateFromDirectory("$archive_dir", $archive_filename)
+    [io.compression.zipfile]::CreateFromDirectory("$archive_dir\windows", $windows_archive_filename)
+    [io.compression.zipfile]::CreateFromDirectory("$archive_dir\linux", $linux_archive_filename)
+    [io.compression.zipfile]::CreateFromDirectory("$archive_dir\osx", $osx_archive_filename)
 }
 
 task pack -depends build, pack-only
