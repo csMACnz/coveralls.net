@@ -13,7 +13,7 @@ addons:
     - dotnet-sharedframework-microsoft.netcore.app-1.1.2
 
 install:
-  - export COVERALLSNET_EXEPATH=/home/travis/build/csMACnz/coveralls.net/Package/Archive/ubuntu/csmacnz.Coveralls
+  - export COVERALLSNET_EXEPATH=/home/travis/build/csMACnz/coveralls.net/Package/Archive/linux/csmacnz.Coveralls
   - dotnet restore ./csmacnz.Coveralls.sln
 script:
   - dotnet build ./csmacnz.Coveralls.sln -c Release
