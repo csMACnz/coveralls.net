@@ -6,8 +6,7 @@ coveralls.net
 [![License](http://img.shields.io/:license-mit-blue.svg)](http://csmacnz.mit-license.org)
 [![NuGet](https://img.shields.io/nuget/v/coveralls.net.svg)](https://www.nuget.org/packages/coveralls.net)
 [![NuGet](https://img.shields.io/nuget/dt/coveralls.net.svg)](https://www.nuget.org/packages/coveralls.net)
-[![Gratipay](http://img.shields.io/gratipay/csMACnz.svg)](https://gratipay.com/csMACnz/)
-[![Badges](http://img.shields.io/:badges-17/17-ff6799.svg)](https://github.com/badges/badgerbadgerbadger)
+[![Badges](http://img.shields.io/:badges-16/16-ff6799.svg)](https://github.com/badges/badgerbadgerbadger)
 
 [![Build status](https://ci.appveyor.com/api/projects/status/m9hqgm8a38s4vke1?svg=true)](https://ci.appveyor.com/project/MarkClearwater/coveralls-net)
 [![Travis Build Status](https://img.shields.io/travis/csMACnz/coveralls.net.svg)](https://travis-ci.org/csMACnz/coveralls.net)
@@ -34,21 +33,30 @@ Install
 
 ### The new way ####
 
-The new way is using the dotnet SDK 2.1 tools. This can be installed from version 0.9.0.
+The new way is using the dotnet SDK 2.1 tools. This can be installed from version 1.0.0.
+This requires dotnet sdk version 2.1 to be installed.
 
 ``` powershell
-dotnet tool install -g coveralls.net --version 0.9.0
+# install globally
+dotnet tool install -g coveralls.net --version 1.0.0
+
+# install into a local folder
+dotnet tool install coveralls.net --version 1.0.0 --tools-path tools
 ```
 
 To run the new version, simply use the command:
 
 ``` powershell
-dotnet coveralls.net <args>
+# if installed globally, this should just be available on your path
+csmacnz.coveralls <args>
+
+# if installed into a tools path, you can run it from there.
+.\tools\csmacnz.Coveralls <args>
 ```
 
 #### The old way ####
 
-Version 0.7.0 is available on nuget at [www.nuget.org/packages/coveralls.net](https://www.nuget.org/packages/coveralls.net). This is a full .Net Framework exe that even runs on mono.
+Version 0.7.0 is still available on nuget at [www.nuget.org/packages/coveralls.net](https://www.nuget.org/packages/coveralls.net). This is a full .Net Framework exe that even runs on mono.
 
 To install coveralls.net you can find it by searching for `coveralls.net` in the visual studio nuget extension, or install by running this command in the Package Manager Console.
 
@@ -59,7 +67,12 @@ PM> Install-Package coveralls.net -Version 0.7.0
 You can get help for this older version using:
 
 ``` powershell
+
+# on windows
 csmacnz.coveralls.exe --help
+
+#on mono
+mono csmacnz.coveralls.exe --help
 ```
 
 For more information, checkout the old version readme: https://github.com/csMACnz/coveralls.net/blob/release-0.7.0/README.md
