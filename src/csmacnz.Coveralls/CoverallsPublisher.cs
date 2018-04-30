@@ -57,13 +57,16 @@ namespace csmacnz.Coveralls
             if (!settings.DryRun)
             {
                 var uploadResult = UploadCoverage(fileData);
-                if (settings.TreatUploadErrorsAsWarnings)
+                if (!uploadResult.Successful)
                 {
-                    _console.WriteLine(uploadResult.Error);
-                }
-                else
-                {
-                    return uploadResult.Error;
+                    if (settings.TreatUploadErrorsAsWarnings)
+                    {
+                        _console.WriteLine(uploadResult.Error);
+                    }
+                    else
+                    {
+                        return uploadResult.Error;
+                    }
                 }
             }
 
