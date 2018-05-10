@@ -297,7 +297,7 @@ task integration-on-package -depends archive-only {
     dotnet test .\src\csmacnz.Coveralls.Tests.Integration\csmacnz.Coveralls.Tests.Integration.csproj
 }
 
-task postbuild -depends archive-only, pack-only, coverage-only, integration, integration-on-package, inspect, dupfinder
+task postbuild -depends archive-only, pack-only, coverage-only, coveralls-only, integration, integration-on-package, inspect, dupfinder
 
 task appveyor-install -depends GitVersion
 
