@@ -134,7 +134,7 @@ namespace csmacnz.Coveralls
         private static List<CoverageSource> ParseCoverageSources(MainArgs args)
         {
             List<CoverageSource> results = new List<CoverageSource>();
-            if (args.IsProvided("--multiple") && args.OptMultiple)
+            if (args.OptMultiple)
             {
                 var modes = args.OptInput.Split(';');
                 foreach (var modekeyvalue in modes)
@@ -212,42 +212,42 @@ namespace csmacnz.Coveralls
 
         private static Option<CoverageMode> GetMode(MainArgs args)
         {
-            if (args.IsProvided("--monocov") && args.OptMonocov)
+            if (args.OptMonocov)
             {
                 return CoverageMode.MonoCov;
             }
 
-            if (args.IsProvided("--chutzpah") && args.OptChutzpah)
+            if (args.OptChutzpah)
             {
                 return CoverageMode.Chutzpah;
             }
 
-            if (args.IsProvided("--dynamiccodecoverage") && args.OptDynamiccodecoverage)
+            if (args.OptDynamiccodecoverage)
             {
                 return CoverageMode.DynamicCodeCoverage;
             }
 
-            if (args.IsProvided("--exportcodecoverage") && args.OptExportcodecoverage)
+            if (args.OptExportcodecoverage)
             {
                 return CoverageMode.ExportCodeCoverage;
             }
 
-            if (args.IsProvided("--opencover") && args.OptOpencover)
+            if (args.OptOpencover)
             {
                 return CoverageMode.OpenCover;
             }
 
-            if (args.IsProvided("--lcov") && args.OptLcov)
+            if (args.OptLcov)
             {
                 return CoverageMode.LCov;
             }
 
-            if (args.IsProvided("--ncover") && args.OptNCover)
+            if (args.OptNCover)
             {
                 return CoverageMode.NCover;
             }
 
-            if (args.IsProvided("--reportgenerator") && args.OptReportGenerator)
+            if (args.OptReportGenerator)
             {
                 return CoverageMode.ReportGenerator;
             }

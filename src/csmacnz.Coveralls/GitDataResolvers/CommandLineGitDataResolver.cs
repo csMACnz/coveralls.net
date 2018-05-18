@@ -14,14 +14,14 @@ namespace csmacnz.Coveralls.GitDataResolvers
 
         public bool CanProvideData()
         {
-            var commitId = _args.IsProvided("--commitId") ? _args.OptCommitid : string.Empty;
+            var commitId = _args.OptCommitid;
             return commitId.IsNotNullOrWhitespace();
         }
 
         public GitData GenerateData()
         {
             GitData gitData = null;
-            var commitId = _args.IsProvided("--commitId") ? _args.OptCommitid : string.Empty;
+            var commitId = _args.OptCommitid;
             if (commitId.IsNotNullOrWhitespace())
             {
                 var committerName = _args.OptCommitauthor ?? string.Empty;

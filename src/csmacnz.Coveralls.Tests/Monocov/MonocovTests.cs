@@ -24,12 +24,10 @@ namespace csmacnz.Coveralls.Tests.Monocov
             Assert.True(savedFile.HasValue, "Expected file to exist in fileSystem");
             var savedFileData = savedFile.ValueOr(" ");
             Assert.Contains(@"""repo_token"":""MYTESTREPOTOKEN""", savedFileData, StringComparison.Ordinal);
-            Assert.Contains(@"""service_job_id"":""0""", savedFileData, StringComparison.Ordinal);
             Assert.Contains(@"""service_name"":""coveralls.net""", savedFileData, StringComparison.Ordinal);
             Assert.Contains(@"""parallel"":false", savedFileData, StringComparison.Ordinal);
             var jObject = AssertValidJson(savedFileData);
             Assert.Equal("MYTESTREPOTOKEN", jObject.Value<string>("repo_token"));
-            Assert.Equal("0", jObject.Value<string>("service_job_id"));
             Assert.Equal("coveralls.net", jObject.Value<string>("service_name"));
             Assert.False(jObject.Value<bool?>("parallel"));
 

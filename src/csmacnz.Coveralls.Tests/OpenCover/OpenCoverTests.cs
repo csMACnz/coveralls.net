@@ -28,7 +28,6 @@ namespace csmacnz.Coveralls.Tests.OpenCover
             Assert.True(savedFile.HasValue, "Expected file to exist in fileSystem");
             var savedFileData = savedFile.ValueOr(" ");
             Assert.Contains(@"""repo_token"":""MYTESTREPOTOKEN""", savedFileData, StringComparison.Ordinal);
-            Assert.Contains(@"""service_job_id"":""0""", savedFileData, StringComparison.Ordinal);
             Assert.Contains(@"""service_name"":""coveralls.net""", savedFileData, StringComparison.Ordinal);
             Assert.Contains(@"""parallel"":false", savedFileData, StringComparison.Ordinal);
             Assert.Contains(@"""source_files"":[]", savedFileData, StringComparison.Ordinal);

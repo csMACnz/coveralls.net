@@ -12,7 +12,7 @@ namespace csmacnz.Coveralls
             var serviceJobId = ResolveServiceJobId(args);
             var serviceNumber = ResolveServiceNumber(args);
             var pullRequestId = ResolvePullRequestId(args);
-            var parallel = args.IsProvided("--parallel") && args.OptParallel;
+            var parallel = args.OptParallel;
 
             return new CoverageMetadata
             {
