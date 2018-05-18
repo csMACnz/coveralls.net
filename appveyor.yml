@@ -20,7 +20,7 @@ install:
 - sh: sudo apt-get install dotnet-sdk-2.1.300-preview2-008533 -y
 build_script:
 - cmd: psake appveyor-build
-- sh: dotnet build -configuration Release
+- sh: dotnet build -c Release
 test_script:
 - cmd: psake appveyor-test
 - sh: dotnet test src\csmacnz.Coveralls.Tests\csmacnz.Coveralls.Tests.csproj /p:CollectCoverage=true /p:CoverletOutputFormat=opencover /p:CoverletOutputDirectory=../../
