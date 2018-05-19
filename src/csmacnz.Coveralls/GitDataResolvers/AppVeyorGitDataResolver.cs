@@ -16,7 +16,7 @@ namespace csmacnz.Coveralls.GitDataResolvers
 
         public bool CanProvideData()
         {
-            return _variables.GetEnvironmentVariable("APPVEYOR") == "True";
+            return bool.TryParse(_variables.GetEnvironmentVariable("APPVEYOR"), out var result) && result;
         }
 
         public GitData GenerateData()
