@@ -19,6 +19,7 @@ install:
 - sh: sudo apt-get update
 - sh: sudo apt-get install dotnet-sdk-2.1.300-preview2-008533 -y
 build_script:
+- ps: Write-Host "APPVEYOR=$env:APPVEYOR"
 - cmd: psake appveyor-build
 - sh: dotnet build -c Release
 test_script:
