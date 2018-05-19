@@ -54,7 +54,7 @@ namespace csmacnz.Coveralls
                     return args.FailErrorCode;
                 }
 
-                var gitData = ResolveGitData(args);
+                var gitData = ResolveGitData(_console, args);
 
                 var settings = LoadSettings(args);
 
@@ -76,7 +76,7 @@ namespace csmacnz.Coveralls
             }
         }
 
-        private static Option<GitData> ResolveGitData(MainArgs args)
+        private static Option<GitData> ResolveGitData(IConsole console, MainArgs args)
         {
             var providers = new List<IGitDataResolver>
             {
@@ -84,7 +84,15 @@ namespace csmacnz.Coveralls
                 new AppVeyorGitDataResolver(new EnvironmentVariables())
             };
 
-            return providers.Where(p => p.CanProvideData()).Select(p => p.GenerateData()).FirstOrDefault();
+            var provider = providers.FirstOrDefault(p => p.CanProvideData());
+            if (provider is null)
+            {
+                console.WriteLine("No git data available");
+                return Option<GitData>.None;
+            }
+
+            console.WriteLine($"Using Git Data Provider '{provider.DisplayName}'");
+            return provider.GenerateData();
         }
 
         private static ConfigurationSettings LoadSettings(MainArgs args)

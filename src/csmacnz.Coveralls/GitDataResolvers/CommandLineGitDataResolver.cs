@@ -12,6 +12,8 @@ namespace csmacnz.Coveralls.GitDataResolvers
             _args = args;
         }
 
+        public string DisplayName => "Command line Arguments";
+
         public bool CanProvideData()
         {
             var commitId = _args.OptCommitid;

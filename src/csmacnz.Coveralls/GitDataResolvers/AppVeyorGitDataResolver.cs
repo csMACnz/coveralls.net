@@ -12,6 +12,8 @@ namespace csmacnz.Coveralls.GitDataResolvers
             _variables = variables;
         }
 
+        public string DisplayName => "AppVeyor Environment Variables";
+
         public bool CanProvideData()
         {
             return _variables.GetEnvironmentVariable("APPVEYOR") == "True";

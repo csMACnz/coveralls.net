@@ -7,5 +7,7 @@ namespace csmacnz.Coveralls.GitDataResolvers
         bool CanProvideData();
 
         GitData GenerateData();
+
+        string DisplayName { get; }
     }
 }
