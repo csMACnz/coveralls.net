@@ -4,7 +4,7 @@
     <RootNamespace>csmacnz.Coveralls</RootNamespace>
     <AssemblyName>csmacnz.Coveralls</AssemblyName>
     <AssemblyTitle>csmacnz.Coveralls</AssemblyTitle>
-    <TargetFramework>netcoreapp2.1</TargetFramework>
+    <TargetFramework>netcoreapp2.0</TargetFramework>
     <RuntimeIdentifiers>win-x64;osx-x64;linux-x64</RuntimeIdentifiers>
     <Title>coveralls.net - Coveralls.io uploader for .NET Code Coverage</Title>
     <Description>Coveralls.io uploader for .NET Code Coverage. Supports opencover and visual studio's codecoverage.exe on windows, and monocov for mono</Description>
