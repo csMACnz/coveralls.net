@@ -41,9 +41,11 @@ deploy:
   on:
     branch: /release-.*/
     APPVEYOR_REPO_TAG: true
+    CI_WINDOWS: true
 - provider: NuGet
   api_key:
     secure: 4XLKYHbHXYJuc9SCTYZt5VzxE/XDBpjWSttRIK3ZGux5TwIgAnhMBamo16fjVmzS
   on:
     branch: /release-.*/
     APPVEYOR_REPO_TAG: true
+    CI_WINDOWS: true
