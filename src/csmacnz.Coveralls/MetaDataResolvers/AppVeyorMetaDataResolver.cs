@@ -16,7 +16,7 @@ namespace csmacnz.Coveralls.MetaDataResolvers
 
         public bool IsActive()
         {
-            return bool.TryParse(_variables.GetEnvironmentVariable("APPVEYOR"), out var result) && result;
+            return _variables.GetEnvironmentVariable("APPVEYOR");
         }
 
         public Option<string> ResolveServiceName()

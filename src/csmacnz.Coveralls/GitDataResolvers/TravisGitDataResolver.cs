@@ -16,7 +16,7 @@ namespace csmacnz.Coveralls.GitDataResolvers
 
         public bool CanProvideData()
         {
-            return bool.TryParse(_variables.GetEnvironmentVariable("TRAVIS"), out var result) && result;
+            return _variables.GetEnvironmentVariable("TRAVIS");
         }
 
         public GitData GenerateData()
