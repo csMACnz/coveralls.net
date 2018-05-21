@@ -58,7 +58,7 @@ namespace csmacnz.Coveralls
 
                 var settings = LoadSettings(args);
 
-                var metadata = CoverageMetadataResolver.Resolve(args);
+                var metadata = CoverageMetadataResolver.Resolve(args, new EnvironmentVariables());
 
                 var app = new CoverallsPublisher(_console, _fileSystem);
                 var result = app.Run(settings, gitData.ValueOrDefault(), metadata);

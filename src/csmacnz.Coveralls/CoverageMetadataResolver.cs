@@ -1,17 +1,23 @@
-﻿using BCLExtensions;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using BCLExtensions;
 using Beefeater;
 using csmacnz.Coveralls.Adapters;
+using csmacnz.Coveralls.MetaDataResolvers;
+using csmacnz.Coveralls.Ports;
 
 namespace csmacnz.Coveralls
 {
     public static class CoverageMetadataResolver
     {
-        public static CoverageMetadata Resolve(MainArgs args)
+        public static CoverageMetadata Resolve(MainArgs args, IEnvironmentVariables variables)
         {
-            var serviceName = ResolveServiceName(args);
-            var serviceJobId = ResolveServiceJobId(args);
-            var serviceNumber = ResolveServiceNumber(args);
-            var pullRequestId = ResolvePullRequestId(args);
+            var resolvers = CreateResolvers(args, variables);
+            var serviceName = Resolve(resolvers, r => r.ResolveServiceName());
+            var serviceJobId = Resolve(resolvers, r => r.ResolveServiceJobId());
+            var serviceNumber = Resolve(resolvers, r => r.ResolveServiceNumber());
+            var pullRequestId = Resolve(resolvers, r => r.ResolvePullRequestId());
             var parallel = args.OptParallel;
 
             return new CoverageMetadata
@@ -24,68 +30,22 @@ namespace csmacnz.Coveralls
             };
         }
 
-        private static Option<string> ResolveServiceName(MainArgs args)
+        private static List<IMetaDataResolver> CreateResolvers(MainArgs args, IEnvironmentVariables variables)
         {
-            if (args.IsProvided("--serviceName"))
+            return new List<IMetaDataResolver>
             {
-                return args.OptServicename;
-            }
-
-            var isAppVeyor = new EnvironmentVariables().GetEnvironmentVariable("APPVEYOR");
-            if (isAppVeyor == "True")
-            {
-                return "appveyor";
-            }
-
-            return null;
+                new CommandLineMetaDataResolver(args),
+                new AppVeyorMetaDataResolver(variables),
+                new TravisMetaDataResolver(variables)
+            };
         }
 
-        private static Option<string> ResolveServiceJobId(MainArgs args)
+        private static Option<string> Resolve(List<IMetaDataResolver> resolvers, Func<IMetaDataResolver, Option<string>> resolve)
         {
-            if (args.IsProvided("--jobId"))
-            {
-                return args.OptJobid;
-            }
-
-            var jobId = new EnvironmentVariables().GetEnvironmentVariable("APPVEYOR_JOB_ID");
-            if (jobId.IsNotNullOrWhitespace())
-            {
-                return jobId;
-            }
-
-            return null;
-        }
-
-        private static Option<string> ResolveServiceNumber(MainArgs args)
-        {
-            if (args.IsProvided("--serviceNumber"))
-            {
-                return args.OptServicenumber;
-            }
-
-            var jobId = new EnvironmentVariables().GetEnvironmentVariable("APPVEYOR_BUILD_NUMBER");
-            if (jobId.IsNotNullOrWhitespace())
-            {
-                return jobId;
-            }
-
-            return null;
-        }
-
-        private static Option<string> ResolvePullRequestId(MainArgs args)
-        {
-            if (args.IsProvided("--pullRequest"))
-            {
-                return args.OptPullrequest;
-            }
-
-            var prId = new EnvironmentVariables().GetEnvironmentVariable("APPVEYOR_PULL_REQUEST_NUMBER");
-            if (prId.IsNotNullOrWhitespace())
-            {
-                return prId;
-            }
-
-            return null;
+            return resolvers
+            .Where(r => r.IsActive())
+            .Select(r => resolve?.Invoke(r) ?? Option<string>.None)
+            .FirstOrDefault(v => v.HasValue);
         }
     }
 }
