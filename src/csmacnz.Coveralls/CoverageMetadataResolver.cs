@@ -18,7 +18,7 @@ namespace csmacnz.Coveralls
             var serviceJobId = Resolve(resolvers, r => r.ResolveServiceJobId());
             var serviceNumber = Resolve(resolvers, r => r.ResolveServiceNumber());
             var pullRequestId = Resolve(resolvers, r => r.ResolvePullRequestId());
-            var parallel = args.OptParallel;
+            var parallel = ResolveParallel(args, variables);
 
             return new CoverageMetadata
             {
@@ -46,6 +46,15 @@ namespace csmacnz.Coveralls
             .Where(r => r.IsActive())
             .Select(r => resolve?.Invoke(r) ?? Option<string>.None)
             .FirstOrDefault(v => v.HasValue);
+        }
+
+        private static bool ResolveParallel(MainArgs args, IEnvironmentVariables variables)
+        {
+            if (args.IsProvided("--parallel"))
+            {
+                return args.OptParallel;
+            }
+            return variables.GetBooleanVariable("COVERALLS_PARALLEL");
         }
     }
 }
