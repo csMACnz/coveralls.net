@@ -1,3 +1,4 @@
+using csmacnz.Coveralls.Adapters;
 using csmacnz.Coveralls.Data;
 using csmacnz.Coveralls.Ports;
 
@@ -16,7 +17,7 @@ namespace csmacnz.Coveralls.GitDataResolvers
 
         public bool CanProvideData()
         {
-            return bool.TryParse(_variables.GetEnvironmentVariable("APPVEYOR"), out var result) && result;
+            return _variables.GetBooleanVariable("APPVEYOR");
         }
 
         public GitData GenerateData()
