@@ -10,7 +10,7 @@ namespace csmacnz.Coveralls.MetaDataResolvers
 
         Option<string> ResolveServiceJobId();
 
-        Option<string> ResolveServiceNumber();
+        Option<string> ResolveServiceBuildNumber();
 
         Option<string> ResolvePullRequestId();
     }

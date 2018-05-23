@@ -15,11 +15,16 @@ namespace csmacnz.Coveralls
     {
         private readonly IConsole _console;
         private readonly IFileSystem _fileSystem;
+        private readonly ICoverallsService _coverallsService;
 
-        public CoverallsPublisher(IConsole console, IFileSystem fileSystem)
+        public CoverallsPublisher(
+            IConsole console,
+            IFileSystem fileSystem,
+            ICoverallsService coverallsService)
         {
             _console = console;
             _fileSystem = fileSystem;
+            _coverallsService = coverallsService;
         }
 
         public Result<Unit, string> Run(
@@ -41,7 +46,7 @@ namespace csmacnz.Coveralls
                 RepoToken = settings.RepoToken,
                 ServiceJobId = metadata.ServiceJobId,
                 ServiceName = metadata.ServiceName,
-                ServiceNumber = metadata.ServiceNumber,
+                ServiceNumber = metadata.ServiceBuildNumber,
                 PullRequestId = metadata.PullRequestId,
                 SourceFiles = files.Value.ToArray(),
                 Parallel = metadata.Parallel,
@@ -115,7 +120,7 @@ namespace csmacnz.Coveralls
 
         private Result<Unit, string> UploadCoverage(string fileData)
         {
-            var uploadResult = new CoverallsService().Upload(fileData);
+            var uploadResult = _coverallsService.Upload(fileData);
             if (!uploadResult.Successful)
             {
                 var message = $"Failed to upload to coveralls\n{uploadResult.Error}";

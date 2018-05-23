@@ -9,6 +9,7 @@ namespace csmacnz.Coveralls
 
 Usage:
   csmacnz.Coveralls (--opencover | --dynamiccodecoverage | --monocov | --exportcodecoverage | --chutzpah | --lcov | --ncover | --reportgenerator | --multiple) -i ./opencovertests.xml (--repoToken <repoToken> | [--repoTokenVariable <repoTokenVariable>]) [-o ./opencovertests.json] [--dryrun] [--useRelativePaths [--basePath <path>] ] [--commitId <commitId> --commitBranch <commitBranch> [--commitAuthor <commitAuthor> --commitEmail <commitEmail> --commitMessage <commitMessage>] ] [--jobId <jobId>] [--serviceName <Name>] [--serviceNumber <Number>] [--pullRequest <pullRequestId>] [--treatUploadErrorsAsWarnings] [--parallel]
+  csmacnz.Coveralls --completeParallelWork (--repoToken <repoToken> | [--repoTokenVariable <repoTokenVariable>]) [--serviceNumber <Number>]
   csmacnz.Coveralls --version
   csmacnz.Coveralls --help
 
@@ -30,6 +31,7 @@ Options:
  --reportgenerator                        Reads input as ReportGenerator folder.
  --multiple                               Provide multiple types and files. This mode requires -i to provide values in the format ""chutzpah=chutzpahFile.json;opencover=opencoverFile.xml""
  --parallel                               If using the parallel builds. If sent, it will wait for the webhook before completing the build.
+ --completeParallelWork                   Submit to Coveralls.io to notify a parallel set of results has finished.
  --repoToken <repoToken>                  The coveralls.io repository token.
  --repoTokenVariable <repoTokenVariable>  The Environment Variable name where the coveralls.io repository token is available. [default: COVERALLS_REPO_TOKEN]
  --commitId <commitId>                    The git commit hash for the coverage report.
@@ -139,6 +141,8 @@ What it's for:
         public bool OptTreatuploaderrorsaswarnings => _args["--treatUploadErrorsAsWarnings"].IsTrue;
 
         public bool OptParallel => _args["--parallel"].IsTrue;
+
+        public bool OptCompleteParallelWork => _args["--completeParallelWork"].IsTrue;
 
         public bool OptVersion => _args["--version"].IsTrue;
 

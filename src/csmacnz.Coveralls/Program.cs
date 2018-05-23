@@ -17,18 +17,33 @@ namespace csmacnz.Coveralls
         private readonly IConsole _console;
         private readonly string _version;
         private readonly IFileSystem _fileSystem;
+        private readonly IEnvironmentVariables _environmentVariables;
+        private readonly ICoverallsService _coverallsService;
 
-        public Program(IConsole console, IFileSystem fileSystem, string version)
+        // TODO(markc): make this configurable, especially if private servers are used.
+#pragma warning disable S1075 // URIs should not be hardcoded
+        private static readonly Uri BaseUri = new Uri("https://coveralls.io");
+#pragma warning restore S1075 // URIs should not be hardcoded
+
+        public Program(
+            IConsole console,
+            IFileSystem fileSystem,
+            IEnvironmentVariables environmentVariables,
+            ICoverallsService coverallsService,
+            string version)
         {
             _console = console;
             _fileSystem = fileSystem;
+            _environmentVariables = environmentVariables;
+            _coverallsService = coverallsService;
             _version = version;
         }
 
         public static void Main(string[] argv)
         {
             var console = new StandardConsole();
-            var result = new Program(console, new FileSystem(), GetDisplayVersion()).Run(argv);
+
+            var result = new Program(console, new FileSystem(), new EnvironmentVariables(), new CoverallsService(BaseUri), GetDisplayVersion()).Run(argv);
             if (result.HasValue)
             {
                 Environment.Exit(result.Value);
@@ -54,13 +69,26 @@ namespace csmacnz.Coveralls
                     return args.FailErrorCode;
                 }
 
-                var gitData = ResolveGitData(_console, args);
+                var metadata = CoverageMetadataResolver.Resolve(args, _environmentVariables);
+
+                if (args.OptCompleteParallelWork)
+                {
+                    var repoToken = ResolveRepoToken(args);
+
+                    var pushResult = _coverallsService.PushParallelCompleteWebhook(repoToken, metadata.ServiceBuildNumber);
+                    if (!pushResult.Successful)
+                    {
+                        ExitWithError(pushResult.Error);
+                    }
+
+                    return null;
+                }
 
                 var settings = LoadSettings(args);
 
-                var metadata = CoverageMetadataResolver.Resolve(args, new EnvironmentVariables());
+                var gitData = ResolveGitData(_console, args);
 
-                var app = new CoverallsPublisher(_console, _fileSystem);
+                var app = new CoverallsPublisher(_console, _fileSystem, _coverallsService);
                 var result = app.Run(settings, gitData.ValueOrDefault(), metadata);
                 if (!result.Successful)
                 {
@@ -76,12 +104,12 @@ namespace csmacnz.Coveralls
             }
         }
 
-        private static Option<GitData> ResolveGitData(IConsole console, MainArgs args)
+        private Option<GitData> ResolveGitData(IConsole console, MainArgs args)
         {
             var providers = new List<IGitDataResolver>
             {
                 new CommandLineGitDataResolver(args),
-                new AppVeyorGitDataResolver(new EnvironmentVariables())
+                new AppVeyorGitDataResolver(_environmentVariables)
             };
 
             var provider = providers.FirstOrDefault(p => p.CanProvideData());
@@ -95,7 +123,7 @@ namespace csmacnz.Coveralls
             return provider.GenerateData();
         }
 
-        private static ConfigurationSettings LoadSettings(MainArgs args)
+        private ConfigurationSettings LoadSettings(MainArgs args)
         {
             var settings = new ConfigurationSettings
             {
@@ -110,7 +138,7 @@ namespace csmacnz.Coveralls
             return settings;
         }
 
-        private static string ResolveRepoToken(MainArgs args)
+        private string ResolveRepoToken(MainArgs args)
         {
             string repoToken;
             if (args.IsProvided("--repoToken"))
@@ -129,7 +157,7 @@ namespace csmacnz.Coveralls
                     ExitWithError("parameter repoTokenVariable is required.");
                 }
 
-                repoToken = Environment.GetEnvironmentVariable(variable);
+                repoToken = _environmentVariables.GetEnvironmentVariable(variable);
                 if (repoToken.IsNullOrWhitespace())
                 {
                     ExitWithError("No token found in Environment Variable '{0}'.".FormatWith(variable));

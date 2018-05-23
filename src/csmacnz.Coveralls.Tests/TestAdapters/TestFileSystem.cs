@@ -15,7 +15,7 @@ namespace csmacnz.Coveralls.Tests.TestAdapters
 
         public Option<string> TryLoadFile(string filePath)
         {
-            var pathKey = resolvePathKey(filePath);
+            var pathKey = ResolvePathKey(filePath);
             if (_files.ContainsKey(pathKey))
             {
                 return _files[pathKey];
@@ -33,7 +33,7 @@ namespace csmacnz.Coveralls.Tests.TestAdapters
         {
             if (_files.Any())
             {
-                var directoryAsPathKey = resolvePathKey(directory);
+                var directoryAsPathKey = ResolvePathKey(directory);
                 return _files
                     .Where(kvp => kvp.Key.StartsWith(directoryAsPathKey, StringComparison.OrdinalIgnoreCase))
                     .Select(kvp => new FileInfo(kvp.Key))
@@ -62,10 +62,10 @@ namespace csmacnz.Coveralls.Tests.TestAdapters
 
         public void AddFile(string path, string contents)
         {
-            _files[resolvePathKey(path)] = contents;
+            _files[ResolvePathKey(path)] = contents;
         }
 
-        private string resolvePathKey(string path)
+        private string ResolvePathKey(string path)
         {
             if (!Path.IsPathRooted(path))
             {

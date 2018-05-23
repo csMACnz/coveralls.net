@@ -1,4 +1,4 @@
-using csmacnz.Coveralls.Data;
+﻿using csmacnz.Coveralls.Data;
 using csmacnz.Coveralls.Ports;
 
 namespace csmacnz.Coveralls.GitDataResolvers
@@ -16,7 +16,7 @@ namespace csmacnz.Coveralls.GitDataResolvers
 
         public bool CanProvideData()
         {
-            return _variables.GetEnvironmentVariable("TRAVIS");
+            return _variables.GetBooleanVariable("TRAVIS");
         }
 
         public GitData GenerateData()

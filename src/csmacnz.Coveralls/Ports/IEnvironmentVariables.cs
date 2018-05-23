@@ -1,6 +1,4 @@
-﻿using Beefeater;
-
-namespace csmacnz.Coveralls.Ports
+﻿namespace csmacnz.Coveralls.Ports
 {
     public interface IEnvironmentVariables
     {

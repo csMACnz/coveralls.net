@@ -9,10 +9,54 @@ namespace csmacnz.Coveralls.Adapters
 {
     public class CoverallsService : ICoverallsService
     {
-        // TODO(markc): make this configurable, especially if private servers are used.
+        private readonly Uri _baseUri;
+
 #pragma warning disable S1075 // URIs should not be hardcoded
-        private static readonly Uri RequestUri = new Uri("https://coveralls.io/api/v1/jobs");
+        private static readonly Uri JobsUri = new Uri("/api/v1/jobs", UriKind.Relative);
 #pragma warning restore S1075 // URIs should not be hardcoded
+
+        private static Uri WebhookUri(string repoToken) => new Uri($"/webhook?repo_token={System.Net.WebUtility.UrlEncode(repoToken)}", UriKind.Relative);
+
+        public CoverallsService(Uri baseUri)
+        {
+            _baseUri = baseUri;
+        }
+
+        public Result<Unit, string> PushParallelCompleteWebhook(string repoToken, string buildNumber)
+        {
+            var payload = $@"
+{{
+    ""payload"": {{
+        ""build_num"": {buildNumber},
+        ""status"": ""done""
+    }}
+}}";
+
+            using (HttpContent stringContent = new StringContent(payload))
+            {
+                using (var client = new HttpClient())
+                {
+                    var url = new Uri(_baseUri, WebhookUri(repoToken));
+
+                    var response = client.PostAsync(url, stringContent).Result;
+
+                    if (!response.IsSuccessStatusCode)
+                    {
+                        var content = response.Content.ReadAsStringAsync().Result;
+                        var message = TryGetJsonMessageFromResponse(content).ValueOr(content);
+
+                        if (message.Length > 200)
+                        {
+                            message = message.Substring(0, 200);
+                        }
+
+                        return $"{response.StatusCode} - {message}";
+                    }
+
+                    return Unit.Default;
+                }
+            }
+        }
 
         public Result<Unit, string> Upload(string fileData)
         {
@@ -23,7 +67,7 @@ namespace csmacnz.Coveralls.Adapters
                 {
                     formData.Add(stringContent, "json_file", "coverage.json");
 
-                    var response = client.PostAsync(RequestUri, formData).Result;
+                    var response = client.PostAsync(new Uri(_baseUri, JobsUri), formData).Result;
 
                     if (!response.IsSuccessStatusCode)
                     {

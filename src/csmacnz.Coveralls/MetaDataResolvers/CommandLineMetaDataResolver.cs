@@ -1,6 +1,4 @@
-using BCLExtensions;
 using Beefeater;
-using csmacnz.Coveralls.Data;
 
 namespace csmacnz.Coveralls.MetaDataResolvers
 {
@@ -38,7 +36,7 @@ namespace csmacnz.Coveralls.MetaDataResolvers
             return Option<string>.None;
         }
 
-        public Option<string> ResolveServiceNumber()
+        public Option<string> ResolveServiceBuildNumber()
         {
             if (_args.IsProvided("--serviceNumber"))
             {

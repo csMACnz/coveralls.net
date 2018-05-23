@@ -13,7 +13,7 @@ namespace csmacnz.Coveralls.Tests.GitDataResolvers
         [Fact]
         public void CanProvideDataNoEnvironmentVariablesSetReturnsFalse()
         {
-            var sut = new AppVeyorGitDataResolver(new TestEnvironmentVariables(new Dictionary<string, string>()));
+            var sut = new AppVeyorGitDataResolver(new TestEnvironmentVariables());
 
             var canProvideData = sut.CanProvideData();
 

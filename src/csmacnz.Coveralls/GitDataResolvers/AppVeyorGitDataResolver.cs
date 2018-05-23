@@ -1,4 +1,3 @@
-using csmacnz.Coveralls.Adapters;
 using csmacnz.Coveralls.Data;
 using csmacnz.Coveralls.Ports;
 

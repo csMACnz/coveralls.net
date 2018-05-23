@@ -1,6 +1,5 @@
-using BCLExtensions;
+﻿using BCLExtensions;
 using Beefeater;
-using csmacnz.Coveralls.Data;
 using csmacnz.Coveralls.Ports;
 
 namespace csmacnz.Coveralls.MetaDataResolvers
@@ -16,7 +15,7 @@ namespace csmacnz.Coveralls.MetaDataResolvers
 
         public bool IsActive()
         {
-            return _variables.GetEnvironmentVariable("APPVEYOR");
+            return _variables.GetBooleanVariable("APPVEYOR");
         }
 
         public Option<string> ResolveServiceName()
@@ -29,7 +28,7 @@ namespace csmacnz.Coveralls.MetaDataResolvers
             return GetFromVariable("APPVEYOR_JOB_ID");
         }
 
-        public Option<string> ResolveServiceNumber()
+        public Option<string> ResolveServiceBuildNumber()
         {
             return GetFromVariable("APPVEYOR_BUILD_NUMBER");
         }
