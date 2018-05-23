@@ -29,7 +29,7 @@ namespace csmacnz.Coveralls
 
         public Result<Unit, string> Run(
             ConfigurationSettings settings,
-            GitData gitData,
+            Either<GitData, CommitSha> gitData,
             CoverageMetadata metadata)
         {
             var outputFile = ResolveOutpuFile(settings);
@@ -50,8 +50,17 @@ namespace csmacnz.Coveralls
                 PullRequestId = metadata.PullRequestId,
                 SourceFiles = files.Value.ToArray(),
                 Parallel = metadata.Parallel,
-                Git = gitData
             };
+
+            gitData.Match(
+                git =>
+                {
+                    data.Git = git;
+                },
+                sha =>
+                {
+                    data.CommitSha = sha.Value;
+                });
 
             var fileData = JsonConvert.SerializeObject(data);
             if (!string.IsNullOrWhiteSpace(outputFile))

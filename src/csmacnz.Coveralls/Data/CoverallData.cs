@@ -27,5 +27,8 @@ namespace csmacnz.Coveralls.Data
 
         [JsonProperty("git", DefaultValueHandling = DefaultValueHandling.Ignore)]
         public GitData Git { get; set; }
+
+        [JsonProperty("commit_sha", DefaultValueHandling = DefaultValueHandling.Ignore)]
+        public string CommitSha { get; set; }
     }
 }

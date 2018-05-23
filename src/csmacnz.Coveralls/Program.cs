@@ -104,7 +104,7 @@ namespace csmacnz.Coveralls
             }
         }
 
-        private Option<GitData> ResolveGitData(IConsole console, MainArgs args)
+        private Option<Either<GitData, CommitSha>> ResolveGitData(IConsole console, MainArgs args)
         {
             var providers = new List<IGitDataResolver>
             {
@@ -116,11 +116,18 @@ namespace csmacnz.Coveralls
             if (provider is null)
             {
                 console.WriteLine("No git data available");
-                return Option<GitData>.None;
+            }
+            else
+            {
+                console.WriteLine($"Using Git Data Provider '{provider.DisplayName}'");
+                var data = provider.GenerateData();
+                if (data.HasValue)
+                {
+                    return data;
+                }
             }
 
-            console.WriteLine($"Using Git Data Provider '{provider.DisplayName}'");
-            return provider.GenerateData();
+            return Option<Either<GitData, CommitSha>>.None;
         }
 
         private ConfigurationSettings LoadSettings(MainArgs args)

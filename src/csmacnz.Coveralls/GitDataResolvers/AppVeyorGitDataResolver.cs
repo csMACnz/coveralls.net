@@ -1,3 +1,4 @@
+﻿using Beefeater;
 using csmacnz.Coveralls.Data;
 using csmacnz.Coveralls.Ports;
 
@@ -19,7 +20,7 @@ namespace csmacnz.Coveralls.GitDataResolvers
             return _variables.GetBooleanVariable("APPVEYOR");
         }
 
-        public GitData GenerateData()
+        public Either<GitData, CommitSha> GenerateData()
         {
             var generateData = new GitData
             {

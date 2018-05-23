@@ -1,4 +1,5 @@
-﻿using csmacnz.Coveralls.Data;
+﻿using Beefeater;
+using csmacnz.Coveralls.Data;
 
 namespace csmacnz.Coveralls.GitDataResolvers
 {
@@ -6,7 +7,7 @@ namespace csmacnz.Coveralls.GitDataResolvers
     {
         bool CanProvideData();
 
-        GitData GenerateData();
+        Either<GitData, CommitSha> GenerateData();
 
         string DisplayName { get; }
     }

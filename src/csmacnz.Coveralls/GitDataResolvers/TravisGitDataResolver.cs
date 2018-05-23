@@ -1,4 +1,5 @@
-﻿using csmacnz.Coveralls.Data;
+﻿using Beefeater;
+using csmacnz.Coveralls.Data;
 using csmacnz.Coveralls.Ports;
 
 namespace csmacnz.Coveralls.GitDataResolvers
@@ -19,7 +20,7 @@ namespace csmacnz.Coveralls.GitDataResolvers
             return _variables.GetBooleanVariable("TRAVIS");
         }
 
-        public GitData GenerateData()
+        public Either<GitData, CommitSha> GenerateData()
         {
             var generateData = new GitData
             {

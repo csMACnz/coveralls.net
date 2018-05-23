@@ -12,7 +12,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Beefeater" Version="0.3.0" />
+    <PackageReference Include="Beefeater" Version="0.4.0" />
     <PackageReference Include="coverlet.msbuild" Version="2.0.0" />
     <PackageReference Include="csMACnz.Caps" Version="1.0.7" />
     <PackageReference Include="csMACnz.EmbedRes" Version="1.0.8" />

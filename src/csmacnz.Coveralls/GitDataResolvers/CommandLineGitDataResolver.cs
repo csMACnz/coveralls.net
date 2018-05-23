@@ -1,4 +1,5 @@
 ﻿using BCLExtensions;
+using Beefeater;
 using csmacnz.Coveralls.Data;
 
 namespace csmacnz.Coveralls.GitDataResolvers
@@ -20,7 +21,7 @@ namespace csmacnz.Coveralls.GitDataResolvers
             return commitId.IsNotNullOrWhitespace();
         }
 
-        public GitData GenerateData()
+        public Either<GitData, CommitSha> GenerateData()
         {
             GitData gitData = null;
             var commitId = _args.OptCommitid;

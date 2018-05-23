@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using Beefeater;
 using csmacnz.Coveralls.Data;
 using csmacnz.Coveralls.GitDataResolvers;
 using csmacnz.Coveralls.Ports;
@@ -62,7 +63,8 @@ namespace csmacnz.Coveralls.Tests.GitDataResolvers
 
             var gitData = sut.GenerateData();
 
-            Assert.NotNull(gitData);
+            Assert.True(gitData.HasValue);
+            Assert.True(gitData.IsItem1);
         }
 
         public class GenerateData
@@ -94,7 +96,7 @@ namespace csmacnz.Coveralls.Tests.GitDataResolvers
 
                 var sut = new AppVeyorGitDataResolver(variables);
 
-                _gitData = sut.GenerateData();
+                _gitData = sut.GenerateData().Match(g => g, c => null);
             }
 
             [Fact]
