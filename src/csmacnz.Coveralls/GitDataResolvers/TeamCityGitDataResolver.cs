@@ -20,7 +20,7 @@ namespace csmacnz.Coveralls.GitDataResolvers
 
         public bool CanProvideData()
         {
-            return _variables.GetBooleanVariable("TEAMCITY_VERSION");
+            return _variables.GetEnvironmentVariable("TEAMCITY_VERSION").IsNotNullOrWhitespace();
         }
 
         public Either<GitData, CommitSha> GenerateData()

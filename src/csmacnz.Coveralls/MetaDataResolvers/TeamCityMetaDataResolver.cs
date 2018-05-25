@@ -15,7 +15,7 @@ namespace csmacnz.Coveralls.MetaDataResolvers
 
         public bool IsActive()
         {
-            return _variables.GetBooleanVariable("TEAMCITY_VERSION");
+            return _variables.GetEnvironmentVariable("TEAMCITY_VERSION").IsNotNullOrWhitespace();
         }
 
         public Option<string> ResolveServiceName()
@@ -40,7 +40,7 @@ namespace csmacnz.Coveralls.MetaDataResolvers
 
             // TODO: regex for `refs/pull/86/merge` && `refs/pull/86/head`
             return value.Match(
-                val => bool.TryParse(val?.Trim(), out bool _) ? val : Option<string>.None,
+                val => int.TryParse(val?.Trim(), out int _) ? val : Option<string>.None,
                 () => Option<string>.None);
         }
 
