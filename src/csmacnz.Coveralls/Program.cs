@@ -109,7 +109,8 @@ namespace csmacnz.Coveralls
             var providers = new List<IGitDataResolver>
             {
                 new CommandLineGitDataResolver(args),
-                new AppVeyorGitDataResolver(_environmentVariables)
+                new AppVeyorGitDataResolver(_environmentVariables),
+                new TeamCityGitDataResolver(_environmentVariables, _console)
             };
 
             var provider = providers.FirstOrDefault(p => p.CanProvideData());

@@ -34,7 +34,8 @@ namespace csmacnz.Coveralls
             {
                 new CommandLineMetaDataResolver(args),
                 new AppVeyorMetaDataResolver(variables),
-                new TravisMetaDataResolver(variables)
+                new TravisMetaDataResolver(variables),
+                new TeamCityMetaDataResolver(variables)
             };
         }
 
