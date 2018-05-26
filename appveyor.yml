@@ -3,6 +3,7 @@ image:
 - Visual Studio 2017 Preview
 - ubuntu
 environment:
+  DOTNET_SKIP_FIRST_TIME_EXPERIENCE: true
   COVERALLS_REPO_TOKEN:
     secure: /6Ynh8LMsDKryTdOsEc2zl0ePsN3ce+oYemlM6CFK3ChePYSavZmgIH1ENWE0ZDh
   COVERITY_TOKEN:

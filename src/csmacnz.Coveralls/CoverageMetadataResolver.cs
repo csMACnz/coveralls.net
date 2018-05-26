@@ -1,6 +1,7 @@
 ﻿using BCLExtensions;
 using Beefeater;
 using csmacnz.Coveralls.Adapters;
+using csmacnz.Coveralls.Ports;
 
 namespace csmacnz.Coveralls
 {
@@ -31,8 +32,8 @@ namespace csmacnz.Coveralls
                 return args.OptServicename;
             }
 
-            var isAppVeyor = new EnvironmentVariables().GetEnvironmentVariable("APPVEYOR");
-            if (isAppVeyor == "True")
+            var isAppVeyor = new EnvironmentVariables().GetBooleanVariable("APPVEYOR");
+            if (isAppVeyor)
             {
                 return "appveyor";
             }
