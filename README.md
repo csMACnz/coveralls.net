@@ -10,6 +10,7 @@ coveralls.net
 
 [![Build status](https://ci.appveyor.com/api/projects/status/m9hqgm8a38s4vke1?svg=true)](https://ci.appveyor.com/project/MarkClearwater/coveralls-net)
 [![Travis Build Status](https://img.shields.io/travis/csMACnz/coveralls.net.svg)](https://travis-ci.org/csMACnz/coveralls.net)
+[![TeamCity Build Status](https://teamcity.jetbrains.com/app/rest/builds/buildType:OpenSourceProjects_CoverallsNet_Build/statusIcon.svg)](https://teamcity.jetbrains.com/viewType.html?buildTypeId=OpenSourceProjects_CoverallsNet_Build)
 
 [![Coverage Status](https://img.shields.io/coveralls/csMACnz/coveralls.net.svg)](https://coveralls.io/r/csMACnz/coveralls.net)
 [![Coverity Scan Build Status](https://scan.coverity.com/projects/3696/badge.svg)](https://scan.coverity.com/projects/3696)
