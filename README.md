@@ -6,13 +6,8 @@ coveralls.net
 [![License](http://img.shields.io/:license-mit-blue.svg)](http://csmacnz.mit-license.org)
 [![NuGet](https://img.shields.io/nuget/v/coveralls.net.svg)](https://www.nuget.org/packages/coveralls.net)
 [![NuGet](https://img.shields.io/nuget/dt/coveralls.net.svg)](https://www.nuget.org/packages/coveralls.net)
-[![Badges](http://img.shields.io/:badges-16/16-ff6799.svg)](https://github.com/badges/badgerbadgerbadger)
+[![Badges](http://img.shields.io/:badges-22/22-ff6799.svg)](https://github.com/badges/badgerbadgerbadger)
 
-[![Build status](https://ci.appveyor.com/api/projects/status/m9hqgm8a38s4vke1?svg=true)](https://ci.appveyor.com/project/MarkClearwater/coveralls-net)
-[![Travis Build Status](https://img.shields.io/travis/csMACnz/coveralls.net.svg)](https://travis-ci.org/csMACnz/coveralls.net)
-[![TeamCity Build Status](https://teamcity.jetbrains.com/app/rest/builds/buildType:OpenSourceProjects_CoverallsNet_Build/statusIcon.svg)](https://teamcity.jetbrains.com/viewType.html?buildTypeId=OpenSourceProjects_CoverallsNet_Build)
-
-[![Coverage Status](https://img.shields.io/coveralls/csMACnz/coveralls.net.svg)](https://coveralls.io/r/csMACnz/coveralls.net)
 [![Coverity Scan Build Status](https://scan.coverity.com/projects/3696/badge.svg)](https://scan.coverity.com/projects/3696)
 
 [![Stories in Backlog](https://badge.waffle.io/csmacnz/coveralls.net.png?label=backlog&title=Backlog)](https://waffle.io/csmacnz/coveralls.net)
@@ -28,6 +23,13 @@ coveralls.net
 [![Documentation Status](https://readthedocs.org/projects/coverallsnet/badge/?version=latest)](https://readthedocs.org/projects/coverallsnet/?badge=latest)
 
 Coveralls uploader for .Net Code coverage of your C# source code. Should work with any code files that get reported with the supported coverage tools, but the primary focus is CSharp.
+
+| Branch  | Appveyor | Travis | TeamCity | Coverage |
+|:-------:|:--------:|:------:|:--------:|:--------:|
+| master  |[![AppVeyor Build status](https://ci.appveyor.com/api/projects/status/m9hqgm8a38s4vke1/branch/master?svg=true)](https://ci.appveyor.com/project/MarkClearwater/coveralls-net/branch/master)|[![Travis Build Status](https://img.shields.io/travis/csMACnz/coveralls.net/master.svg)](https://travis-ci.org/csMACnz/coveralls.net/branches)|[![TeamCity Build Status](https://teamcity.jetbrains.com/app/rest/builds/buildType:OpenSourceProjects_CoverallsNet_Build,branch:master/statusIcon.svg)](https://teamcity.jetbrains.com/viewType.html?buildTypeId=OpenSourceProjects_CoverallsNet_Build&branch_OpenSourceProjects_CoverallsNet=master)|
+[![Coverage Status](https://img.shields.io/coveralls/csMACnz/coveralls.net/master.svg)](https://coveralls.io/r/csMACnz/coveralls.net?branch=master)|
+| develop |[![AppVeyor Build status](https://ci.appveyor.com/api/projects/status/m9hqgm8a38s4vke1/branch/develop?svg=true)](https://ci.appveyor.com/project/MarkClearwater/coveralls-net/branch/develop)|[![Travis Build Status](https://img.shields.io/travis/csMACnz/coveralls.net/develop.svg)](https://travis-ci.org/csMACnz/coveralls.net/branches)|[![TeamCity Build Status](https://teamcity.jetbrains.com/app/rest/builds/buildType:OpenSourceProjects_CoverallsNet_Build,branch:develop/statusIcon.svg)](https://teamcity.jetbrains.com/viewType.html?buildTypeId=OpenSourceProjects_CoverallsNet_Build&branch_OpenSourceProjects_CoverallsNet=develop)|
+[![Coverage Status](https://img.shields.io/coveralls/csMACnz/coveralls.net/develop.svg)](https://coveralls.io/r/csMACnz/coveralls.net?branch=develop)|
 
 Install
 -------
@@ -88,8 +90,8 @@ Samples
 
 Sample applications using Coveralls.net to publish their results can be found in the [csmacnz/Coveralls.net-Samples](https://github.com/csmacnz/Coveralls.net-Samples) Project.
 
-Supported
----------
+Supported Coverage Formats
+--------------------------
 
 * [OpenCover](https://github.com/sawilde/opencover)
 * [Mono Code Coverage (monocov)](http://www.mono-project.com/docs/debug+profile/profile/code-coverage/)
@@ -101,6 +103,13 @@ Supported
 * [ReportGenerator](http://danielpalme.github.io/ReportGenerator/)
 
 Full Supported, In Progress, and Future Support information can be found [Coverage Support](https://github.com/csMACnz/coveralls.net/wiki/Coverage-Support) wiki page
+
+Supported Build Servers
+-----------------------
+
+* Appveyor
+* Travis
+* TeamCity (using custom EnvVars)
 
 Issues
 ------
