@@ -18,7 +18,7 @@ install:
 - cmd: psake appveyor-install
 - sh: printf "Commands with sh Prefix run on Linux image only"
 - sh: sudo apt-get update
-- sh: sudo apt-get install dotnet-sdk-2.1.300-preview2-008533 -y
+- sh: sudo apt-get install dotnet-sdk-2.1 -y
 build_script:
 - ps: Write-Host "APPVEYOR=$env:APPVEYOR"
 - cmd: psake appveyor-build
