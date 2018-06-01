@@ -14,6 +14,8 @@ cache:
 - C:\ProgramData\chocolatey\bin -> build.environment.ps1
 - C:\ProgramData\chocolatey\lib -> build.environment.ps1
 install:
+- cmd: powershell iwr https://github.com/dotnet/cli/raw/v2.1.300/scripts/obtain/dotnet-install.ps1 -outfile dotnet-install.ps1
+- cmd: powershell .\dotnet-install.ps1 -Version 2.1 -InstallDir $env:ProgramFiles/dotnet
 - cmd: powershell .\build.environment.ps1
 - cmd: psake appveyor-install
 - sh: printf "Commands with sh Prefix run on Linux image only"
