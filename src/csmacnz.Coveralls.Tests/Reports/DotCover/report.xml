@@ -1,0 +1,897 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Root CoveredStatements="1453" TotalStatements="1977" CoveragePercent="73" ReportType="Xml" DotCoverVersion="2018.1.1">
+  <Assembly Name="csmacnz.Coveralls" CoveredStatements="828" TotalStatements="1340" CoveragePercent="62">
+    <Namespace Name="csmacnz.Coveralls" CoveredStatements="433" TotalStatements="577" CoveragePercent="75">
+      <Type Name="ConfigurationSettings" CoveredStatements="13" TotalStatements="14" CoveragePercent="93">
+        <Constructor Name="ConfigurationSettings()" CoveredStatements="1" TotalStatements="1" CoveragePercent="100" />
+        <AutoProperty Name="BasePath:string" CoveredStatements="2" TotalStatements="2" CoveragePercent="100">
+          <PropertyGetter CoveredStatements="1" TotalStatements="1" CoveragePercent="100" />
+          <PropertySetter CoveredStatements="1" TotalStatements="1" CoveragePercent="100" />
+        </AutoProperty>
+        <AutoProperty Name="CoverageSources:List&lt;CoverageSource&gt;" CoveredStatements="1" TotalStatements="1" CoveragePercent="100">
+          <PropertyGetter CoveredStatements="1" TotalStatements="1" CoveragePercent="100" />
+        </AutoProperty>
+        <AutoProperty Name="DryRun:bool" CoveredStatements="2" TotalStatements="2" CoveragePercent="100">
+          <PropertyGetter CoveredStatements="1" TotalStatements="1" CoveragePercent="100" />
+          <PropertySetter CoveredStatements="1" TotalStatements="1" CoveragePercent="100" />
+        </AutoProperty>
+        <AutoProperty Name="OutputFile:string" CoveredStatements="2" TotalStatements="2" CoveragePercent="100">
+          <PropertyGetter CoveredStatements="1" TotalStatements="1" CoveragePercent="100" />
+          <PropertySetter CoveredStatements="1" TotalStatements="1" CoveragePercent="100" />
+        </AutoProperty>
+        <AutoProperty Name="RepoToken:string" CoveredStatements="2" TotalStatements="2" CoveragePercent="100">
+          <PropertyGetter CoveredStatements="1" TotalStatements="1" CoveragePercent="100" />
+          <PropertySetter CoveredStatements="1" TotalStatements="1" CoveragePercent="100" />
+        </AutoProperty>
+        <AutoProperty Name="TreatUploadErrorsAsWarnings:bool" CoveredStatements="1" TotalStatements="2" CoveragePercent="50">
+          <PropertyGetter CoveredStatements="0" TotalStatements="1" CoveragePercent="0" />
+          <PropertySetter CoveredStatements="1" TotalStatements="1" CoveragePercent="100" />
+        </AutoProperty>
+        <AutoProperty Name="UseRelativePaths:bool" CoveredStatements="2" TotalStatements="2" CoveragePercent="100">
+          <PropertyGetter CoveredStatements="1" TotalStatements="1" CoveragePercent="100" />
+          <PropertySetter CoveredStatements="1" TotalStatements="1" CoveragePercent="100" />
+        </AutoProperty>
+      </Type>
+      <Type Name="CoverageFileBuilder" CoveredStatements="39" TotalStatements="39" CoveragePercent="100">
+        <Constructor Name="CoverageFileBuilder(FileCoverageData)" CoveredStatements="11" TotalStatements="11" CoveragePercent="100">
+          <OwnCoverage CoveredStatements="10" TotalStatements="10" CoveragePercent="100" />
+          <AnonymousMethod Name="(string):string" CoveredStatements="1" TotalStatements="1" CoveragePercent="100" />
+        </Constructor>
+        <Method Name="AddSource(string):void" CoveredStatements="11" TotalStatements="11" CoveragePercent="100" />
+        <Method Name="CreateFile():CoverageFile" CoveredStatements="11" TotalStatements="11" CoveragePercent="100" />
+        <Method Name="HasSource():bool" CoveredStatements="3" TotalStatements="3" CoveragePercent="100" />
+        <Method Name="SetPath(string):void" CoveredStatements="3" TotalStatements="3" CoveragePercent="100" />
+      </Type>
+      <Type Name="CoverageLoader" CoveredStatements="75" TotalStatements="103" CoveragePercent="73">
+        <Constructor Name="CoverageLoader(IFileLoader)" CoveredStatements="4" TotalStatements="4" CoveragePercent="100" />
+        <Method Name="BuildCoverageFiles(PathProcessor,bool,List&lt;FileCoverageData&gt;):List&lt;CoverageFile&gt;" CoveredStatements="21" TotalStatements="24" CoveragePercent="88">
+          <OwnCoverage CoveredStatements="4" TotalStatements="4" CoveragePercent="100" />
+          <AnonymousMethod Name="(FileCoverageData):CoverageFile" CoveredStatements="17" TotalStatements="20" CoveragePercent="85" />
+        </Method>
+        <Method Name="LoadCoverageData(CoverageMode,string):Result&lt;List&lt;FileCoverageData&gt;,LoadCoverageFilesError&gt;" CoveredStatements="17" TotalStatements="28" CoveragePercent="61" />
+        <Method Name="LoadCoverageFiles(CoverageMode,PathProcessor,string,bool):Result&lt;List&lt;CoverageFile&gt;,LoadCoverageFilesError&gt;" CoveredStatements="10" TotalStatements="10" CoveragePercent="100" />
+        <Method Name="LoadData(string,Func&lt;Dictionary&lt;string,XDocument&gt;,List&lt;FileCoverageData&gt;&gt;):Option&lt;List&lt;FileCoverageData&gt;&gt;" CoveredStatements="9" TotalStatements="11" CoveragePercent="82" />
+        <Method Name="LoadData(string,Func&lt;string[],List&lt;FileCoverageData&gt;&gt;):Option&lt;List&lt;FileCoverageData&gt;&gt;" CoveredStatements="0" TotalStatements="10" CoveragePercent="0" />
+        <Method Name="LoadData(string,Func&lt;XDocument,List&lt;FileCoverageData&gt;&gt;):Option&lt;List&lt;FileCoverageData&gt;&gt;" CoveredStatements="8" TotalStatements="10" CoveragePercent="80" />
+        <Method Name="LoadXDocuments(Option&lt;FileInfo[]&gt;):Dictionary&lt;string,XDocument&gt;" CoveredStatements="6" TotalStatements="6" CoveragePercent="100">
+          <OwnCoverage CoveredStatements="3" TotalStatements="3" CoveragePercent="100" />
+          <AnonymousMethod Name="(FileInfo):bool" CoveredStatements="1" TotalStatements="1" CoveragePercent="100" />
+          <AnonymousMethod Name="(FileInfo):string" CoveredStatements="1" TotalStatements="1" CoveragePercent="100" />
+          <AnonymousMethod Name="(FileInfo):XDocument" CoveredStatements="1" TotalStatements="1" CoveragePercent="100" />
+        </Method>
+      </Type>
+      <Type Name="CoverageMetadata" CoveredStatements="10" TotalStatements="10" CoveragePercent="100">
+        <AutoProperty Name="Parallel:bool" CoveredStatements="2" TotalStatements="2" CoveragePercent="100">
+          <PropertyGetter CoveredStatements="1" TotalStatements="1" CoveragePercent="100" />
+          <PropertySetter CoveredStatements="1" TotalStatements="1" CoveragePercent="100" />
+        </AutoProperty>
+        <AutoProperty Name="PullRequestId:string" CoveredStatements="2" TotalStatements="2" CoveragePercent="100">
+          <PropertyGetter CoveredStatements="1" TotalStatements="1" CoveragePercent="100" />
+          <PropertySetter CoveredStatements="1" TotalStatements="1" CoveragePercent="100" />
+        </AutoProperty>
+        <AutoProperty Name="ServiceBuildNumber:string" CoveredStatements="2" TotalStatements="2" CoveragePercent="100">
+          <PropertyGetter CoveredStatements="1" TotalStatements="1" CoveragePercent="100" />
+          <PropertySetter CoveredStatements="1" TotalStatements="1" CoveragePercent="100" />
+        </AutoProperty>
+        <AutoProperty Name="ServiceJobId:string" CoveredStatements="2" TotalStatements="2" CoveragePercent="100">
+          <PropertyGetter CoveredStatements="1" TotalStatements="1" CoveragePercent="100" />
+          <PropertySetter CoveredStatements="1" TotalStatements="1" CoveragePercent="100" />
+        </AutoProperty>
+        <AutoProperty Name="ServiceName:string" CoveredStatements="2" TotalStatements="2" CoveragePercent="100">
+          <PropertyGetter CoveredStatements="1" TotalStatements="1" CoveragePercent="100" />
+          <PropertySetter CoveredStatements="1" TotalStatements="1" CoveragePercent="100" />
+        </AutoProperty>
+      </Type>
+      <Type Name="CoverageMetadataResolver" CoveredStatements="27" TotalStatements="28" CoveragePercent="96">
+        <Method Name="CreateResolvers(MainArgs,IEnvironmentVariables):List&lt;IMetaDataResolver&gt;" CoveredStatements="3" TotalStatements="3" CoveragePercent="100" />
+        <Method Name="Resolve(MainArgs,IEnvironmentVariables):CoverageMetadata" CoveredStatements="13" TotalStatements="13" CoveragePercent="100">
+          <OwnCoverage CoveredStatements="9" TotalStatements="9" CoveragePercent="100" />
+          <AnonymousMethod Name="(IMetaDataResolver):Option&lt;string&gt;" CoveredStatements="1" TotalStatements="1" CoveragePercent="100" />
+          <AnonymousMethod Name="(IMetaDataResolver):Option&lt;string&gt;" CoveredStatements="1" TotalStatements="1" CoveragePercent="100" />
+          <AnonymousMethod Name="(IMetaDataResolver):Option&lt;string&gt;" CoveredStatements="1" TotalStatements="1" CoveragePercent="100" />
+          <AnonymousMethod Name="(IMetaDataResolver):Option&lt;string&gt;" CoveredStatements="1" TotalStatements="1" CoveragePercent="100" />
+        </Method>
+        <Method Name="Resolve(List&lt;IMetaDataResolver&gt;,Func&lt;IMetaDataResolver,Option&lt;string&gt;&gt;):Option&lt;string&gt;" CoveredStatements="6" TotalStatements="6" CoveragePercent="100">
+          <OwnCoverage CoveredStatements="3" TotalStatements="3" CoveragePercent="100" />
+          <AnonymousMethod Name="(IMetaDataResolver):bool" CoveredStatements="1" TotalStatements="1" CoveragePercent="100" />
+          <AnonymousMethod Name="(IMetaDataResolver):Option&lt;string&gt;" CoveredStatements="1" TotalStatements="1" CoveragePercent="100" />
+          <AnonymousMethod Name="(Option&lt;string&gt;):bool" CoveredStatements="1" TotalStatements="1" CoveragePercent="100" />
+        </Method>
+        <Method Name="ResolveParallel(MainArgs,IEnvironmentVariables):bool" CoveredStatements="5" TotalStatements="6" CoveragePercent="83" />
+      </Type>
+      <Type Name="CoverageSource" CoveredStatements="7" TotalStatements="7" CoveragePercent="100">
+        <Constructor Name="CoverageSource(CoverageMode,string)" CoveredStatements="5" TotalStatements="5" CoveragePercent="100" />
+        <AutoProperty Name="Input:string" CoveredStatements="1" TotalStatements="1" CoveragePercent="100">
+          <PropertyGetter CoveredStatements="1" TotalStatements="1" CoveragePercent="100" />
+        </AutoProperty>
+        <AutoProperty Name="Mode:CoverageMode" CoveredStatements="1" TotalStatements="1" CoveragePercent="100">
+          <PropertyGetter CoveredStatements="1" TotalStatements="1" CoveragePercent="100" />
+        </AutoProperty>
+      </Type>
+      <Type Name="CoverallsPublisher" CoveredStatements="60" TotalStatements="93" CoveragePercent="65">
+        <Constructor Name="CoverallsPublisher(IConsole,IFileSystem,ICoverallsService)" CoveredStatements="6" TotalStatements="6" CoveragePercent="100" />
+        <Method Name="BuildCoverageFiles(ConfigurationSettings):Result&lt;List&lt;CoverageFile&gt;,string&gt;" CoveredStatements="18" TotalStatements="18" CoveragePercent="100" />
+        <Method Name="LoadCoverageFiles(CoverageMode,PathProcessor,string,bool):Result&lt;List&lt;CoverageFile&gt;,string&gt;" CoveredStatements="9" TotalStatements="12" CoveragePercent="75" />
+        <Method Name="ResolveOutpuFile(ConfigurationSettings):string" CoveredStatements="5" TotalStatements="8" CoveragePercent="63" />
+        <Method Name="Run(ConfigurationSettings,Either&lt;GitData,CommitSha&gt;,CoverageMetadata):Result&lt;Unit,string&gt;" CoveredStatements="19" TotalStatements="34" CoveragePercent="56">
+          <OwnCoverage CoveredStatements="16" TotalStatements="28" CoveragePercent="57" />
+          <AnonymousMethod Name="(GitData):void" CoveredStatements="3" TotalStatements="3" CoveragePercent="100" />
+          <AnonymousMethod Name="(CommitSha):void" CoveredStatements="0" TotalStatements="3" CoveragePercent="0" />
+        </Method>
+        <Method Name="UploadCoverage(string):Result&lt;Unit,string&gt;" CoveredStatements="0" TotalStatements="9" CoveragePercent="0" />
+        <Method Name="WriteFileData(IFileStorer,string,string):void" CoveredStatements="3" TotalStatements="6" CoveragePercent="50" />
+      </Type>
+      <Type Name="Crypto" CoveredStatements="8" TotalStatements="8" CoveragePercent="100">
+        <Method Name="CalculateMd5Digest(string):NotNull&lt;string&gt;" CoveredStatements="8" TotalStatements="8" CoveragePercent="100">
+          <OwnCoverage CoveredStatements="6" TotalStatements="6" CoveragePercent="100" />
+          <AnonymousMethod Name="(byte):string" CoveredStatements="1" TotalStatements="1" CoveragePercent="100" />
+          <AnonymousMethod Name="(string,string):string" CoveredStatements="1" TotalStatements="1" CoveragePercent="100" />
+        </Method>
+      </Type>
+      <Type Name="ExitException" CoveredStatements="3" TotalStatements="9" CoveragePercent="33">
+        <Constructor Name="ExitException(string)" CoveredStatements="3" TotalStatements="3" CoveragePercent="100" />
+        <Constructor Name="ExitException()" CoveredStatements="0" TotalStatements="3" CoveragePercent="0" />
+        <Constructor Name="ExitException(string,Exception)" CoveredStatements="0" TotalStatements="3" CoveragePercent="0" />
+      </Type>
+      <Type Name="FileCoverageDataBuilder" CoveredStatements="16" TotalStatements="18" CoveragePercent="89">
+        <Constructor Name="FileCoverageDataBuilder(string)" CoveredStatements="6" TotalStatements="8" CoveragePercent="75" />
+        <Method Name="CreateFile():FileCoverageData" CoveredStatements="7" TotalStatements="7" CoveragePercent="100">
+          <OwnCoverage CoveredStatements="5" TotalStatements="5" CoveragePercent="100" />
+          <AnonymousMethod Name="(KeyValuePair&lt;int,int&gt;):int" CoveredStatements="1" TotalStatements="1" CoveragePercent="100" />
+          <AnonymousMethod Name="(int):Nullable&lt;int&gt;" CoveredStatements="1" TotalStatements="1" CoveragePercent="100" />
+        </Method>
+        <Method Name="RecordCoverage(int,int):void" CoveredStatements="3" TotalStatements="3" CoveragePercent="100" />
+      </Type>
+      <Type Name="MainArgs" CoveredStatements="41" TotalStatements="51" CoveragePercent="80">
+        <Constructor Name="MainArgs(ICollection&lt;string&gt;,bool,object,bool)" CoveredStatements="11" TotalStatements="11" CoveragePercent="100">
+          <OwnCoverage CoveredStatements="6" TotalStatements="6" CoveragePercent="100" />
+          <AnonymousMethod Name="(object,PrintExitEventArgs):void" CoveredStatements="5" TotalStatements="5" CoveragePercent="100" />
+        </Constructor>
+        <Property Name="Args:IDictionary&lt;string,ValueObject&gt;" CoveredStatements="0" TotalStatements="1" CoveragePercent="0">
+          <PropertyGetter CoveredStatements="0" TotalStatements="1" CoveragePercent="0" />
+        </Property>
+        <AutoProperty Name="Failed:bool" CoveredStatements="2" TotalStatements="2" CoveragePercent="100">
+          <PropertyGetter CoveredStatements="1" TotalStatements="1" CoveragePercent="100" />
+          <PropertySetter CoveredStatements="1" TotalStatements="1" CoveragePercent="100" />
+        </AutoProperty>
+        <AutoProperty Name="FailErrorCode:int" CoveredStatements="2" TotalStatements="2" CoveragePercent="100">
+          <PropertyGetter CoveredStatements="1" TotalStatements="1" CoveragePercent="100" />
+          <PropertySetter CoveredStatements="1" TotalStatements="1" CoveragePercent="100" />
+        </AutoProperty>
+        <AutoProperty Name="FailMessage:string" CoveredStatements="2" TotalStatements="2" CoveragePercent="100">
+          <PropertyGetter CoveredStatements="1" TotalStatements="1" CoveragePercent="100" />
+          <PropertySetter CoveredStatements="1" TotalStatements="1" CoveragePercent="100" />
+        </AutoProperty>
+        <Property Name="OptBasepath:string" CoveredStatements="0" TotalStatements="1" CoveragePercent="0">
+          <PropertyGetter CoveredStatements="0" TotalStatements="1" CoveragePercent="0" />
+        </Property>
+        <Property Name="OptChutzpah:bool" CoveredStatements="1" TotalStatements="1" CoveragePercent="100">
+          <PropertyGetter CoveredStatements="1" TotalStatements="1" CoveragePercent="100" />
+        </Property>
+        <Property Name="OptCommitauthor:string" CoveredStatements="0" TotalStatements="1" CoveragePercent="0">
+          <PropertyGetter CoveredStatements="0" TotalStatements="1" CoveragePercent="0" />
+        </Property>
+        <Property Name="OptCommitbranch:string" CoveredStatements="0" TotalStatements="1" CoveragePercent="0">
+          <PropertyGetter CoveredStatements="0" TotalStatements="1" CoveragePercent="0" />
+        </Property>
+        <Property Name="OptCommitemail:string" CoveredStatements="0" TotalStatements="1" CoveragePercent="0">
+          <PropertyGetter CoveredStatements="0" TotalStatements="1" CoveragePercent="0" />
+        </Property>
+        <Property Name="OptCommitid:string" CoveredStatements="1" TotalStatements="1" CoveragePercent="100">
+          <PropertyGetter CoveredStatements="1" TotalStatements="1" CoveragePercent="100" />
+        </Property>
+        <Property Name="OptCommitmessage:string" CoveredStatements="0" TotalStatements="1" CoveragePercent="0">
+          <PropertyGetter CoveredStatements="0" TotalStatements="1" CoveragePercent="0" />
+        </Property>
+        <Property Name="OptCompleteParallelWork:bool" CoveredStatements="1" TotalStatements="1" CoveragePercent="100">
+          <PropertyGetter CoveredStatements="1" TotalStatements="1" CoveragePercent="100" />
+        </Property>
+        <Property Name="OptDryrun:bool" CoveredStatements="1" TotalStatements="1" CoveragePercent="100">
+          <PropertyGetter CoveredStatements="1" TotalStatements="1" CoveragePercent="100" />
+        </Property>
+        <Property Name="OptDynamiccodecoverage:bool" CoveredStatements="1" TotalStatements="1" CoveragePercent="100">
+          <PropertyGetter CoveredStatements="1" TotalStatements="1" CoveragePercent="100" />
+        </Property>
+        <Property Name="OptExportcodecoverage:bool" CoveredStatements="1" TotalStatements="1" CoveragePercent="100">
+          <PropertyGetter CoveredStatements="1" TotalStatements="1" CoveragePercent="100" />
+        </Property>
+        <Property Name="OptHelp:bool" CoveredStatements="0" TotalStatements="1" CoveragePercent="0">
+          <PropertyGetter CoveredStatements="0" TotalStatements="1" CoveragePercent="0" />
+        </Property>
+        <Property Name="OptInput:string" CoveredStatements="1" TotalStatements="1" CoveragePercent="100">
+          <PropertyGetter CoveredStatements="1" TotalStatements="1" CoveragePercent="100" />
+        </Property>
+        <Property Name="OptJobid:string" CoveredStatements="0" TotalStatements="1" CoveragePercent="0">
+          <PropertyGetter CoveredStatements="0" TotalStatements="1" CoveragePercent="0" />
+        </Property>
+        <Property Name="OptLcov:bool" CoveredStatements="1" TotalStatements="1" CoveragePercent="100">
+          <PropertyGetter CoveredStatements="1" TotalStatements="1" CoveragePercent="100" />
+        </Property>
+        <Property Name="OptMonocov:bool" CoveredStatements="1" TotalStatements="1" CoveragePercent="100">
+          <PropertyGetter CoveredStatements="1" TotalStatements="1" CoveragePercent="100" />
+        </Property>
+        <Property Name="OptMultiple:bool" CoveredStatements="1" TotalStatements="1" CoveragePercent="100">
+          <PropertyGetter CoveredStatements="1" TotalStatements="1" CoveragePercent="100" />
+        </Property>
+        <Property Name="OptNCover:bool" CoveredStatements="1" TotalStatements="1" CoveragePercent="100">
+          <PropertyGetter CoveredStatements="1" TotalStatements="1" CoveragePercent="100" />
+        </Property>
+        <Property Name="OptOpencover:bool" CoveredStatements="1" TotalStatements="1" CoveragePercent="100">
+          <PropertyGetter CoveredStatements="1" TotalStatements="1" CoveragePercent="100" />
+        </Property>
+        <Property Name="OptOutput:string" CoveredStatements="1" TotalStatements="1" CoveragePercent="100">
+          <PropertyGetter CoveredStatements="1" TotalStatements="1" CoveragePercent="100" />
+        </Property>
+        <Property Name="OptParallel:bool" CoveredStatements="1" TotalStatements="1" CoveragePercent="100">
+          <PropertyGetter CoveredStatements="1" TotalStatements="1" CoveragePercent="100" />
+        </Property>
+        <Property Name="OptPullrequest:string" CoveredStatements="0" TotalStatements="1" CoveragePercent="0">
+          <PropertyGetter CoveredStatements="0" TotalStatements="1" CoveragePercent="0" />
+        </Property>
+        <Property Name="OptReportGenerator:bool" CoveredStatements="1" TotalStatements="1" CoveragePercent="100">
+          <PropertyGetter CoveredStatements="1" TotalStatements="1" CoveragePercent="100" />
+        </Property>
+        <Property Name="OptRepotoken:string" CoveredStatements="1" TotalStatements="1" CoveragePercent="100">
+          <PropertyGetter CoveredStatements="1" TotalStatements="1" CoveragePercent="100" />
+        </Property>
+        <Property Name="OptRepotokenvariable:string" CoveredStatements="1" TotalStatements="1" CoveragePercent="100">
+          <PropertyGetter CoveredStatements="1" TotalStatements="1" CoveragePercent="100" />
+        </Property>
+        <Property Name="OptServicename:string" CoveredStatements="1" TotalStatements="1" CoveragePercent="100">
+          <PropertyGetter CoveredStatements="1" TotalStatements="1" CoveragePercent="100" />
+        </Property>
+        <Property Name="OptServicenumber:string" CoveredStatements="1" TotalStatements="1" CoveragePercent="100">
+          <PropertyGetter CoveredStatements="1" TotalStatements="1" CoveragePercent="100" />
+        </Property>
+        <Property Name="OptTreatuploaderrorsaswarnings:bool" CoveredStatements="1" TotalStatements="1" CoveragePercent="100">
+          <PropertyGetter CoveredStatements="1" TotalStatements="1" CoveragePercent="100" />
+        </Property>
+        <Property Name="OptUserelativepaths:bool" CoveredStatements="1" TotalStatements="1" CoveragePercent="100">
+          <PropertyGetter CoveredStatements="1" TotalStatements="1" CoveragePercent="100" />
+        </Property>
+        <Property Name="OptVersion:bool" CoveredStatements="0" TotalStatements="1" CoveragePercent="0">
+          <PropertyGetter CoveredStatements="0" TotalStatements="1" CoveragePercent="0" />
+        </Property>
+        <Method Name="IsProvided(string):bool" CoveredStatements="3" TotalStatements="3" CoveragePercent="100" />
+      </Type>
+      <Type Name="PathProcessor" CoveredStatements="7" TotalStatements="14" CoveragePercent="50">
+        <Constructor Name="PathProcessor(string)" CoveredStatements="4" TotalStatements="4" CoveragePercent="100" />
+        <Method Name="ConvertPath(string):string" CoveredStatements="0" TotalStatements="7" CoveragePercent="0" />
+        <Method Name="UnixifyPath(string):string" CoveredStatements="3" TotalStatements="3" CoveragePercent="100" />
+      </Type>
+      <Type Name="Program" CoveredStatements="127" TotalStatements="183" CoveragePercent="69">
+        <Constructor Name="Program(IConsole,IFileSystem,IEnvironmentVariables,ICoverallsService,string)" CoveredStatements="8" TotalStatements="8" CoveragePercent="100" />
+        <Constructor Name="Program()" CoveredStatements="0" TotalStatements="1" CoveragePercent="0" />
+        <Method Name="ExitWithError(string):void" CoveredStatements="2" TotalStatements="2" CoveragePercent="100" />
+        <Method Name="GetDisplayVersion():NotNull&lt;string&gt;" CoveredStatements="0" TotalStatements="3" CoveragePercent="0" />
+        <Method Name="GetMode(string):Option&lt;CoverageMode&gt;" CoveredStatements="18" TotalStatements="27" CoveragePercent="67" />
+        <Method Name="GetMode(MainArgs):Option&lt;CoverageMode&gt;" CoveredStatements="18" TotalStatements="27" CoveragePercent="67" />
+        <Method Name="LoadSettings(MainArgs):ConfigurationSettings" CoveredStatements="5" TotalStatements="5" CoveragePercent="100" />
+        <Method Name="Main(string[]):void" CoveredStatements="0" TotalStatements="8" CoveragePercent="0" />
+        <Method Name="ParseCoverageSources(MainArgs):List&lt;CoverageSource&gt;" CoveredStatements="25" TotalStatements="31" CoveragePercent="81" />
+        <Method Name="ResolveGitData(IConsole,MainArgs):Option&lt;Either&lt;GitData,CommitSha&gt;&gt;" CoveredStatements="10" TotalStatements="17" CoveragePercent="59">
+          <OwnCoverage CoveredStatements="9" TotalStatements="16" CoveragePercent="56" />
+          <AnonymousMethod Name="(IGitDataResolver):bool" CoveredStatements="1" TotalStatements="1" CoveragePercent="100" />
+        </Method>
+        <Method Name="ResolveRepoToken(MainArgs):string" CoveredStatements="14" TotalStatements="23" CoveragePercent="61" />
+        <Method Name="Run(string[]):Nullable&lt;int&gt;" CoveredStatements="27" TotalStatements="31" CoveragePercent="87" />
+      </Type>
+    </Namespace>
+    <Namespace Name="csmacnz.Coveralls.Adapters" CoveredStatements="0" TotalStatements="88" CoveragePercent="0">
+      <Type Name="CoverallsService" CoveredStatements="0" TotalStatements="52" CoveragePercent="0">
+        <Constructor Name="CoverallsService(Uri)" CoveredStatements="0" TotalStatements="4" CoveragePercent="0" />
+        <Constructor Name="CoverallsService()" CoveredStatements="0" TotalStatements="1" CoveragePercent="0" />
+        <Method Name="PushParallelCompleteWebhook(string,string):Result&lt;Unit,string&gt;" CoveredStatements="0" TotalStatements="19" CoveragePercent="0" />
+        <Method Name="TryGetJsonMessageFromResponse(string):Option&lt;string&gt;" CoveredStatements="0" TotalStatements="8" CoveragePercent="0" />
+        <Method Name="Upload(string):Result&lt;Unit,string&gt;" CoveredStatements="0" TotalStatements="19" CoveragePercent="0" />
+        <Method Name="WebhookUri(string):Uri" CoveredStatements="0" TotalStatements="1" CoveragePercent="0" />
+      </Type>
+      <Type Name="EnvironmentVariables" CoveredStatements="0" TotalStatements="3" CoveragePercent="0">
+        <Method Name="GetEnvironmentVariable(string):string" CoveredStatements="0" TotalStatements="3" CoveragePercent="0" />
+      </Type>
+      <Type Name="FileSystem" CoveredStatements="0" TotalStatements="27" CoveragePercent="0">
+        <Method Name="GetFiles(string):Option&lt;FileInfo[]&gt;" CoveredStatements="0" TotalStatements="6" CoveragePercent="0" />
+        <Method Name="TryLoadFile(string):Option&lt;string&gt;" CoveredStatements="0" TotalStatements="6" CoveragePercent="0" />
+        <Method Name="TryReadAllLinesFromFile(string):Option&lt;string[]&gt;" CoveredStatements="0" TotalStatements="6" CoveragePercent="0" />
+        <Method Name="WriteFile(string,string):bool" CoveredStatements="0" TotalStatements="9" CoveragePercent="0" />
+      </Type>
+      <Type Name="StandardConsole" CoveredStatements="0" TotalStatements="6" CoveragePercent="0">
+        <Method Name="WriteErrorLine(string):void" CoveredStatements="0" TotalStatements="3" CoveragePercent="0" />
+        <Method Name="WriteLine(string):void" CoveredStatements="0" TotalStatements="3" CoveragePercent="0" />
+      </Type>
+    </Namespace>
+    <Namespace Name="csmacnz.Coveralls.Data" CoveredStatements="64" TotalStatements="75" CoveragePercent="85">
+      <Type Name="CommitSha" CoveredStatements="5" TotalStatements="5" CoveragePercent="100">
+        <Constructor Name="CommitSha(string)" CoveredStatements="4" TotalStatements="4" CoveragePercent="100" />
+        <Property Name="Value:string" CoveredStatements="1" TotalStatements="1" CoveragePercent="100">
+          <PropertyGetter CoveredStatements="1" TotalStatements="1" CoveragePercent="100" />
+        </Property>
+      </Type>
+      <Type Name="CoverageFile" CoveredStatements="13" TotalStatements="15" CoveragePercent="87">
+        <Constructor Name="CoverageFile(string,string,Nullable&lt;int&gt;[])" CoveredStatements="7" TotalStatements="9" CoveragePercent="78" />
+        <AutoProperty Name="Coverage:Nullable&lt;int&gt;[]" CoveredStatements="2" TotalStatements="2" CoveragePercent="100">
+          <PropertyGetter CoveredStatements="1" TotalStatements="1" CoveragePercent="100" />
+          <PropertySetter CoveredStatements="1" TotalStatements="1" CoveragePercent="100" />
+        </AutoProperty>
+        <AutoProperty Name="Name:string" CoveredStatements="2" TotalStatements="2" CoveragePercent="100">
+          <PropertyGetter CoveredStatements="1" TotalStatements="1" CoveragePercent="100" />
+          <PropertySetter CoveredStatements="1" TotalStatements="1" CoveragePercent="100" />
+        </AutoProperty>
+        <AutoProperty Name="SourceDigest:string" CoveredStatements="2" TotalStatements="2" CoveragePercent="100">
+          <PropertyGetter CoveredStatements="1" TotalStatements="1" CoveragePercent="100" />
+          <PropertySetter CoveredStatements="1" TotalStatements="1" CoveragePercent="100" />
+        </AutoProperty>
+      </Type>
+      <Type Name="CoverallData" CoveredStatements="17" TotalStatements="18" CoveragePercent="94">
+        <AutoProperty Name="CommitSha:string" CoveredStatements="1" TotalStatements="2" CoveragePercent="50">
+          <PropertyGetter CoveredStatements="1" TotalStatements="1" CoveragePercent="100" />
+          <PropertySetter CoveredStatements="0" TotalStatements="1" CoveragePercent="0" />
+        </AutoProperty>
+        <AutoProperty Name="Git:GitData" CoveredStatements="2" TotalStatements="2" CoveragePercent="100">
+          <PropertyGetter CoveredStatements="1" TotalStatements="1" CoveragePercent="100" />
+          <PropertySetter CoveredStatements="1" TotalStatements="1" CoveragePercent="100" />
+        </AutoProperty>
+        <AutoProperty Name="Parallel:Nullable&lt;bool&gt;" CoveredStatements="2" TotalStatements="2" CoveragePercent="100">
+          <PropertyGetter CoveredStatements="1" TotalStatements="1" CoveragePercent="100" />
+          <PropertySetter CoveredStatements="1" TotalStatements="1" CoveragePercent="100" />
+        </AutoProperty>
+        <AutoProperty Name="PullRequestId:string" CoveredStatements="2" TotalStatements="2" CoveragePercent="100">
+          <PropertyGetter CoveredStatements="1" TotalStatements="1" CoveragePercent="100" />
+          <PropertySetter CoveredStatements="1" TotalStatements="1" CoveragePercent="100" />
+        </AutoProperty>
+        <AutoProperty Name="RepoToken:string" CoveredStatements="2" TotalStatements="2" CoveragePercent="100">
+          <PropertyGetter CoveredStatements="1" TotalStatements="1" CoveragePercent="100" />
+          <PropertySetter CoveredStatements="1" TotalStatements="1" CoveragePercent="100" />
+        </AutoProperty>
+        <AutoProperty Name="ServiceJobId:string" CoveredStatements="2" TotalStatements="2" CoveragePercent="100">
+          <PropertyGetter CoveredStatements="1" TotalStatements="1" CoveragePercent="100" />
+          <PropertySetter CoveredStatements="1" TotalStatements="1" CoveragePercent="100" />
+        </AutoProperty>
+        <AutoProperty Name="ServiceName:string" CoveredStatements="2" TotalStatements="2" CoveragePercent="100">
+          <PropertyGetter CoveredStatements="1" TotalStatements="1" CoveragePercent="100" />
+          <PropertySetter CoveredStatements="1" TotalStatements="1" CoveragePercent="100" />
+        </AutoProperty>
+        <AutoProperty Name="ServiceNumber:string" CoveredStatements="2" TotalStatements="2" CoveragePercent="100">
+          <PropertyGetter CoveredStatements="1" TotalStatements="1" CoveragePercent="100" />
+          <PropertySetter CoveredStatements="1" TotalStatements="1" CoveragePercent="100" />
+        </AutoProperty>
+        <AutoProperty Name="SourceFiles:CoverageFile[]" CoveredStatements="2" TotalStatements="2" CoveragePercent="100">
+          <PropertyGetter CoveredStatements="1" TotalStatements="1" CoveragePercent="100" />
+          <PropertySetter CoveredStatements="1" TotalStatements="1" CoveragePercent="100" />
+        </AutoProperty>
+      </Type>
+      <Type Name="FileCoverageData" CoveredStatements="13" TotalStatements="15" CoveragePercent="87">
+        <Constructor Name="FileCoverageData(string,Nullable&lt;int&gt;[])" CoveredStatements="3" TotalStatements="3" CoveragePercent="100" />
+        <Constructor Name="FileCoverageData(string,Nullable&lt;int&gt;[],string[])" CoveredStatements="7" TotalStatements="9" CoveragePercent="78" />
+        <AutoProperty Name="Coverage:Nullable&lt;int&gt;[]" CoveredStatements="1" TotalStatements="1" CoveragePercent="100">
+          <PropertyGetter CoveredStatements="1" TotalStatements="1" CoveragePercent="100" />
+        </AutoProperty>
+        <AutoProperty Name="FullPath:string" CoveredStatements="1" TotalStatements="1" CoveragePercent="100">
+          <PropertyGetter CoveredStatements="1" TotalStatements="1" CoveragePercent="100" />
+        </AutoProperty>
+        <AutoProperty Name="Source:string[]" CoveredStatements="1" TotalStatements="1" CoveragePercent="100">
+          <PropertyGetter CoveredStatements="1" TotalStatements="1" CoveragePercent="100" />
+        </AutoProperty>
+      </Type>
+      <Type Name="GitData" CoveredStatements="4" TotalStatements="6" CoveragePercent="67">
+        <AutoProperty Name="Branch:string" CoveredStatements="2" TotalStatements="2" CoveragePercent="100">
+          <PropertyGetter CoveredStatements="1" TotalStatements="1" CoveragePercent="100" />
+          <PropertySetter CoveredStatements="1" TotalStatements="1" CoveragePercent="100" />
+        </AutoProperty>
+        <AutoProperty Name="Head:GitHead" CoveredStatements="2" TotalStatements="2" CoveragePercent="100">
+          <PropertyGetter CoveredStatements="1" TotalStatements="1" CoveragePercent="100" />
+          <PropertySetter CoveredStatements="1" TotalStatements="1" CoveragePercent="100" />
+        </AutoProperty>
+        <AutoProperty Name="Remotes:GitRemotes" CoveredStatements="0" TotalStatements="2" CoveragePercent="0">
+          <PropertyGetter CoveredStatements="0" TotalStatements="1" CoveragePercent="0" />
+          <PropertySetter CoveredStatements="0" TotalStatements="1" CoveragePercent="0" />
+        </AutoProperty>
+      </Type>
+      <Type Name="GitHead" CoveredStatements="12" TotalStatements="12" CoveragePercent="100">
+        <AutoProperty Name="AuthorEmail:string" CoveredStatements="2" TotalStatements="2" CoveragePercent="100">
+          <PropertyGetter CoveredStatements="1" TotalStatements="1" CoveragePercent="100" />
+          <PropertySetter CoveredStatements="1" TotalStatements="1" CoveragePercent="100" />
+        </AutoProperty>
+        <AutoProperty Name="AuthorName:string" CoveredStatements="2" TotalStatements="2" CoveragePercent="100">
+          <PropertyGetter CoveredStatements="1" TotalStatements="1" CoveragePercent="100" />
+          <PropertySetter CoveredStatements="1" TotalStatements="1" CoveragePercent="100" />
+        </AutoProperty>
+        <AutoProperty Name="ComitterEmail:string" CoveredStatements="2" TotalStatements="2" CoveragePercent="100">
+          <PropertyGetter CoveredStatements="1" TotalStatements="1" CoveragePercent="100" />
+          <PropertySetter CoveredStatements="1" TotalStatements="1" CoveragePercent="100" />
+        </AutoProperty>
+        <AutoProperty Name="CommitterName:string" CoveredStatements="2" TotalStatements="2" CoveragePercent="100">
+          <PropertyGetter CoveredStatements="1" TotalStatements="1" CoveragePercent="100" />
+          <PropertySetter CoveredStatements="1" TotalStatements="1" CoveragePercent="100" />
+        </AutoProperty>
+        <AutoProperty Name="Id:string" CoveredStatements="2" TotalStatements="2" CoveragePercent="100">
+          <PropertyGetter CoveredStatements="1" TotalStatements="1" CoveragePercent="100" />
+          <PropertySetter CoveredStatements="1" TotalStatements="1" CoveragePercent="100" />
+        </AutoProperty>
+        <AutoProperty Name="Message:string" CoveredStatements="2" TotalStatements="2" CoveragePercent="100">
+          <PropertyGetter CoveredStatements="1" TotalStatements="1" CoveragePercent="100" />
+          <PropertySetter CoveredStatements="1" TotalStatements="1" CoveragePercent="100" />
+        </AutoProperty>
+      </Type>
+      <Type Name="GitRemotes" CoveredStatements="0" TotalStatements="4" CoveragePercent="0">
+        <AutoProperty Name="Name:string" CoveredStatements="0" TotalStatements="2" CoveragePercent="0">
+          <PropertyGetter CoveredStatements="0" TotalStatements="1" CoveragePercent="0" />
+          <PropertySetter CoveredStatements="0" TotalStatements="1" CoveragePercent="0" />
+        </AutoProperty>
+        <AutoProperty Name="Url:string" CoveredStatements="0" TotalStatements="2" CoveragePercent="0">
+          <PropertyGetter CoveredStatements="0" TotalStatements="1" CoveragePercent="0" />
+          <PropertySetter CoveredStatements="0" TotalStatements="1" CoveragePercent="0" />
+        </AutoProperty>
+      </Type>
+    </Namespace>
+    <Namespace Name="csmacnz.Coveralls.GitDataResolvers" CoveredStatements="46" TotalStatements="75" CoveragePercent="61">
+      <Type Name="AppVeyorGitDataResolver" CoveredStatements="11" TotalStatements="12" CoveragePercent="92">
+        <Constructor Name="AppVeyorGitDataResolver(IEnvironmentVariables)" CoveredStatements="4" TotalStatements="4" CoveragePercent="100" />
+        <Property Name="DisplayName:string" CoveredStatements="0" TotalStatements="1" CoveragePercent="0">
+          <PropertyGetter CoveredStatements="0" TotalStatements="1" CoveragePercent="0" />
+        </Property>
+        <Method Name="CanProvideData():bool" CoveredStatements="3" TotalStatements="3" CoveragePercent="100" />
+        <Method Name="GenerateData():Either&lt;GitData,CommitSha&gt;" CoveredStatements="4" TotalStatements="4" CoveragePercent="100" />
+      </Type>
+      <Type Name="CommandLineGitDataResolver" CoveredStatements="8" TotalStatements="21" CoveragePercent="38">
+        <Constructor Name="CommandLineGitDataResolver(MainArgs)" CoveredStatements="4" TotalStatements="4" CoveragePercent="100" />
+        <Property Name="DisplayName:string" CoveredStatements="0" TotalStatements="1" CoveragePercent="0">
+          <PropertyGetter CoveredStatements="0" TotalStatements="1" CoveragePercent="0" />
+        </Property>
+        <Method Name="CanProvideData():bool" CoveredStatements="4" TotalStatements="4" CoveragePercent="100" />
+        <Method Name="GenerateData():Either&lt;GitData,CommitSha&gt;" CoveredStatements="0" TotalStatements="12" CoveragePercent="0" />
+      </Type>
+      <Type Name="TeamCityGitDataResolver" CoveredStatements="27" TotalStatements="30" CoveragePercent="90">
+        <Constructor Name="TeamCityGitDataResolver(IEnvironmentVariables,IConsole)" CoveredStatements="5" TotalStatements="5" CoveragePercent="100" />
+        <Property Name="DisplayName:string" CoveredStatements="0" TotalStatements="1" CoveragePercent="0">
+          <PropertyGetter CoveredStatements="0" TotalStatements="1" CoveragePercent="0" />
+        </Property>
+        <Method Name="CanProvideData():bool" CoveredStatements="3" TotalStatements="3" CoveragePercent="100" />
+        <Method Name="GenerateData():Either&lt;GitData,CommitSha&gt;" CoveredStatements="19" TotalStatements="21" CoveragePercent="90" />
+      </Type>
+      <Type Name="TravisGitDataResolver" CoveredStatements="0" TotalStatements="12" CoveragePercent="0">
+        <Constructor Name="TravisGitDataResolver(IEnvironmentVariables)" CoveredStatements="0" TotalStatements="4" CoveragePercent="0" />
+        <Property Name="DisplayName:string" CoveredStatements="0" TotalStatements="1" CoveragePercent="0">
+          <PropertyGetter CoveredStatements="0" TotalStatements="1" CoveragePercent="0" />
+        </Property>
+        <Method Name="CanProvideData():bool" CoveredStatements="0" TotalStatements="3" CoveragePercent="0" />
+        <Method Name="GenerateData():Either&lt;GitData,CommitSha&gt;" CoveredStatements="0" TotalStatements="4" CoveragePercent="0" />
+      </Type>
+    </Namespace>
+    <Namespace Name="csmacnz.Coveralls.MetaDataResolvers" CoveredStatements="69" TotalStatements="115" CoveragePercent="60">
+      <Type Name="AppVeyorMetaDataResolver" CoveredStatements="7" TotalStatements="26" CoveragePercent="27">
+        <Constructor Name="AppVeyorMetaDataResolver(IEnvironmentVariables)" CoveredStatements="4" TotalStatements="4" CoveragePercent="100" />
+        <Method Name="GetFromVariable(string):Option&lt;string&gt;" CoveredStatements="0" TotalStatements="7" CoveragePercent="0" />
+        <Method Name="IsActive():bool" CoveredStatements="3" TotalStatements="3" CoveragePercent="100" />
+        <Method Name="ResolvePullRequestId():Option&lt;string&gt;" CoveredStatements="0" TotalStatements="3" CoveragePercent="0" />
+        <Method Name="ResolveServiceBuildNumber():Option&lt;string&gt;" CoveredStatements="0" TotalStatements="3" CoveragePercent="0" />
+        <Method Name="ResolveServiceJobId():Option&lt;string&gt;" CoveredStatements="0" TotalStatements="3" CoveragePercent="0" />
+        <Method Name="ResolveServiceName():Option&lt;string&gt;" CoveredStatements="0" TotalStatements="3" CoveragePercent="0" />
+      </Type>
+      <Type Name="CommandLineMetaDataResolver" CoveredStatements="26" TotalStatements="31" CoveragePercent="84">
+        <Constructor Name="CommandLineMetaDataResolver(MainArgs)" CoveredStatements="4" TotalStatements="4" CoveragePercent="100" />
+        <Method Name="IsActive():bool" CoveredStatements="3" TotalStatements="3" CoveragePercent="100" />
+        <Method Name="ResolvePullRequestId():Option&lt;string&gt;" CoveredStatements="4" TotalStatements="6" CoveragePercent="67" />
+        <Method Name="ResolveServiceBuildNumber():Option&lt;string&gt;" CoveredStatements="6" TotalStatements="6" CoveragePercent="100" />
+        <Method Name="ResolveServiceJobId():Option&lt;string&gt;" CoveredStatements="4" TotalStatements="6" CoveragePercent="67" />
+        <Method Name="ResolveServiceName():Option&lt;string&gt;" CoveredStatements="5" TotalStatements="6" CoveragePercent="83" />
+      </Type>
+      <Type Name="TeamCityMetaDataResolver" CoveredStatements="29" TotalStatements="29" CoveragePercent="100">
+        <Constructor Name="TeamCityMetaDataResolver(IEnvironmentVariables)" CoveredStatements="4" TotalStatements="4" CoveragePercent="100" />
+        <Method Name="GetFromVariable(string):Option&lt;string&gt;" CoveredStatements="7" TotalStatements="7" CoveragePercent="100" />
+        <Method Name="IsActive():bool" CoveredStatements="3" TotalStatements="3" CoveragePercent="100" />
+        <Method Name="ResolvePullRequestId():Option&lt;string&gt;" CoveredStatements="6" TotalStatements="6" CoveragePercent="100">
+          <OwnCoverage CoveredStatements="4" TotalStatements="4" CoveragePercent="100" />
+          <AnonymousMethod Name="(string):Option&lt;string&gt;" CoveredStatements="1" TotalStatements="1" CoveragePercent="100" />
+          <AnonymousMethod Name="():Option&lt;string&gt;" CoveredStatements="1" TotalStatements="1" CoveragePercent="100" />
+        </Method>
+        <Method Name="ResolveServiceBuildNumber():Option&lt;string&gt;" CoveredStatements="3" TotalStatements="3" CoveragePercent="100" />
+        <Method Name="ResolveServiceJobId():Option&lt;string&gt;" CoveredStatements="3" TotalStatements="3" CoveragePercent="100" />
+        <Method Name="ResolveServiceName():Option&lt;string&gt;" CoveredStatements="3" TotalStatements="3" CoveragePercent="100" />
+      </Type>
+      <Type Name="TravisMetaDataResolver" CoveredStatements="7" TotalStatements="29" CoveragePercent="24">
+        <Constructor Name="TravisMetaDataResolver(IEnvironmentVariables)" CoveredStatements="4" TotalStatements="4" CoveragePercent="100" />
+        <Method Name="GetFromVariable(string):Option&lt;string&gt;" CoveredStatements="0" TotalStatements="7" CoveragePercent="0" />
+        <Method Name="IsActive():bool" CoveredStatements="3" TotalStatements="3" CoveragePercent="100" />
+        <Method Name="ResolvePullRequestId():Option&lt;string&gt;" CoveredStatements="0" TotalStatements="6" CoveragePercent="0">
+          <OwnCoverage CoveredStatements="0" TotalStatements="4" CoveragePercent="0" />
+          <AnonymousMethod Name="(string):Option&lt;string&gt;" CoveredStatements="0" TotalStatements="1" CoveragePercent="0" />
+          <AnonymousMethod Name="():Option&lt;string&gt;" CoveredStatements="0" TotalStatements="1" CoveragePercent="0" />
+        </Method>
+        <Method Name="ResolveServiceBuildNumber():Option&lt;string&gt;" CoveredStatements="0" TotalStatements="3" CoveragePercent="0" />
+        <Method Name="ResolveServiceJobId():Option&lt;string&gt;" CoveredStatements="0" TotalStatements="3" CoveragePercent="0" />
+        <Method Name="ResolveServiceName():Option&lt;string&gt;" CoveredStatements="0" TotalStatements="3" CoveragePercent="0" />
+      </Type>
+    </Namespace>
+    <Namespace Name="csmacnz.Coveralls.Parsers" CoveredStatements="213" TotalStatements="407" CoveragePercent="52">
+      <Type Name="ChutzpahJsonFileItem" CoveredStatements="7" TotalStatements="8" CoveragePercent="88">
+        <AutoProperty Name="CoveragePercentage:double" CoveredStatements="1" TotalStatements="2" CoveragePercent="50">
+          <PropertyGetter CoveredStatements="0" TotalStatements="1" CoveragePercent="0" />
+          <PropertySetter CoveredStatements="1" TotalStatements="1" CoveragePercent="100" />
+        </AutoProperty>
+        <AutoProperty Name="FilePath:string" CoveredStatements="2" TotalStatements="2" CoveragePercent="100">
+          <PropertyGetter CoveredStatements="1" TotalStatements="1" CoveragePercent="100" />
+          <PropertySetter CoveredStatements="1" TotalStatements="1" CoveragePercent="100" />
+        </AutoProperty>
+        <AutoProperty Name="LineExecutionCounts:Nullable&lt;int&gt;[]" CoveredStatements="2" TotalStatements="2" CoveragePercent="100">
+          <PropertyGetter CoveredStatements="1" TotalStatements="1" CoveragePercent="100" />
+          <PropertySetter CoveredStatements="1" TotalStatements="1" CoveragePercent="100" />
+        </AutoProperty>
+        <AutoProperty Name="SourceLines:string[]" CoveredStatements="2" TotalStatements="2" CoveragePercent="100">
+          <PropertyGetter CoveredStatements="1" TotalStatements="1" CoveragePercent="100" />
+          <PropertySetter CoveredStatements="1" TotalStatements="1" CoveragePercent="100" />
+        </AutoProperty>
+      </Type>
+      <Type Name="ChutzpahJsonParser" CoveredStatements="18" TotalStatements="18" CoveragePercent="100">
+        <Method Name="GenerateSourceFiles(string[]):List&lt;FileCoverageData&gt;" CoveredStatements="18" TotalStatements="18" CoveragePercent="100" />
+      </Type>
+      <Type Name="DynamicCodeCoverageParser" CoveredStatements="0" TotalStatements="63" CoveragePercent="0">
+        <Method Name="GenerateSourceFiles(XDocument):List&lt;FileCoverageData&gt;" CoveredStatements="0" TotalStatements="63" CoveragePercent="0" />
+      </Type>
+      <Type Name="ExportCodeCoverageParser" CoveredStatements="0" TotalStatements="92" CoveragePercent="0">
+        <Method Name="GenerateSourceFiles(XDocument):List&lt;FileCoverageData&gt;" CoveredStatements="0" TotalStatements="92" CoveragePercent="0" />
+      </Type>
+      <Type Name="LcovParser" CoveredStatements="0" TotalStatements="31" CoveragePercent="0">
+        <Method Name="GenerateSourceFiles(string[]):List&lt;FileCoverageData&gt;" CoveredStatements="0" TotalStatements="31" CoveragePercent="0" />
+      </Type>
+      <Type Name="MonoCoverParser" CoveredStatements="31" TotalStatements="34" CoveragePercent="91">
+        <Method Name="GenerateSourceFiles(Dictionary&lt;string,XDocument&gt;):List&lt;FileCoverageData&gt;" CoveredStatements="28" TotalStatements="31" CoveragePercent="90" />
+        <Method Name="IsMonoCoverageClassFileName(string):bool" CoveredStatements="3" TotalStatements="3" CoveragePercent="100" />
+      </Type>
+      <Type Name="NCoverParser" CoveredStatements="41" TotalStatements="45" CoveragePercent="91">
+        <Method Name="GenerateSourceFiles(XDocument):List&lt;FileCoverageData&gt;" CoveredStatements="41" TotalStatements="45" CoveragePercent="91">
+          <OwnCoverage CoveredStatements="40" TotalStatements="44" CoveragePercent="91" />
+          <AnonymousMethod Name="(FileCoverageDataBuilder):FileCoverageData" CoveredStatements="1" TotalStatements="1" CoveragePercent="100" />
+        </Method>
+      </Type>
+      <Type Name="OpenCoverParser" CoveredStatements="69" TotalStatements="69" CoveragePercent="100">
+        <Method Name="GenerateSourceFiles(XDocument):List&lt;FileCoverageData&gt;" CoveredStatements="69" TotalStatements="69" CoveragePercent="100" />
+      </Type>
+      <Type Name="ReportGeneratorParser" CoveredStatements="47" TotalStatements="47" CoveragePercent="100">
+        <Method Name="GenerateSourceFiles(Dictionary&lt;string,XDocument&gt;):List&lt;FileCoverageData&gt;" CoveredStatements="47" TotalStatements="47" CoveragePercent="100">
+          <OwnCoverage CoveredStatements="46" TotalStatements="46" CoveragePercent="100" />
+          <AnonymousMethod Name="(string):bool" CoveredStatements="1" TotalStatements="1" CoveragePercent="100" />
+        </Method>
+      </Type>
+    </Namespace>
+    <Namespace Name="csmacnz.Coveralls.Ports" CoveredStatements="3" TotalStatements="3" CoveragePercent="100">
+      <Type Name="EnvironmentVariablesExtensions" CoveredStatements="3" TotalStatements="3" CoveragePercent="100">
+        <Method Name="GetBooleanVariable(IEnvironmentVariables,string):bool" CoveredStatements="3" TotalStatements="3" CoveragePercent="100" />
+      </Type>
+    </Namespace>
+  </Assembly>
+  <Assembly Name="csmacnz.Coveralls.Tests" CoveredStatements="625" TotalStatements="637" CoveragePercent="98">
+    <Namespace Name="csmacnz.Coveralls.Tests" CoveredStatements="111" TotalStatements="111" CoveragePercent="100">
+      <Type Name="CoverageFileBuilderTests" CoveredStatements="32" TotalStatements="32" CoveragePercent="100">
+        <Type Name="WhenCreatingACoverageFromADefaultBuilder" CoveredStatements="16" TotalStatements="16" CoveragePercent="100">
+          <Constructor Name="WhenCreatingACoverageFromADefaultBuilder()" CoveredStatements="5" TotalStatements="5" CoveragePercent="100" />
+          <Method Name="ThenCoverageIsEmpty():void" CoveredStatements="5" TotalStatements="5" CoveragePercent="100" />
+          <Method Name="ThenFileNameIsSet():void" CoveredStatements="3" TotalStatements="3" CoveragePercent="100" />
+          <Method Name="ThenSourceDigestIsTheEmptyDigest():void" CoveredStatements="3" TotalStatements="3" CoveragePercent="100" />
+        </Type>
+        <Method Name="CanConstructBuilder():void" CoveredStatements="4" TotalStatements="4" CoveragePercent="100" />
+        <Method Name="CreateFileBuilder(string):CoverageFileBuilder" CoveredStatements="3" TotalStatements="3" CoveragePercent="100" />
+        <Method Name="NewBuilderCanCreateCoverageFile():void" CoveredStatements="5" TotalStatements="5" CoveragePercent="100" />
+        <Method Name="NewBuilderWithNullFileThrowsArgumentException():void" CoveredStatements="4" TotalStatements="4" CoveragePercent="100">
+          <OwnCoverage CoveredStatements="3" TotalStatements="3" CoveragePercent="100" />
+          <AnonymousMethod Name="():object" CoveredStatements="1" TotalStatements="1" CoveragePercent="100" />
+        </Method>
+      </Type>
+      <Type Name="Reports" CoveredStatements="52" TotalStatements="52" CoveragePercent="100">
+        <Type Name="ChutzpahSample" CoveredStatements="1" TotalStatements="1" CoveragePercent="100">
+          <Property Name="ChutzpahExample:string" CoveredStatements="1" TotalStatements="1" CoveragePercent="100">
+            <PropertyGetter CoveredStatements="1" TotalStatements="1" CoveragePercent="100" />
+          </Property>
+        </Type>
+        <Type Name="MonoCovSamples" CoveredStatements="16" TotalStatements="16" CoveragePercent="100">
+          <Type Name="Sample1" CoveredStatements="13" TotalStatements="13" CoveragePercent="100">
+            <Property Name="Class_GameOfLife_Game:string" CoveredStatements="1" TotalStatements="1" CoveragePercent="100">
+              <PropertyGetter CoveredStatements="1" TotalStatements="1" CoveragePercent="100" />
+            </Property>
+            <Property Name="Class_GameOfLife_Program:string" CoveredStatements="1" TotalStatements="1" CoveragePercent="100">
+              <PropertyGetter CoveredStatements="1" TotalStatements="1" CoveragePercent="100" />
+            </Property>
+            <Property Name="Class_GameOfLife_World:string" CoveredStatements="1" TotalStatements="1" CoveragePercent="100">
+              <PropertyGetter CoveredStatements="1" TotalStatements="1" CoveragePercent="100" />
+            </Property>
+            <Property Name="Class_GameOfLife_WorldBuilder:string" CoveredStatements="1" TotalStatements="1" CoveragePercent="100">
+              <PropertyGetter CoveredStatements="1" TotalStatements="1" CoveragePercent="100" />
+            </Property>
+            <Property Name="Class_GameOfLife_Xunit_Tests_WorldTests:string" CoveredStatements="1" TotalStatements="1" CoveragePercent="100">
+              <PropertyGetter CoveredStatements="1" TotalStatements="1" CoveragePercent="100" />
+            </Property>
+            <Property Name="Namespace_GameOfLife:string" CoveredStatements="1" TotalStatements="1" CoveragePercent="100">
+              <PropertyGetter CoveredStatements="1" TotalStatements="1" CoveragePercent="100" />
+            </Property>
+            <Property Name="Namespace_GameOfLife_Xunit:string" CoveredStatements="1" TotalStatements="1" CoveragePercent="100">
+              <PropertyGetter CoveredStatements="1" TotalStatements="1" CoveragePercent="100" />
+            </Property>
+            <Property Name="Namespace_GameOfLife_Xunit_Tests:string" CoveredStatements="1" TotalStatements="1" CoveragePercent="100">
+              <PropertyGetter CoveredStatements="1" TotalStatements="1" CoveragePercent="100" />
+            </Property>
+            <Property Name="Project:string" CoveredStatements="1" TotalStatements="1" CoveragePercent="100">
+              <PropertyGetter CoveredStatements="1" TotalStatements="1" CoveragePercent="100" />
+            </Property>
+            <Property Name="Style:string" CoveredStatements="1" TotalStatements="1" CoveragePercent="100">
+              <PropertyGetter CoveredStatements="1" TotalStatements="1" CoveragePercent="100" />
+            </Property>
+            <Method Name="GetSample1Contents(string):string" CoveredStatements="3" TotalStatements="3" CoveragePercent="100" />
+          </Type>
+          <Method Name="GetMonoCovContents(string):string" CoveredStatements="3" TotalStatements="3" CoveragePercent="100" />
+        </Type>
+        <Type Name="NCoverSamples" CoveredStatements="7" TotalStatements="7" CoveragePercent="100">
+          <Type Name="SingleFileReportOneLineCovered" CoveredStatements="2" TotalStatements="2" CoveragePercent="100">
+            <Property Name="Report:string" CoveredStatements="1" TotalStatements="1" CoveragePercent="100">
+              <PropertyGetter CoveredStatements="1" TotalStatements="1" CoveragePercent="100" />
+            </Property>
+            <Property Name="SourceFile:string" CoveredStatements="1" TotalStatements="1" CoveragePercent="100">
+              <PropertyGetter CoveredStatements="1" TotalStatements="1" CoveragePercent="100" />
+            </Property>
+          </Type>
+          <Property Name="EmptyReport:string" CoveredStatements="1" TotalStatements="1" CoveragePercent="100">
+            <PropertyGetter CoveredStatements="1" TotalStatements="1" CoveragePercent="100" />
+          </Property>
+          <Property Name="SingleFileReportOneLineUncovered:string" CoveredStatements="1" TotalStatements="1" CoveragePercent="100">
+            <PropertyGetter CoveredStatements="1" TotalStatements="1" CoveragePercent="100" />
+          </Property>
+          <Method Name="GetNCoverContents(string):string" CoveredStatements="3" TotalStatements="3" CoveragePercent="100" />
+        </Type>
+        <Type Name="OpenCoverSamples" CoveredStatements="11" TotalStatements="11" CoveragePercent="100">
+          <Property Name="EmptyReport:string" CoveredStatements="1" TotalStatements="1" CoveragePercent="100">
+            <PropertyGetter CoveredStatements="1" TotalStatements="1" CoveragePercent="100" />
+          </Property>
+          <Property Name="SingleFileReport:string" CoveredStatements="1" TotalStatements="1" CoveragePercent="100">
+            <PropertyGetter CoveredStatements="1" TotalStatements="1" CoveragePercent="100" />
+          </Property>
+          <Property Name="SingleFileReportOneLineCovered:string" CoveredStatements="1" TotalStatements="1" CoveragePercent="100">
+            <PropertyGetter CoveredStatements="1" TotalStatements="1" CoveragePercent="100" />
+          </Property>
+          <Property Name="SingleFileReportOneLineUncovered:string" CoveredStatements="1" TotalStatements="1" CoveragePercent="100">
+            <PropertyGetter CoveredStatements="1" TotalStatements="1" CoveragePercent="100" />
+          </Property>
+          <Property Name="SingleFileReportSourceFile:string" CoveredStatements="1" TotalStatements="1" CoveragePercent="100">
+            <PropertyGetter CoveredStatements="1" TotalStatements="1" CoveragePercent="100" />
+          </Property>
+          <Method Name="GetOpenCoverContents(string):string" CoveredStatements="3" TotalStatements="3" CoveragePercent="100" />
+          <Method Name="GetOpenCoverXmlContents(string):string" CoveredStatements="3" TotalStatements="3" CoveragePercent="100" />
+        </Type>
+        <Type Name="ReportGeneratorSample" CoveredStatements="14" TotalStatements="14" CoveragePercent="100">
+          <Type Name="Sample1" CoveredStatements="5" TotalStatements="5" CoveragePercent="100">
+            <Property Name="Summary:string" CoveredStatements="1" TotalStatements="1" CoveragePercent="100">
+              <PropertyGetter CoveredStatements="1" TotalStatements="1" CoveragePercent="100" />
+            </Property>
+            <Property Name="Test_test_UnitTest1:string" CoveredStatements="1" TotalStatements="1" CoveragePercent="100">
+              <PropertyGetter CoveredStatements="1" TotalStatements="1" CoveragePercent="100" />
+            </Property>
+            <Method Name="GetReportGeneratorContents(string):string" CoveredStatements="3" TotalStatements="3" CoveragePercent="100" />
+          </Type>
+          <Type Name="Sample2" CoveredStatements="9" TotalStatements="9" CoveragePercent="100">
+            <Property Name="GameOfLife_GameOfLife_Game:string" CoveredStatements="1" TotalStatements="1" CoveragePercent="100">
+              <PropertyGetter CoveredStatements="1" TotalStatements="1" CoveragePercent="100" />
+            </Property>
+            <Property Name="GameOfLife_GameOfLife_Program:string" CoveredStatements="1" TotalStatements="1" CoveragePercent="100">
+              <PropertyGetter CoveredStatements="1" TotalStatements="1" CoveragePercent="100" />
+            </Property>
+            <Property Name="GameOfLife_GameOfLife_World:string" CoveredStatements="1" TotalStatements="1" CoveragePercent="100">
+              <PropertyGetter CoveredStatements="1" TotalStatements="1" CoveragePercent="100" />
+            </Property>
+            <Property Name="GameOfLife_GameOfLife_WorldBuilder:string" CoveredStatements="1" TotalStatements="1" CoveragePercent="100">
+              <PropertyGetter CoveredStatements="1" TotalStatements="1" CoveragePercent="100" />
+            </Property>
+            <Property Name="GameOfLife_xUnit_Tests_GameOfLife_xUnit_Tests_WorldTests:string" CoveredStatements="1" TotalStatements="1" CoveragePercent="100">
+              <PropertyGetter CoveredStatements="1" TotalStatements="1" CoveragePercent="100" />
+            </Property>
+            <Property Name="Summary:string" CoveredStatements="1" TotalStatements="1" CoveragePercent="100">
+              <PropertyGetter CoveredStatements="1" TotalStatements="1" CoveragePercent="100" />
+            </Property>
+            <Method Name="GetReportGeneratorContents(string):string" CoveredStatements="3" TotalStatements="3" CoveragePercent="100" />
+          </Type>
+        </Type>
+        <Method Name="GetFileContents(string):string" CoveredStatements="3" TotalStatements="3" CoveragePercent="100" />
+      </Type>
+      <Type Name="UsageTests" CoveredStatements="27" TotalStatements="27" CoveragePercent="100">
+        <Method Name="FileDoesntExist():void" CoveredStatements="5" TotalStatements="5" CoveragePercent="100" />
+        <Method Name="HelpLongHand():void" CoveredStatements="5" TotalStatements="5" CoveragePercent="100" />
+        <Method Name="HelpShortHand():void" CoveredStatements="5" TotalStatements="5" CoveragePercent="100" />
+        <Method Name="InvalidArgument_ExitCodeNotSuccess():void" CoveredStatements="4" TotalStatements="4" CoveragePercent="100" />
+        <Method Name="NoArguments_ExitCodeNotSuccess():void" CoveredStatements="4" TotalStatements="4" CoveragePercent="100" />
+        <Method Name="Version():void" CoveredStatements="4" TotalStatements="4" CoveragePercent="100" />
+      </Type>
+    </Namespace>
+    <Namespace Name="csmacnz.Coveralls.Tests.Chutzpah" CoveredStatements="9" TotalStatements="9" CoveragePercent="100">
+      <Type Name="ChutzpahJsonParserTests" CoveredStatements="9" TotalStatements="9" CoveragePercent="100">
+        <Method Name="GenerateSourceFiles_CorrectCoverage():void" CoveredStatements="9" TotalStatements="9" CoveragePercent="100" />
+      </Type>
+    </Namespace>
+    <Namespace Name="csmacnz.Coveralls.Tests.GitDataResolvers" CoveredStatements="89" TotalStatements="90" CoveragePercent="99">
+      <Type Name="AppVeyorGitDataResolverTests" CoveredStatements="57" TotalStatements="58" CoveragePercent="98">
+        <Type Name="GenerateData" CoveredStatements="33" TotalStatements="34" CoveragePercent="97">
+          <Constructor Name="GenerateData()" CoveredStatements="12" TotalStatements="13" CoveragePercent="92">
+            <OwnCoverage CoveredStatements="11" TotalStatements="11" CoveragePercent="100" />
+            <AnonymousMethod Name="(GitData):GitData" CoveredStatements="1" TotalStatements="1" CoveragePercent="100" />
+            <AnonymousMethod Name="(CommitSha):GitData" CoveredStatements="0" TotalStatements="1" CoveragePercent="0" />
+          </Constructor>
+          <Method Name="BranchSetCorrectly():void" CoveredStatements="3" TotalStatements="3" CoveragePercent="100" />
+          <Method Name="CommitIdSetCorrectly():void" CoveredStatements="4" TotalStatements="4" CoveragePercent="100" />
+          <Method Name="EmailSetCorrectly():void" CoveredStatements="5" TotalStatements="5" CoveragePercent="100" />
+          <Method Name="MessageSetCorrectly():void" CoveredStatements="4" TotalStatements="4" CoveragePercent="100" />
+          <Method Name="NameSetCorrectly():void" CoveredStatements="5" TotalStatements="5" CoveragePercent="100" />
+        </Type>
+        <Method Name="CanProvideDataAppVeyorEnvironmentVariableSetToFalseReturnsFalse():void" CoveredStatements="6" TotalStatements="6" CoveragePercent="100" />
+        <Method Name="CanProvideDataAppVeyorEnvironmentVariablesSetReturnsTrue():void" CoveredStatements="6" TotalStatements="6" CoveragePercent="100" />
+        <Method Name="CanProvideDataNoEnvironmentVariablesSetReturnsFalse():void" CoveredStatements="5" TotalStatements="5" CoveragePercent="100" />
+        <Method Name="GenerateDataNoEnviromentDataReturnsEmptyGitData():void" CoveredStatements="7" TotalStatements="7" CoveragePercent="100" />
+      </Type>
+      <Type Name="TeamCityGitDataResolverTests" CoveredStatements="32" TotalStatements="32" CoveragePercent="100">
+        <Method Name="CanProvideDataNoEnvironmentVariablesSetReturnsFalse():void" CoveredStatements="5" TotalStatements="5" CoveragePercent="100" />
+        <Method Name="CanProvideDataTeamCityEnvironmentVariableSetReturnsTrue():void" CoveredStatements="6" TotalStatements="6" CoveragePercent="100" />
+        <Method Name="GenerateDataCustomEnviromentDataReturnsGitData():void" CoveredStatements="12" TotalStatements="12" CoveragePercent="100" />
+        <Method Name="GenerateDataNoCustomEnviromentDataReturnsCommitSha():void" CoveredStatements="9" TotalStatements="9" CoveragePercent="100" />
+      </Type>
+    </Namespace>
+    <Namespace Name="csmacnz.Coveralls.Tests.MetaDataResolvers" CoveredStatements="50" TotalStatements="50" CoveragePercent="100">
+      <Type Name="TeamCityMetaDataResolverTests" CoveredStatements="50" TotalStatements="50" CoveragePercent="100">
+        <Type Name="GenerateData" CoveredStatements="27" TotalStatements="27" CoveragePercent="100">
+          <Constructor Name="GenerateData()" CoveredStatements="8" TotalStatements="8" CoveragePercent="100" />
+          <Method Name="PullRequestIdSetCorrectly():void" CoveredStatements="5" TotalStatements="5" CoveragePercent="100" />
+          <Method Name="ServiceBuildNumberResolvesCorrectly():void" CoveredStatements="5" TotalStatements="5" CoveragePercent="100" />
+          <Method Name="ServiceJobIdResolvesCorrectly():void" CoveredStatements="4" TotalStatements="4" CoveragePercent="100" />
+          <Method Name="ServiceNameResolvesCorrectly():void" CoveredStatements="5" TotalStatements="5" CoveragePercent="100" />
+        </Type>
+        <Method Name="CanProvideDataNoEnvironmentVariablesSetReturnsFalse():void" CoveredStatements="5" TotalStatements="5" CoveragePercent="100" />
+        <Method Name="CanProvideDataTeamCityEnvironmentVariableSetReturnsTrue():void" CoveredStatements="6" TotalStatements="6" CoveragePercent="100" />
+        <Method Name="TeamcityNoCustomEnvironmentVariableSetReturnsCorrectResults():void" CoveredStatements="12" TotalStatements="12" CoveragePercent="100" />
+      </Type>
+    </Namespace>
+    <Namespace Name="csmacnz.Coveralls.Tests.Monocov" CoveredStatements="62" TotalStatements="62" CoveragePercent="100">
+      <Type Name="MonocovTests" CoveredStatements="62" TotalStatements="62" CoveragePercent="100">
+        <Method Name="AssertIsValidCoverageFileData(JToken,string):void" CoveredStatements="4" TotalStatements="4" CoveragePercent="100" />
+        <Method Name="AssertValidJson(string):JObject" CoveredStatements="5" TotalStatements="5" CoveragePercent="100" />
+        <Method Name="BuildMonocovReportFolder():ValueTuple&lt;TestFileSystem,string&gt;" CoveredStatements="15" TotalStatements="15" CoveragePercent="100" />
+        <Method Name="DryRunCoverallsMultiModeWithInputFile(string,TestFileSystem):CoverallsRunResults" CoveredStatements="3" TotalStatements="3" CoveragePercent="100" />
+        <Method Name="DryRunCoverallsWithInputFile(string,TestFileSystem):CoverallsRunResults" CoveredStatements="3" TotalStatements="3" CoveragePercent="100" />
+        <Method Name="EmptyReport_GivenAnOutput_OutputsSamplePost():void" CoveredStatements="22" TotalStatements="22" CoveragePercent="100">
+          <OwnCoverage CoveredStatements="17" TotalStatements="17" CoveragePercent="100" />
+          <AnonymousMethod Name="(JToken):void" CoveredStatements="1" TotalStatements="1" CoveragePercent="100" />
+          <AnonymousMethod Name="(JToken):void" CoveredStatements="1" TotalStatements="1" CoveragePercent="100" />
+          <AnonymousMethod Name="(JToken):void" CoveredStatements="1" TotalStatements="1" CoveragePercent="100" />
+          <AnonymousMethod Name="(JToken):void" CoveredStatements="1" TotalStatements="1" CoveragePercent="100" />
+          <AnonymousMethod Name="(JToken):void" CoveredStatements="1" TotalStatements="1" CoveragePercent="100" />
+        </Method>
+        <Method Name="ReportWithOneFile_MultipleMode_RunsSuccessfully():void" CoveredStatements="5" TotalStatements="5" CoveragePercent="100" />
+        <Method Name="ReportWithOneFile_RunsSuccessfully():void" CoveredStatements="5" TotalStatements="5" CoveragePercent="100" />
+      </Type>
+    </Namespace>
+    <Namespace Name="csmacnz.Coveralls.Tests.NCover" CoveredStatements="70" TotalStatements="70" CoveragePercent="100">
+      <Type Name="NCoverParserTests" CoveredStatements="20" TotalStatements="20" CoveragePercent="100">
+        <Method Name="EmptyReportLoadsNoSourceFiles():void" CoveredStatements="5" TotalStatements="5" CoveragePercent="100" />
+        <Method Name="SingleFileReportLoadsSingleSourceFiles():void" CoveredStatements="5" TotalStatements="5" CoveragePercent="100" />
+        <Method Name="SingleFileReportWithSingleMethodLineCoveredWithoutSourceLoadsCorrectly():void" CoveredStatements="5" TotalStatements="5" CoveragePercent="100" />
+        <Method Name="SingleFileReportWithSingleMethodLineUncoveredWithoutSourceLoadsCorrectly():void" CoveredStatements="5" TotalStatements="5" CoveragePercent="100" />
+      </Type>
+      <Type Name="NCoverTests" CoveredStatements="50" TotalStatements="50" CoveragePercent="100">
+        <Method Name="BuildReportWithOneFile():ValueTuple&lt;TestFileSystem,string&gt;" CoveredStatements="20" TotalStatements="20" CoveragePercent="100">
+          <OwnCoverage CoveredStatements="19" TotalStatements="19" CoveragePercent="100" />
+          <AnonymousMethod Name="(XElement):bool" CoveredStatements="1" TotalStatements="1" CoveragePercent="100" />
+        </Method>
+        <Method Name="DryRunCoverallsMultiModeWithInputFile(string,TestFileSystem):CoverallsRunResults" CoveredStatements="3" TotalStatements="3" CoveragePercent="100" />
+        <Method Name="DryRunCoverallsWithInputFile(string,TestFileSystem):CoverallsRunResults" CoveredStatements="3" TotalStatements="3" CoveragePercent="100" />
+        <Method Name="EmptyReport_MultipleMode_RunsSuccessfully():void" CoveredStatements="7" TotalStatements="7" CoveragePercent="100" />
+        <Method Name="EmptyReport_RunsSuccessfully():void" CoveredStatements="7" TotalStatements="7" CoveragePercent="100" />
+        <Method Name="ReportWithOneFile_MultipleMode_RunsSuccessfully():void" CoveredStatements="5" TotalStatements="5" CoveragePercent="100" />
+        <Method Name="ReportWithOneFile_RunsSuccessfully():void" CoveredStatements="5" TotalStatements="5" CoveragePercent="100" />
+      </Type>
+    </Namespace>
+    <Namespace Name="csmacnz.Coveralls.Tests.OpenCover" CoveredStatements="108" TotalStatements="108" CoveragePercent="100">
+      <Type Name="OpenCoverParserTests" CoveredStatements="20" TotalStatements="20" CoveragePercent="100">
+        <Method Name="EmptyReportLoadsNoSourceFiles():void" CoveredStatements="5" TotalStatements="5" CoveragePercent="100" />
+        <Method Name="SingleFileReportLoadsSingleSourceFiles():void" CoveredStatements="5" TotalStatements="5" CoveragePercent="100" />
+        <Method Name="SingleFileReportWithSingleMethodLineCoveredWithoutSourceLoadsCorrectly():void" CoveredStatements="5" TotalStatements="5" CoveragePercent="100" />
+        <Method Name="SingleFileReportWithSingleMethodLineUncoveredWithoutSourceLoadsCorrectly():void" CoveredStatements="5" TotalStatements="5" CoveragePercent="100" />
+      </Type>
+      <Type Name="OpenCoverTests" CoveredStatements="59" TotalStatements="59" CoveragePercent="100">
+        <Method Name="BuildReportWithOneFile():ValueTuple&lt;TestFileSystem,string&gt;" CoveredStatements="14" TotalStatements="14" CoveragePercent="100">
+          <OwnCoverage CoveredStatements="13" TotalStatements="13" CoveragePercent="100" />
+          <AnonymousMethod Name="(XElement):bool" CoveredStatements="1" TotalStatements="1" CoveragePercent="100" />
+        </Method>
+        <Method Name="DryRunCoverallsMultiModeWithInputFile(string,TestFileSystem):CoverallsRunResults" CoveredStatements="3" TotalStatements="3" CoveragePercent="100" />
+        <Method Name="DryRunCoverallsWithInputFile(string,TestFileSystem):CoverallsRunResults" CoveredStatements="3" TotalStatements="3" CoveragePercent="100" />
+        <Method Name="EmptyReport_GivenAnOutput_OutputsSamplePost():void" CoveredStatements="15" TotalStatements="15" CoveragePercent="100" />
+        <Method Name="EmptyReport_MultipleMode_RunsSuccessfully():void" CoveredStatements="7" TotalStatements="7" CoveragePercent="100" />
+        <Method Name="EmptyReport_RunsSuccessfully():void" CoveredStatements="7" TotalStatements="7" CoveragePercent="100" />
+        <Method Name="ReportWithOneFile_MultipleMode_RunsSuccessfully():void" CoveredStatements="5" TotalStatements="5" CoveragePercent="100" />
+        <Method Name="ReportWithOneFile_RunsSuccessfully():void" CoveredStatements="5" TotalStatements="5" CoveragePercent="100" />
+      </Type>
+      <Type Name="ReportGeneratorTests" CoveredStatements="29" TotalStatements="29" CoveragePercent="100">
+        <Method Name="DryRunCoverallsMultiModeWithInputFile(string,TestFileSystem):CoverallsRunResults" CoveredStatements="3" TotalStatements="3" CoveragePercent="100" />
+        <Method Name="DryRunCoverallsWithInputFile(string,TestFileSystem):CoverallsRunResults" CoveredStatements="3" TotalStatements="3" CoveragePercent="100" />
+        <Method Name="EmptyReport_MultipleMode_RunsSuccessfully():void" CoveredStatements="8" TotalStatements="8" CoveragePercent="100" />
+        <Method Name="EmptyReport_RunsSuccessfully():void" CoveredStatements="8" TotalStatements="8" CoveragePercent="100" />
+        <Method Name="MissingFolder_RunsWithCorrectErrorMessage():void" CoveredStatements="7" TotalStatements="7" CoveragePercent="100" />
+      </Type>
+    </Namespace>
+    <Namespace Name="csmacnz.Coveralls.Tests.Parallel" CoveredStatements="23" TotalStatements="23" CoveragePercent="100">
+      <Type Name="CompleteParallelTests" CoveredStatements="23" TotalStatements="23" CoveragePercent="100">
+        <Method Name="CompleteParallelCommandWithEnvironmentVariablesWorks():void" CoveredStatements="5" TotalStatements="5" CoveragePercent="100" />
+        <Method Name="CompleteParallelCommandWithServiceBuildNumberWorks():void" CoveredStatements="4" TotalStatements="4" CoveragePercent="100" />
+        <Method Name="CompleteParallelCommandWithTokenVariableWorks():void" CoveredStatements="5" TotalStatements="5" CoveragePercent="100" />
+        <Method Name="CompleteParallelCommandWithTokenWorks():void" CoveredStatements="4" TotalStatements="4" CoveragePercent="100" />
+        <Method Name="InvalidArgument_ExitCodeNotSuccess():void" CoveredStatements="5" TotalStatements="5" CoveragePercent="100" />
+      </Type>
+    </Namespace>
+    <Namespace Name="csmacnz.Coveralls.Tests.ReportGenerator" CoveredStatements="16" TotalStatements="16" CoveragePercent="100">
+      <Type Name="ReportGeneratorParserTests" CoveredStatements="16" TotalStatements="16" CoveragePercent="100">
+        <Method Name="EmptyReportLoadsNoSourceFiles():void" CoveredStatements="16" TotalStatements="16" CoveragePercent="100" />
+      </Type>
+    </Namespace>
+    <Namespace Name="csmacnz.Coveralls.Tests.TestAdapters" CoveredStatements="65" TotalStatements="74" CoveragePercent="88">
+      <Type Name="TestConsole" CoveredStatements="10" TotalStatements="10" CoveragePercent="100">
+        <Constructor Name="TestConsole()" CoveredStatements="2" TotalStatements="2" CoveragePercent="100" />
+        <Property Name="Errors:string[]" CoveredStatements="1" TotalStatements="1" CoveragePercent="100">
+          <PropertyGetter CoveredStatements="1" TotalStatements="1" CoveragePercent="100" />
+        </Property>
+        <Property Name="StandardOut:string[]" CoveredStatements="1" TotalStatements="1" CoveragePercent="100">
+          <PropertyGetter CoveredStatements="1" TotalStatements="1" CoveragePercent="100" />
+        </Property>
+        <Method Name="WriteErrorLine(string):void" CoveredStatements="3" TotalStatements="3" CoveragePercent="100" />
+        <Method Name="WriteLine(string):void" CoveredStatements="3" TotalStatements="3" CoveragePercent="100" />
+      </Type>
+      <Type Name="TestCoverallsService" CoveredStatements="8" TotalStatements="11" CoveragePercent="73">
+        <Constructor Name="TestCoverallsService(bool)" CoveredStatements="4" TotalStatements="4" CoveragePercent="100" />
+        <Property Name="Success:Result&lt;Unit,string&gt;" CoveredStatements="1" TotalStatements="1" CoveragePercent="100">
+          <PropertyGetter CoveredStatements="1" TotalStatements="1" CoveragePercent="100" />
+        </Property>
+        <Method Name="PushParallelCompleteWebhook(string,string):Result&lt;Unit,string&gt;" CoveredStatements="3" TotalStatements="3" CoveragePercent="100" />
+        <Method Name="Upload(string):Result&lt;Unit,string&gt;" CoveredStatements="0" TotalStatements="3" CoveragePercent="0" />
+      </Type>
+      <Type Name="TestEnvironmentVariables" CoveredStatements="11" TotalStatements="11" CoveragePercent="100">
+        <Constructor Name="TestEnvironmentVariables()" CoveredStatements="4" TotalStatements="4" CoveragePercent="100" />
+        <Constructor Name="TestEnvironmentVariables(Dictionary&lt;string,string&gt;)" CoveredStatements="4" TotalStatements="4" CoveragePercent="100" />
+        <Method Name="GetEnvironmentVariable(string):string" CoveredStatements="3" TotalStatements="3" CoveragePercent="100" />
+      </Type>
+      <Type Name="TestFileSystem" CoveredStatements="36" TotalStatements="42" CoveragePercent="86">
+        <Constructor Name="TestFileSystem()" CoveredStatements="2" TotalStatements="2" CoveragePercent="100" />
+        <AutoProperty Name="BasePath:string" CoveredStatements="1" TotalStatements="1" CoveragePercent="100">
+          <PropertyGetter CoveredStatements="1" TotalStatements="1" CoveragePercent="100" />
+        </AutoProperty>
+        <Method Name="AddFile(string,string):void" CoveredStatements="3" TotalStatements="3" CoveragePercent="100" />
+        <Method Name="GenerateRandomAbsolutePath(params string[]):string" CoveredStatements="3" TotalStatements="3" CoveragePercent="100" />
+        <Method Name="GetFiles(string):Option&lt;FileInfo[]&gt;" CoveredStatements="9" TotalStatements="9" CoveragePercent="100">
+          <OwnCoverage CoveredStatements="7" TotalStatements="7" CoveragePercent="100" />
+          <AnonymousMethod Name="(KeyValuePair&lt;string,string&gt;):bool" CoveredStatements="1" TotalStatements="1" CoveragePercent="100" />
+          <AnonymousMethod Name="(KeyValuePair&lt;string,string&gt;):FileInfo" CoveredStatements="1" TotalStatements="1" CoveragePercent="100" />
+        </Method>
+        <Method Name="ResolvePathKey(string):string" CoveredStatements="7" TotalStatements="7" CoveragePercent="100" />
+        <Method Name="TryLoadFile(string):Option&lt;string&gt;" CoveredStatements="7" TotalStatements="7" CoveragePercent="100" />
+        <Method Name="TryReadAllLinesFromFile(string):Option&lt;string[]&gt;" CoveredStatements="0" TotalStatements="6" CoveragePercent="0" />
+        <Method Name="WriteFile(string,string):bool" CoveredStatements="4" TotalStatements="4" CoveragePercent="100" />
+      </Type>
+    </Namespace>
+    <Namespace Name="csmacnz.Coveralls.Tests.TestHelpers" CoveredStatements="22" TotalStatements="22" CoveragePercent="100">
+      <Type Name="CoverallsAssert" CoveredStatements="9" TotalStatements="9" CoveragePercent="100">
+        <Method Name="ContainsStandardUsageText(CoverallsRunResults):void" CoveredStatements="6" TotalStatements="6" CoveragePercent="100" />
+        <Method Name="RanSuccessfully(CoverallsRunResults):void" CoveredStatements="3" TotalStatements="3" CoveragePercent="100" />
+      </Type>
+      <Type Name="CoverallsRunResults" CoveredStatements="6" TotalStatements="6" CoveragePercent="100">
+        <AutoProperty Name="ExitCode:int" CoveredStatements="2" TotalStatements="2" CoveragePercent="100">
+          <PropertyGetter CoveredStatements="1" TotalStatements="1" CoveragePercent="100" />
+          <PropertySetter CoveredStatements="1" TotalStatements="1" CoveragePercent="100" />
+        </AutoProperty>
+        <AutoProperty Name="StandardError:string" CoveredStatements="2" TotalStatements="2" CoveragePercent="100">
+          <PropertyGetter CoveredStatements="1" TotalStatements="1" CoveragePercent="100" />
+          <PropertySetter CoveredStatements="1" TotalStatements="1" CoveragePercent="100" />
+        </AutoProperty>
+        <AutoProperty Name="StandardOutput:string" CoveredStatements="2" TotalStatements="2" CoveragePercent="100">
+          <PropertyGetter CoveredStatements="1" TotalStatements="1" CoveragePercent="100" />
+          <PropertySetter CoveredStatements="1" TotalStatements="1" CoveragePercent="100" />
+        </AutoProperty>
+      </Type>
+      <Type Name="CoverallsTestRunner" CoveredStatements="7" TotalStatements="7" CoveragePercent="100">
+        <Method Name="RunCoveralls(string,TestFileSystem,TestEnvironmentVariables):CoverallsRunResults" CoveredStatements="7" TotalStatements="7" CoveragePercent="100" />
+      </Type>
+    </Namespace>
+    <Type Name="AutoGeneratedProgram" CoveredStatements="0" TotalStatements="2" CoveragePercent="0">
+      <Method Name="Main(string[]):void" CoveredStatements="0" TotalStatements="2" CoveragePercent="0" />
+    </Type>
+  </Assembly>
+</Root>
