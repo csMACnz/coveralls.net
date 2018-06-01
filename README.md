@@ -115,6 +115,7 @@ Supported
 * NCover (classic 1.5.x format, at least)
 * [Chutzpah - A JavaScript Test Runner](https://github.com/mmanela/chutzpah)
 * [ReportGenerator](http://danielpalme.github.io/ReportGenerator/)
+* [Coverlet](https://github.com/tonerdo/coverlet) (via its opencover output format `/p:CoverletOutputFormat=opencover`)
 
 Full Supported, In Progress, and Future Support information can be found [Coverage Support](https://github.com/csMACnz/coveralls.net/wiki/Coverage-Support) wiki page
 
