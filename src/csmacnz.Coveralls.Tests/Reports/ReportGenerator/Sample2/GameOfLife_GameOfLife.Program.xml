@@ -1,0 +1,55 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<CoverageReport scope="GameOfLife.Program">
+  <Summary>
+    <Class>GameOfLife.Program</Class>
+    <Assembly>GameOfLife</Assembly>
+    <Files>
+      <File>C:\dev\Coveralls.net-Samples\src\GameOfLife\Program.cs</File>
+    </Files>
+    <Coveredlines>0</Coveredlines>
+    <Uncoveredlines>9</Uncoveredlines>
+    <Coverablelines>9</Coverablelines>
+    <Totallines>29</Totallines>
+    <Linecoverage>0%</Linecoverage>
+  </Summary>
+  <Metrics>
+    <Main>
+      <Cyclomaticcomplexity>1</Cyclomaticcomplexity>
+      <Sequencecoverage>0</Sequencecoverage>
+      <Branchcoverage>0</Branchcoverage>
+    </Main>
+  </Metrics>
+  <Files>
+    <File name="C:\dev\Coveralls.net-Samples\src\GameOfLife\Program.cs">
+      <LineAnalysis line="1" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="using System;" />
+      <LineAnalysis line="2" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="using System.Threading;" />
+      <LineAnalysis line="3" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="" />
+      <LineAnalysis line="4" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="namespace GameOfLife" />
+      <LineAnalysis line="5" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="{" />
+      <LineAnalysis line="6" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="    public class Program" />
+      <LineAnalysis line="7" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="    {" />
+      <LineAnalysis line="8" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="        public static void Main(string[] args)" />
+      <LineAnalysis line="9" visits="0" coverage="NotCovered" coveredbranches="" totalbranches="" content="        {" />
+      <LineAnalysis line="10" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="            //uncomment for different beginning states" />
+      <LineAnalysis line="11" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="" />
+      <LineAnalysis line="12" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="            //var world = WorldBuilder.BuildBeaconWorld();" />
+      <LineAnalysis line="13" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="            //var world = WorldBuilder.BuildBlinkerWorld();" />
+      <LineAnalysis line="14" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="            //var world = WorldBuilder.BuildToadWorld();" />
+      <LineAnalysis line="15" visits="0" coverage="NotCovered" coveredbranches="" totalbranches="" content="            var world = WorldBuilder.BuildRandomWorld();" />
+      <LineAnalysis line="16" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="" />
+      <LineAnalysis line="17" visits="0" coverage="NotCovered" coveredbranches="" totalbranches="" content="            while (true)" />
+      <LineAnalysis line="18" visits="0" coverage="NotCovered" coveredbranches="" totalbranches="" content="            {" />
+      <LineAnalysis line="19" visits="0" coverage="NotCovered" coveredbranches="" totalbranches="" content="                world = Game.GetNextWorldState(world);" />
+      <LineAnalysis line="20" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="" />
+      <LineAnalysis line="21" visits="0" coverage="NotCovered" coveredbranches="" totalbranches="" content="                Console.Clear();" />
+      <LineAnalysis line="22" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="" />
+      <LineAnalysis line="23" visits="0" coverage="NotCovered" coveredbranches="" totalbranches="" content="                Game.DrawWorld(world);" />
+      <LineAnalysis line="24" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="" />
+      <LineAnalysis line="25" visits="0" coverage="NotCovered" coveredbranches="" totalbranches="" content="                Thread.Sleep(600);" />
+      <LineAnalysis line="26" visits="0" coverage="NotCovered" coveredbranches="" totalbranches="" content="            }" />
+      <LineAnalysis line="27" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="        }" />
+      <LineAnalysis line="28" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="    }" />
+      <LineAnalysis line="29" visits="-1" coverage="NotCoverable" coveredbranches="" totalbranches="" content="}" />
+    </File>
+  </Files>
+</CoverageReport>

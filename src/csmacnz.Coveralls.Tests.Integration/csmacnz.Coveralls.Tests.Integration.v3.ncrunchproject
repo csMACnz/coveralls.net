@@ -1,0 +1,11 @@
+﻿<ProjectConfiguration>
+  <Settings>
+    <AdditionalFilesToIncludeForProject>
+      <Value>..\csmacnz.Coveralls\bin\**.*</Value>
+      <Value>..\csmacnz.Coveralls.Tests\Reports\**.*</Value>
+    </AdditionalFilesToIncludeForProject>
+    <ImplicitProjectDependencyPathsRelativeToSolutionDirectory>
+      <Value>csmacnz.Coveralls\csmacnz.Coveralls.csproj</Value>
+    </ImplicitProjectDependencyPathsRelativeToSolutionDirectory>
+  </Settings>
+</ProjectConfiguration>

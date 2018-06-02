@@ -154,7 +154,6 @@ AppPackages/
 sql/
 *.Cache
 ClientBin/
-[Ss]tyle[Cc]op.*
 ~$*
 *~
 *.dbmdl
@@ -190,9 +189,9 @@ Package/
 
 #Build Artifacts
 cov-int/
+BuildPackages/
+TestResults/
 coveralls.coverity.*.zip
 coveralls.net.*.zip
 coveralls.net.*.nupkg
 opencovertests.xml
-*Report.xml
-*Report.html

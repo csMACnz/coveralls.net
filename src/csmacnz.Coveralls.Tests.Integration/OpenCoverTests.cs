@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Diagnostics.CodeAnalysis;
 using System.IO;
 using System.Linq;
 using System.Xml.Linq;
@@ -12,34 +13,72 @@ namespace csmacnz.Coveralls.Tests.Integration
         [Fact]
         public void EmptyReport_RunsSuccessfully()
         {
-            var emptyFilePath = Path.Combine(RepositoryPaths.GetSamplesPath(), "opencover", "Sample1", "EmptyReport.xml");
+            var emptyFilePath = Path.Combine(RepositoryPaths.GetSamplesPath(), "OpenCover", "EmptyReport.xml");
             var results = DryRunCoverallsWithInputFile(emptyFilePath);
 
-            Assert.Equal(0, results.ExitCode);
+            CoverallsAssert.RanSuccessfully(results);
+        }
+
+        [Fact]
+        public void EmptyReport_MultipleMode_RunsSuccessfully()
+        {
+            var emptyFilePath = Path.Combine(RepositoryPaths.GetSamplesPath(), "OpenCover", "EmptyReport.xml");
+            var results = DryRunCoverallsMultiModeWithInputFile(emptyFilePath);
+
+            CoverallsAssert.RanSuccessfully(results);
         }
 
         [Fact]
         public void ReportWithOneFile_RunsSuccessfully()
         {
-            string sampleFolderPath = Path.Combine(RepositoryPaths.GetSamplesPath(), "opencover", "Sample2");
+            var coverageFilePath = BuildReportWithOneFile();
+
+            var results = DryRunCoverallsWithInputFile(coverageFilePath);
+
+            CoverallsAssert.RanSuccessfully(results);
+        }
+
+        [Fact]
+        public void ReportWithOneFile_MultipleMode_RunsSuccessfully()
+        {
+            var coverageFilePath = BuildReportWithOneFile();
+
+            var results = DryRunCoverallsMultiModeWithInputFile(coverageFilePath);
+
+            CoverallsAssert.RanSuccessfully(results);
+        }
+
+        private static string BuildReportWithOneFile()
+        {
+            var sampleFolderPath = Path.Combine(RepositoryPaths.GetSamplesPath(), "OpenCover");
             var sampleCoverageFile = Path.Combine(sampleFolderPath, "SingleFileReport.xml");
             var sampleClassFile = Path.Combine(sampleFolderPath, "SingleFileReportSourceFile.txt");
             var coverageFilePath = TestFolders.GetTempFilePath(Guid.NewGuid() + ".xml");
             var classFilePath = TestFolders.GetTempFilePath(Guid.NewGuid() + ".cs");
             File.Copy(sampleClassFile, classFilePath);
             var doc = XDocument.Load(sampleCoverageFile);
-            var classFile = doc.XPathSelectElements("//CoverageSession/Modules/Module/Files/File").FirstOrDefault(e => e.Attribute("fullPath").Value.EndsWith("Class1.cs"));
+            var classFile =
+                doc.XPathSelectElements("//CoverageSession/Modules/Module/Files/File")
+                    .FirstOrDefault(e => e.Attribute("fullPath").Value.EndsWith("Class1.cs", StringComparison.Ordinal));
             classFile.Attribute("fullPath").SetValue(classFilePath);
-            doc.Save(coverageFilePath);
+            using (var stream = File.OpenWrite(coverageFilePath))
+            {
+                doc.Save(stream);
+            }
 
-            var results = DryRunCoverallsWithInputFile(coverageFilePath);
-
-            Assert.Equal(0, results.ExitCode);
+            return coverageFilePath;
         }
 
-        private static CoverageRunResults DryRunCoverallsWithInputFile(string inputFilePath)
+        private static CoverallsRunResults DryRunCoverallsWithInputFile(string inputFilePath)
         {
-            return CoverallsTestRunner.RunCoveralls(string.Format("--opencover -i {0} --dryrun --repoToken MYTESTREPOTOKEN", inputFilePath));
+            return CoverallsTestRunner.RunCoveralls(
+                $"--opencover -i {inputFilePath} --dryrun --repoToken MYTESTREPOTOKEN");
+        }
+
+        private static CoverallsRunResults DryRunCoverallsMultiModeWithInputFile(string inputFilePath)
+        {
+            return CoverallsTestRunner.RunCoveralls(
+                $"--multiple -i opencover={inputFilePath} --dryrun --repoToken MYTESTREPOTOKEN");
         }
     }
 }

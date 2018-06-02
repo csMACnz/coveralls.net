@@ -1,6 +1,9 @@
 version: 0.0.{build}
-os: Windows Server 2012 R2
+image: 
+- Visual Studio 2017 Preview
+- ubuntu
 environment:
+  DOTNET_SKIP_FIRST_TIME_EXPERIENCE: true
   COVERALLS_REPO_TOKEN:
     secure: /6Ynh8LMsDKryTdOsEc2zl0ePsN3ce+oYemlM6CFK3ChePYSavZmgIH1ENWE0ZDh
   COVERITY_TOKEN:
@@ -8,34 +11,44 @@ environment:
   COVERITY_EMAIL:
     secure: YNNLrvdTPJBtXcWskGnutoOOXbWeulhguf0c7iX9Gis=
 cache:
-- src\packages -> **\packages.config
 - C:\ProgramData\chocolatey\bin -> build.environment.ps1
 - C:\ProgramData\chocolatey\lib -> build.environment.ps1
 install:
-- ps: .\build.environment.ps1
-- ps: psake .\build.tasks.ps1 appveyor-install
+- cmd: powershell iwr https://github.com/dotnet/cli/raw/v2.1.300/scripts/obtain/dotnet-install.ps1 -outfile dotnet-install.ps1
+- cmd: powershell .\dotnet-install.ps1 -Version 2.1.300 -InstallDir $env:ProgramFiles/dotnet
+- cmd: powershell .\build.environment.ps1
+- cmd: psake appveyor-install
+- sh: printf "Commands with sh Prefix run on Linux image only"
+- sh: sudo apt-get update
+- sh: sudo apt-get install dotnet-sdk-2.1 -y
 build_script:
-- ps: psake .\build.tasks.ps1 appveyor-build
+- ps: Write-Host "APPVEYOR=$env:APPVEYOR"
+- cmd: psake appveyor-build
+- sh: dotnet build -c Release
 test_script:
-- ps: psake .\build.tasks.ps1 appveyor-test
+- cmd: psake appveyor-test
+- sh: dotnet test src/csmacnz.Coveralls.Tests/csmacnz.Coveralls.Tests.csproj /p:CollectCoverage=true /p:CoverletOutputFormat=opencover /p:CoverletOutputDirectory=../../
+- sh: dotnet run -c Release --project src/csmacnz.Coveralls/csmacnz.Coveralls.csproj -- --opencover -i "coverage.xml" --treatUploadErrorsAsWarnings --useRelativePaths
 artifacts:
-- path: opencovertests.xml
-  name: opencovertests.xml
-- path: coveralls.net.*.zip
-- path: coveralls.net.*.nupkg
+- path: TestResults/Coverage.xml
+  name: Coverage.xml
+- path: Package/coveralls.net.*.zip
+- path: Package/coveralls.net.*.nupkg
 deploy:
 - provider: GitHub
-  release: $($env:GitVersion_SemVer)
+  release: $(GitVersion_SemVer)
   auth_token:
     secure: hH6A9i7v+sf5mZy9FLQVG7n4UpLWkUhpshIsia7sGi1ONr+iMKroqjkJk0Hsi3nK
-  artifact: /.*\.nupkg/
+  artifact: /.*\.nupkg/,/.*\.zip/
   prerelease: true
   on:
     branch: /release-.*/
     APPVEYOR_REPO_TAG: true
+    CI_WINDOWS: true
 - provider: NuGet
   api_key:
     secure: 4XLKYHbHXYJuc9SCTYZt5VzxE/XDBpjWSttRIK3ZGux5TwIgAnhMBamo16fjVmzS
   on:
     branch: /release-.*/
     APPVEYOR_REPO_TAG: true
+    CI_WINDOWS: true

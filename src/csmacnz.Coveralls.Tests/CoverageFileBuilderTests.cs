@@ -1,4 +1,5 @@
 ﻿using System;
+using csmacnz.Coveralls.Data;
 using Xunit;
 
 namespace csmacnz.Coveralls.Tests
@@ -20,12 +21,23 @@ namespace csmacnz.Coveralls.Tests
             Assert.NotNull(coverageFile);
         }
 
+        [Fact]
+        public void NewBuilderWithNullFileThrowsArgumentException()
+        {
+            Assert.Throws<ArgumentNullException>(() => new CoverageFileBuilder(null));
+        }
+
+        public static CoverageFileBuilder CreateFileBuilder(string filePath = @"C:\temp\file.cs")
+        {
+            return new CoverageFileBuilder(new FileCoverageData(filePath, new int?[1]));
+        }
+
         public class WhenCreatingACoverageFromADefaultBuilder
         {
-            private readonly CoverageFile _coverageFile;
             private const string Filename = @"C:\sourceFile.cs";
+            private readonly CoverageFile _coverageFile;
 
-            public  WhenCreatingACoverageFromADefaultBuilder()
+            public WhenCreatingACoverageFromADefaultBuilder()
             {
                 var builder = CreateFileBuilder(Filename);
                 _coverageFile = builder.CreateFile();
@@ -47,20 +59,9 @@ namespace csmacnz.Coveralls.Tests
             public void ThenCoverageIsEmpty()
             {
                 Assert.NotNull(_coverageFile.Coverage);
-                Assert.Equal(1, _coverageFile.Coverage.Length);
+                Assert.Single(_coverageFile.Coverage);
                 Assert.Null(_coverageFile.Coverage[0]);
             }
-        }
-
-        [Fact]
-        public void NewBuilderWithNullFileThrowsArgumentException()
-        {
-            Assert.Throws<ArgumentNullException>(() => new CoverageFileBuilder(null));
-        }
-
-        public static CoverageFileBuilder CreateFileBuilder(string filePath = @"C:\temp\file.cs")
-        {
-            return new CoverageFileBuilder(new FileCoverageData(filePath, new int?[1]));
         }
     }
 }

@@ -1,4 +1,5 @@
-﻿using System.Text.RegularExpressions;
+﻿using System;
+using System.Text.RegularExpressions;
 using Xunit;
 
 namespace csmacnz.Coveralls.Tests.Integration
@@ -12,6 +13,7 @@ namespace csmacnz.Coveralls.Tests.Integration
 
             Assert.NotEqual(0, results.ExitCode);
         }
+
         [Fact]
         public void InvalidArgument_ExitCodeNotSuccess()
         {
@@ -23,17 +25,21 @@ namespace csmacnz.Coveralls.Tests.Integration
         [Fact]
         public void FileDoesntExist()
         {
-            var results = CoverallsTestRunner.RunCoveralls("--opencover -i opencover.xml --dryrun --repoToken MYTESTREPOTOKEN");
+            var results =
+                CoverallsTestRunner.RunCoveralls("--opencover -i opencover.xml --dryrun --repoToken MYTESTREPOTOKEN");
 
             Assert.NotEqual(0, results.ExitCode);
-            Assert.Contains("Input file 'opencover.xml' cannot be found", results.StandardError);
+            Assert.Contains("Input file 'opencover.xml' cannot be found", results.StandardError, StringComparison.Ordinal);
         }
+
         [Fact]
         public void Version()
         {
             var results = CoverallsTestRunner.RunCoveralls("--version");
 
-            Assert.True(Regex.IsMatch(results.StandardOutput, @"\d+.\d+.\d+.\d+"), "Version doesn't match regex: " + results.StandardOutput);
+            Assert.True(
+                Regex.IsMatch(results.StandardOutput, @"\d+.\d+.\d+.\d+"),
+                "Version doesn't match regex: " + results.StandardOutput);
         }
 
         [Fact]
@@ -41,7 +47,7 @@ namespace csmacnz.Coveralls.Tests.Integration
         {
             var results = CoverallsTestRunner.RunCoveralls("--help");
 
-            Assert.Equal(0, results.ExitCode);
+            CoverallsAssert.RanSuccessfully(results);
             ContainsStandardUsageText(results);
         }
 
@@ -50,17 +56,17 @@ namespace csmacnz.Coveralls.Tests.Integration
         {
             var results = CoverallsTestRunner.RunCoveralls("-h");
 
-            Assert.Equal(0, results.ExitCode);
+            CoverallsAssert.RanSuccessfully(results);
             ContainsStandardUsageText(results);
         }
 
-        private static void ContainsStandardUsageText(CoverageRunResults results)
+        private static void ContainsStandardUsageText(CoverallsRunResults results)
         {
-            Assert.Contains("Usage:", results.StandardOutput);
-            Assert.Contains("csmacnz.Coveralls --help", results.StandardOutput);
-            Assert.Contains("Options:", results.StandardOutput);
-            Assert.Contains("Options:", results.StandardOutput);
-            Assert.Contains("What it's for:", results.StandardOutput);
+            Assert.Contains("Usage:", results.StandardOutput, StringComparison.Ordinal);
+            Assert.Contains("csmacnz.Coveralls --help", results.StandardOutput, StringComparison.Ordinal);
+            Assert.Contains("Options:", results.StandardOutput, StringComparison.Ordinal);
+            Assert.Contains("Options:", results.StandardOutput, StringComparison.Ordinal);
+            Assert.Contains("What it's for:", results.StandardOutput, StringComparison.Ordinal);
         }
     }
 }

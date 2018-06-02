@@ -1,0 +1,11 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<?xml-stylesheet href="coverage.xsl" type="text/xsl"?>
+<!-- saved from url=(0022)http://www.ncover.org/ -->
+<coverage profilerVersion="1.5.8 Beta" driverVersion="1.5.8.0" startTime="2017-12-13T17:38:23.7608214+00:00" measureTime="2017-12-13T17:38:24.244335+00:00">
+  <module moduleId="5" name="C:\Users\steve\OneDrive\Documents\Visual Studio 2017\Projects\NCoverTesting\ConsoleApp1\bin\Debug\NCoverTesting.dll" assembly="NCoverTesting" assemblyIdentity="NCoverTesting, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null, processorArchitecture=MSIL">
+    <method name="CallThis" excluded="false" instrumented="true" class="NCoverTesting.Class1">
+      <seqpnt visitcount="1" line="11" column="13" endline="11" endcolumn="41" excluded="false" document="C:\Users\steve\OneDrive\Documents\Visual Studio 2017\Projects\NCoverTesting\NCoverTesting\Class1.cs" />
+      <seqpnt visitcount="1" line="12" column="9" endline="12" endcolumn="10" excluded="false" document="C:\Users\steve\OneDrive\Documents\Visual Studio 2017\Projects\NCoverTesting\NCoverTesting\Class1.cs" />
+    </method>
+  </module>
+</coverage>

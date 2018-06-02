@@ -1,0 +1,75 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<RuleSet Name="Shared Ruleset" Description=" " ToolsVersion="15.0">
+  <!-- https://msdn.microsoft.com/en-us/library/dd264939.aspx -->
+  <Rules AnalyzerId="Microsoft.ApiDesignGuidelines.Analyzers" RuleNamespace="Microsoft.ApiDesignGuidelines.Analyzers">
+    <!-- async must use ConfigureAwait(false) -->
+    <Rule Id="CA2007" Action="None" />
+    <!-- Uri properties should not be strings -->
+    <Rule Id="CA1056" Action="None" />
+    <!-- Normalize strings to uppercase -->
+    <Rule Id="CA1308" Action="None" />
+    <!-- Properties should not return arrays -->
+    <Rule Id="CA1819" Action="None" />
+    <!-- Mark member as static -->
+    <Rule Id="CA1822" Action="Error" />
+
+    <!--CA1032: Add the right constructor to Exception -->
+    <!-- seems fine for custom exceptions on this application-->
+    <Rule Id="CA1032" Action="Info" />
+
+  </Rules>
+  <Rules AnalyzerId="StyleCop.Analyzers" RuleNamespace="StyleCop.Analyzers">
+    <!--SA0001: XML comment analysis is disabled due to project configuration-->
+    <Rule Id="SA0001" Action="None" />
+
+    <!--SA1101: Prefix local calls with this -->
+    <Rule Id="SA1101" Action="None" />
+
+    <!--SA1201: Elements Should appear in the correct order-->
+    <Rule Id="SA1201" Action="None" />
+    
+    <!--SA1202: Elements Must Be Ordered By Access -->
+    <Rule Id="SA1202" Action="None" />
+
+    <!--SA1204: Static members should appear before non-static members-->
+    <Rule Id="SA1204" Action="None" />
+    
+    <!--SA1300: Element 'csmacnz' should begin with an uppercase letter-->
+    <Rule Id="SA1300" Action="None" />
+
+    <!--SA1309: Field '_args' should not begin with an underscore -->
+    <Rule Id="SA1309" Action="None" />
+
+    <!--SA1413: Use trailing comma in multi-line initializers-->
+    <Rule Id="SA1413" Action="None" />
+
+    <!--SA1600 Elements should be documented-->
+    <Rule Id="SA1600" Action="None" />
+
+    <!--SA1601 Partial elements should be documented-->
+    <Rule Id="SA1601" Action="None" />
+
+    <!--SA1602 Enumeration items should be documented-->
+    <Rule Id="SA1602" Action="None" />
+
+    <!--SA1633: The file header is missing or not located at the top of the file.-->
+    <Rule Id="SA1633" Action="None" />
+    
+  </Rules>
+  <Rules AnalyzerId="CodeCracker.CSharp" RuleNamespace="CodeCracker.CSharp">
+
+    <!--CC0001: Use 'var' instead of specifying the type name.-->
+    <Rule Id="CC0001" Action="None" />
+    
+  </Rules>
+  <Rules AnalyzerId="SonarAnalyzer.CSharp" RuleNamespace="SonarAnalyzer.CSharp">
+  
+    <!-- S2583: Change this condition so that it does not always evaluate to 'false' -->
+    <!-- False positives -->
+    <Rule Id="S2583" Action="Hidden" />
+
+  </Rules>
+  <Rules AnalyzerId="Microsoft.CodeQuality.Analyzers" RuleNamespace="Microsoft.CodeQuality.Analyzers">
+
+  </Rules>
+</RuleSet>

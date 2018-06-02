@@ -2,11 +2,11 @@
 
 namespace csmacnz.Coveralls.Tests.Integration
 {
-    public class RepositoryPaths
+    public static class RepositoryPaths
     {
         public static string GetSamplesPath()
         {
-            return Path.Combine("..", "..", "..", "..", "CoverageSamples");
+            return Path.Combine("..", "..", "..", "..", "..", "src", "csmacnz.Coveralls.Tests", "Reports");
         }
     }
 }
