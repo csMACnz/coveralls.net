@@ -55,6 +55,23 @@ csmacnz.coveralls <args>
 .\tools\csmacnz.Coveralls <args>
 ```
 
+Haven't got the latest tools? You can still use the new version thanks to the published zip stand-alone app versions. These can be found in GitHub Releases for each platform, `window`, `linux` and `osx`.
+
+For example on windows, you can download and unzip the windows stand-alone version:
+
+``` powershell
+# The TLS change was necessary on my development machine
+[Net.ServicePointManager]::SecurityProtocol = [Net.SecurityProtocolType]::Tls12
+
+$zipDownloadPath="https://github.com/csMACnz/coveralls.net/releases/download/1.0.0/coveralls.net.1.0.0-windows.zip"
+Invoke-WebRequest -UseBasicParsing $zipDownloadPath -OutFile coveralls-windows.zip
+mkdir coveralls-windows
+Expand-Archive .\coveralls-windows.zip coveralls-windows
+
+.\coveralls-windows\csmacnz.Coveralls.exe
+
+```
+
 #### The old way ####
 
 Version 0.7.0 is still available on nuget at [www.nuget.org/packages/coveralls.net](https://www.nuget.org/packages/coveralls.net). This is a full .Net Framework exe that even runs on mono.
@@ -99,6 +116,7 @@ Supported Coverage Formats
 * NCover (classic 1.5.x format, at least)
 * [Chutzpah - A JavaScript Test Runner](https://github.com/mmanela/chutzpah)
 * [ReportGenerator](http://danielpalme.github.io/ReportGenerator/)
+* [Coverlet](https://github.com/tonerdo/coverlet) (via its opencover output format `/p:CoverletOutputFormat=opencover`)
 
 Full Supported, In Progress, and Future Support information can be found [Coverage Support](https://github.com/csMACnz/coveralls.net/wiki/Coverage-Support) wiki page
 
