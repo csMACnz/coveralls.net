@@ -40,7 +40,7 @@ Options:
  --commitEmail <commitEmail>              The git commit author email for the coverage report.
  --commitMessage <commitMessage>          The git commit message for the coverage report.
  --jobId <jobId>                          The job Id to provide to coveralls.io.
- --serviceName <Name>                     The service-name for the coverage report. [default: coveralls.net]
+ --serviceName <Name>                     The service-name for the coverage report.
  --serviceNumber <Number>                 The service-number for the coverage report.
  --pullRequest <pullRequestId>            The github pull request id. Used for updating status on github PRs.
  -k, --treatUploadErrorsAsWarnings        Exit successfully if an upload error is encountered and this flag is set.
