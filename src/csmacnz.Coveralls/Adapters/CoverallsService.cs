@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Net.Http;
+using System.Text;
 using BCLExtensions;
 using Beefeater;
 using csmacnz.Coveralls.Ports;
@@ -27,12 +28,12 @@ namespace csmacnz.Coveralls.Adapters
             var payload = $@"
 {{
     ""payload"": {{
-        ""build_num"": {buildNumber},
+        ""build_num"": ""{buildNumber}"",
         ""status"": ""done""
     }}
 }}";
 
-            using (HttpContent stringContent = new StringContent(payload))
+            using (HttpContent stringContent = new StringContent(payload, Encoding.Default, "application/json"))
             {
                 using (var client = new HttpClient())
                 {
@@ -40,9 +41,9 @@ namespace csmacnz.Coveralls.Adapters
 
                     var response = client.PostAsync(url, stringContent).Result;
 
+                    var content = response.Content.ReadAsStringAsync().Result;
                     if (!response.IsSuccessStatusCode)
                     {
-                        var content = response.Content.ReadAsStringAsync().Result;
                         var message = TryGetJsonMessageFromResponse(content).ValueOr(content);
 
                         if (message.Length > 200)
@@ -51,6 +52,12 @@ namespace csmacnz.Coveralls.Adapters
                         }
 
                         return $"{response.StatusCode} - {message}";
+                    }
+
+                    var error = TryFindErrorFromResponse(content);
+                    if (error.HasValue)
+                    {
+                        return $"{response.StatusCode} - {error}";
                     }
 
                     return Unit.Default;
@@ -93,6 +100,19 @@ namespace csmacnz.Coveralls.Adapters
             {
                 dynamic result = JsonConvert.DeserializeObject(content);
                 return (string)result.message;
+            }
+            catch (Exception)
+            {
+                return null;
+            }
+        }
+
+        private static Option<string> TryFindErrorFromResponse(string content)
+        {
+            try
+            {
+                dynamic result = JsonConvert.DeserializeObject(content);
+                return (string)result.error;
             }
             catch (Exception)
             {
