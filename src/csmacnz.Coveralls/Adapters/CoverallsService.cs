@@ -55,12 +55,10 @@ namespace csmacnz.Coveralls.Adapters
                     }
 
                     var error = TryFindErrorFromResponse(content);
-                    if (error.HasValue)
-                    {
-                        return $"{response.StatusCode} - {error}";
-                    }
 
-                    return Unit.Default;
+                    return error.Match<string, Result<Unit, string>>(
+                        e => $"{response.StatusCode} - {e}",
+                        () => Unit.Default);
                 }
             }
         }
