@@ -41,7 +41,7 @@ This requires dotnet sdk version 2.1 to be installed.
 dotnet tool install -g coveralls.net --version 1.0.0
 
 # install into a local folder
-dotnet tool install coveralls.net --version 1.0.0 --tools-path tools
+dotnet tool install coveralls.net --version 1.0.0 --tool-path tools
 ```
 
 To run the new version, simply use the command:
