@@ -28,7 +28,7 @@ build_script:
 test_script:
 - cmd: psake appveyor-test
 - sh: dotnet test src/csmacnz.Coveralls.Tests/csmacnz.Coveralls.Tests.csproj /p:CollectCoverage=true /p:CoverletOutputFormat=opencover /p:CoverletOutputDirectory=../../
-- sh: dotnet run -c Release --project src/csmacnz.Coveralls/csmacnz.Coveralls.csproj -- --opencover -i "coverage.xml" --treatUploadErrorsAsWarnings --useRelativePaths
+- sh: [[ ! -z "${COVERALLS_REPO_TOKEN}" ]] && dotnet run -c Release --project src/csmacnz.Coveralls/csmacnz.Coveralls.csproj -- --opencover -i "coverage.xml" --treatUploadErrorsAsWarnings --useRelativePaths
 artifacts:
 - path: TestResults/Coverage.xml
   name: Coverage.xml
