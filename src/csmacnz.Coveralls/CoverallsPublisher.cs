@@ -27,7 +27,7 @@ namespace csmacnz.Coveralls
             GitData gitData,
             CoverageMetadata metadata)
         {
-            var outputFile = ResolveOutpuFile(settings);
+            var outputFile = ResolveOutputFile(settings);
 
             // Main Processing
             var files = BuildCoverageFiles(settings);
@@ -73,7 +73,7 @@ namespace csmacnz.Coveralls
             return Unit.Default;
         }
 
-        private string ResolveOutpuFile(ConfigurationSettings settings)
+        private string ResolveOutputFile(ConfigurationSettings settings)
         {
             var outputFile = settings.OutputFile;
             if (!string.IsNullOrWhiteSpace(outputFile) && File.Exists(outputFile))

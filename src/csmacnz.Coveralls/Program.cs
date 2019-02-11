@@ -78,10 +78,12 @@ namespace csmacnz.Coveralls
 
         private static Option<GitData> ResolveGitData(IConsole console, MainArgs args)
         {
+            var currentEnvironment = new EnvironmentVariables();
             var providers = new List<IGitDataResolver>
             {
                 new CommandLineGitDataResolver(args),
-                new AppVeyorGitDataResolver(new EnvironmentVariables())
+                new AppVeyorGitDataResolver(currentEnvironment),
+                new GitlabGitDataResolver(currentEnvironment)
             };
 
             var provider = providers.FirstOrDefault(p => p.CanProvideData());

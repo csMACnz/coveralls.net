@@ -1,0 +1,11 @@
+{
+  "profiles": {
+    "csmacnz.Coveralls": {
+      "commandName": "Project",
+      "commandLineArgs": "--opencover --useRelativePaths --basePath d:\\git\\System.IO.Paging -i D:\\git\\System.IO.Paging\\coverage.xml --commitId  cec262d5bdf5264f1a521d1d2147e763ca2cd9c6  --commitBranch develop ",
+      "environmentVariables": {
+        "COVERALLS_REPO_TOKEN": "3Tv7DEZkbxzzSnIINNYeEEF3Xd65OBatw"
+      }
+    }
+  }
+}
