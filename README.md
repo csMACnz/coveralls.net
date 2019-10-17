@@ -48,7 +48,7 @@ To run the new version, simply use the command:
 
 ``` powershell
 # if installed globally, this should just be available on your path
-csmacnz.coveralls <args>
+csmacnz.Coveralls <args>
 
 # if installed into a tools path, you can run it from there.
 .\tools\csmacnz.Coveralls <args>
@@ -86,10 +86,10 @@ You can get help for this older version using:
 ``` powershell
 
 # on windows
-csmacnz.coveralls.exe --help
+csmacnz.Coveralls.exe --help
 
 #on mono
-mono csmacnz.coveralls.exe --help
+mono csmacnz.Coveralls.exe --help
 ```
 
 For more information, checkout the old version readme: https://github.com/csMACnz/coveralls.net/blob/release-0.7.0/README.md
