@@ -1,0 +1,16 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<RuleSet Name="Shared Test Projects Ruleset" Description=" " ToolsVersion="15.0">
+  <Include Path="ruleset.ruleset" Action="Default" />
+  <Rules AnalyzerId="Microsoft.ApiDesignGuidelines.Analyzers" RuleNamespace="Microsoft.ApiDesignGuidelines.Analyzers">
+    <!-- Nested types should not be visible -->
+    <Rule Id="CA1034" Action="None" />
+    <!-- Identifiers should not contain underscores -->
+    <Rule Id="CA1707" Action="None" />
+    <!-- Mark members as static -->
+    <Rule Id="CA1822" Action="None" />    
+  </Rules>
+  <Rules AnalyzerId="SonarAnalyzer.CSharp" RuleNamespace="SonarAnalyzer.CSharp">
+    <!-- Do not use default value type constructor -->
+    <Rule Id="SA1129" Action="None" />    
+  </Rules>
+</RuleSet>

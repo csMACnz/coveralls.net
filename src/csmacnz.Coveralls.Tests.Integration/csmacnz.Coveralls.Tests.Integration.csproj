@@ -9,6 +9,7 @@
     <PackageLicenseUrl>https://github.com/csMACnz/BCLExtensions/blob/master/LICENSE</PackageLicenseUrl>
     <PackageProjectUrl>https://github.com/csMACnz/BCLExtensions</PackageProjectUrl>
     <GenerateRuntimeConfigurationFiles>true</GenerateRuntimeConfigurationFiles>
+    <CodeAnalysisRuleSet>../../tests.ruleset</CodeAnalysisRuleSet>
   </PropertyGroup>
 
   <ItemGroup>
@@ -19,10 +20,6 @@
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
-  </ItemGroup>
-
-  <ItemGroup>
-    <DotNetCliToolReference Include="dotnet-xunit" Version="2.3.0-beta1-build3642" />
   </ItemGroup>
 
   <ItemGroup>

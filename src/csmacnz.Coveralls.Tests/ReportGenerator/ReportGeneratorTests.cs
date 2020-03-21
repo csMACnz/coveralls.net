@@ -10,8 +10,8 @@ namespace csmacnz.Coveralls.Tests.OpenCover
         [Fact]
         public void MissingFolder_RunsWithCorrectErrorMessage()
         {
-            var fileSystem = new TestFileSystem();
             var directoryPath = TestFileSystem.GenerateRandomAbsolutePath("reports", "Sample1");
+            var fileSystem = new TestFileSystem();
 
             var results = DryRunCoverallsWithInputFile(directoryPath, fileSystem);
 
@@ -24,10 +24,8 @@ namespace csmacnz.Coveralls.Tests.OpenCover
         [Fact]
         public void EmptyReport_RunsSuccessfully()
         {
-            var fileSystem = new TestFileSystem();
             var directoryPath = TestFileSystem.GenerateRandomAbsolutePath("reports", "Sample1");
-            fileSystem.AddFile(Path.Combine(directoryPath, "Summary.xml"), Reports.ReportGeneratorSample.Sample1.Summary);
-            fileSystem.AddFile(Path.Combine(directoryPath, "test_test.UnitTest1.xml"), Reports.ReportGeneratorSample.Sample1.Test_test_UnitTest1);
+            var fileSystem = EmptyReportFileSystem(directoryPath);
 
             var results = DryRunCoverallsWithInputFile(directoryPath, fileSystem);
 
@@ -37,14 +35,21 @@ namespace csmacnz.Coveralls.Tests.OpenCover
         [Fact]
         public void EmptyReport_MultipleMode_RunsSuccessfully()
         {
-            var fileSystem = new TestFileSystem();
             var directoryPath = TestFileSystem.GenerateRandomAbsolutePath("reports", "Sample1");
-            fileSystem.AddFile(Path.Combine(directoryPath, "Summary.xml"), Reports.ReportGeneratorSample.Sample1.Summary);
-            fileSystem.AddFile(Path.Combine(directoryPath, "test_test.UnitTest1.xml"), Reports.ReportGeneratorSample.Sample1.Test_test_UnitTest1);
+            var fileSystem = EmptyReportFileSystem(directoryPath);
 
             var results = DryRunCoverallsMultiModeWithInputFile(directoryPath, fileSystem);
 
             CoverallsAssert.RanSuccessfully(results);
+        }
+
+        private static TestFileSystem EmptyReportFileSystem(string directoryPath)
+        {
+            var fileSystem = new TestFileSystem();
+            fileSystem.AddFile(Path.Combine(directoryPath, "Summary.xml"), Reports.ReportGeneratorSample.Sample1.Summary);
+            fileSystem.AddFile(Path.Combine(directoryPath, "test_test.UnitTest1.xml"), Reports.ReportGeneratorSample.Sample1.Test_test_UnitTest1);
+
+            return fileSystem;
         }
 
         private static CoverallsRunResults DryRunCoverallsWithInputFile(
