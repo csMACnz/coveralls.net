@@ -11,6 +11,8 @@ namespace csmacnz.Coveralls
     {
         public static CoverageMetadata Resolve(MainArgs args, IEnvironmentVariables variables)
         {
+            _ = args ?? throw new ArgumentNullException(paramName: nameof(args));
+
             var resolvers = CreateResolvers(args, variables);
             var serviceName = Resolve(resolvers, r => r.ResolveServiceName());
             var serviceJobId = Resolve(resolvers, r => r.ResolveServiceJobId());
@@ -18,14 +20,12 @@ namespace csmacnz.Coveralls
             var pullRequestId = Resolve(resolvers, r => r.ResolvePullRequestId());
             var parallel = ResolveParallel(args, variables);
 
-            return new CoverageMetadata
-            {
-                ServiceJobId = serviceJobId.ValueOr("0"),
-                ServiceName = serviceName.ValueOr("coveralls.net"),
-                ServiceBuildNumber = serviceBuildNumber.ValueOr(null),
-                PullRequestId = pullRequestId.ValueOr(null),
-                Parallel = parallel,
-            };
+            return new CoverageMetadata(
+                serviceName: serviceName.ValueOr("coveralls.net"),
+                serviceJobId: serviceJobId.ValueOr("0"),
+                serviceBuildNumber: serviceBuildNumber.ValueOrDefault(),
+                pullRequestId: pullRequestId.ValueOrDefault(),
+                parallel: parallel);
         }
 
         private static List<IMetaDataResolver> CreateResolvers(MainArgs args, IEnvironmentVariables variables)

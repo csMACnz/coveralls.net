@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using Beefeater;
-using csmacnz.Coveralls.Data;
+﻿using System.Collections.Generic;
 using csmacnz.Coveralls.MetaDataResolvers;
 using csmacnz.Coveralls.Ports;
 using csmacnz.Coveralls.Tests.TestAdapters;

@@ -7,7 +7,7 @@ namespace csmacnz.Coveralls.GitDataResolvers
     {
         bool CanProvideData();
 
-        Either<GitData, CommitSha> GenerateData();
+        Either<GitData, CommitSha>? GenerateData();
 
         string DisplayName { get; }
     }

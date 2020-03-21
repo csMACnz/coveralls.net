@@ -62,7 +62,7 @@ What it's for:
         public MainArgs(
             ICollection<string> argv,
             bool help = true,
-            object version = null,
+            object? version = null,
             bool optionsFirst = false)
         {
             var docOpt = new Docopt();
@@ -77,9 +77,9 @@ What it's for:
 
         public bool Failed { get; private set; }
 
-        public string FailMessage { get; private set; }
+        public string? FailMessage { get; private set; }
 
-        public int FailErrorCode { get; private set; }
+        public int? FailErrorCode { get; private set; }
 
         public IDictionary<string, ValueObject> Args => _args;
 
@@ -106,37 +106,37 @@ What it's for:
 
         public bool OptMultiple => _args["--multiple"].IsTrue;
 
-        public string OptInput => _args["--input"]?.ToString();
+        public string? OptInput => _args["--input"]?.ToString();
 
-        public string OptRepotoken => _args["--repoToken"]?.ToString();
+        public string? OptRepotoken => _args["--repoToken"]?.ToString();
 
-        public string OptRepotokenvariable => _args["--repoTokenVariable"]?.ToString();
+        public string? OptRepotokenvariable => _args["--repoTokenVariable"]?.ToString();
 
-        public string OptOutput => _args["--output"]?.ToString();
+        public string? OptOutput => _args["--output"]?.ToString();
 
         public bool OptDryrun => _args["--dryrun"].IsTrue;
 
         public bool OptUserelativepaths => _args["--useRelativePaths"].IsTrue;
 
-        public string OptBasepath => _args["--basePath"]?.ToString();
+        public string? OptBasepath => _args["--basePath"]?.ToString();
 
-        public string OptCommitid => _args["--commitId"]?.ToString();
+        public string? OptCommitid => _args["--commitId"]?.ToString();
 
-        public string OptCommitbranch => _args["--commitBranch"]?.ToString();
+        public string? OptCommitbranch => _args["--commitBranch"]?.ToString();
 
-        public string OptCommitauthor => _args["--commitAuthor"]?.ToString();
+        public string? OptCommitauthor => _args["--commitAuthor"]?.ToString();
 
-        public string OptCommitemail => _args["--commitEmail"]?.ToString();
+        public string? OptCommitemail => _args["--commitEmail"]?.ToString();
 
-        public string OptCommitmessage => _args["--commitMessage"]?.ToString();
+        public string? OptCommitmessage => _args["--commitMessage"]?.ToString();
 
-        public string OptJobid => _args["--jobId"]?.ToString();
+        public string? OptJobid => _args["--jobId"]?.ToString();
 
-        public string OptServicename => _args["--serviceName"]?.ToString();
+        public string? OptServicename => _args["--serviceName"]?.ToString();
 
-        public string OptServicenumber => _args["--serviceNumber"]?.ToString();
+        public string? OptServicenumber => _args["--serviceNumber"]?.ToString();
 
-        public string OptPullrequest => _args["--pullRequest"]?.ToString();
+        public string? OptPullrequest => _args["--pullRequest"]?.ToString();
 
         public bool OptTreatuploaderrorsaswarnings => _args["--treatUploadErrorsAsWarnings"].IsTrue;
 

@@ -1,5 +1,4 @@
-﻿using BCLExtensions;
-using Beefeater;
+﻿using Beefeater;
 using csmacnz.Coveralls.Ports;
 
 namespace csmacnz.Coveralls.MetaDataResolvers
@@ -38,9 +37,9 @@ namespace csmacnz.Coveralls.MetaDataResolvers
         {
             var value = GetFromVariable("TEAMCITY_PULL_REQUEST");
 
-            // TODO: regex for `refs/pull/86/merge` && `refs/pull/86/head`
+            // Edge case: regex for `refs/pull/86/merge` && `refs/pull/86/head` needed
             return value.Match(
-                val => int.TryParse(val?.Trim(), out int _) ? val : Option<string>.None,
+                val => int.TryParse(val.Trim(), out int _) ? val : Option<string>.None,
                 () => Option<string>.None);
         }
 
@@ -50,7 +49,7 @@ namespace csmacnz.Coveralls.MetaDataResolvers
 
             if (prId.IsNotNullOrWhitespace())
             {
-                return prId;
+                return new Option<string>(prId);
             }
 
             return Option<string>.None;

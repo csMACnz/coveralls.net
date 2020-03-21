@@ -10,6 +10,8 @@ namespace csmacnz.Coveralls.Parsers
     {
         public static List<FileCoverageData> GenerateSourceFiles(Dictionary<string, XDocument> documents)
         {
+            _ = documents ?? throw new ArgumentNullException(nameof(documents));
+
             var sourceFiles = new List<FileCoverageData>();
             foreach (var fileName in documents.Keys.Where(IsMonoCoverageClassFileName))
             {

@@ -13,7 +13,7 @@ namespace csmacnz.Coveralls.Tests.TestAdapters
             _isWorking = isWorking;
         }
 
-        public Result<Unit, string> PushParallelCompleteWebhook(string repoToken, string buildNumber)
+        public Result<Unit, string> PushParallelCompleteWebhook(string repoToken, string? buildNumber)
         {
             return _isWorking ? Success : "An Error In the Test Service";
         }

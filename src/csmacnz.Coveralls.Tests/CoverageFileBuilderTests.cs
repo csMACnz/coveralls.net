@@ -24,7 +24,7 @@ namespace csmacnz.Coveralls.Tests
         [Fact]
         public void NewBuilderWithNullFileThrowsArgumentException()
         {
-            Assert.Throws<ArgumentNullException>(() => new CoverageFileBuilder(null));
+            Assert.Throws<ArgumentNullException>(() => new CoverageFileBuilder(null!));
         }
 
         public static CoverageFileBuilder CreateFileBuilder(string filePath = @"C:\temp\file.cs")

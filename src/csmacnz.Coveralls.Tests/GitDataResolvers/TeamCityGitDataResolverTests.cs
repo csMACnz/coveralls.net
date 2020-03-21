@@ -1,7 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using Beefeater;
-using csmacnz.Coveralls.Data;
+﻿using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 using csmacnz.Coveralls.GitDataResolvers;
 using csmacnz.Coveralls.Ports;
 using csmacnz.Coveralls.Tests.TestAdapters;
@@ -50,9 +48,9 @@ namespace csmacnz.Coveralls.Tests.GitDataResolvers
 
             var gitData = sut.GenerateData();
 
-            Assert.True(gitData.HasValue);
-            Assert.True(gitData.IsItem2);
-            Assert.Equal(sha, gitData.Item2.Value);
+            AssertNotNull(gitData!);
+            Assert.True(gitData.Value.IsItem2);
+            Assert.Equal(sha, gitData.Value.Item2.Value);
         }
 
         [Fact]
@@ -72,11 +70,16 @@ namespace csmacnz.Coveralls.Tests.GitDataResolvers
 
             var gitData = sut.GenerateData();
 
-            Assert.True(gitData.HasValue);
-            Assert.True(gitData.IsItem1);
-            Assert.Equal(branch, gitData.Item1.Branch);
-            Assert.NotNull(gitData.Item1.Head);
-            Assert.Equal(sha, gitData.Item1.Head.Id);
+            AssertNotNull(gitData!);
+            Assert.True(gitData.Value.IsItem1);
+            Assert.Equal(branch, gitData.Value.Item1.Branch);
+            AssertNotNull(gitData.Value.Item1.Head!);
+            Assert.Equal(sha, gitData.Value.Item1.Head.Id);
+        }
+
+        private void AssertNotNull([NotNull]object t)
+        {
+            Assert.NotNull(t);
         }
     }
 }

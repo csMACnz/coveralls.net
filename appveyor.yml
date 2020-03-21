@@ -1,6 +1,6 @@
 version: 0.0.{build}
 image: 
-- Visual Studio 2017
+- Visual Studio 2019
 - ubuntu
 environment:
   DOTNET_SKIP_FIRST_TIME_EXPERIENCE: true
@@ -14,13 +14,8 @@ cache:
 - C:\ProgramData\chocolatey\bin -> build.environment.ps1
 - C:\ProgramData\chocolatey\lib -> build.environment.ps1
 install:
-- cmd: powershell iwr https://github.com/dotnet/cli/raw/v2.1.300/scripts/obtain/dotnet-install.ps1 -outfile dotnet-install.ps1
-- cmd: powershell .\dotnet-install.ps1 -Version 2.1.300 -InstallDir $env:ProgramFiles/dotnet
 - cmd: powershell .\build.environment.ps1
 - cmd: psake appveyor-install
-- sh: printf "Commands with sh Prefix run on Linux image only"
-- sh: sudo apt-get update
-- sh: sudo apt-get install dotnet-sdk-2.1 -y
 build_script:
 - ps: Write-Host "APPVEYOR=$env:APPVEYOR"
 - cmd: psake appveyor-build

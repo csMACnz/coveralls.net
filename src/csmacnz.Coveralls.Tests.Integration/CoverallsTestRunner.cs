@@ -53,22 +53,20 @@ namespace csmacnz.Coveralls.Tests.Integration
                 exitCode = process.ExitCode;
             }
 
-            return new CoverallsRunResults
-            {
-                StandardOutput = results,
-                StandardError = errorsResults,
-                ExitCode = exitCode
-            };
+            return new CoverallsRunResults(
+                standardOutput: results,
+                standardError: errorsResults,
+                exitCode: exitCode);
         }
 
         private static string GetCoverallsDll()
         {
 #if DEBUG
-            var configuration = "Debug";
+            const string configuration = "Debug";
 #else
-            var configuration = "Release";
+            const string configuration = "Release";
 #endif
-            return Path.Combine("..", "..", "..", "..", "csmacnz.Coveralls", "bin", configuration, "netcoreapp2.1", "csmacnz.Coveralls.dll");
+            return Path.Combine("..", "..", "..", "..", "csmacnz.Coveralls", "bin", configuration, "netcoreapp3.1", "csmacnz.Coveralls.dll");
         }
     }
 }

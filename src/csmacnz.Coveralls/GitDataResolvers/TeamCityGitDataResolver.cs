@@ -1,5 +1,4 @@
-﻿using BCLExtensions;
-using Beefeater;
+﻿using Beefeater;
 using csmacnz.Coveralls.Data;
 using csmacnz.Coveralls.Ports;
 
@@ -23,7 +22,7 @@ namespace csmacnz.Coveralls.GitDataResolvers
             return _variables.GetEnvironmentVariable("TEAMCITY_VERSION").IsNotNullOrWhitespace();
         }
 
-        public Either<GitData, CommitSha> GenerateData()
+        public Either<GitData, CommitSha>? GenerateData()
         {
             var customVariablesSha = _variables.GetEnvironmentVariable("TEAMCITY_BUILD_COMMIT");
 
@@ -56,7 +55,7 @@ namespace csmacnz.Coveralls.GitDataResolvers
                 }
                 else
                 {
-                    return Either<GitData, CommitSha>.OfResult1(null);
+                    return null;
                 }
             }
         }

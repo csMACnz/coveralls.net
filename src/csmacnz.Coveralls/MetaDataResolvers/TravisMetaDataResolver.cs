@@ -1,5 +1,4 @@
-﻿using BCLExtensions;
-using Beefeater;
+﻿using Beefeater;
 using csmacnz.Coveralls.Ports;
 
 namespace csmacnz.Coveralls.MetaDataResolvers

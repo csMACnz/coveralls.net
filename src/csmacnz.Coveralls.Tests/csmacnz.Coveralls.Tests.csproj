@@ -3,7 +3,7 @@
 <PropertyGroup>
     <Description>Tests for csmacnz.Coveralls</Description>
     <AssemblyTitle>Tests for csmacnz.Coveralls</AssemblyTitle>
-    <TargetFrameworks>netcoreapp2.1</TargetFrameworks>
+    <TargetFrameworks>netcoreapp3.1</TargetFrameworks>
     <AssemblyName>csmacnz.Coveralls.Tests</AssemblyName>
     <PackageId>csmacnz.Coveralls.Tests</PackageId>
     <PackageLicenseUrl>https://github.com/csMACnz/BCLExtensions/blob/master/LICENSE</PackageLicenseUrl>
@@ -12,17 +12,23 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Beefeater" Version="0.4.0" />
-    <PackageReference Include="coverlet.msbuild" Version="2.0.0" />
+    <PackageReference Include="Beefeater" Version="0.5.0" />
+    <PackageReference Include="coverlet.msbuild" Version="2.8.0">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
     <PackageReference Include="csMACnz.Caps" Version="1.0.7" />
     <PackageReference Include="csMACnz.EmbedRes" Version="1.0.8" />
-    <PackageReference Include="Microsoft.NET.Test.Sdk" Version="15.5.0" />
+    <PackageReference Include="FluentAssertions" Version="5.10.2" />
+    <PackageReference Include="Microsoft.NET.Test.Sdk" Version="16.5.0" />
     <PackageReference Include="System.Xml.XPath.XDocument" Version="4.3.0" />
-    <PackageReference Include="xunit" Version="2.3.1" />
-    <PackageReference Include="xunit.runner.visualstudio" Version="2.3.1" />
-    <PackageReference Include="BCLExtensions" Version="1.2.0" />
-    <PackageReference Include="docopt.net" Version="0.6.1.9" />
-    <PackageReference Include="Newtonsoft.Json" Version="10.0.3" />
+    <PackageReference Include="xunit" Version="2.4.1" />
+    <PackageReference Include="xunit.runner.visualstudio" Version="2.4.1">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
+    <PackageReference Include="docopt.net" Version="0.6.1.10" />
+    <PackageReference Include="Newtonsoft.Json" Version="12.0.3" />
   </ItemGroup>
 
   <ItemGroup>
@@ -35,6 +41,12 @@
 
   <ItemGroup>
     <EmbeddedResource Include="Reports\**" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Update="Microsoft.CodeAnalysis.FxCopAnalyzers" Version="2.9.8" />
+    <PackageReference Update="SonarAnalyzer.CSharp" Version="8.5.0.15942" />
+    <PackageReference Update="StyleCop.Analyzers" Version="1.1.118" />
   </ItemGroup>
 
 </Project>

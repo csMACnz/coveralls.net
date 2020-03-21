@@ -2,11 +2,11 @@
 {
     public class ChutzpahJsonFileItem
     {
-        public string FilePath { get; set; }
+        public string FilePath { get; set; } = default!;
 
-        public int?[] LineExecutionCounts { get; set; }
+        public int?[] LineExecutionCounts { get; set; } = default!;
 
-        public string[] SourceLines { get; set; }
+        public string[] SourceLines { get; set; } = default!;
 
         public double CoveragePercentage { get; set; }
     }

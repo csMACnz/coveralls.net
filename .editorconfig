@@ -26,6 +26,16 @@ indent_size = 2
 indent_style = space
 indent_size = 2
 
+# YAML files
+[*.yml]
+indent_style = space
+indent_size = 2
+
+# Shell script files
+[*.sh]
+indent_style = space
+indent_size = 2
+
 # Markdown Files
 [*.md]
 trim_trailing_whitespace = false
@@ -33,6 +43,7 @@ trim_trailing_whitespace = false
 # Dotnet Code Style Settings
 # See https://docs.microsoft.com/en-us/visualstudio/ide/editorconfig-code-style-settings-reference
 # See http://kent-boogaart.com/blog/editorconfig-reference-for-c-developers
+# Also https://stackoverflow.com/questions/45736659/how-do-i-customize-visual-studios-private-field-generation-shortcut-for-constru/49428349#49428349
 [*.{cs,csx,cake,vb}]
 dotnet_sort_system_directives_first = true:warning
 
@@ -74,9 +85,12 @@ dotnet_naming_symbols.public_internal_fields.applicable_kinds = field
 # private_protected_fields - Define private and protected fields
 dotnet_naming_symbols.private_protected_fields.applicable_accessibilities = private, protected
 dotnet_naming_symbols.private_protected_fields.applicable_kinds = field
+# private_fields - Define private fields
+dotnet_naming_symbols.private_fields.applicable_kinds           = field
+dotnet_naming_symbols.private_fields.applicable_accessibilities = private
 # public_symbols - Define any public symbol
 dotnet_naming_symbols.public_symbols.applicable_accessibilities = public, internal, protected, protected_internal
-dotnet_naming_symbols.public_symbols.applicable_kinds = method, property, event, delegate
+dotnet_naming_symbols.public_symbols.applicable_kinds = method, property, event, delegateI
 # parameters - Defines any parameter
 dotnet_naming_symbols.parameters.applicable_kinds = parameter
 # non_interface_types - Defines class, struct, enum and delegate types
@@ -94,6 +108,9 @@ dotnet_naming_style.first_upper.capitalization = first_word_upper
 # prefix_interface_interface_with_i - Interfaces must be PascalCase and the first character of an interface must be an 'I'
 dotnet_naming_style.prefix_interface_interface_with_i.required_prefix = I
 dotnet_naming_style.prefix_interface_interface_with_i.capitalization = pascal_case
+# prefix_underscore - Define the prefix underscore style
+dotnet_naming_style.prefix_underscore.capitalization = camel_case
+dotnet_naming_style.prefix_underscore.required_prefix = _
 
 # Naming Rules
 # Constant fields must be PascalCase
@@ -108,18 +125,22 @@ dotnet_naming_rule.non_private_readonly_fields_must_be_pascal_case.style = pasca
 dotnet_naming_rule.static_readonly_fields_must_be_pascal_case.severity = warning
 dotnet_naming_rule.static_readonly_fields_must_be_pascal_case.symbols = static_readonly_fields
 dotnet_naming_rule.static_readonly_fields_must_be_pascal_case.style = pascal_case
-# Private readonly fields must be camelCase
-dotnet_naming_rule.private_readonly_fields_must_be_camel_case.severity = warning
-dotnet_naming_rule.private_readonly_fields_must_be_camel_case.symbols = private_readonly_fields
-dotnet_naming_rule.private_readonly_fields_must_be_camel_case.style = camel_case
+# Private readonly fields be prefixed with underscore
+dotnet_naming_rule.private_readonly_fields_with_underscore.severity = warning
+dotnet_naming_rule.private_readonly_fields_with_underscore.symbols = private_readonly_fields
+dotnet_naming_rule.private_readonly_fields_with_underscore.style = prefix_underscore
+# Private fields must be prefixed with underscore
+dotnet_naming_rule.private_members_with_underscore.severity = warning
+dotnet_naming_rule.private_members_with_underscore.symbols = private_fields
+dotnet_naming_rule.private_members_with_underscore.style    = prefix_underscore
 # Public and internal fields must be PascalCase
 dotnet_naming_rule.public_internal_fields_must_be_pascal_case.severity = warning
 dotnet_naming_rule.public_internal_fields_must_be_pascal_case.symbols = public_internal_fields
 dotnet_naming_rule.public_internal_fields_must_be_pascal_case.style = pascal_case
-# Private and protected fields must be camelCase
-dotnet_naming_rule.private_protected_fields_must_be_camel_case.severity = warning
-dotnet_naming_rule.private_protected_fields_must_be_camel_case.symbols = private_protected_fields
-dotnet_naming_rule.private_protected_fields_must_be_camel_case.style = camel_case
+# Private and protected be prefixed with underscore
+dotnet_naming_rule.private_protected_fields_with_underscore.severity = warning
+dotnet_naming_rule.private_protected_fields_with_underscore.symbols = private_protected_fields
+dotnet_naming_rule.private_protected_fields_with_underscore.style = prefix_underscore
 # Public members must be capitalized
 dotnet_naming_rule.public_members_must_be_capitalized.severity = warning
 dotnet_naming_rule.public_members_must_be_capitalized.symbols = public_symbols
@@ -197,3 +218,6 @@ csharp_space_between_square_brackets = false:warning
 # Wrapping Options
 csharp_preserve_single_line_blocks = true:error
 csharp_preserve_single_line_statements = false:error
+
+# CA1303: Do not pass literals as localized parameters
+dotnet_diagnostic.CA1303.severity = none

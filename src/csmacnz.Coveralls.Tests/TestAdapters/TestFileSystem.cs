@@ -21,7 +21,7 @@ namespace csmacnz.Coveralls.Tests.TestAdapters
                 return _files[pathKey];
             }
 
-            return null;
+            return Option<string>.None;
         }
 
         public static string GenerateRandomAbsolutePath(params string[] paths)
@@ -40,7 +40,7 @@ namespace csmacnz.Coveralls.Tests.TestAdapters
                     .ToArray();
             }
 
-            return null;
+            return Option<FileInfo[]>.None;
         }
 
         public bool WriteFile(string outputFile, string fileData)
@@ -57,7 +57,7 @@ namespace csmacnz.Coveralls.Tests.TestAdapters
                 return _files[filePath].Split('\n');
             }
 
-            return null;
+            return Option<string[]>.None;
         }
 
         public void AddFile(string path, string contents)

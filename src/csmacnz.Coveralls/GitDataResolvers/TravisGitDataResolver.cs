@@ -20,7 +20,7 @@ namespace csmacnz.Coveralls.GitDataResolvers
             return _variables.GetBooleanVariable("TRAVIS");
         }
 
-        public Either<GitData, CommitSha> GenerateData()
+        public Either<GitData, CommitSha>? GenerateData()
         {
             var generateData = new GitData
             {

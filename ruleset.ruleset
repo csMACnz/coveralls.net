@@ -6,6 +6,8 @@
     <Rule Id="CA2007" Action="None" />
     <!-- Uri properties should not be strings -->
     <Rule Id="CA1056" Action="None" />
+    <!-- Do not pass literals as localized parameters -->
+    <Rule Id="CA1303" Action="None" />
     <!-- Normalize strings to uppercase -->
     <Rule Id="CA1308" Action="None" />
     <!-- Properties should not return arrays -->
@@ -54,12 +56,6 @@
 
     <!--SA1633: The file header is missing or not located at the top of the file.-->
     <Rule Id="SA1633" Action="None" />
-    
-  </Rules>
-  <Rules AnalyzerId="CodeCracker.CSharp" RuleNamespace="CodeCracker.CSharp">
-
-    <!--CC0001: Use 'var' instead of specifying the type name.-->
-    <Rule Id="CC0001" Action="None" />
     
   </Rules>
   <Rules AnalyzerId="SonarAnalyzer.CSharp" RuleNamespace="SonarAnalyzer.CSharp">

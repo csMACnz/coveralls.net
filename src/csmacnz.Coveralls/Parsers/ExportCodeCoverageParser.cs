@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Globalization;
 using System.Xml.Linq;
 using csmacnz.Coveralls.Data;
@@ -9,6 +10,8 @@ namespace csmacnz.Coveralls.Parsers
     {
         public static List<FileCoverageData> GenerateSourceFiles(XDocument document)
         {
+            _ = document ?? throw new ArgumentNullException(nameof(document));
+
             var files = new List<FileCoverageData>();
             if (document.Root != null)
             {

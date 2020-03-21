@@ -23,7 +23,7 @@ namespace csmacnz.Coveralls.Adapters
             _baseUri = baseUri;
         }
 
-        public Result<Unit, string> PushParallelCompleteWebhook(string repoToken, string buildNumber)
+        public Result<Unit, string> PushParallelCompleteWebhook(string repoToken, string? buildNumber)
         {
             var payload = $@"
 {{
@@ -33,88 +33,96 @@ namespace csmacnz.Coveralls.Adapters
     }}
 }}";
 
-            using (HttpContent stringContent = new StringContent(payload, Encoding.Default, "application/json"))
+            using HttpContent stringContent = new StringContent(payload, Encoding.Default, "application/json");
+            using var client = new HttpClient();
+            var url = new Uri(_baseUri, WebhookUri(repoToken));
+
+            var response = client.PostAsync(url, stringContent).Result;
+
+            var content = response.Content.ReadAsStringAsync().Result;
+            if (!response.IsSuccessStatusCode)
             {
-                using (var client = new HttpClient())
+                var message = TryGetJsonMessageFromResponse(content).ValueOr(content);
+
+                if (message.Length > 200)
                 {
-                    var url = new Uri(_baseUri, WebhookUri(repoToken));
-
-                    var response = client.PostAsync(url, stringContent).Result;
-
-                    var content = response.Content.ReadAsStringAsync().Result;
-                    if (!response.IsSuccessStatusCode)
-                    {
-                        var message = TryGetJsonMessageFromResponse(content).ValueOr(content);
-
-                        if (message.Length > 200)
-                        {
-                            message = message.Substring(0, 200);
-                        }
-
-                        return $"{response.StatusCode} - {message}";
-                    }
-
-                    var error = TryFindErrorFromResponse(content);
-
-                    return error.Match<string, Result<Unit, string>>(
-                        e => $"{response.StatusCode} - {e}",
-                        () => Unit.Default);
+                    message = message.Substring(0, 200);
                 }
+
+                return $"{response.StatusCode} - {message}";
             }
+
+            var error = TryFindErrorFromResponse(content);
+
+            return error.Match<Result<Unit, string>>(
+                e => $"{response.StatusCode} - {e}",
+                () => Unit.Default);
         }
 
         public Result<Unit, string> Upload(string fileData)
         {
-            using (HttpContent stringContent = new StringContent(fileData))
+            using HttpContent stringContent = new StringContent(fileData);
+            using HttpClient client = new HttpClient();
+            using var formData = new MultipartFormDataContent
             {
-                using (var client = new HttpClient())
-                using (var formData = new MultipartFormDataContent())
+                { stringContent, "json_file", "coverage.json" }
+            };
+
+            var response = client.PostAsync(new Uri(_baseUri, JobsUri), formData).Result;
+
+            if (!response.IsSuccessStatusCode)
+            {
+                var content = response.Content.ReadAsStringAsync().Result;
+                var message = TryGetJsonMessageFromResponse(content).ValueOr(content);
+
+                if (message.Length > 200)
                 {
-                    formData.Add(stringContent, "json_file", "coverage.json");
-
-                    var response = client.PostAsync(new Uri(_baseUri, JobsUri), formData).Result;
-
-                    if (!response.IsSuccessStatusCode)
-                    {
-                        var content = response.Content.ReadAsStringAsync().Result;
-                        var message = TryGetJsonMessageFromResponse(content).ValueOr(content);
-
-                        if (message.Length > 200)
-                        {
-                            message = message.Substring(0, 200);
-                        }
-
-                        return $"{response.StatusCode} - {message}";
-                    }
-
-                    return Unit.Default;
+                    message = message.Substring(0, 200);
                 }
+
+                return $"{response.StatusCode} - {message}";
             }
+
+            return Unit.Default;
         }
 
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Design", "CA1031:Do not catch general exception types", Justification = "TryGet is intentionally swallowing errors")]
         private static Option<string> TryGetJsonMessageFromResponse(string content)
         {
             try
             {
-                dynamic result = JsonConvert.DeserializeObject(content);
+                object? obj = JsonConvert.DeserializeObject(content);
+                if (obj is null)
+                {
+                    return Option<string>.None;
+                }
+
+                dynamic result = obj;
                 return (string)result.message;
             }
             catch (Exception)
             {
-                return null;
+                return Option<string>.None;
             }
         }
 
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Design", "CA1031:Do not catch general exception types", Justification = "TryFind is intentionally swallowing errors")]
         private static Option<string> TryFindErrorFromResponse(string content)
         {
             try
             {
-                dynamic result = JsonConvert.DeserializeObject(content);
-                return (string)result.error;
+                object? obj = JsonConvert.DeserializeObject(content);
+                if (obj is null)
+                {
+                    return Option<string>.None;
+                }
+
+                dynamic result = obj;
+                return new Option<string>((string)result.error);
             }
             catch (Exception)
             {
-                return null;
+                return Option<string>.None;
             }
         }
     }

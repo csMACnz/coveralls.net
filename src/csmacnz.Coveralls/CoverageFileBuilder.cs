@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using BCLExtensions;
 using csmacnz.Coveralls.Data;
 
 namespace csmacnz.Coveralls
@@ -15,18 +14,16 @@ namespace csmacnz.Coveralls
 
         public CoverageFileBuilder(FileCoverageData data)
         {
-            data.EnsureIsNotNull(nameof(data));
+            _ = data ?? throw new ArgumentNullException(nameof(data));
+
             _coverage = data.Coverage;
             _filePath = data.FullPath;
-            if (data.Source?.Any() == true)
-            {
-                _sourceLines = data.Source.Select(l => l ?? string.Empty).ToList();
-            }
+            _sourceLines = data.Source.Select(l => l ?? string.Empty).ToList();
         }
 
         public bool HasSource()
         {
-            return _sourceLines?.Any() == true;
+            return _sourceLines.Any();
         }
 
         public void AddSource(string source)
@@ -34,7 +31,7 @@ namespace csmacnz.Coveralls
             var lines = new List<string>();
             using (var sr = new StringReader(source))
             {
-                string nextLine;
+                string? nextLine;
                 while ((nextLine = sr.ReadLine()) != null)
                 {
                     lines.Add(nextLine);
