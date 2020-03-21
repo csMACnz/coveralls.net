@@ -44,7 +44,7 @@ task InstallGitVersion -depends BootstrapNuget {
 }
 
 task InstallReSharperCLI -depends BootstrapNuget {
-    InstallNugetPackage "JetBrains.ReSharper.CommandLineTools" 2017.3.0 $build_packages_dir
+    InstallNugetPackage "JetBrains.ReSharper.CommandLineTools" 2019.3.4 $build_packages_dir
 }
 
 task GitVersion -depends InstallGitVersion {
@@ -200,6 +200,7 @@ task dupfinder -depends InstallReSharperCLI {
 
 task inspect -depends InstallReSharperCLI {
     $inspectcode = GetInspectCodePath $build_packages_dir
+    echo "$inspectcode"
     exec { cmd /c $inspectcode /o="$test_results_dir\resharperReport.xml" $sln_file 2`> nul }
     [xml]$stats = Get-Content $test_results_dir\resharperReport.xml
     $anyErrors = $FALSE;
