@@ -26,15 +26,14 @@ Install
 
 ### The new way ####
 
-The new way is using the dotnet SDK 2.1 tools. This can be installed from version 1.0.0.
-This requires dotnet sdk version 2.1 to be installed.
+The new way is using the dotnet SDK tools. This can be installed from version 2.0.0.
 
 ``` powershell
 # install globally
-dotnet tool install -g coveralls.net --version 1.0.0
+dotnet tool install --global coveralls.net --version 2.0.0
 
 # install into a local folder
-dotnet tool install coveralls.net --version 1.0.0 --tool-path tools
+dotnet tool install coveralls.net --version 2.0.0 --tool-path tools
 ```
 
 To run the new version, simply use the command:
@@ -55,7 +54,7 @@ For example on windows, you can download and unzip the windows stand-alone versi
 # The TLS change was necessary on my development machine
 [Net.ServicePointManager]::SecurityProtocol = [Net.SecurityProtocolType]::Tls12
 
-$zipDownloadPath="https://github.com/csMACnz/coveralls.net/releases/download/1.0.0/coveralls.net.1.0.0-windows.zip"
+$zipDownloadPath="https://github.com/csMACnz/coveralls.net/releases/download/2.0.0/coveralls.net.2.0.0-windows.zip"
 Invoke-WebRequest -UseBasicParsing $zipDownloadPath -OutFile coveralls-windows.zip
 mkdir coveralls-windows
 Expand-Archive .\coveralls-windows.zip coveralls-windows
@@ -63,8 +62,11 @@ Expand-Archive .\coveralls-windows.zip coveralls-windows
 .\coveralls-windows\csmacnz.Coveralls.exe
 
 ```
+#### pre dotnet 3.1 ####
 
-#### The old way ####
+If you are not yet on 3.1 you can still use Version 1.0.0 which runs on dotnet 2.1 runtimes and above (using envvar `DOTNET_ROLL_FORWARD` set to `Major` for 3.0), following essentially the same instructions as above.
+
+#### The older old way ####
 
 Version 0.7.0 is still available on nuget at [www.nuget.org/packages/coveralls.net](https://www.nuget.org/packages/coveralls.net). This is a full .Net Framework exe that even runs on mono.
 
