@@ -1,6 +1,6 @@
 language: csharp
 mono: none
-dotnet: 2.1.200
+dotnet: 3.1
 dist: trusty
 sudo: false
 
@@ -12,6 +12,7 @@ addons:
     packages:
     - dotnet-sharedframework-microsoft.netcore.app-1.1.2
     - dotnet-sdk-2.1
+    - dotnet-sdk-3.1
 
 install:
   - export COVERALLSNET_EXEPATH=/home/travis/build/csMACnz/coveralls.net/Package/Archive/linux/csmacnz.Coveralls
@@ -19,5 +20,5 @@ install:
 script:
   - dotnet build ./csmacnz.Coveralls.sln -c Release
   - dotnet test ./src/csmacnz.Coveralls.Tests/csmacnz.Coveralls.Tests.csproj -c Release
-  - dotnet publish ./src/csmacnz.Coveralls/csmacnz.Coveralls.csproj -f netcoreapp2.1 -c Release -o "/home/travis/build/csMACnz/coveralls.net/Package/Archive/linux" -r linux-x64
+  - dotnet publish ./src/csmacnz.Coveralls/csmacnz.Coveralls.csproj -c Release -o "/home/travis/build/csMACnz/coveralls.net/Package/Archive/linux" -r linux-x64
   - dotnet test ./src/csmacnz.Coveralls.Tests.Integration/csmacnz.Coveralls.Tests.Integration.csproj -c Release
