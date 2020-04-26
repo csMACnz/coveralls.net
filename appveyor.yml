@@ -33,7 +33,7 @@ deploy:
 - provider: GitHub
   release: $(GitVersion_SemVer)
   auth_token:
-    secure: 2gMTqVIDCimH8A9gtOLgt1zcE4arpBdzH175DR/w1nc7AhDBhm5hOAyCWvjTpPoN
+    secure: JLsZCRammlQx2C31swz8d888SUs8nWY7fDeyqaL0oTKkn+hXM0TeOElswwGxP2Ss
   artifact: /.*\.nupkg/,/.*\.zip/
   prerelease: true
   on:
