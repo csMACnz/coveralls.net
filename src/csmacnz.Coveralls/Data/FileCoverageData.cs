@@ -1,4 +1,5 @@
 ﻿using System;
+using Newtonsoft.Json;
 
 namespace csmacnz.Coveralls.Data
 {
@@ -23,7 +24,14 @@ namespace csmacnz.Coveralls.Data
             Source = source;
         }
 
+        [JsonIgnore]
         public string FullPath { get; }
+
+        [JsonProperty("full_path")]
+        private string UrlEncodedFullPath
+        {
+            get { return System.Web.HttpUtility.UrlEncode(FullPath); }
+        }
 
         public int?[] Coverage { get; }
 
