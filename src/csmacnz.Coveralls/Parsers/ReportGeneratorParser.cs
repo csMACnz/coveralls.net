@@ -18,20 +18,20 @@ namespace csmacnz.Coveralls.Parsers
             foreach (var fileName in documents.Keys.Where(k => k != "Summary.xml"))
             {
                 var rootDocument = documents[fileName];
-                var filesElement = rootDocument.Root?.Element("Files");
+                var filesElement = rootDocument.Root?.Element(XName.Get("Files"));
                 if (filesElement != null)
                 {
                     foreach (var fileElement in filesElement.Elements("File"))
                     {
-                        var filePath = fileElement.Attribute("name").Value;
+                        var filePath = fileElement.Attribute(XName.Get("name")) !.Value;
 
                         var source = new List<string>();
                         var coverage = new List<int?>();
                         foreach (var lineAnalysis in fileElement.Elements("LineAnalysis"))
                         {
-                            var visits = lineAnalysis.Attribute("visits").Value;
-                            var coverageMode = lineAnalysis.Attribute($"coverage").Value;
-                            var content = lineAnalysis.Attribute("content").Value;
+                            var visits = lineAnalysis.Attribute(XName.Get("visits")) !.Value;
+                            var coverageMode = lineAnalysis.Attribute(XName.Get($"coverage")) !.Value;
+                            var content = lineAnalysis.Attribute(XName.Get("content")) !.Value;
 
                             source.Add(WebUtility.HtmlDecode(content));
 

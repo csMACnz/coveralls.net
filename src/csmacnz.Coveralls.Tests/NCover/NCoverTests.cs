@@ -66,10 +66,10 @@ namespace csmacnz.Coveralls.Tests.NCover
             var doc = XDocument.Parse(Reports.NCoverSamples.SingleFileReportOneLineCovered.Report);
             var classFiles =
                 doc.XPathSelectElements("//coverage/module/method/seqpnt")
-                    .Where(e => e.Attribute("document").Value.EndsWith("Class1.cs", StringComparison.Ordinal));
+                    .Where(e => e.Attribute(XName.Get("document")) !.Value.EndsWith("Class1.cs", StringComparison.Ordinal));
             foreach (var classFile in classFiles)
             {
-                classFile.Attribute("document").SetValue(sourcePath);
+                classFile.Attribute(XName.Get("document")) !.SetValue(sourcePath);
             }
 
             var reportContents = doc.ToString();

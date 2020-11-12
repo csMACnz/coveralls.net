@@ -16,16 +16,16 @@ namespace csmacnz.Coveralls.Parsers
             foreach (var fileName in documents.Keys.Where(IsMonoCoverageClassFileName))
             {
                 var rootDocument = documents[fileName];
-                var sourceElement = rootDocument.Root?.Element("source");
+                var sourceElement = rootDocument.Root?.Element(XName.Get("source"));
                 if (sourceElement != null)
                 {
                     var coverage = new List<int?>();
                     var source = new List<string>();
-                    var filePath = sourceElement.Attribute("sourceFile").Value;
+                    var filePath = sourceElement.Attribute(XName.Get("sourceFile")) !.Value;
 
                     foreach (var line in sourceElement.Elements("l"))
                     {
-                        if (!int.TryParse(line.Attribute("count").Value, out var coverageCount))
+                        if (!int.TryParse(line.Attribute(XName.Get("count")) !.Value, out var coverageCount))
                         {
                             coverageCount = -1;
                         }

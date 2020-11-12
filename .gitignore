@@ -195,3 +195,6 @@ coveralls.coverity.*.zip
 coveralls.net.*.zip
 coveralls.net.*.nupkg
 opencovertests.xml
+
+# Idea
+.idea/

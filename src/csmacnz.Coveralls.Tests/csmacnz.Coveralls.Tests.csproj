@@ -3,7 +3,7 @@
 <PropertyGroup>
     <Description>Tests for csmacnz.Coveralls</Description>
     <AssemblyTitle>Tests for csmacnz.Coveralls</AssemblyTitle>
-    <TargetFrameworks>netcoreapp3.1</TargetFrameworks>
+    <TargetFrameworks>net5.0</TargetFrameworks>
     <AssemblyName>csmacnz.Coveralls.Tests</AssemblyName>
     <PackageId>csmacnz.Coveralls.Tests</PackageId>
     <PackageLicenseUrl>https://github.com/csMACnz/BCLExtensions/blob/master/LICENSE</PackageLicenseUrl>

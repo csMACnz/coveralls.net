@@ -14,37 +14,37 @@ namespace csmacnz.Coveralls.Parsers
             _ = document ?? throw new ArgumentNullException(nameof(document));
 
             var files = new List<FileCoverageData>();
-            var xElement = document.Root?.Element("modules");
+            var xElement = document.Root?.Element(XName.Get("modules"));
             if (xElement != null)
             {
                 foreach (var module in xElement.Elements("module"))
                 {
-                    var filesElement = module.Element("source_files");
+                    var filesElement = module.Element(XName.Get("source_files"));
                     if (filesElement != null)
                     {
                         foreach (var file in filesElement.Elements("source_file"))
                         {
-                            var fileid = file.Attribute("id").Value;
-                            var fullPath = file.Attribute("path").Value;
+                            var fileid = file.Attribute(XName.Get("id")) !.Value;
+                            var fullPath = file.Attribute(XName.Get("path")) !.Value;
 
                             var coverageBuilder = new FileCoverageDataBuilder(fullPath);
 
-                            var classesElement = module.Element("functions");
+                            var classesElement = module.Element(XName.Get("functions"));
                             if (classesElement != null)
                             {
                                 foreach (var @class in classesElement.Elements("function"))
                                 {
-                                    var ranges = @class.Element("ranges");
+                                    var ranges = @class.Element(XName.Get("ranges"));
                                     if (ranges != null)
                                     {
                                         foreach (var range in ranges.Elements("range"))
                                         {
-                                            var rangeFileId = range.Attribute("source_id").Value;
+                                            var rangeFileId = range.Attribute(XName.Get("source_id")) !.Value;
                                             if (fileid == rangeFileId)
                                             {
-                                                var sourceStartLine = int.Parse(range.Attribute("start_line").Value, CultureInfo.InvariantCulture);
-                                                var sourceEndLine = int.Parse(range.Attribute("end_line").Value, CultureInfo.InvariantCulture);
-                                                var covered = range.Attribute("covered").Value == "yes";
+                                                var sourceStartLine = int.Parse(range.Attribute(XName.Get("start_line")) !.Value, CultureInfo.InvariantCulture);
+                                                var sourceEndLine = int.Parse(range.Attribute(XName.Get("end_line")) !.Value, CultureInfo.InvariantCulture);
+                                                var covered = range.Attribute(XName.Get("covered")) !.Value == "yes";
 
                                                 var sourceLineNumbers = Enumerable.Range(
                                                     sourceStartLine,

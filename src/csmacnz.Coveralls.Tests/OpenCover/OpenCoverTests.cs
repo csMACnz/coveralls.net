@@ -88,8 +88,8 @@ namespace csmacnz.Coveralls.Tests.OpenCover
             var doc = XDocument.Parse(Reports.OpenCoverSamples.SingleFileReportOneLineCovered);
             var classFile = doc
                 .XPathSelectElements("//CoverageSession/Modules/Module/Files/File")
-                .FirstOrDefault(e => e.Attribute("fullPath").Value.EndsWith("Class1.cs", StringComparison.Ordinal));
-            classFile.Attribute("fullPath").SetValue(sourcePath);
+                .FirstOrDefault(e => e.Attribute(XName.Get("fullPath")) !.Value.EndsWith("Class1.cs", StringComparison.Ordinal));
+            classFile!.Attribute(XName.Get("fullPath")) !.SetValue(sourcePath);
 
             var reportContents = doc.ToString();
             string reportPath = Path.Combine(filePath, "SingleFileReportOneLineCovered.xml");

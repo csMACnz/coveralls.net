@@ -19,7 +19,7 @@ namespace csmacnz.Coveralls.Parsers
 
                 foreach (var sourceFile in document.Root.Elements("SourceFileNames"))
                 {
-                    var idElement = sourceFile.Element("SourceFileID");
+                    var idElement = sourceFile.Element(XName.Get("SourceFileID"));
 
                     if (idElement == null)
                     {
@@ -28,7 +28,7 @@ namespace csmacnz.Coveralls.Parsers
 
                     var id = idElement.Value;
 
-                    var fileNameElement = sourceFile.Element("SourceFileName");
+                    var fileNameElement = sourceFile.Element(XName.Get("SourceFileName"));
 
                     if (fileNameElement == null)
                     {
@@ -49,7 +49,7 @@ namespace csmacnz.Coveralls.Parsers
 
                         var coverageBuilder = new FileCoverageDataBuilder(fullPath);
 
-                        var namespaceTable = module.Element("NamespaceTable");
+                        var namespaceTable = module.Element(XName.Get("NamespaceTable"));
                         if (namespaceTable == null)
                         {
                             continue;
@@ -61,7 +61,7 @@ namespace csmacnz.Coveralls.Parsers
                             {
                                 foreach (var lines in method.Elements("Lines"))
                                 {
-                                    var sourceFileIdElement = lines.Element("SourceFileID");
+                                    var sourceFileIdElement = lines.Element(XName.Get("SourceFileID"));
 
                                     if (sourceFileIdElement == null)
                                     {
@@ -75,7 +75,7 @@ namespace csmacnz.Coveralls.Parsers
                                         continue;
                                     }
 
-                                    var sourceStartLineElement = lines.Element("LnStart");
+                                    var sourceStartLineElement = lines.Element(XName.Get("LnStart"));
 
                                     if (sourceStartLineElement == null)
                                     {
@@ -84,7 +84,7 @@ namespace csmacnz.Coveralls.Parsers
 
                                     var sourceStartLine = int.Parse(sourceStartLineElement.Value, CultureInfo.InvariantCulture);
 
-                                    var sourceEndLineElement = lines.Element("LnEnd");
+                                    var sourceEndLineElement = lines.Element(XName.Get("LnEnd"));
 
                                     if (sourceEndLineElement == null)
                                     {
@@ -93,7 +93,7 @@ namespace csmacnz.Coveralls.Parsers
 
                                     var sourceEndLine = int.Parse(sourceEndLineElement.Value, CultureInfo.InvariantCulture);
 
-                                    var coveredElement = lines.Element("Coverage");
+                                    var coveredElement = lines.Element(XName.Get("Coverage"));
 
                                     if (coveredElement == null)
                                     {

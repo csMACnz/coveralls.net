@@ -42,9 +42,9 @@ namespace csmacnz.Coveralls
         private static Option<string> Resolve(List<IMetaDataResolver> resolvers, Func<IMetaDataResolver, Option<string>> resolve)
         {
             return resolvers
-            .Where(r => r.IsActive())
-            .Select(r => resolve?.Invoke(r) ?? Option<string>.None)
-            .FirstOrDefault(v => v.HasValue);
+                .Where(r => r.IsActive())
+                .Select(r => resolve?.Invoke(r) ?? Option<string>.None)
+                .FirstOrDefault(v => v.HasValue) !;
         }
 
         private static bool ResolveParallel(MainArgs args, IEnvironmentVariables variables)
