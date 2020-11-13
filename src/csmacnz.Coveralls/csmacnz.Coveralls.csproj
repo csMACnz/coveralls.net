@@ -10,9 +10,9 @@
     <Description>Coveralls.io uploader for .NET Code Coverage. Supports opencover and visual studio's codecoverage.exe on windows, and monocov for mono</Description>
     <PackageId>coveralls.net</PackageId>
     <PackageRequireLicenseAcceptance>false</PackageRequireLicenseAcceptance>
-    <PackageLicenseUrl>https://github.com/csmacnz/coveralls.net/blob/master/LICENSE</PackageLicenseUrl>
+    <PackageLicenseExpression>MIT</PackageLicenseExpression>
     <PackageProjectUrl>https://github.com/csmacnz/coveralls.net</PackageProjectUrl>
-    <PackageIconUrl>http://img.csmac.nz/coverallsNet-256.png</PackageIconUrl>
+    <PackageIcon>icon.png</PackageIcon>
     <PackageTags>Code-Coverage Coveralls opencover monocov codecoverage.exe coveralls.io Reporting Runner</PackageTags>
     <PackageRequireLicenseAcceptance>false</PackageRequireLicenseAcceptance>
     <ToolCommandName>csmacnz.Coveralls</ToolCommandName>
@@ -41,6 +41,10 @@
     <PackageReference Update="Microsoft.CodeAnalysis.FxCopAnalyzers" Version="2.9.8" />
     <PackageReference Update="SonarAnalyzer.CSharp" Version="8.5.0.15942" />
     <PackageReference Update="StyleCop.Analyzers" Version="1.1.118" />
+  </ItemGroup>
+
+  <ItemGroup>
+      <None Include="icon.png" Pack="true" PackagePath=""/>
   </ItemGroup>
 
 </Project>
