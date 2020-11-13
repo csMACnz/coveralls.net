@@ -1,6 +1,6 @@
 version: 0.0.{build}
 image: 
-- Visual Studio 2017
+- Visual Studio 2019
 - ubuntu
 environment:
   DOTNET_SKIP_FIRST_TIME_EXPERIENCE: true
@@ -14,13 +14,8 @@ cache:
 - C:\ProgramData\chocolatey\bin -> build.environment.ps1
 - C:\ProgramData\chocolatey\lib -> build.environment.ps1
 install:
-- cmd: powershell iwr https://github.com/dotnet/cli/raw/v2.1.300/scripts/obtain/dotnet-install.ps1 -outfile dotnet-install.ps1
-- cmd: powershell .\dotnet-install.ps1 -Version 2.1.300 -InstallDir $env:ProgramFiles/dotnet
 - cmd: powershell .\build.environment.ps1
 - cmd: psake appveyor-install
-- sh: printf "Commands with sh Prefix run on Linux image only"
-- sh: sudo apt-get update
-- sh: sudo apt-get install dotnet-sdk-2.1 -y
 build_script:
 - ps: Write-Host "APPVEYOR=$env:APPVEYOR"
 - cmd: psake appveyor-build
@@ -38,7 +33,7 @@ deploy:
 - provider: GitHub
   release: $(GitVersion_SemVer)
   auth_token:
-    secure: hH6A9i7v+sf5mZy9FLQVG7n4UpLWkUhpshIsia7sGi1ONr+iMKroqjkJk0Hsi3nK
+    secure: JLsZCRammlQx2C31swz8d888SUs8nWY7fDeyqaL0oTKkn+hXM0TeOElswwGxP2Ss
   artifact: /.*\.nupkg/,/.*\.zip/
   prerelease: true
   on:
@@ -47,7 +42,7 @@ deploy:
     CI_WINDOWS: true
 - provider: NuGet
   api_key:
-    secure: 4XLKYHbHXYJuc9SCTYZt5VzxE/XDBpjWSttRIK3ZGux5TwIgAnhMBamo16fjVmzS
+    secure: 2ShBuyKkd5yraipTRuPBXK/LSUNxsqY+AysueCM+cS4Ajdqvye/ZUkH9EsZLMjjw
   on:
     branch: /release-.*/
     APPVEYOR_REPO_TAG: true

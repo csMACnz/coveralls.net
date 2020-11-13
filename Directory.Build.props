@@ -8,8 +8,8 @@
     <Company>csMACnz</Company>
     <Product>coveralls.net</Product>
     <Copyright>Copyright © csMACnz 2017</Copyright>
-    <LangVersion>7.1</LangVersion>
-    <Features>IOperation</Features>
+    <LangVersion>8.0</LangVersion>
+    <nullable>enable</nullable>
     <CodeAnalysisRuleSet>$(MSBuildThisFileDirectory)/ruleset.ruleset</CodeAnalysisRuleSet>
     
     <GenerateAssemblyVersionAttribute>false</GenerateAssemblyVersionAttribute>
@@ -28,7 +28,6 @@
   <ItemGroup>
     <PackageReference Include="Microsoft.CodeAnalysis.FxCopAnalyzers" Version="2.6.0" PrivateAssets="All" />
     <PackageReference Include="SonarAnalyzer.CSharp" Version="6.7.1.4347" PrivateAssets="All" />
-    <PackageReference Include="codecracker.CSharp" Version="1.0.3" PrivateAssets="All" />
     <PackageReference Include="StyleCop.Analyzers" Version="1.1.0-beta004" PrivateAssets="All" />
   </ItemGroup>
 

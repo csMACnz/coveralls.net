@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
 using System.Xml.Linq;
@@ -10,6 +11,8 @@ namespace csmacnz.Coveralls.Parsers
     {
         public static List<FileCoverageData> GenerateSourceFiles(XDocument document)
         {
+            _ = document ?? throw new ArgumentNullException(nameof(document));
+
             var files = new List<FileCoverageData>();
             var xElement = document.Root?.Element("modules");
             if (xElement != null)

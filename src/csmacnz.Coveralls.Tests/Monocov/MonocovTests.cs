@@ -12,7 +12,7 @@ namespace csmacnz.Coveralls.Tests.Monocov
         [Fact]
         public void EmptyReport_GivenAnOutput_OutputsSamplePost()
         {
-            var outfile = "TestingOutput.xml";
+            const string outfile = "TestingOutput.xml";
             var (fileSystem, coverageFolderPath) = BuildMonocovReportFolder();
 
             var results = CoverallsTestRunner.RunCoveralls(
@@ -32,7 +32,7 @@ namespace csmacnz.Coveralls.Tests.Monocov
             Assert.False(jObject.Value<bool?>("parallel"));
 
             Assert.Collection(
-                (JArray)jObject.GetValue("source_files", StringComparison.Ordinal),
+                (JArray?)jObject.GetValue("source_files", StringComparison.Ordinal),
                 i => AssertIsValidCoverageFileData(i, "GameOfLife/Game.cs"),
                 i => AssertIsValidCoverageFileData(i, "GameOfLife/Program.cs"),
                 i => AssertIsValidCoverageFileData(i, "GameOfLife/World.cs"),

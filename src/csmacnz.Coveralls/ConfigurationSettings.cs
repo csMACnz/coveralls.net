@@ -4,18 +4,31 @@ namespace csmacnz.Coveralls
 {
     public class ConfigurationSettings
     {
-        public bool DryRun { get; set; }
+        public ConfigurationSettings(
+            string repoToken,
+            string? outputFile,
+            bool dryRun,
+            bool treatUploadErrorsAsWarnings,
+            bool useRelativePaths,
+            string? basePath,
+            List<CoverageSource> coverageSources)
+        {
+            (DryRun, TreatUploadErrorsAsWarnings, UseRelativePaths, OutputFile, BasePath, CoverageSources, RepoToken)
+            = (dryRun, treatUploadErrorsAsWarnings, useRelativePaths, outputFile, basePath, coverageSources, repoToken);
+        }
 
-        public bool TreatUploadErrorsAsWarnings { get; set; }
+        public bool DryRun { get; }
 
-        public bool UseRelativePaths { get; set; }
+        public bool TreatUploadErrorsAsWarnings { get; }
 
-        public string OutputFile { get; set; }
+        public bool UseRelativePaths { get; }
 
-        public string BasePath { get; set; }
+        public string? OutputFile { get; }
 
-        public List<CoverageSource> CoverageSources { get; } = new List<CoverageSource>();
+        public string? BasePath { get; }
 
-        public string RepoToken { get; set; }
+        public IReadOnlyList<CoverageSource> CoverageSources { get; }
+
+        public string RepoToken { get; }
     }
 }

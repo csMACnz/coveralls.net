@@ -9,6 +9,7 @@ namespace csmacnz.Coveralls
 
 Usage:
   csmacnz.Coveralls (--opencover | --dynamiccodecoverage | --monocov | --exportcodecoverage | --chutzpah | --lcov | --ncover | --reportgenerator | --multiple) -i ./opencovertests.xml (--repoToken <repoToken> | [--repoTokenVariable <repoTokenVariable>]) [-o ./opencovertests.json] [--dryrun] [--useRelativePaths [--basePath <path>] ] [--commitId <commitId> --commitBranch <commitBranch> [--commitAuthor <commitAuthor> --commitEmail <commitEmail> --commitMessage <commitMessage>] ] [--jobId <jobId>] [--serviceName <Name>] [--serviceNumber <Number>] [--pullRequest <pullRequestId>] [--treatUploadErrorsAsWarnings] [--parallel]
+  csmacnz.Coveralls --completeParallelWork (--repoToken <repoToken> | [--repoTokenVariable <repoTokenVariable>]) [--serviceNumber <Number>]
   csmacnz.Coveralls --version
   csmacnz.Coveralls --help
 
@@ -30,6 +31,7 @@ Options:
  --reportgenerator                        Reads input as ReportGenerator folder.
  --multiple                               Provide multiple types and files. This mode requires -i to provide values in the format ""chutzpah=chutzpahFile.json;opencover=opencoverFile.xml""
  --parallel                               If using the parallel builds. If sent, it will wait for the webhook before completing the build.
+ --completeParallelWork                   Submit to Coveralls.io to notify a parallel set of results has finished.
  --repoToken <repoToken>                  The coveralls.io repository token.
  --repoTokenVariable <repoTokenVariable>  The Environment Variable name where the coveralls.io repository token is available. [default: COVERALLS_REPO_TOKEN]
  --commitId <commitId>                    The git commit hash for the coverage report.
@@ -38,7 +40,7 @@ Options:
  --commitEmail <commitEmail>              The git commit author email for the coverage report.
  --commitMessage <commitMessage>          The git commit message for the coverage report.
  --jobId <jobId>                          The job Id to provide to coveralls.io.
- --serviceName <Name>                     The service-name for the coverage report. [default: coveralls.net]
+ --serviceName <Name>                     The service-name for the coverage report.
  --serviceNumber <Number>                 The service-number for the coverage report.
  --pullRequest <pullRequestId>            The github pull request id. Used for updating status on github PRs.
  -k, --treatUploadErrorsAsWarnings        Exit successfully if an upload error is encountered and this flag is set.
@@ -60,7 +62,7 @@ What it's for:
         public MainArgs(
             ICollection<string> argv,
             bool help = true,
-            object version = null,
+            object? version = null,
             bool optionsFirst = false)
         {
             var docOpt = new Docopt();
@@ -75,9 +77,9 @@ What it's for:
 
         public bool Failed { get; private set; }
 
-        public string FailMessage { get; private set; }
+        public string? FailMessage { get; private set; }
 
-        public int FailErrorCode { get; private set; }
+        public int? FailErrorCode { get; private set; }
 
         public IDictionary<string, ValueObject> Args => _args;
 
@@ -104,41 +106,43 @@ What it's for:
 
         public bool OptMultiple => _args["--multiple"].IsTrue;
 
-        public string OptInput => _args["--input"]?.ToString();
+        public string? OptInput => _args["--input"]?.ToString();
 
-        public string OptRepotoken => _args["--repoToken"]?.ToString();
+        public string? OptRepotoken => _args["--repoToken"]?.ToString();
 
-        public string OptRepotokenvariable => _args["--repoTokenVariable"]?.ToString();
+        public string? OptRepotokenvariable => _args["--repoTokenVariable"]?.ToString();
 
-        public string OptOutput => _args["--output"]?.ToString();
+        public string? OptOutput => _args["--output"]?.ToString();
 
         public bool OptDryrun => _args["--dryrun"].IsTrue;
 
         public bool OptUserelativepaths => _args["--useRelativePaths"].IsTrue;
 
-        public string OptBasepath => _args["--basePath"]?.ToString();
+        public string? OptBasepath => _args["--basePath"]?.ToString();
 
-        public string OptCommitid => _args["--commitId"]?.ToString();
+        public string? OptCommitid => _args["--commitId"]?.ToString();
 
-        public string OptCommitbranch => _args["--commitBranch"]?.ToString();
+        public string? OptCommitbranch => _args["--commitBranch"]?.ToString();
 
-        public string OptCommitauthor => _args["--commitAuthor"]?.ToString();
+        public string? OptCommitauthor => _args["--commitAuthor"]?.ToString();
 
-        public string OptCommitemail => _args["--commitEmail"]?.ToString();
+        public string? OptCommitemail => _args["--commitEmail"]?.ToString();
 
-        public string OptCommitmessage => _args["--commitMessage"]?.ToString();
+        public string? OptCommitmessage => _args["--commitMessage"]?.ToString();
 
-        public string OptJobid => _args["--jobId"]?.ToString();
+        public string? OptJobid => _args["--jobId"]?.ToString();
 
-        public string OptServicename => _args["--serviceName"]?.ToString();
+        public string? OptServicename => _args["--serviceName"]?.ToString();
 
-        public string OptServicenumber => _args["--serviceNumber"]?.ToString();
+        public string? OptServicenumber => _args["--serviceNumber"]?.ToString();
 
-        public string OptPullrequest => _args["--pullRequest"]?.ToString();
+        public string? OptPullrequest => _args["--pullRequest"]?.ToString();
 
         public bool OptTreatuploaderrorsaswarnings => _args["--treatUploadErrorsAsWarnings"].IsTrue;
 
         public bool OptParallel => _args["--parallel"].IsTrue;
+
+        public bool OptCompleteParallelWork => _args["--completeParallelWork"].IsTrue;
 
         public bool OptVersion => _args["--version"].IsTrue;
 

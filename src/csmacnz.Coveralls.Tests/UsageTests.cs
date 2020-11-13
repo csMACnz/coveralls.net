@@ -49,7 +49,7 @@ namespace csmacnz.Coveralls.Tests
             var results = CoverallsTestRunner.RunCoveralls("--help");
 
             CoverallsAssert.RanSuccessfully(results);
-            ContainsStandardUsageText(results);
+            CoverallsAssert.ContainsStandardUsageText(results);
         }
 
         [Fact]
@@ -58,16 +58,7 @@ namespace csmacnz.Coveralls.Tests
             var results = CoverallsTestRunner.RunCoveralls("-h");
 
             CoverallsAssert.RanSuccessfully(results);
-            ContainsStandardUsageText(results);
-        }
-
-        private static void ContainsStandardUsageText(CoverallsRunResults results)
-        {
-            Assert.Contains("Usage:", results.StandardOutput, StringComparison.Ordinal);
-            Assert.Contains("csmacnz.Coveralls --help", results.StandardOutput, StringComparison.Ordinal);
-            Assert.Contains("Options:", results.StandardOutput, StringComparison.Ordinal);
-            Assert.Contains("Options:", results.StandardOutput, StringComparison.Ordinal);
-            Assert.Contains("What it's for:", results.StandardOutput, StringComparison.Ordinal);
+            CoverallsAssert.ContainsStandardUsageText(results);
         }
     }
 }

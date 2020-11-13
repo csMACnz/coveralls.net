@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
-using BCLExtensions;
 using Beefeater;
 using csmacnz.Coveralls.Adapters;
 using csmacnz.Coveralls.Data;
@@ -17,18 +16,33 @@ namespace csmacnz.Coveralls
         private readonly IConsole _console;
         private readonly string _version;
         private readonly IFileSystem _fileSystem;
+        private readonly IEnvironmentVariables _environmentVariables;
+        private readonly ICoverallsService _coverallsService;
 
-        public Program(IConsole console, IFileSystem fileSystem, string version)
+        // NOTE(markc): make this configurable, especially if private servers are used.
+#pragma warning disable S1075 // URIs should not be hardcoded
+        private static readonly Uri BaseUri = new Uri("https://coveralls.io");
+#pragma warning restore S1075 // URIs should not be hardcoded
+
+        public Program(
+            IConsole console,
+            IFileSystem fileSystem,
+            IEnvironmentVariables environmentVariables,
+            ICoverallsService coverallsService,
+            string version)
         {
             _console = console;
             _fileSystem = fileSystem;
+            _environmentVariables = environmentVariables;
+            _coverallsService = coverallsService;
             _version = version;
         }
 
         public static void Main(string[] argv)
         {
             var console = new StandardConsole();
-            var result = new Program(console, new FileSystem(), GetDisplayVersion()).Run(argv);
+
+            var result = new Program(console, new FileSystem(), new EnvironmentVariables(), new CoverallsService(BaseUri), GetDisplayVersion()).Run(argv);
             if (result.HasValue)
             {
                 Environment.Exit(result.Value);
@@ -38,8 +52,8 @@ namespace csmacnz.Coveralls
         private static NotNull<string> GetDisplayVersion()
         {
             return Assembly
-                .GetEntryAssembly()
-                .GetCustomAttribute<AssemblyFileVersionAttribute>()
+                .GetEntryAssembly() !
+                .GetCustomAttribute<AssemblyFileVersionAttribute>() !
                 .Version;
         }
 
@@ -50,18 +64,31 @@ namespace csmacnz.Coveralls
                 var args = new MainArgs(argv, version: _version);
                 if (args.Failed)
                 {
-                    _console.WriteLine(args.FailMessage);
+                    _console.WriteLine(args.FailMessage!);
                     return args.FailErrorCode;
                 }
 
-                var gitData = ResolveGitData(_console, args);
+                var metadata = CoverageMetadataResolver.Resolve(args, _environmentVariables);
+
+                if (args.OptCompleteParallelWork)
+                {
+                    var repoToken = ResolveRepoToken(args);
+
+                    var pushResult = _coverallsService.PushParallelCompleteWebhook(repoToken, metadata.ServiceBuildNumber);
+                    if (!pushResult.Successful)
+                    {
+                        ExitWithError(pushResult.Error);
+                    }
+
+                    return null;
+                }
 
                 var settings = LoadSettings(args);
 
-                var metadata = CoverageMetadataResolver.Resolve(args);
+                var gitData = ResolveGitData(_console, args);
 
-                var app = new CoverallsPublisher(_console, _fileSystem);
-                var result = app.Run(settings, gitData.ValueOrDefault(), metadata);
+                var app = new CoverallsPublisher(_console, _fileSystem, _coverallsService);
+                var result = app.Run(settings, gitData, metadata);
                 if (!result.Successful)
                 {
                     ExitWithError(result.Error);
@@ -76,43 +103,49 @@ namespace csmacnz.Coveralls
             }
         }
 
-        private static Option<GitData> ResolveGitData(IConsole console, MainArgs args)
+        private Either<GitData, CommitSha>? ResolveGitData(IConsole console, MainArgs args)
         {
             var providers = new List<IGitDataResolver>
             {
                 new CommandLineGitDataResolver(args),
-                new AppVeyorGitDataResolver(new EnvironmentVariables())
+                new AppVeyorGitDataResolver(_environmentVariables),
+                new TeamCityGitDataResolver(_environmentVariables, _console)
             };
 
             var provider = providers.FirstOrDefault(p => p.CanProvideData());
             if (provider is null)
             {
                 console.WriteLine("No git data available");
-                return Option<GitData>.None;
+            }
+            else
+            {
+                console.WriteLine($"Using Git Data Provider '{provider.DisplayName}'");
+                var data = provider.GenerateData();
+                if (data.HasValue)
+                {
+                    return data;
+                }
             }
 
-            console.WriteLine($"Using Git Data Provider '{provider.DisplayName}'");
-            return provider.GenerateData();
+            return null;
         }
 
-        private static ConfigurationSettings LoadSettings(MainArgs args)
+        private ConfigurationSettings LoadSettings(MainArgs args)
         {
-            var settings = new ConfigurationSettings
-            {
-                RepoToken = ResolveRepoToken(args),
-                OutputFile = args.IsProvided("--output") ? args.OptOutput : string.Empty,
-                DryRun = args.OptDryrun,
-                TreatUploadErrorsAsWarnings = args.OptTreatuploaderrorsaswarnings,
-                UseRelativePaths = args.OptUserelativepaths,
-                BasePath = args.IsProvided("--basePath") ? args.OptBasepath : null
-            };
-            settings.CoverageSources.AddRange(ParseCoverageSources(args));
+            var settings = new ConfigurationSettings(
+                repoToken: ResolveRepoToken(args),
+                outputFile: args.IsProvided("--output") ? args.OptOutput : null,
+                dryRun: args.OptDryrun,
+                treatUploadErrorsAsWarnings: args.OptTreatuploaderrorsaswarnings,
+                useRelativePaths: args.OptUserelativepaths,
+                basePath: args.IsProvided("--basePath") ? args.OptBasepath : null,
+                ParseCoverageSources(args));
             return settings;
         }
 
-        private static string ResolveRepoToken(MainArgs args)
+        private string ResolveRepoToken(MainArgs args)
         {
-            string repoToken;
+            string? repoToken = null;
             if (args.IsProvided("--repoToken"))
             {
                 repoToken = args.OptRepotoken;
@@ -128,11 +161,14 @@ namespace csmacnz.Coveralls
                 {
                     ExitWithError("parameter repoTokenVariable is required.");
                 }
+                else
+                {
+                    repoToken = _environmentVariables.GetEnvironmentVariable(variable);
+                }
 
-                repoToken = Environment.GetEnvironmentVariable(variable);
                 if (repoToken.IsNullOrWhitespace())
                 {
-                    ExitWithError("No token found in Environment Variable '{0}'.".FormatWith(variable));
+                    ExitWithError($"No token found in Environment Variable '{variable}'.");
                 }
             }
 
@@ -141,10 +177,14 @@ namespace csmacnz.Coveralls
 
         private static List<CoverageSource> ParseCoverageSources(MainArgs args)
         {
+            var optInput = args.OptInput ?? throw new ArgumentException(
+                message: "Parsing Sources mode requires input",
+                paramName: nameof(args));
+
             List<CoverageSource> results = new List<CoverageSource>();
             if (args.OptMultiple)
             {
-                var modes = args.OptInput.Split(';');
+                var modes = optInput.Split(';');
                 foreach (var modekeyvalue in modes)
                 {
                     var split = modekeyvalue.Split('=');
@@ -155,8 +195,10 @@ namespace csmacnz.Coveralls
                     {
                         ExitWithError("Unknown mode provided");
                     }
-
-                    results.Add(new CoverageSource((CoverageMode)mode, input));
+                    else
+                    {
+                        results.Add(new CoverageSource(mode.Value, input));
+                    }
                 }
             }
             else
@@ -166,14 +208,16 @@ namespace csmacnz.Coveralls
                 {
                     ExitWithError("Unknown mode provided");
                 }
-
-                results.Add(new CoverageSource((CoverageMode)mode, args.OptInput));
+                else
+                {
+                    results.Add(new CoverageSource(mode.Value, optInput));
+                }
             }
 
             return results;
         }
 
-        private static Option<CoverageMode> GetMode(string mode)
+        private static CoverageMode? GetMode(string mode)
         {
             if (string.Equals(mode, "monocov", StringComparison.OrdinalIgnoreCase))
             {
@@ -215,10 +259,10 @@ namespace csmacnz.Coveralls
                 return CoverageMode.ReportGenerator;
             }
 
-            return Option<CoverageMode>.None;
+            return null;
         }
 
-        private static Option<CoverageMode> GetMode(MainArgs args)
+        private static CoverageMode? GetMode(MainArgs args)
         {
             if (args.OptMonocov)
             {
@@ -260,10 +304,11 @@ namespace csmacnz.Coveralls
                 return CoverageMode.ReportGenerator;
             }
 
-            return Option<CoverageMode>.None; // Unreachable
+            return null; // Unreachable
         }
 
         [ContractAnnotation("=>halt")]
+        [System.Diagnostics.CodeAnalysis.DoesNotReturn]
         private static void ExitWithError(string message)
         {
             throw new ExitException(message);

@@ -8,19 +8,7 @@ coveralls.net
 [![NuGet](https://img.shields.io/nuget/dt/coveralls.net.svg)](https://www.nuget.org/packages/coveralls.net)
 [![Badges](http://img.shields.io/:badges-16/16-ff6799.svg)](https://github.com/badges/badgerbadgerbadger)
 
-[![Build status](https://ci.appveyor.com/api/projects/status/m9hqgm8a38s4vke1?svg=true)](https://ci.appveyor.com/project/MarkClearwater/coveralls-net)
-[![Travis Build Status](https://img.shields.io/travis/csMACnz/coveralls.net.svg)](https://travis-ci.org/csMACnz/coveralls.net)
-
-[![Coverage Status](https://img.shields.io/coveralls/csMACnz/coveralls.net.svg)](https://coveralls.io/r/csMACnz/coveralls.net)
 [![Coverity Scan Build Status](https://scan.coverity.com/projects/3696/badge.svg)](https://scan.coverity.com/projects/3696)
-
-[![Stories in Backlog](https://badge.waffle.io/csmacnz/coveralls.net.png?label=backlog&title=Backlog)](https://waffle.io/csmacnz/coveralls.net)
-[![Stories in Ready](https://badge.waffle.io/csmacnz/coveralls.net.png?label=ready&title=Ready)](https://waffle.io/csmacnz/coveralls.net)
-[![Stories in progress](https://badge.waffle.io/csmacnz/coveralls.net.png?label=in%20progress&title=In%20Progress)](https://waffle.io/csmacnz/coveralls.net)
-[![Stories in next release](https://badge.waffle.io/csmacnz/coveralls.net.png?label=in%20next%20release&title=In%20Next%20Release)](https://waffle.io/csmacnz/coveralls.net)
-[![Issue Stats](http://www.issuestats.com/github/csMACnz/coveralls.net/badge/pr)](http://www.issuestats.com/github/csMACnz/coveralls.net)
-[![Issue Stats](http://www.issuestats.com/github/csMACnz/coveralls.net/badge/issue)](http://www.issuestats.com/github/csMACnz/coveralls.net)
-
 
 [![Source Browser](https://img.shields.io/badge/Browse-Source-green.svg)](http://sourcebrowser.io/Browse/csMACnz/coveralls.net)
 [![Open Hub](https://img.shields.io/badge/Open-Hub-0185CA.svg)](https://www.openhub.net/p/coverallsdotnet)
@@ -28,20 +16,24 @@ coveralls.net
 
 Coveralls uploader for .Net Code coverage of your C# source code. Should work with any code files that get reported with the supported coverage tools, but the primary focus is CSharp.
 
+| Branch  | Appveyor | Travis | TeamCity | AppVeyor Coverage | TeamCity Coverage |
+|:-------:|:--------:|:------:|:--------:|:-----------------:|:-----------------:|
+| master  |[![AppVeyor Build status](https://ci.appveyor.com/api/projects/status/m9hqgm8a38s4vke1/branch/master?svg=true)](https://ci.appveyor.com/project/MarkClearwater/coveralls-net/branch/master)|[![Travis Build Status](https://img.shields.io/travis/csMACnz/coveralls.net/master.svg)](https://travis-ci.org/csMACnz/coveralls.net/branches)|[![TeamCity Build Status](https://teamcity.jetbrains.com/app/rest/builds/buildType:OpenSourceProjects_CoverallsNet_Build,branch:master/statusIcon.svg)](https://teamcity.jetbrains.com/viewType.html?buildTypeId=OpenSourceProjects_CoverallsNet_Build&branch_OpenSourceProjects_CoverallsNet=master)|[![Coverage Status](https://img.shields.io/coveralls/csMACnz/coveralls.net/master.svg)](https://coveralls.io/r/csMACnz/coveralls.net?branch=master)|[![Coverage on TeamCity](https://img.shields.io/coveralls/csMACnz/coveralls.net/TC_master.svg)](https://coveralls.io/r/csMACnz/coveralls.net?branch=TC_master)|
+| develop |[![AppVeyor Build status](https://ci.appveyor.com/api/projects/status/m9hqgm8a38s4vke1/branch/develop?svg=true)](https://ci.appveyor.com/project/MarkClearwater/coveralls-net/branch/develop)|[![Travis Build Status](https://img.shields.io/travis/csMACnz/coveralls.net/develop.svg)](https://travis-ci.org/csMACnz/coveralls.net/branches)|[![TeamCity Build Status](https://teamcity.jetbrains.com/app/rest/builds/buildType:OpenSourceProjects_CoverallsNet_Build,branch:develop/statusIcon.svg)](https://teamcity.jetbrains.com/viewType.html?buildTypeId=OpenSourceProjects_CoverallsNet_Build&branch_OpenSourceProjects_CoverallsNet=develop)|[![Coverage Status](https://img.shields.io/coveralls/csMACnz/coveralls.net/develop.svg)](https://coveralls.io/r/csMACnz/coveralls.net?branch=develop)|[![Coverage on TeamCity](https://img.shields.io/coveralls/csMACnz/coveralls.net/TC_develop.svg)](https://coveralls.io/r/csMACnz/coveralls.net?branch=TC_develop)|
+
 Install
 -------
 
 ### The new way ####
 
-The new way is using the dotnet SDK 2.1 tools. This can be installed from version 1.0.0.
-This requires dotnet sdk version 2.1 to be installed.
+The new way is using the dotnet SDK tools. This can be installed from version 2.0.0.
 
 ``` powershell
 # install globally
-dotnet tool install -g coveralls.net --version 1.0.0
+dotnet tool install --global coveralls.net --version 2.0.0
 
 # install into a local folder
-dotnet tool install coveralls.net --version 1.0.0 --tool-path tools
+dotnet tool install coveralls.net --version 2.0.0 --tool-path tools
 ```
 
 To run the new version, simply use the command:
@@ -62,7 +54,7 @@ For example on windows, you can download and unzip the windows stand-alone versi
 # The TLS change was necessary on my development machine
 [Net.ServicePointManager]::SecurityProtocol = [Net.SecurityProtocolType]::Tls12
 
-$zipDownloadPath="https://github.com/csMACnz/coveralls.net/releases/download/1.0.0/coveralls.net.1.0.0-windows.zip"
+$zipDownloadPath="https://github.com/csMACnz/coveralls.net/releases/download/2.0.0/coveralls.net.2.0.0-windows.zip"
 Invoke-WebRequest -UseBasicParsing $zipDownloadPath -OutFile coveralls-windows.zip
 mkdir coveralls-windows
 Expand-Archive .\coveralls-windows.zip coveralls-windows
@@ -70,8 +62,11 @@ Expand-Archive .\coveralls-windows.zip coveralls-windows
 .\coveralls-windows\csmacnz.Coveralls.exe
 
 ```
+#### pre dotnet 3.1 ####
 
-#### The old way ####
+If you are not yet on 3.1 you can still use Version 1.0.0 which runs on dotnet 2.1 runtimes and above (using envvar `DOTNET_ROLL_FORWARD` set to `Major` for 3.0), following essentially the same instructions as above.
+
+#### The older old way ####
 
 Version 0.7.0 is still available on nuget at [www.nuget.org/packages/coveralls.net](https://www.nuget.org/packages/coveralls.net). This is a full .Net Framework exe that even runs on mono.
 
@@ -104,8 +99,8 @@ Samples
 
 Sample applications using Coveralls.net to publish their results can be found in the [csmacnz/Coveralls.net-Samples](https://github.com/csmacnz/Coveralls.net-Samples) Project.
 
-Supported
----------
+Supported Coverage Formats
+--------------------------
 
 * [OpenCover](https://github.com/sawilde/opencover)
 * [Mono Code Coverage (monocov)](http://www.mono-project.com/docs/debug+profile/profile/code-coverage/)
@@ -118,6 +113,13 @@ Supported
 * [Coverlet](https://github.com/tonerdo/coverlet) (via its opencover output format `/p:CoverletOutputFormat=opencover`)
 
 Full Supported, In Progress, and Future Support information can be found [Coverage Support](https://github.com/csMACnz/coveralls.net/wiki/Coverage-Support) wiki page
+
+Supported Build Servers
+-----------------------
+
+* Appveyor
+* Travis
+* TeamCity (using custom EnvVars)
 
 Issues
 ------

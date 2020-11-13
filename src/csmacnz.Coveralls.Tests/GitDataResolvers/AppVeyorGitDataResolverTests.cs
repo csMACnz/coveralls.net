@@ -13,7 +13,7 @@ namespace csmacnz.Coveralls.Tests.GitDataResolvers
         [Fact]
         public void CanProvideDataNoEnvironmentVariablesSetReturnsFalse()
         {
-            var sut = new AppVeyorGitDataResolver(new TestEnvironmentVariables(new Dictionary<string, string>()));
+            var sut = new AppVeyorGitDataResolver(new TestEnvironmentVariables());
 
             var canProvideData = sut.CanProvideData();
 
@@ -63,6 +63,7 @@ namespace csmacnz.Coveralls.Tests.GitDataResolvers
             var gitData = sut.GenerateData();
 
             Assert.NotNull(gitData);
+            Assert.True(gitData!.Value.IsItem1);
         }
 
         public class GenerateData
@@ -94,42 +95,52 @@ namespace csmacnz.Coveralls.Tests.GitDataResolvers
 
                 var sut = new AppVeyorGitDataResolver(variables);
 
-                _gitData = sut.GenerateData();
+                var generatedData = sut.GenerateData();
+                var data = generatedData.HasValue
+                    ? generatedData.Value.Match(g => g, c => (GitData?)null)
+                    : null;
+
+                _gitData = data ?? throw new Exception("Expected GitData");
             }
 
             [Fact]
             public void CommitIdSetCorrectly()
             {
+                Assert.NotNull(_gitData);
                 Assert.NotNull(_gitData.Head);
-                Assert.Equal(_expectedId, _gitData.Head.Id);
+                Assert.Equal(_expectedId, _gitData.Head!.Id);
             }
 
             [Fact]
             public void NameSetCorrectly()
             {
+                Assert.NotNull(_gitData);
                 Assert.NotNull(_gitData.Head);
-                Assert.Equal(_expectedName, _gitData.Head.AuthorName);
-                Assert.Equal(_expectedName, _gitData.Head.CommitterName);
+                Assert.Equal(_expectedName, _gitData.Head!.AuthorName);
+                Assert.Equal(_expectedName, _gitData.Head!.CommitterName);
             }
 
             [Fact]
             public void EmailSetCorrectly()
             {
+                Assert.NotNull(_gitData);
                 Assert.NotNull(_gitData.Head);
-                Assert.Equal(_expectedEmail, _gitData.Head.AuthorEmail);
-                Assert.Equal(_expectedEmail, _gitData.Head.ComitterEmail);
+                Assert.Equal(_expectedEmail, _gitData.Head!.AuthorEmail);
+                Assert.Equal(_expectedEmail, _gitData.Head!.ComitterEmail);
             }
 
             [Fact]
             public void MessageSetCorrectly()
             {
+                Assert.NotNull(_gitData);
                 Assert.NotNull(_gitData.Head);
-                Assert.Equal(_expectedMessage, _gitData.Head.Message);
+                Assert.Equal(_expectedMessage, _gitData.Head!.Message);
             }
 
             [Fact]
             public void BranchSetCorrectly()
             {
+                Assert.NotNull(_gitData);
                 Assert.Equal(_expectedBranch, _gitData.Branch);
             }
         }

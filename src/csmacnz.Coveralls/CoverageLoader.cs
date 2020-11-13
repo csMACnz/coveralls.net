@@ -159,6 +159,7 @@ namespace csmacnz.Coveralls
                 {
                     path = pathProcessor.ConvertPath(coverageFileData.FullPath);
                 }
+
                 path = PathProcessor.UnixifyPath(path);
                 coverageBuilder.SetPath(path);
 

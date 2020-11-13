@@ -84,7 +84,7 @@ namespace csmacnz.Coveralls.Tests
 
             public static string SingleFileReportSourceFile => GetOpenCoverContents("SingleFileReportSourceFile.txt");
 
-            public static string GetOpenCoverXmlContents([CallerMemberName] string resourceName = null)
+            public static string GetOpenCoverXmlContents([CallerMemberName] string resourceName = default!)
             {
                 return GetOpenCoverContents($"{resourceName}.xml");
             }

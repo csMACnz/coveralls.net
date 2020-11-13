@@ -15,13 +15,13 @@ namespace csmacnz.Coveralls.Tests.TestAdapters
 
         public Option<string> TryLoadFile(string filePath)
         {
-            var pathKey = resolvePathKey(filePath);
+            var pathKey = ResolvePathKey(filePath);
             if (_files.ContainsKey(pathKey))
             {
                 return _files[pathKey];
             }
 
-            return null;
+            return Option<string>.None;
         }
 
         public static string GenerateRandomAbsolutePath(params string[] paths)
@@ -33,14 +33,14 @@ namespace csmacnz.Coveralls.Tests.TestAdapters
         {
             if (_files.Any())
             {
-                var directoryAsPathKey = resolvePathKey(directory);
+                var directoryAsPathKey = ResolvePathKey(directory);
                 return _files
                     .Where(kvp => kvp.Key.StartsWith(directoryAsPathKey, StringComparison.OrdinalIgnoreCase))
                     .Select(kvp => new FileInfo(kvp.Key))
                     .ToArray();
             }
 
-            return null;
+            return Option<FileInfo[]>.None;
         }
 
         public bool WriteFile(string outputFile, string fileData)
@@ -57,15 +57,15 @@ namespace csmacnz.Coveralls.Tests.TestAdapters
                 return _files[filePath].Split('\n');
             }
 
-            return null;
+            return Option<string[]>.None;
         }
 
         public void AddFile(string path, string contents)
         {
-            _files[resolvePathKey(path)] = contents;
+            _files[ResolvePathKey(path)] = contents;
         }
 
-        private string resolvePathKey(string path)
+        private string ResolvePathKey(string path)
         {
             if (!Path.IsPathRooted(path))
             {

@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
 using System.Net;
@@ -11,6 +12,8 @@ namespace csmacnz.Coveralls.Parsers
     {
         public static List<FileCoverageData> GenerateSourceFiles(Dictionary<string, XDocument> documents)
         {
+            _ = documents ?? throw new ArgumentNullException(nameof(documents));
+
             var files = new List<FileCoverageData>();
             foreach (var fileName in documents.Keys.Where(k => k != "Summary.xml"))
             {

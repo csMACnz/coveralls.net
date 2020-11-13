@@ -14,10 +14,9 @@ namespace csmacnz.Coveralls.Adapters
                 return File.ReadAllText(filePath);
             }
 
-            return null;
+            return Option<string>.None;
         }
 
-        // todo: not FileInfo
         public Option<FileInfo[]> GetFiles(string directory)
         {
             if (Directory.Exists(directory))
@@ -25,7 +24,7 @@ namespace csmacnz.Coveralls.Adapters
                 return new DirectoryInfo(directory).GetFiles();
             }
 
-            return null;
+            return Option<FileInfo[]>.None;
         }
 
         public bool WriteFile(string outputFile, string fileData)
@@ -34,7 +33,9 @@ namespace csmacnz.Coveralls.Adapters
             {
                 File.WriteAllText(outputFile, fileData);
             }
+#pragma warning disable CA1031 // Do not catch general exception types
             catch (Exception)
+#pragma warning restore CA1031 // Do not catch general exception types
             {
                 // Maybe should give reason.
                 return false;
@@ -50,7 +51,7 @@ namespace csmacnz.Coveralls.Adapters
                 return File.ReadAllLines(filePath);
             }
 
-            return null;
+            return Option<string[]>.None;
         }
     }
 }

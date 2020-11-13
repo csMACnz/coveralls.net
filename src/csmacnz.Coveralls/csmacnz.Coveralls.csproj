@@ -4,7 +4,7 @@
     <RootNamespace>csmacnz.Coveralls</RootNamespace>
     <AssemblyName>csmacnz.Coveralls</AssemblyName>
     <AssemblyTitle>csmacnz.Coveralls</AssemblyTitle>
-    <TargetFramework>netcoreapp2.1</TargetFramework>
+    <TargetFramework>netcoreapp3.1</TargetFramework>
     <RuntimeIdentifiers>win-x64;osx-x64;linux-x64</RuntimeIdentifiers>
     <Title>coveralls.net - Coveralls.io uploader for .NET Code Coverage</Title>
     <Description>Coveralls.io uploader for .NET Code Coverage. Supports opencover and visual studio's codecoverage.exe on windows, and monocov for mono</Description>
@@ -24,18 +24,23 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="BCLExtensions" Version="1.2.0" />
-    <PackageReference Include="Beefeater" Version="0.3.0" />
-    <PackageReference Include="docopt.net" Version="0.6.1.9" />
+    <PackageReference Include="Beefeater" Version="0.5.0" />
+    <PackageReference Include="docopt.net" Version="0.6.1.10" />
     <PackageReference Include="System.Collections.NonGeneric" Version="4.3.0" />
-    <PackageReference Include="JetBrains.Annotations" Version="11.1.0" />
-    <PackageReference Include="Newtonsoft.Json" Version="10.0.3" />
+    <PackageReference Include="JetBrains.Annotations" Version="2019.1.3" />
+    <PackageReference Include="Newtonsoft.Json" Version="12.0.3" />
   </ItemGroup>
 
   <ItemGroup>
     <AdditionalFiles Update="C:\Dev\coveralls.net\/stylecop.json">
       <CopyToOutputDirectory>false</CopyToOutputDirectory>
     </AdditionalFiles>
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Update="Microsoft.CodeAnalysis.FxCopAnalyzers" Version="2.9.8" />
+    <PackageReference Update="SonarAnalyzer.CSharp" Version="8.5.0.15942" />
+    <PackageReference Update="StyleCop.Analyzers" Version="1.1.118" />
   </ItemGroup>
 
 </Project>

@@ -1,92 +1,60 @@
-﻿using BCLExtensions;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
 using Beefeater;
-using csmacnz.Coveralls.Adapters;
+using csmacnz.Coveralls.MetaDataResolvers;
 using csmacnz.Coveralls.Ports;
 
 namespace csmacnz.Coveralls
 {
     public static class CoverageMetadataResolver
     {
-        public static CoverageMetadata Resolve(MainArgs args)
+        public static CoverageMetadata Resolve(MainArgs args, IEnvironmentVariables variables)
         {
-            var serviceName = ResolveServiceName(args);
-            var serviceJobId = ResolveServiceJobId(args);
-            var serviceNumber = ResolveServiceNumber(args);
-            var pullRequestId = ResolvePullRequestId(args);
-            var parallel = args.OptParallel;
+            _ = args ?? throw new ArgumentNullException(paramName: nameof(args));
 
-            return new CoverageMetadata
+            var resolvers = CreateResolvers(args, variables);
+            var serviceName = Resolve(resolvers, r => r.ResolveServiceName());
+            var serviceJobId = Resolve(resolvers, r => r.ResolveServiceJobId());
+            var serviceBuildNumber = Resolve(resolvers, r => r.ResolveServiceBuildNumber());
+            var pullRequestId = Resolve(resolvers, r => r.ResolvePullRequestId());
+            var parallel = ResolveParallel(args, variables);
+
+            return new CoverageMetadata(
+                serviceName: serviceName.ValueOr("coveralls.net"),
+                serviceJobId: serviceJobId.ValueOr("0"),
+                serviceBuildNumber: serviceBuildNumber.ValueOrDefault(),
+                pullRequestId: pullRequestId.ValueOrDefault(),
+                parallel: parallel);
+        }
+
+        private static List<IMetaDataResolver> CreateResolvers(MainArgs args, IEnvironmentVariables variables)
+        {
+            return new List<IMetaDataResolver>
             {
-                ServiceJobId = serviceJobId.ValueOr("0"),
-                ServiceName = serviceName.ValueOr("coveralls.net"),
-                ServiceNumber = serviceNumber.ValueOr(null),
-                PullRequestId = pullRequestId.ValueOr(null),
-                Parallel = parallel
+                new CommandLineMetaDataResolver(args),
+                new AppVeyorMetaDataResolver(variables),
+                new TravisMetaDataResolver(variables),
+                new TeamCityMetaDataResolver(variables)
             };
         }
 
-        private static Option<string> ResolveServiceName(MainArgs args)
+        private static Option<string> Resolve(List<IMetaDataResolver> resolvers, Func<IMetaDataResolver, Option<string>> resolve)
         {
-            if (args.IsProvided("--serviceName"))
-            {
-                return args.OptServicename;
-            }
-
-            var isAppVeyor = new EnvironmentVariables().GetBooleanVariable("APPVEYOR");
-            if (isAppVeyor)
-            {
-                return "appveyor";
-            }
-
-            return null;
+            return resolvers
+            .Where(r => r.IsActive())
+            .Select(r => resolve?.Invoke(r) ?? Option<string>.None)
+            .FirstOrDefault(v => v.HasValue);
         }
 
-        private static Option<string> ResolveServiceJobId(MainArgs args)
+        private static bool ResolveParallel(MainArgs args, IEnvironmentVariables variables)
         {
-            if (args.IsProvided("--jobId"))
+            if (args.IsProvided("--parallel"))
             {
-                return args.OptJobid;
+                return args.OptParallel;
             }
 
-            var jobId = new EnvironmentVariables().GetEnvironmentVariable("APPVEYOR_JOB_ID");
-            if (jobId.IsNotNullOrWhitespace())
-            {
-                return jobId;
-            }
-
-            return null;
-        }
-
-        private static Option<string> ResolveServiceNumber(MainArgs args)
-        {
-            if (args.IsProvided("--serviceNumber"))
-            {
-                return args.OptServicenumber;
-            }
-
-            var jobId = new EnvironmentVariables().GetEnvironmentVariable("APPVEYOR_BUILD_NUMBER");
-            if (jobId.IsNotNullOrWhitespace())
-            {
-                return jobId;
-            }
-
-            return null;
-        }
-
-        private static Option<string> ResolvePullRequestId(MainArgs args)
-        {
-            if (args.IsProvided("--pullRequest"))
-            {
-                return args.OptPullrequest;
-            }
-
-            var prId = new EnvironmentVariables().GetEnvironmentVariable("APPVEYOR_PULL_REQUEST_NUMBER");
-            if (prId.IsNotNullOrWhitespace())
-            {
-                return prId;
-            }
-
-            return null;
+            return variables.GetBooleanVariable("COVERALLS_PARALLEL");
         }
     }
 }

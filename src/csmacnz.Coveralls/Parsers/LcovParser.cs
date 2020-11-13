@@ -10,7 +10,9 @@ namespace csmacnz.Coveralls.Parsers
     {
         public static List<FileCoverageData> GenerateSourceFiles(string[] lines)
         {
-            FileCoverageDataBuilder coverageBuilder = null;
+            _ = lines ?? throw new ArgumentNullException(nameof(lines));
+
+            FileCoverageDataBuilder? coverageBuilder = null;
             var files = new List<FileCoverageData>();
             foreach (var line in lines)
             {

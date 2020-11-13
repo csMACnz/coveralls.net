@@ -2,16 +2,25 @@
 {
     public class CoverageMetadata
     {
-        public string RepoToken { get; set; }
+        public CoverageMetadata(
+            string serviceName,
+            string serviceJobId,
+            string? serviceBuildNumber,
+            string? pullRequestId,
+            bool parallel)
+        {
+            (ServiceName, ServiceJobId, ServiceBuildNumber, PullRequestId, Parallel)
+            = (serviceName, serviceJobId, serviceBuildNumber, pullRequestId, parallel);
+        }
 
-        public string ServiceName { get; set; }
+        public string ServiceName { get; }
 
-        public string ServiceJobId { get; set; }
+        public string ServiceJobId { get; }
 
-        public string ServiceNumber { get; set; }
+        public string? ServiceBuildNumber { get; }
 
-        public string PullRequestId { get; set; }
+        public string? PullRequestId { get; }
 
-        public bool Parallel { get; set; }
+        public bool Parallel { get; }
     }
 }

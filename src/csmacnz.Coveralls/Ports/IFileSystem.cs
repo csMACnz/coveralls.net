@@ -14,6 +14,7 @@ namespace csmacnz.Coveralls.Ports
 
     public interface IFileLoader
     {
+        // At some point this shouldn't expose FileInfo as a Port Type
         Option<FileInfo[]> GetFiles(string directory);
 
         Option<string[]> TryReadAllLinesFromFile(string filePath);

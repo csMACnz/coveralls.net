@@ -4,7 +4,6 @@ using System.Diagnostics;
 using System.IO;
 using BCLExtensions;
 using Beefeater;
-using csmacnz.Coveralls.Adapters;
 using csmacnz.Coveralls.Data;
 using csmacnz.Coveralls.Ports;
 using Newtonsoft.Json;
@@ -15,18 +14,26 @@ namespace csmacnz.Coveralls
     {
         private readonly IConsole _console;
         private readonly IFileSystem _fileSystem;
+        private readonly ICoverallsService _coverallsService;
 
-        public CoverallsPublisher(IConsole console, IFileSystem fileSystem)
+        public CoverallsPublisher(
+            IConsole console,
+            IFileSystem fileSystem,
+            ICoverallsService coverallsService)
         {
             _console = console;
             _fileSystem = fileSystem;
+            _coverallsService = coverallsService;
         }
 
         public Result<Unit, string> Run(
             ConfigurationSettings settings,
-            GitData gitData,
+            Either<GitData, CommitSha>? gitData,
             CoverageMetadata metadata)
         {
+            _ = settings ?? throw new ArgumentNullException(nameof(settings));
+            _ = metadata ?? throw new ArgumentNullException(nameof(metadata));
+
             var outputFile = ResolveOutpuFile(settings);
 
             // Main Processing
@@ -36,20 +43,32 @@ namespace csmacnz.Coveralls
                 return files.Error;
             }
 
-            var data = new CoverallData
+            var data = new CoverallData(
+                repoToken: settings.RepoToken,
+                serviceName: metadata.ServiceName,
+                sourceFiles: files.Value.ToArray())
             {
-                RepoToken = settings.RepoToken,
                 ServiceJobId = metadata.ServiceJobId,
-                ServiceName = metadata.ServiceName,
-                ServiceNumber = metadata.ServiceNumber,
+                ServiceNumber = metadata.ServiceBuildNumber,
                 PullRequestId = metadata.PullRequestId,
-                SourceFiles = files.Value.ToArray(),
                 Parallel = metadata.Parallel,
-                Git = gitData
             };
 
+            if (gitData.HasValue)
+            {
+                gitData.Value.Match(
+                    git =>
+                    {
+                        data.Git = git;
+                    },
+                    sha =>
+                    {
+                        data.CommitSha = sha.Value;
+                    });
+            }
+
             var fileData = JsonConvert.SerializeObject(data);
-            if (!string.IsNullOrWhiteSpace(outputFile))
+            if (outputFile.IsNotNullOrWhitespace())
             {
                 WriteFileData(_fileSystem, fileData, outputFile);
             }
@@ -73,10 +92,10 @@ namespace csmacnz.Coveralls
             return Unit.Default;
         }
 
-        private string ResolveOutpuFile(ConfigurationSettings settings)
+        private string? ResolveOutpuFile(ConfigurationSettings settings)
         {
             var outputFile = settings.OutputFile;
-            if (!string.IsNullOrWhiteSpace(outputFile) && File.Exists(outputFile))
+            if (outputFile.IsNotNullOrWhitespace() && File.Exists(outputFile))
             {
                 _console.WriteLine($"output file '{outputFile}' already exists and will be overwritten.");
             }
@@ -115,7 +134,7 @@ namespace csmacnz.Coveralls
 
         private Result<Unit, string> UploadCoverage(string fileData)
         {
-            var uploadResult = new CoverallsService().Upload(fileData);
+            var uploadResult = _coverallsService.Upload(fileData);
             if (!uploadResult.Successful)
             {
                 var message = $"Failed to upload to coveralls\n{uploadResult.Error}";
@@ -141,17 +160,13 @@ namespace csmacnz.Coveralls
 
             if (!coverageFiles.Successful)
             {
-                switch (coverageFiles.Error)
+                return coverageFiles.Error switch
                 {
-                    case LoadCoverageFilesError.InputFileNotFound:
-                        return $"Input file '{inputArgument}' cannot be found";
-                    case LoadCoverageFilesError.ModeNotSupported:
-                        return $"Could not process mode {mode}";
-                    case LoadCoverageFilesError.UnknownFilesMissingError:
-                        return $"Unknown Error Finding files processing mode {mode}";
-                    default:
-                        throw new NotSupportedException($"Unknown value '{coverageFiles.Error}' returned from 'LoadCoverageFiles'.");
-                }
+                    LoadCoverageFilesError.InputFileNotFound => $"Input file '{inputArgument}' cannot be found",
+                    LoadCoverageFilesError.ModeNotSupported => $"Could not process mode {mode}",
+                    LoadCoverageFilesError.UnknownFilesMissingError => $"Unknown Error Finding files processing mode {mode}",
+                    _ => throw new NotSupportedException($"Unknown value '{coverageFiles.Error}' returned from 'LoadCoverageFiles'."),
+                };
             }
 
             return coverageFiles.Value;

@@ -1,3 +1,4 @@
+﻿using System;
 using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
@@ -10,6 +11,8 @@ namespace csmacnz.Coveralls.Parsers
     {
         public static List<FileCoverageData> GenerateSourceFiles(XDocument document)
         {
+            _ = document ?? throw new ArgumentNullException(nameof(document));
+
             var coverage = new List<FileCoverageData>();
             var xElement = document.Root;
             if (xElement != null)
@@ -20,9 +23,9 @@ namespace csmacnz.Coveralls.Parsers
 
                     foreach (var method in module.Elements("method"))
                     {
-                        var attribute = method.Attribute("excluded");
+                        XAttribute attribute = method.Attribute("excluded");
                         if (!string.IsNullOrEmpty(attribute?.Value) &&
-                             bool.Parse(attribute?.Value))
+                             bool.Parse(attribute.Value))
                         {
                                 continue;
                         }
@@ -31,7 +34,7 @@ namespace csmacnz.Coveralls.Parsers
                         {
                             attribute = method.Attribute("excluded");
                             if (!string.IsNullOrEmpty(attribute?.Value) &&
-                                bool.Parse(attribute?.Value))
+                                bool.Parse(attribute.Value))
                             {
                                     continue;
                             }

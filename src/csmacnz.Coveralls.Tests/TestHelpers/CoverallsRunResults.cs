@@ -2,10 +2,20 @@
 {
     public class CoverallsRunResults
     {
-        public string StandardOutput { get; set; }
+        public CoverallsRunResults(
+            string standardOutput,
+            string standardError,
+            int exitCode)
+        {
+            StandardOutput = standardOutput;
+            StandardError = standardError;
+            ExitCode = exitCode;
+        }
 
-        public string StandardError { get; set; }
+        public string StandardOutput { get; }
 
-        public int ExitCode { get; set; }
+        public string StandardError { get; }
+
+        public int ExitCode { get; }
     }
 }
