@@ -55,7 +55,7 @@ namespace csmacnz.Coveralls.Tests.NCover
             CoverallsAssert.RanSuccessfully(results);
         }
 
-        private static (TestFileSystem, string basePath) BuildReportWithOneFile()
+        private static (TestFileSystem FileSystem, string BasePath) BuildReportWithOneFile()
         {
             var fileSystem = new TestFileSystem();
             string filePath = TestFileSystem.GenerateRandomAbsolutePath("ncover");
@@ -66,10 +66,10 @@ namespace csmacnz.Coveralls.Tests.NCover
             var doc = XDocument.Parse(Reports.NCoverSamples.SingleFileReportOneLineCovered.Report);
             var classFiles =
                 doc.XPathSelectElements("//coverage/module/method/seqpnt")
-                    .Where(e => e.Attribute("document").Value.EndsWith("Class1.cs", StringComparison.Ordinal));
+                    .Where(e => e.Attribute("document")!.Value.EndsWith("Class1.cs", StringComparison.Ordinal));
             foreach (var classFile in classFiles)
             {
-                classFile.Attribute("document").SetValue(sourcePath);
+                classFile.Attribute("document")!.SetValue(sourcePath);
             }
 
             var reportContents = doc.ToString();

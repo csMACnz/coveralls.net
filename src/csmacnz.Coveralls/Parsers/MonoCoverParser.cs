@@ -21,11 +21,11 @@ namespace csmacnz.Coveralls.Parsers
                 {
                     var coverage = new List<int?>();
                     var source = new List<string>();
-                    var filePath = sourceElement.Attribute("sourceFile").Value;
+                    var filePath = sourceElement.Attribute("sourceFile")!.Value;
 
                     foreach (var line in sourceElement.Elements("l"))
                     {
-                        if (!int.TryParse(line.Attribute("count").Value, out var coverageCount))
+                        if (!int.TryParse(line.Attribute("count")!.Value, out var coverageCount))
                         {
                             coverageCount = -1;
                         }

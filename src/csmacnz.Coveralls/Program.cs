@@ -52,8 +52,8 @@ namespace csmacnz.Coveralls
         private static NotNull<string> GetDisplayVersion()
         {
             return Assembly
-                .GetEntryAssembly() !
-                .GetCustomAttribute<AssemblyFileVersionAttribute>() !
+                .GetEntryAssembly()!
+                .GetCustomAttribute<AssemblyFileVersionAttribute>()!
                 .Version;
         }
 

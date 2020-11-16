@@ -60,7 +60,7 @@ namespace csmacnz.Coveralls.Tests.Monocov
             CoverallsAssert.RanSuccessfully(results);
         }
 
-        private static (TestFileSystem fileSystem, string basePath) BuildMonocovReportFolder()
+        private static (TestFileSystem FileSystem, string BasePath) BuildMonocovReportFolder()
         {
             var fileSystem = new TestFileSystem();
             var filesDir = TestFileSystem.GenerateRandomAbsolutePath("monocov", "Sample1");

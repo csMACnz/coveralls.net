@@ -24,8 +24,8 @@ namespace csmacnz.Coveralls.Parsers
                     {
                         foreach (var file in filesElement.Elements("source_file"))
                         {
-                            var fileid = file.Attribute("id").Value;
-                            var fullPath = file.Attribute("path").Value;
+                            var fileid = file.Attribute("id")!.Value;
+                            var fullPath = file.Attribute("path")!.Value;
 
                             var coverageBuilder = new FileCoverageDataBuilder(fullPath);
 
@@ -39,12 +39,12 @@ namespace csmacnz.Coveralls.Parsers
                                     {
                                         foreach (var range in ranges.Elements("range"))
                                         {
-                                            var rangeFileId = range.Attribute("source_id").Value;
+                                            var rangeFileId = range.Attribute("source_id")!.Value;
                                             if (fileid == rangeFileId)
                                             {
-                                                var sourceStartLine = int.Parse(range.Attribute("start_line").Value, CultureInfo.InvariantCulture);
-                                                var sourceEndLine = int.Parse(range.Attribute("end_line").Value, CultureInfo.InvariantCulture);
-                                                var covered = range.Attribute("covered").Value == "yes";
+                                                var sourceStartLine = int.Parse(range.Attribute("start_line")!.Value, CultureInfo.InvariantCulture);
+                                                var sourceEndLine = int.Parse(range.Attribute("end_line")!.Value, CultureInfo.InvariantCulture);
+                                                var covered = range.Attribute("covered")!.Value == "yes";
 
                                                 var sourceLineNumbers = Enumerable.Range(
                                                     sourceStartLine,
