@@ -77,7 +77,7 @@ namespace csmacnz.Coveralls.Tests.OpenCover
             CoverallsAssert.RanSuccessfully(results);
         }
 
-        private static (TestFileSystem, string basePath) BuildReportWithOneFile()
+        private static (TestFileSystem FileSystem, string BasePath) BuildReportWithOneFile()
         {
             var fileSystem = new TestFileSystem();
             string filePath = TestFileSystem.GenerateRandomAbsolutePath("opencover");
@@ -88,8 +88,8 @@ namespace csmacnz.Coveralls.Tests.OpenCover
             var doc = XDocument.Parse(Reports.OpenCoverSamples.SingleFileReportOneLineCovered);
             var classFile = doc
                 .XPathSelectElements("//CoverageSession/Modules/Module/Files/File")
-                .FirstOrDefault(e => e.Attribute("fullPath").Value.EndsWith("Class1.cs", StringComparison.Ordinal));
-            classFile.Attribute("fullPath").SetValue(sourcePath);
+                .Single(e => e.Attribute("fullPath")!.Value.EndsWith("Class1.cs", StringComparison.Ordinal));
+            classFile.Attribute("fullPath")!.SetValue(sourcePath);
 
             var reportContents = doc.ToString();
             string reportPath = Path.Combine(filePath, "SingleFileReportOneLineCovered.xml");

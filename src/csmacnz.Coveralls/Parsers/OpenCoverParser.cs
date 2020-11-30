@@ -26,8 +26,8 @@ namespace csmacnz.Coveralls.Parsers
                         {
                             foreach (var file in filesElement.Elements("File"))
                             {
-                                var fileid = file.Attribute("uid").Value;
-                                var fullPath = file.Attribute("fullPath").Value;
+                                var fileid = file.Attribute("uid")!.Value;
+                                var fullPath = file.Attribute("fullPath")!.Value;
 
                                 var coverageBuilder = new FileCoverageDataBuilder(fullPath);
 
@@ -48,13 +48,13 @@ namespace csmacnz.Coveralls.Parsers
                                                         var sequencePoint in
                                                             sequencePointsElement.Elements("SequencePoint"))
                                                     {
-                                                        var sequenceFileid = sequencePoint.Attribute($"fileid").Value;
+                                                        var sequenceFileid = sequencePoint.Attribute($"fileid")!.Value;
                                                         if (fileid == sequenceFileid)
                                                         {
                                                             var sourceLine =
-                                                                int.Parse(sequencePoint.Attribute("sl").Value, CultureInfo.InvariantCulture);
+                                                                int.Parse(sequencePoint.Attribute("sl")!.Value, CultureInfo.InvariantCulture);
                                                             var visitCount =
-                                                                int.Parse(sequencePoint.Attribute("vc").Value, CultureInfo.InvariantCulture);
+                                                                int.Parse(sequencePoint.Attribute("vc")!.Value, CultureInfo.InvariantCulture);
 
                                                             coverageBuilder.RecordCoverage(sourceLine, visitCount);
                                                         }

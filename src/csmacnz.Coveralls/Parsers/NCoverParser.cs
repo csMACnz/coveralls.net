@@ -23,7 +23,7 @@ namespace csmacnz.Coveralls.Parsers
 
                     foreach (var method in module.Elements("method"))
                     {
-                        XAttribute attribute = method.Attribute("excluded");
+                        XAttribute attribute = method.Attribute("excluded")!;
                         if (!string.IsNullOrEmpty(attribute?.Value) &&
                              bool.Parse(attribute.Value))
                         {
@@ -32,7 +32,7 @@ namespace csmacnz.Coveralls.Parsers
 
                         foreach (var seqpnt in method.Elements("seqpnt"))
                         {
-                            attribute = method.Attribute("excluded");
+                            attribute = method.Attribute("excluded")!;
                             if (!string.IsNullOrEmpty(attribute?.Value) &&
                                 bool.Parse(attribute.Value))
                             {
@@ -40,10 +40,10 @@ namespace csmacnz.Coveralls.Parsers
                             }
 
                             var sourceLine =
-                                int.Parse(seqpnt.Attribute("line").Value, CultureInfo.InvariantCulture);
+                                int.Parse(seqpnt.Attribute("line")!.Value, CultureInfo.InvariantCulture);
                             var visitCount =
-                                int.Parse(seqpnt.Attribute("visitcount").Value, CultureInfo.InvariantCulture);
-                            var file = seqpnt.Attribute("doc" + "ument").Value; // avoid false positive error CC0021: Use 'nameof(document)'
+                                int.Parse(seqpnt.Attribute("visitcount")!.Value, CultureInfo.InvariantCulture);
+                            var file = seqpnt.Attribute("doc" + "ument")!.Value; // avoid false positive error CC0021: Use 'nameof(document)'
                             if (!files.ContainsKey(file))
                             {
                                 files[file] = new FileCoverageDataBuilder(file);

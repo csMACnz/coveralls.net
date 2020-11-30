@@ -131,6 +131,19 @@ Follow The App
 
 You can ask questions and get updates using the twitter account [coveralls.net (@coverallsdotnet)](https://twitter.com/coverallsdotnet).
 
+Local Development
+-----------------
+
+This app (currently) uses psake to build and test, which is primarily just a wrapper of the dotnet cli for most cases.
+
+If you want to use the full build steps rather than just Visual Studio or dotnet cli:
+
+* Install psake:  `choco install -y psake`
+* Enable using installed modules locally with `Set-ExecutionPolicy RemoteSigned`
+* Load psake using `Import-Module psake`
+* List tasks using `Invoke-psake -docs`
+* Run build commands using `Invoke-psake build` or `Invoke-psake unit-test` (and others)
+
 Contributers
 ------------
 
