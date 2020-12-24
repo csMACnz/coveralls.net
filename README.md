@@ -24,9 +24,47 @@ Coveralls uploader for .Net Code coverage of your C# source code. Should work wi
 Install
 -------
 
-### The new way ####
+### The net5.0 way ###
 
-The new way is using the dotnet SDK tools. This can be installed from version 2.0.0.
+The dotnet 3.1 way is using the dotnet SDK tools. This can be installed from version 3.0.0. You can use the `--version <VERSION>` argument with any of these commands to pin to a particular version.
+
+```
+# Install globally: https://docs.microsoft.com/en-us/dotnet/core/tools/global-tools-how-to-use
+dotnet tool install --global coveralls.net
+
+# install locally: https://docs.microsoft.com/en-us/dotnet/core/tools/local-tools-how-to-use
+dotnet new tool-manifest
+dotnet tool install coveralls.net
+#restore again later
+dotnet tool restore
+```
+
+You can install prerelease versions as well directly from the build feed using the private source provided by appveyor
+NOTE: this is unstable and probably best limited for early testing only.
+
+```
+# globally
+dotnet tool install --global --add-source https://ci.appveyor.com/nuget/coveralls-net-t37a9a9unhwk coveralls.net
+
+# locally
+dotnet tool install --add-source https://ci.appveyor.com/nuget/coveralls-net-t37a9a9unhwk coveralls.net
+```
+
+To run the tool after installing:
+
+```
+# Globally
+csmacnz.Coveralls
+
+# Locally - don't forget to restore first if necessary
+dotnet tool run csmacnz.Coveralls
+# or
+dotnet csmacnz.Coveralls
+```
+
+### The dotnet 3.1 way ####
+
+The dotnet 3.1 way is using the dotnet SDK tools. This can be installed from version 2.0.0.
 
 ``` powershell
 # install globally
