@@ -154,40 +154,6 @@ task coveralls-only -precondition { return -not $env:APPVEYOR_PULL_REQUEST_NUMBE
     exec { & ".\Package\Archive\windows\csmacnz.Coveralls.exe" --opencover -i "$test_results_dir\Coverage.xml" --treatUploadErrorsAsWarnings --useRelativePaths}
 }
 
-task dupfinder -depends InstallReSharperCLI {
-    $dupfinder = GetDupFinderPath $build_packages_dir
-    exec { cmd /c $dupfinder /o="$test_results_dir\duplicateReport.xml" /e="$base_dir\src\**\obj\**.cs" /show-text $base_dir\src\**\*.cs 2`> nul }
-    [xml]$stats = Get-Content $test_results_dir\duplicateReport.xml
-    $anyDuplicates = $FALSE;
-
-    foreach ($duplicate in $stats.DuplicatesReport.Duplicates.Duplicate) {
-        Write-Host "Duplicate code found with a cost of $($duplicate.Cost), in $($duplicateCost.Fragment.Count) fragments"
-
-        foreach ($fragment in $duplicate.Fragment) {
-            Write-Host "File: $($fragment.FileName) Line: $($fragment.LineRange.Start) - $($fragment.LineRange.End)"
-            Write-Host "Text: $($fragment.Text)"
-        }
-
-        $anyDuplicates = $TRUE;
-
-        if (Get-Command "Add-AppveyorTest" -errorAction SilentlyContinue) {
-            Add-AppveyorMessage "Duplicate Found in the file $($fragment.FileName) with a cost of $($duplicate.Cost), across $($duplicate.Fragment.Count) Fragments" -Category Warning -Details "See duplicateReport.xml for details of duplicates"
-            if ([convert]::ToInt32($duplicate.Cost, 10) -gt 100) {
-                Add-AppveyorTest "Duplicate Found with a cost of $($duplicate.Cost), across $($duplicate.Fragment.Count) Fragments" -Outcome Failed -ErrorMessage "See duplicateReport.xml for details of duplicates" -FileName "$($fragment.FileName)"
-            }
-        }
-    }
-
-    $xslt = New-Object System.Xml.Xsl.XslCompiledTransform
-    $xslt.Load("BuildTools\dupfinder.xslt")
-    $xslt.Transform("$test_results_dir\duplicateReport.xml", "$test_results_dir\duplicateReport.html")
-
-    if (Get-Command "Push-AppveyorArtifact" -errorAction SilentlyContinue) {
-        Push-AppveyorArtifact $test_results_dir\duplicateReport.xml
-        Push-AppveyorArtifact $test_results_dir\duplicateReport.html
-    }
-}
-
 task inspect -depends InstallReSharperCLI {
     $inspectcode = GetInspectCodePath $build_packages_dir
     echo "$inspectcode"
@@ -288,7 +254,7 @@ task integration-on-package -depends archive-only {
     dotnet test .\src\csmacnz.Coveralls.Tests.Integration\csmacnz.Coveralls.Tests.Integration.csproj
 }
 
-task postbuild -depends archive-only, pack-only, coverage-only, coveralls-only, integration, integration-on-package, inspect, dupfinder
+task postbuild -depends archive-only, pack-only, coverage-only, coveralls-only, integration, integration-on-package, inspect
 
 task appveyor-install -depends GitVersion
 

@@ -31,13 +31,6 @@ param(
     return (Resolve-Path "$packageFolder\Nuget.CommandLine.*\tools\nuget.exe").ToString()
 }
 
-function GetDupFinderPath {
-param(
-    [Parameter(Mandatory=$true)][string]$packageFolder
-)
-    return (Resolve-Path "$packageFolder\JetBrains.ReSharper.CommandLineTools.*\tools\dupfinder.exe").ToString()
-}
-
 function GetInspectCodePath {
 param(
     [Parameter(Mandatory=$true)][string]$packageFolder
