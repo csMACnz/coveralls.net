@@ -16,9 +16,9 @@ coveralls.net
 
 Coveralls uploader for .Net Code coverage of your C# source code. Should work with any code files that get reported with the supported coverage tools, but the primary focus is CSharp.
 
-| Branch  | Appveyor | Travis | TeamCity | AppVeyor Coverage | TeamCity Coverage |
-|:-------:|:--------:|:------:|:--------:|:-----------------:|:-----------------:|
-| master  |[![AppVeyor Build status](https://ci.appveyor.com/api/projects/status/m9hqgm8a38s4vke1/branch/master?svg=true)](https://ci.appveyor.com/project/MarkClearwater/coveralls-net/branch/master)|[![Travis Build Status](https://img.shields.io/travis/csMACnz/coveralls.net/master.svg)](https://travis-ci.org/csMACnz/coveralls.net/branches)|[![TeamCity Build Status](https://teamcity.jetbrains.com/app/rest/builds/buildType:OpenSourceProjects_CoverallsNet_Build,branch:master/statusIcon.svg)](https://teamcity.jetbrains.com/viewType.html?buildTypeId=OpenSourceProjects_CoverallsNet_Build&branch_OpenSourceProjects_CoverallsNet=master)|[![Coverage Status](https://img.shields.io/coveralls/csMACnz/coveralls.net/master.svg)](https://coveralls.io/r/csMACnz/coveralls.net?branch=master)|[![Coverage on TeamCity](https://img.shields.io/coveralls/csMACnz/coveralls.net/TC_master.svg)](https://coveralls.io/r/csMACnz/coveralls.net?branch=TC_master)|
+| Branch  | Appveyor | TeamCity | AppVeyor Coverage | TeamCity Coverage |
+|:-------:|:--------:|:--------:|:-----------------:|:-----------------:|
+| master  |[![AppVeyor Build status](https://ci.appveyor.com/api/projects/status/m9hqgm8a38s4vke1/branch/master?svg=true)](https://ci.appveyor.com/project/MarkClearwater/coveralls-net/branch/master)|[![TeamCity Build Status](https://teamcity.jetbrains.com/app/rest/builds/buildType:OpenSourceProjects_CoverallsNet_Build,branch:master/statusIcon.svg)](https://teamcity.jetbrains.com/viewType.html?buildTypeId=OpenSourceProjects_CoverallsNet_Build&branch_OpenSourceProjects_CoverallsNet=master)|[![Coverage Status](https://img.shields.io/coveralls/csMACnz/coveralls.net/master.svg)](https://coveralls.io/r/csMACnz/coveralls.net?branch=master)|[![Coverage on TeamCity](https://img.shields.io/coveralls/csMACnz/coveralls.net/TC_master.svg)](https://coveralls.io/r/csMACnz/coveralls.net?branch=TC_master)|
 
 Install
 -------
