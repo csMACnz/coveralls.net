@@ -32,11 +32,11 @@ task InstallCoverity -depends BootstrapNuget {
 }
 
 task InstallGitVersion -depends BootstrapNuget {
-    InstallNugetPackage "GitVersion.CommandLine" 3.6.5 $build_packages_dir
+    InstallNugetPackage "GitVersion.CommandLine" 5.10.1 $build_packages_dir
 }
 
 task InstallReSharperCLI -depends BootstrapNuget {
-    InstallNugetPackage "JetBrains.ReSharper.CommandLineTools" 2019.3.4 $build_packages_dir
+    InstallNugetPackage "JetBrains.ReSharper.CommandLineTools" 2022.1.1 $build_packages_dir
 }
 
 task GitVersion -depends InstallGitVersion {
@@ -222,7 +222,7 @@ task inspect -depends InstallReSharperCLI {
     }
 
     $xslt = New-Object System.Xml.Xsl.XslCompiledTransform
-    $xslt.Load("BuildTools\resharperReport.xslt")
+    $xslt.Load("$base_dir\BuildTools\resharperReport.xslt")
     $xslt.Transform("$test_results_dir\resharperReport.xml", "$test_results_dir\resharperReport.html")
 
     if (Get-Command "Push-AppveyorArtifact" -errorAction SilentlyContinue) {
