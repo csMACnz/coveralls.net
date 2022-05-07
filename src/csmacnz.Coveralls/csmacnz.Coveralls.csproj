@@ -4,7 +4,7 @@
     <RootNamespace>csmacnz.Coveralls</RootNamespace>
     <AssemblyName>csmacnz.Coveralls</AssemblyName>
     <AssemblyTitle>csmacnz.Coveralls</AssemblyTitle>
-    <TargetFramework>net5.0</TargetFramework>
+    <TargetFramework>net6.0</TargetFramework>
     <RuntimeIdentifiers>win-x64;osx-x64;linux-x64</RuntimeIdentifiers>
     <Title>coveralls.net - Coveralls.io uploader for .NET Code Coverage</Title>
     <Description>Coveralls.io uploader for .NET Code Coverage. Supports opencover and visual studio's codecoverage.exe on windows, and monocov for mono</Description>
@@ -25,10 +25,10 @@
 
   <ItemGroup>
     <PackageReference Include="Beefeater" Version="0.5.0" />
-    <PackageReference Include="docopt.net" Version="0.6.1.10" />
+    <PackageReference Include="docopt.net" Version="0.8.1" />
     <PackageReference Include="System.Collections.NonGeneric" Version="4.3.0" />
-    <PackageReference Include="JetBrains.Annotations" Version="2020.1.0" />
-    <PackageReference Include="Newtonsoft.Json" Version="12.0.3" />
+    <PackageReference Include="JetBrains.Annotations" Version="2022.1.0" />
+    <PackageReference Include="Newtonsoft.Json" Version="13.0.1" />
   </ItemGroup>
 
   <ItemGroup>

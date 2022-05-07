@@ -1,4 +1,4 @@
-namespace csmacnz.Coveralls.Data
+﻿namespace csmacnz.Coveralls.Data
 {
     public enum LoadCoverageFilesError
     {

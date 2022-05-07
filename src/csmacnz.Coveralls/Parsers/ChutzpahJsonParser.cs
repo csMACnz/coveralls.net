@@ -12,7 +12,7 @@ namespace csmacnz.Coveralls.Parsers
         {
             var files = new List<FileCoverageData>();
 
-            var jsonFileContents = JsonConvert.DeserializeObject<Dictionary<string, ChutzpahJsonFileItem>>(string.Join(Environment.NewLine, content));
+            var jsonFileContents = JsonConvert.DeserializeObject<Dictionary<string, ChutzpahJsonFileItem>>(string.Join(Environment.NewLine, content)) ?? new Dictionary<string, ChutzpahJsonFileItem>();
 
             foreach (ChutzpahJsonFileItem item in jsonFileContents.Values)
             {

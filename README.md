@@ -23,9 +23,9 @@ Coveralls uploader for .Net Code coverage of your C# source code. Should work wi
 Install
 -------
 
-### The net5.0 way ###
+### The net5.0/net6.0 way ###
 
-The dotnet 3.1 way is using the dotnet SDK tools. This can be installed from version 3.0.0. You can use the `--version <VERSION>` argument with any of these commands to pin to a particular version.
+The net5.0 and net6.0 versions are dotnet SDK tools. These can be installed from version 3.0.0 for net5 and 4.0.0 for net6. You can use the `--version <VERSION>` argument with any of these commands to pin to a particular version.
 
 ```
 # Install globally: https://docs.microsoft.com/en-us/dotnet/core/tools/global-tools-how-to-use

@@ -66,7 +66,7 @@ namespace csmacnz.Coveralls.Tests.Integration
 #else
             const string configuration = "Release";
 #endif
-            return Path.Combine("..", "..", "..", "..", "csmacnz.Coveralls", "bin", configuration, "net5.0", "csmacnz.Coveralls.dll");
+            return Path.Combine("..", "..", "..", "..", "csmacnz.Coveralls", "bin", configuration, "net6.0", "csmacnz.Coveralls.dll");
         }
     }
 }

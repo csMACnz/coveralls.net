@@ -258,9 +258,9 @@ task archive-only {
         Remove-Item $osx_archive_filename
     }
     mkdir $archive_dir
-    dotnet publish $app_project -f net5.0 -c $configuration -o "$archive_dir\windows" -r win-x64
-    dotnet publish $app_project -f net5.0 -c $configuration -o "$archive_dir\linux" -r linux-x64
-    dotnet publish $app_project -f net5.0 -c $configuration -o "$archive_dir\osx" -r osx-x64
+    dotnet publish $app_project -f net6.0 -c $configuration -o "$archive_dir\windows" -r win-x64
+    dotnet publish $app_project -f net6.0 -c $configuration -o "$archive_dir\linux" -r linux-x64
+    dotnet publish $app_project -f net6.0 -c $configuration -o "$archive_dir\osx" -r osx-x64
     
     Add-Type -assembly "system.io.compression.filesystem"
 

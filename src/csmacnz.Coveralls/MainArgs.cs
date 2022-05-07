@@ -72,7 +72,7 @@ What it's for:
                 FailMessage = args.Message;
                 FailErrorCode = args.ErrorCode;
             };
-            _args = docOpt.Apply(Usage, argv, help, version, optionsFirst, true);
+            _args = docOpt.Apply(Usage, argv, help, version, optionsFirst, true) ?? new Dictionary<string, ValueObject>();
         }
 
         public bool Failed { get; private set; }
@@ -85,7 +85,7 @@ What it's for:
 
         public bool IsProvided(string parameter)
         {
-            return _args[parameter] != null;
+            return _args[parameter]?.Value is not null;
         }
 
         public bool OptOpencover => _args["--opencover"].IsTrue;
