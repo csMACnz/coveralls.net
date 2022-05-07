@@ -1,13 +1,10 @@
-﻿using Newtonsoft.Json;
+﻿namespace csmacnz.Coveralls.Data;
 
-namespace csmacnz.Coveralls.Data
+public sealed class GitRemotes
 {
-    public sealed class GitRemotes
-    {
-        [JsonProperty("name", DefaultValueHandling = DefaultValueHandling.Ignore)]
-        public string? Name { get; set; }
+    [JsonProperty("name", DefaultValueHandling = DefaultValueHandling.Ignore)]
+    public string? Name { get; set; }
 
-        [JsonProperty("url", DefaultValueHandling = DefaultValueHandling.Ignore)]
-        public string? Url { get; set; }
-    }
+    [JsonProperty("url", DefaultValueHandling = DefaultValueHandling.Ignore)]
+    public string? Url { get; set; }
 }

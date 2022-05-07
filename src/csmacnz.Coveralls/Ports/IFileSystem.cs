@@ -1,24 +1,20 @@
-﻿using System.IO;
-using Beefeater;
+﻿namespace csmacnz.Coveralls.Ports;
 
-namespace csmacnz.Coveralls.Ports
+public interface IFileSystem : IFileStorer, IFileLoader
 {
-    public interface IFileSystem : IFileStorer, IFileLoader
-    {
-    }
+}
 
-    public interface IFileStorer
-    {
-        bool WriteFile(string outputFile, string fileData);
-    }
+public interface IFileStorer
+{
+    bool WriteFile(string outputFile, string fileData);
+}
 
-    public interface IFileLoader
-    {
-        // At some point this shouldn't expose FileInfo as a Port Type
-        Option<FileInfo[]> GetFiles(string directory);
+public interface IFileLoader
+{
+    // At some point this shouldn't expose FileInfo as a Port Type
+    Option<FileInfo[]> GetFiles(string directory);
 
-        Option<string[]> TryReadAllLinesFromFile(string filePath);
+    Option<string[]> TryReadAllLinesFromFile(string filePath);
 
-        Option<string> TryLoadFile(string filePath);
-    }
+    Option<string> TryLoadFile(string filePath);
 }

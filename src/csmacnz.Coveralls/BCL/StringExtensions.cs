@@ -1,17 +1,10 @@
-﻿using System.Diagnostics.CodeAnalysis;
+﻿namespace csmacnz.Coveralls;
 
-namespace csmacnz.Coveralls
+public static class StringExtensions
 {
-    public static class StringExtensions
-    {
-        public static bool IsNotNullOrWhitespace([NotNullWhen(true)]this string? input)
-        {
-            return !string.IsNullOrWhiteSpace(input);
-        }
+    public static bool IsNotNullOrWhitespace([NotNullWhen(true)] this string? input)
+        => !string.IsNullOrWhiteSpace(input);
 
-        public static bool IsNullOrWhitespace([NotNullWhen(false)]this string? input)
-        {
-            return string.IsNullOrWhiteSpace(input);
-        }
-    }
+    public static bool IsNullOrWhitespace([NotNullWhen(false)] this string? input)
+        => string.IsNullOrWhiteSpace(input);
 }

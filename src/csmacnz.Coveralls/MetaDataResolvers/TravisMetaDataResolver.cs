@@ -1,55 +1,36 @@
-﻿using Beefeater;
-using csmacnz.Coveralls.Ports;
+﻿namespace csmacnz.Coveralls.MetaDataResolvers;
 
-namespace csmacnz.Coveralls.MetaDataResolvers
+public class TravisMetaDataResolver : IMetaDataResolver
 {
-    public class TravisMetaDataResolver : IMetaDataResolver
+    private readonly IEnvironmentVariables _variables;
+
+    public TravisMetaDataResolver(IEnvironmentVariables variables) => _variables = variables;
+
+    public bool IsActive() => _variables.GetBooleanVariable("TRAVIS");
+
+    public Option<string> ResolveServiceName() => "travis";
+
+    public Option<string> ResolveServiceJobId() => GetFromVariable("TRAVIS_JOB_ID");
+
+    public Option<string> ResolveServiceBuildNumber() => GetFromVariable("TRAVIS_BUILD_NUMBER");
+
+    public Option<string> ResolvePullRequestId()
     {
-        private readonly IEnvironmentVariables _variables;
+        var value = GetFromVariable("TRAVIS_PULL_REQUEST");
+        return value.Match(
+            val => val == "false" ? Option<string>.None : val,
+            () => Option<string>.None);
+    }
 
-        public TravisMetaDataResolver(IEnvironmentVariables variables)
+    private Option<string> GetFromVariable(string variableName)
+    {
+        var prId = _variables.GetEnvironmentVariable(variableName);
+
+        if (prId.IsNotNullOrWhitespace())
         {
-            _variables = variables;
+            return prId;
         }
 
-        public bool IsActive()
-        {
-            return _variables.GetBooleanVariable("TRAVIS");
-        }
-
-        public Option<string> ResolveServiceName()
-        {
-            return "travis";
-        }
-
-        public Option<string> ResolveServiceJobId()
-        {
-            return GetFromVariable("TRAVIS_JOB_ID");
-        }
-
-        public Option<string> ResolveServiceBuildNumber()
-        {
-            return GetFromVariable("TRAVIS_BUILD_NUMBER");
-        }
-
-        public Option<string> ResolvePullRequestId()
-        {
-            var value = GetFromVariable("TRAVIS_PULL_REQUEST");
-            return value.Match(
-                val => val == "false" ? Option<string>.None : val,
-                () => Option<string>.None);
-        }
-
-        private Option<string> GetFromVariable(string variableName)
-        {
-            var prId = _variables.GetEnvironmentVariable(variableName);
-
-            if (prId.IsNotNullOrWhitespace())
-            {
-                return prId;
-            }
-
-            return Option<string>.None;
-        }
+        return Option<string>.None;
     }
 }

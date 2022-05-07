@@ -1,14 +1,10 @@
-﻿using Beefeater;
-using csmacnz.Coveralls.Data;
+﻿namespace csmacnz.Coveralls.GitDataResolvers;
 
-namespace csmacnz.Coveralls.GitDataResolvers
+public interface IGitDataResolver
 {
-    public interface IGitDataResolver
-    {
-        bool CanProvideData();
+    bool CanProvideData();
 
-        Either<GitData, CommitSha>? GenerateData();
+    Either<GitData, CommitSha>? GenerateData();
 
-        string DisplayName { get; }
-    }
+    string DisplayName { get; }
 }

@@ -1,6 +1,6 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
-<PropertyGroup>
+  <PropertyGroup>
     <Description>Integration Tests for csmacnz.Coveralls</Description>
     <AssemblyTitle>Integration Tests for csmacnz.Coveralls</AssemblyTitle>
     <TargetFramework>net6.0</TargetFramework>

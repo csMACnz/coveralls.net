@@ -1,13 +1,7 @@
-﻿using System;
-using csmacnz.Coveralls.Ports;
+﻿namespace csmacnz.Coveralls.Adapters;
 
-namespace csmacnz.Coveralls.Adapters
+internal class EnvironmentVariables : IEnvironmentVariables
 {
-    internal class EnvironmentVariables : IEnvironmentVariables
-    {
-        public string? GetEnvironmentVariable(string key)
-        {
-            return Environment.GetEnvironmentVariable(key);
-        }
-    }
+    public string? GetEnvironmentVariable(string key)
+        => Environment.GetEnvironmentVariable(key);
 }

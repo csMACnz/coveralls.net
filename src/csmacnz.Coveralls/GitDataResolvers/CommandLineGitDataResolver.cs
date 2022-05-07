@@ -1,49 +1,42 @@
-﻿using Beefeater;
-using csmacnz.Coveralls.Data;
+﻿namespace csmacnz.Coveralls.GitDataResolvers;
 
-namespace csmacnz.Coveralls.GitDataResolvers
+public class CommandLineGitDataResolver : IGitDataResolver
 {
-    public class CommandLineGitDataResolver : IGitDataResolver
+    private readonly MainArgs _args;
+
+    public CommandLineGitDataResolver(MainArgs args) => _args = args;
+
+    public string DisplayName => "Command line Arguments";
+
+    public bool CanProvideData()
     {
-        private readonly MainArgs _args;
+        var commitId = _args.OptCommitid;
+        return commitId.IsNotNullOrWhitespace();
+    }
 
-        public CommandLineGitDataResolver(MainArgs args)
+    public Either<GitData, CommitSha>? GenerateData()
+    {
+        var commitId = _args.OptCommitid;
+        if (commitId.IsNotNullOrWhitespace())
         {
-            _args = args;
-        }
-
-        public string DisplayName => "Command line Arguments";
-
-        public bool CanProvideData()
-        {
-            var commitId = _args.OptCommitid;
-            return commitId.IsNotNullOrWhitespace();
-        }
-
-        public Either<GitData, CommitSha>? GenerateData()
-        {
-            var commitId = _args.OptCommitid;
-            if (commitId.IsNotNullOrWhitespace())
+            var committerName = _args.OptCommitauthor ?? string.Empty;
+            var comitterEmail = _args.OptCommitemail ?? string.Empty;
+            var commitMessage = _args.OptCommitmessage ?? string.Empty;
+            return new GitData
             {
-                var committerName = _args.OptCommitauthor ?? string.Empty;
-                var comitterEmail = _args.OptCommitemail ?? string.Empty;
-                var commitMessage = _args.OptCommitmessage ?? string.Empty;
-                return new GitData
+                Head = new GitHead
                 {
-                    Head = new GitHead
-                    {
-                        Id = commitId,
-                        AuthorName = committerName,
-                        AuthorEmail = comitterEmail,
-                        CommitterName = committerName,
-                        ComitterEmail = comitterEmail,
-                        Message = commitMessage
-                    },
-                    Branch = _args.OptCommitbranch ?? string.Empty
-                };
-            }
-
-            return null;
+                    Id = commitId,
+                    AuthorName = committerName,
+                    AuthorEmail = comitterEmail,
+                    CommitterName = committerName,
+                    ComitterEmail = comitterEmail,
+                    Message = commitMessage
+                },
+                Branch = _args.OptCommitbranch ?? string.Empty
+            };
         }
+
+        return null;
     }
 }

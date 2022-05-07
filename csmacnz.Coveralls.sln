@@ -2,8 +2,6 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.0.31903.59
 MinimumVisualStudioVersion = 17.0.31903.59
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{BDE8ADF0-E3E5-4579-974E-124AA72E6E10}"
-EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "csmacnz.Coveralls", "src\csmacnz.Coveralls\csmacnz.Coveralls.csproj", "{771993EA-F267-4B49-9062-720ADAAD2B65}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "csmacnz.Coveralls.Tests", "src\csmacnz.Coveralls.Tests\csmacnz.Coveralls.Tests.csproj", "{9820B0B8-9862-4E38-B14C-5F1FDDBD6347}"
@@ -59,11 +57,6 @@ Global
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
-	EndGlobalSection
-	GlobalSection(NestedProjects) = preSolution
-		{771993EA-F267-4B49-9062-720ADAAD2B65} = {BDE8ADF0-E3E5-4579-974E-124AA72E6E10}
-		{9820B0B8-9862-4E38-B14C-5F1FDDBD6347} = {BDE8ADF0-E3E5-4579-974E-124AA72E6E10}
-		{A91ED94A-0434-46D5-90B2-2B938E7B5517} = {BDE8ADF0-E3E5-4579-974E-124AA72E6E10}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {F1DC1677-507A-40DC-A9F3-F4206FF3E3AF}

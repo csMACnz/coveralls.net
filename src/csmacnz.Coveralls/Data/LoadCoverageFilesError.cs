@@ -1,9 +1,8 @@
-﻿namespace csmacnz.Coveralls.Data
+﻿namespace csmacnz.Coveralls.Data;
+
+public enum LoadCoverageFilesError
 {
-    public enum LoadCoverageFilesError
-    {
-        InputFileNotFound,
-        ModeNotSupported,
-        UnknownFilesMissingError
-    }
+    InputFileNotFound,
+    ModeNotSupported,
+    UnknownFilesMissingError
 }

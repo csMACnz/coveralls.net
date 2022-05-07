@@ -1,14 +1,13 @@
-﻿namespace csmacnz.Coveralls.Data
+﻿namespace csmacnz.Coveralls.Data;
+
+public enum CoverageMode
 {
-    public enum CoverageMode
-    {
-        OpenCover,
-        LCov,
-        MonoCov,
-        Chutzpah,
-        DynamicCodeCoverage,
-        ExportCodeCoverage,
-        ReportGenerator,
-        NCover
-    }
+    OpenCover,
+    LCov,
+    MonoCov,
+    Chutzpah,
+    DynamicCodeCoverage,
+    ExportCodeCoverage,
+    ReportGenerator,
+    NCover
 }

@@ -1,14 +1,3 @@
-﻿namespace csmacnz.Coveralls.Data
-{
-    public class CommitSha
-    {
-        private readonly string _value;
+﻿namespace csmacnz.Coveralls.Data;
 
-        public CommitSha(string value)
-        {
-            _value = value;
-        }
-
-        public string Value => _value;
-    }
-}
+public record CommitSha(string Value);

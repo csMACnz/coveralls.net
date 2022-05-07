@@ -1,22 +1,19 @@
-﻿using System;
+﻿namespace csmacnz.Coveralls.Ports;
 
-namespace csmacnz.Coveralls.Ports
+public interface IEnvironmentVariables
 {
-    public interface IEnvironmentVariables
-    {
-        string? GetEnvironmentVariable(string key);
-    }
+    string? GetEnvironmentVariable(string key);
+}
 
-    public static class EnvironmentVariablesExtensions
+public static class EnvironmentVariablesExtensions
+{
+    public static bool GetBooleanVariable(this IEnvironmentVariables variables, string key)
     {
-        public static bool GetBooleanVariable(this IEnvironmentVariables variables, string key)
+        if (variables is null)
         {
-            if (variables is null)
-            {
-                throw new ArgumentNullException(paramName: nameof(variables));
-            }
-
-            return bool.TryParse(variables.GetEnvironmentVariable(key), out var result) && result;
+            throw new ArgumentNullException(paramName: nameof(variables));
         }
+
+        return bool.TryParse(variables.GetEnvironmentVariable(key), out var result) && result;
     }
 }

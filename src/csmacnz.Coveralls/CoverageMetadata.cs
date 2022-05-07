@@ -1,26 +1,8 @@
-﻿namespace csmacnz.Coveralls
-{
-    public class CoverageMetadata
-    {
-        public CoverageMetadata(
-            string serviceName,
-            string serviceJobId,
-            string? serviceBuildNumber,
-            string? pullRequestId,
-            bool parallel)
-        {
-            (ServiceName, ServiceJobId, ServiceBuildNumber, PullRequestId, Parallel)
-            = (serviceName, serviceJobId, serviceBuildNumber, pullRequestId, parallel);
-        }
+﻿namespace csmacnz.Coveralls;
 
-        public string ServiceName { get; }
-
-        public string ServiceJobId { get; }
-
-        public string? ServiceBuildNumber { get; }
-
-        public string? PullRequestId { get; }
-
-        public bool Parallel { get; }
-    }
-}
+public record CoverageMetadata(
+        string ServiceName,
+        string ServiceJobId,
+        string? ServiceBuildNumber,
+        string? PullRequestId,
+        bool Parallel);

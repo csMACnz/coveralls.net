@@ -1,9 +1,8 @@
-﻿namespace csmacnz.Coveralls.Ports
-{
-    public interface IConsole
-    {
-        void WriteLine(string message);
+﻿namespace csmacnz.Coveralls.Ports;
 
-        void WriteErrorLine(string message);
-    }
+public interface IConsole
+{
+    void WriteLine(string message);
+
+    void WriteErrorLine(string message);
 }

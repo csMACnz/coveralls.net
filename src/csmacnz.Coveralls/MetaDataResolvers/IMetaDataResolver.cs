@@ -1,17 +1,14 @@
-using Beefeater;
+﻿namespace csmacnz.Coveralls.MetaDataResolvers;
 
-namespace csmacnz.Coveralls.MetaDataResolvers
+public interface IMetaDataResolver
 {
-    public interface IMetaDataResolver
-    {
-        bool IsActive();
+    bool IsActive();
 
-        Option<string> ResolveServiceName();
+    Option<string> ResolveServiceName();
 
-        Option<string> ResolveServiceJobId();
+    Option<string> ResolveServiceJobId();
 
-        Option<string> ResolveServiceBuildNumber();
+    Option<string> ResolveServiceBuildNumber();
 
-        Option<string> ResolvePullRequestId();
-    }
+    Option<string> ResolvePullRequestId();
 }

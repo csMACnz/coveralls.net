@@ -22,12 +22,12 @@ indent_style = space
 indent_size = 2
 
 # JSON files
-[*.json]
+[*.{json,ejs}]
 indent_style = space
 indent_size = 2
 
 # YAML files
-[*.yml]
+[*.{yml,yaml}]
 indent_style = space
 indent_size = 2
 
@@ -90,7 +90,7 @@ dotnet_naming_symbols.private_fields.applicable_kinds           = field
 dotnet_naming_symbols.private_fields.applicable_accessibilities = private
 # public_symbols - Define any public symbol
 dotnet_naming_symbols.public_symbols.applicable_accessibilities = public, internal, protected, protected_internal
-dotnet_naming_symbols.public_symbols.applicable_kinds = method, property, event, delegateI
+dotnet_naming_symbols.public_symbols.applicable_kinds = method, property, event, delegate
 # parameters - Defines any parameter
 dotnet_naming_symbols.parameters.applicable_kinds = parameter
 # non_interface_types - Defines class, struct, enum and delegate types
@@ -161,13 +161,19 @@ dotnet_naming_rule.interface_types_must_be_prefixed_with_i.style = prefix_interf
 # C# Code Style Settings
 # See https://docs.microsoft.com/en-us/visualstudio/ide/editorconfig-code-style-settings-reference
 # See http://kent-boogaart.com/blog/editorconfig-reference-for-c-developers
-[*.cs,csx,cake]
+[*.{cs,csx,cake}]
 # Indentation Options
 csharp_indent_block_contents = true:warning
 csharp_indent_braces = false:warning
 csharp_indent_case_contents = true:warning
 csharp_indent_labels = no_change:warning
 csharp_indent_switch_labels = true:warning
+
+# Code-block preferences
+csharp_prefer_braces = true:error
+csharp_prefer_simple_using_statement = true:suggestion
+csharp_style_namespace_declarations = file_scoped:warning
+
 # Style Options
 csharp_style_conditional_delegate_call = true:warning
 csharp_style_expression_bodied_accessors = true:warning
@@ -221,3 +227,6 @@ csharp_preserve_single_line_statements = false:error
 
 # CA1303: Do not pass literals as localized parameters
 dotnet_diagnostic.CA1303.severity = none
+
+# IDE0005: Using directive is unnecessary.
+dotnet_diagnostic.IDE0005.severity = error

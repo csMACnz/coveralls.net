@@ -1,37 +1,29 @@
-﻿using System;
-using System.Globalization;
-using System.IO;
+﻿namespace csmacnz.Coveralls;
 
-namespace csmacnz.Coveralls
+public class PathProcessor
 {
-    public class PathProcessor
+    private readonly string _basePath;
+
+    public PathProcessor(string? basePath) => _basePath = basePath.IsNotNullOrWhitespace() ? basePath! : Directory.GetCurrentDirectory();
+
+    public string ConvertPath(string path)
     {
-        private readonly string _basePath;
+        _ = path ?? throw new ArgumentNullException(nameof(path));
 
-        public PathProcessor(string? basePath)
+        var currentWorkingDirectory = _basePath.ToLower(CultureInfo.InvariantCulture);
+
+        if (path.ToLower(CultureInfo.InvariantCulture).StartsWith(currentWorkingDirectory, StringComparison.InvariantCulture))
         {
-            _basePath = basePath.IsNotNullOrWhitespace() ? basePath! : Directory.GetCurrentDirectory();
+            return path[currentWorkingDirectory.Length..];
         }
 
-        public string ConvertPath(string path)
-        {
-            _ = path ?? throw new ArgumentNullException(nameof(path));
+        return path;
+    }
 
-            var currentWorkingDirectory = _basePath.ToLower(CultureInfo.InvariantCulture);
+    public static string UnixifyPath(string filePath)
+    {
+        _ = filePath ?? throw new ArgumentNullException(nameof(filePath));
 
-            if (path.ToLower(CultureInfo.InvariantCulture).StartsWith(currentWorkingDirectory, StringComparison.InvariantCulture))
-            {
-                return path.Substring(currentWorkingDirectory.Length);
-            }
-
-            return path;
-        }
-
-        public static string UnixifyPath(string filePath)
-        {
-            _ = filePath ?? throw new ArgumentNullException(nameof(filePath));
-
-            return filePath.Replace("\\", "/", StringComparison.InvariantCulture).Replace(":", string.Empty, StringComparison.InvariantCulture);
-        }
+        return filePath.Replace("\\", "/", StringComparison.InvariantCulture).Replace(":", string.Empty, StringComparison.InvariantCulture);
     }
 }

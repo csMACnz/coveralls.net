@@ -1,21 +1,20 @@
-﻿namespace csmacnz.Coveralls.Tests.Integration
+﻿namespace csmacnz.Coveralls.Tests.Integration;
+
+public class CoverallsRunResults
 {
-    public class CoverallsRunResults
+    public CoverallsRunResults(
+        string standardOutput,
+        string standardError,
+        int exitCode)
     {
-        public CoverallsRunResults(
-            string standardOutput,
-            string standardError,
-            int exitCode)
-        {
-            StandardOutput = standardOutput;
-            StandardError = standardError;
-            ExitCode = exitCode;
-        }
-
-        public string StandardOutput { get; }
-
-        public string StandardError { get; }
-
-        public int ExitCode { get; }
+        StandardOutput = standardOutput;
+        StandardError = standardError;
+        ExitCode = exitCode;
     }
+
+    public string StandardOutput { get; }
+
+    public string StandardError { get; }
+
+    public int ExitCode { get; }
 }

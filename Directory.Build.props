@@ -8,7 +8,7 @@
     <Company>csMACnz</Company>
     <Product>coveralls.net</Product>
     <Copyright>Copyright © csMACnz 2022</Copyright>
-    <LangVersion>9.0</LangVersion>
+    <LangVersion>10.0</LangVersion>
     <nullable>enable</nullable>
     <CodeAnalysisRuleSet>$(MSBuildThisFileDirectory)/ruleset.ruleset</CodeAnalysisRuleSet>
     

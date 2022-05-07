@@ -4,69 +4,68 @@ using System.IO;
 using System.Text;
 using Xunit.Sdk;
 
-namespace csmacnz.Coveralls.Tests.Integration
+namespace csmacnz.Coveralls.Tests.Integration;
+
+public static class CoverallsTestRunner
 {
-    public static class CoverallsTestRunner
+    public static CoverallsRunResults RunCoveralls(string arguments)
     {
-        public static CoverallsRunResults RunCoveralls(string arguments)
+        var applicationProcess = "dotnet";
+        var applicationPath = GetCoverallsDll();
+        var argumentsToUse = "exec " + applicationPath + " " + arguments;
+
+        var exePath = Environment.GetEnvironmentVariable("COVERALLSNET_EXEPATH");
+        if (!string.IsNullOrWhiteSpace(exePath))
         {
-            var applicationProcess = "dotnet";
-            var applicationPath = GetCoverallsDll();
-            var argumentsToUse = "exec " + applicationPath + " " + arguments;
-
-            var exePath = Environment.GetEnvironmentVariable("COVERALLSNET_EXEPATH");
-            if (!string.IsNullOrWhiteSpace(exePath))
-            {
-                applicationProcess = exePath;
-                argumentsToUse = arguments;
-            }
-
-            string results;
-            string errorsResults;
-            int exitCode;
-            using (var process = new Process())
-            {
-                var startInfo = new ProcessStartInfo
-                {
-                    FileName = applicationProcess,
-                    Arguments = argumentsToUse,
-                    UseShellExecute = false,
-                    RedirectStandardOutput = true,
-                    RedirectStandardError = true,
-                    StandardOutputEncoding = Encoding.UTF8,
-                    StandardErrorEncoding = Encoding.UTF8
-                };
-                process.StartInfo = startInfo;
-
-                process.Start();
-
-                results = process.StandardOutput.ReadToEnd();
-                errorsResults = process.StandardError.ReadToEnd();
-                Console.WriteLine(results);
-
-                const int timeoutInMilliseconds = 10000;
-                if (!process.WaitForExit(timeoutInMilliseconds))
-                {
-                    throw new XunitException($"Test execution time exceeded: {timeoutInMilliseconds}ms");
-                }
-
-                exitCode = process.ExitCode;
-            }
-
-            return new CoverallsRunResults(
-                standardOutput: results,
-                standardError: errorsResults,
-                exitCode: exitCode);
+            applicationProcess = exePath;
+            argumentsToUse = arguments;
         }
 
-        private static string GetCoverallsDll()
+        string results;
+        string errorsResults;
+        int exitCode;
+        using (var process = new Process())
         {
+            var startInfo = new ProcessStartInfo
+            {
+                FileName = applicationProcess,
+                Arguments = argumentsToUse,
+                UseShellExecute = false,
+                RedirectStandardOutput = true,
+                RedirectStandardError = true,
+                StandardOutputEncoding = Encoding.UTF8,
+                StandardErrorEncoding = Encoding.UTF8
+            };
+            process.StartInfo = startInfo;
+
+            process.Start();
+
+            results = process.StandardOutput.ReadToEnd();
+            errorsResults = process.StandardError.ReadToEnd();
+            Console.WriteLine(results);
+
+            const int timeoutInMilliseconds = 10000;
+            if (!process.WaitForExit(timeoutInMilliseconds))
+            {
+                throw new XunitException($"Test execution time exceeded: {timeoutInMilliseconds}ms");
+            }
+
+            exitCode = process.ExitCode;
+        }
+
+        return new CoverallsRunResults(
+            standardOutput: results,
+            standardError: errorsResults,
+            exitCode: exitCode);
+    }
+
+    private static string GetCoverallsDll()
+    {
 #if DEBUG
-            const string configuration = "Debug";
+        const string configuration = "Debug";
 #else
-            const string configuration = "Release";
+        const string configuration = "Release";
 #endif
-            return Path.Combine("..", "..", "..", "..", "csmacnz.Coveralls", "bin", configuration, "net6.0", "csmacnz.Coveralls.dll");
-        }
+        return Path.Combine("..", "..", "..", "..", "csmacnz.Coveralls", "bin", configuration, "net6.0", "csmacnz.Coveralls.dll");
     }
 }

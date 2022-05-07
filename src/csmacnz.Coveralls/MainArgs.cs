@@ -1,11 +1,10 @@
-﻿using System.Collections.Generic;
-using DocoptNet;
+﻿using DocoptNet;
 
-namespace csmacnz.Coveralls
+namespace csmacnz.Coveralls;
+
+public class MainArgs
 {
-    public class MainArgs
-    {
-        public const string Usage = @"csmacnz.Coveralls - a coveralls.io coverage publisher for .Net
+    public const string Usage = @"csmacnz.Coveralls - a coveralls.io coverage publisher for .Net
 
 Usage:
   csmacnz.Coveralls (--opencover | --dynamiccodecoverage | --monocov | --exportcodecoverage | --chutzpah | --lcov | --ncover | --reportgenerator | --multiple) -i ./opencovertests.xml (--repoToken <repoToken> | [--repoTokenVariable <repoTokenVariable>]) [-o ./opencovertests.json] [--dryrun] [--useRelativePaths [--basePath <path>] ] [--commitId <commitId> --commitBranch <commitBranch> [--commitAuthor <commitAuthor> --commitEmail <commitEmail> --commitMessage <commitMessage>] ] [--jobId <jobId>] [--serviceName <Name>] [--serviceNumber <Number>] [--pullRequest <pullRequestId>] [--treatUploadErrorsAsWarnings] [--parallel]
@@ -57,95 +56,91 @@ What it's for:
  coveralls.io's service. This can be used by your build scripts
  or with a CI builder server.";
 
-        private readonly IDictionary<string, ValueObject> _args;
+    private readonly IDictionary<string, ValueObject> _args;
 
-        public MainArgs(
-            ICollection<string> argv,
-            bool help = true,
-            object? version = null,
-            bool optionsFirst = false)
+    public MainArgs(
+        ICollection<string> argv,
+        bool help = true,
+        object? version = null,
+        bool optionsFirst = false)
+    {
+        var docOpt = new Docopt();
+        docOpt.PrintExit += (sender, args) =>
         {
-            var docOpt = new Docopt();
-            docOpt.PrintExit += (sender, args) =>
-            {
-                Failed = true;
-                FailMessage = args.Message;
-                FailErrorCode = args.ErrorCode;
-            };
-            _args = docOpt.Apply(Usage, argv, help, version, optionsFirst, true) ?? new Dictionary<string, ValueObject>();
-        }
-
-        public bool Failed { get; private set; }
-
-        public string? FailMessage { get; private set; }
-
-        public int? FailErrorCode { get; private set; }
-
-        public IDictionary<string, ValueObject> Args => _args;
-
-        public bool IsProvided(string parameter)
-        {
-            return _args[parameter]?.Value is not null;
-        }
-
-        public bool OptOpencover => _args["--opencover"].IsTrue;
-
-        public bool OptDynamiccodecoverage => _args["--dynamiccodecoverage"].IsTrue;
-
-        public bool OptMonocov => _args["--monocov"].IsTrue;
-
-        public bool OptExportcodecoverage => _args["--exportcodecoverage"].IsTrue;
-
-        public bool OptChutzpah => _args["--chutzpah"].IsTrue;
-
-        public bool OptLcov => _args["--lcov"].IsTrue;
-
-        public bool OptNCover => _args["--ncover"].IsTrue;
-
-        public bool OptReportGenerator => _args["--reportgenerator"].IsTrue;
-
-        public bool OptMultiple => _args["--multiple"].IsTrue;
-
-        public string? OptInput => _args["--input"]?.ToString();
-
-        public string? OptRepotoken => _args["--repoToken"]?.ToString();
-
-        public string? OptRepotokenvariable => _args["--repoTokenVariable"]?.ToString();
-
-        public string? OptOutput => _args["--output"]?.ToString();
-
-        public bool OptDryrun => _args["--dryrun"].IsTrue;
-
-        public bool OptUserelativepaths => _args["--useRelativePaths"].IsTrue;
-
-        public string? OptBasepath => _args["--basePath"]?.ToString();
-
-        public string? OptCommitid => _args["--commitId"]?.ToString();
-
-        public string? OptCommitbranch => _args["--commitBranch"]?.ToString();
-
-        public string? OptCommitauthor => _args["--commitAuthor"]?.ToString();
-
-        public string? OptCommitemail => _args["--commitEmail"]?.ToString();
-
-        public string? OptCommitmessage => _args["--commitMessage"]?.ToString();
-
-        public string? OptJobid => _args["--jobId"]?.ToString();
-
-        public string? OptServicename => _args["--serviceName"]?.ToString();
-
-        public string? OptServicenumber => _args["--serviceNumber"]?.ToString();
-
-        public string? OptPullrequest => _args["--pullRequest"]?.ToString();
-
-        public bool OptTreatuploaderrorsaswarnings => _args["--treatUploadErrorsAsWarnings"].IsTrue;
-
-        public bool OptParallel => _args["--parallel"].IsTrue;
-
-        public bool OptCompleteParallelWork => _args["--completeParallelWork"].IsTrue;
-
-        public bool OptVersion => _args["--version"].IsTrue;
-
-        public bool OptHelp => _args["--help"].IsTrue;
+            Failed = true;
+            FailMessage = args.Message;
+            FailErrorCode = args.ErrorCode;
+        };
+        _args = docOpt.Apply(Usage, argv, help, version, optionsFirst, true) ?? new Dictionary<string, ValueObject>();
     }
+
+    public bool Failed { get; private set; }
+
+    public string? FailMessage { get; private set; }
+
+    public int? FailErrorCode { get; private set; }
+
+    public IDictionary<string, ValueObject> Args => _args;
+
+    public bool IsProvided(string parameter) => _args[parameter]?.Value is not null;
+
+    public bool OptOpencover => _args["--opencover"].IsTrue;
+
+    public bool OptDynamiccodecoverage => _args["--dynamiccodecoverage"].IsTrue;
+
+    public bool OptMonocov => _args["--monocov"].IsTrue;
+
+    public bool OptExportcodecoverage => _args["--exportcodecoverage"].IsTrue;
+
+    public bool OptChutzpah => _args["--chutzpah"].IsTrue;
+
+    public bool OptLcov => _args["--lcov"].IsTrue;
+
+    public bool OptNCover => _args["--ncover"].IsTrue;
+
+    public bool OptReportGenerator => _args["--reportgenerator"].IsTrue;
+
+    public bool OptMultiple => _args["--multiple"].IsTrue;
+
+    public string? OptInput => _args["--input"]?.ToString();
+
+    public string? OptRepotoken => _args["--repoToken"]?.ToString();
+
+    public string? OptRepotokenvariable => _args["--repoTokenVariable"]?.ToString();
+
+    public string? OptOutput => _args["--output"]?.ToString();
+
+    public bool OptDryrun => _args["--dryrun"].IsTrue;
+
+    public bool OptUserelativepaths => _args["--useRelativePaths"].IsTrue;
+
+    public string? OptBasepath => _args["--basePath"]?.ToString();
+
+    public string? OptCommitid => _args["--commitId"]?.ToString();
+
+    public string? OptCommitbranch => _args["--commitBranch"]?.ToString();
+
+    public string? OptCommitauthor => _args["--commitAuthor"]?.ToString();
+
+    public string? OptCommitemail => _args["--commitEmail"]?.ToString();
+
+    public string? OptCommitmessage => _args["--commitMessage"]?.ToString();
+
+    public string? OptJobid => _args["--jobId"]?.ToString();
+
+    public string? OptServicename => _args["--serviceName"]?.ToString();
+
+    public string? OptServicenumber => _args["--serviceNumber"]?.ToString();
+
+    public string? OptPullrequest => _args["--pullRequest"]?.ToString();
+
+    public bool OptTreatuploaderrorsaswarnings => _args["--treatUploadErrorsAsWarnings"].IsTrue;
+
+    public bool OptParallel => _args["--parallel"].IsTrue;
+
+    public bool OptCompleteParallelWork => _args["--completeParallelWork"].IsTrue;
+
+    public bool OptVersion => _args["--version"].IsTrue;
+
+    public bool OptHelp => _args["--help"].IsTrue;
 }
