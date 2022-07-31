@@ -2,17 +2,12 @@
 
 public class CoverallsService : ICoverallsService
 {
-    private readonly Uri _baseUri;
-
     private static readonly Uri JobsUri = new("/api/v1/jobs", UriKind.Relative);
 
     private static Uri WebhookUri(string repoToken)
         => new($"/webhook?repo_token={System.Net.WebUtility.UrlEncode(repoToken)}", UriKind.Relative);
 
-    public CoverallsService(Uri baseUri)
-        => _baseUri = baseUri;
-
-    public Result<Unit, string> PushParallelCompleteWebhook(string repoToken, string? buildNumber)
+    public Result<Unit, string> PushParallelCompleteWebhook(string repoToken, string? buildNumber, Uri serverUrl)
     {
         var payload = $@"
 {{
@@ -24,7 +19,7 @@ public class CoverallsService : ICoverallsService
 
         using HttpContent stringContent = new StringContent(payload, Encoding.Default, "application/json");
         using var client = new HttpClient();
-        var url = new Uri(_baseUri, WebhookUri(repoToken));
+        var url = new Uri(serverUrl, WebhookUri(repoToken));
 
         var response = client.PostAsync(url, stringContent).Result;
 
@@ -48,7 +43,7 @@ public class CoverallsService : ICoverallsService
             () => Unit.Default);
     }
 
-    public Result<Unit, string> Upload(string fileData)
+    public Result<Unit, string> Upload(string fileData, Uri serverUrl)
     {
         using HttpContent stringContent = new StringContent(fileData);
         using HttpClient client = new();
@@ -57,7 +52,7 @@ public class CoverallsService : ICoverallsService
             { stringContent, "json_file", "coverage.json" }
         };
 
-        var response = client.PostAsync(new Uri(_baseUri, JobsUri), formData).Result;
+        var response = client.PostAsync(new Uri(serverUrl, JobsUri), formData).Result;
 
         if (!response.IsSuccessStatusCode)
         {

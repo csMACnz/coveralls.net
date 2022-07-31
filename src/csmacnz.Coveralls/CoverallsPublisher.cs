@@ -21,7 +21,8 @@ public class CoverallsPublisher
     public Result<Unit, string> Run(
         ConfigurationSettings settings,
         Either<GitData, CommitSha>? gitData,
-        CoverageMetadata metadata)
+        CoverageMetadata metadata,
+        Uri serverUrl)
     {
         _ = settings ?? throw new ArgumentNullException(nameof(settings));
         _ = metadata ?? throw new ArgumentNullException(nameof(metadata));
@@ -67,7 +68,7 @@ public class CoverallsPublisher
 
         if (!settings.DryRun)
         {
-            var uploadResult = UploadCoverage(fileData);
+            var uploadResult = UploadCoverage(fileData, serverUrl);
             if (!uploadResult.Successful)
             {
                 if (settings.TreatUploadErrorsAsWarnings)
@@ -124,9 +125,9 @@ public class CoverallsPublisher
         return files;
     }
 
-    private Result<Unit, string> UploadCoverage(string fileData)
+    private Result<Unit, string> UploadCoverage(string fileData, Uri serverUrl)
     {
-        var uploadResult = _coverallsService.Upload(fileData);
+        var uploadResult = _coverallsService.Upload(fileData, serverUrl);
         if (!uploadResult.Successful)
         {
             var message = $"Failed to upload to coveralls\n{uploadResult.Error}";

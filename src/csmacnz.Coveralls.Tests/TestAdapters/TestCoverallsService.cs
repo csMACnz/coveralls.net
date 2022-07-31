@@ -1,4 +1,5 @@
-﻿using BCLExtensions;
+﻿using System;
+using BCLExtensions;
 using Beefeater;
 using csmacnz.Coveralls.Ports;
 
@@ -10,9 +11,9 @@ public class TestCoverallsService : ICoverallsService
 
     public TestCoverallsService(bool isWorking) => _isWorking = isWorking;
 
-    public Result<Unit, string> PushParallelCompleteWebhook(string repoToken, string? buildNumber) => _isWorking ? Success : "An Error In the Test Service";
+    public Result<Unit, string> PushParallelCompleteWebhook(string repoToken, string? buildNumber, Uri serverUrl) => _isWorking ? Success : "An Error In the Test Service";
 
-    public Result<Unit, string> Upload(string fileData) => _isWorking ? Success : "An Error In the Test Service";
+    public Result<Unit, string> Upload(string fileData, Uri serverUrl) => _isWorking ? Success : "An Error In the Test Service";
 
     private static Result<Unit, string> Success => Result<Unit, string>.OfValue(Unit.Default);
 }

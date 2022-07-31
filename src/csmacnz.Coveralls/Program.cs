@@ -8,9 +8,6 @@ public class Program
     private readonly IEnvironmentVariables _environmentVariables;
     private readonly ICoverallsService _coverallsService;
 
-    // NOTE(markc): make this configurable, especially if private servers are used.
-    private static readonly Uri BaseUri = new("https://coveralls.io");
-
     public Program(
         IConsole console,
         IFileSystem fileSystem,
@@ -29,7 +26,7 @@ public class Program
     {
         var console = new StandardConsole();
 
-        var result = new Program(console, new FileSystem(), new EnvironmentVariables(), new CoverallsService(BaseUri), GetDisplayVersion()).Run(argv);
+        var result = new Program(console, new FileSystem(), new EnvironmentVariables(), new CoverallsService(), GetDisplayVersion()).Run(argv);
         if (result.HasValue)
         {
             Environment.Exit(result.Value);
@@ -55,11 +52,13 @@ public class Program
 
             var metadata = CoverageMetadataResolver.Resolve(args, _environmentVariables);
 
+            var serverUrl = ResolveServerUrl(args);
+
             if (args.OptCompleteParallelWork)
             {
                 var repoToken = ResolveRepoToken(args);
 
-                var pushResult = _coverallsService.PushParallelCompleteWebhook(repoToken, metadata.ServiceBuildNumber);
+                var pushResult = _coverallsService.PushParallelCompleteWebhook(repoToken, metadata.ServiceBuildNumber, serverUrl);
                 if (!pushResult.Successful)
                 {
                     ExitWithError(pushResult.Error);
@@ -73,7 +72,7 @@ public class Program
             var gitData = ResolveGitData(_console, args);
 
             var app = new CoverallsPublisher(_console, _fileSystem, _coverallsService);
-            var result = app.Run(settings, gitData, metadata);
+            var result = app.Run(settings, gitData, metadata, serverUrl);
             if (!result.Successful)
             {
                 ExitWithError(result.Error);
@@ -158,6 +157,24 @@ public class Program
         }
 
         return repoToken;
+    }
+
+    private static Uri ResolveServerUrl(MainArgs args)
+    {
+#pragma warning disable S1075 // URIs should not be hardcoded
+        var uri = new Uri("https://coveralls.io");
+#pragma warning restore S1075 // URIs should not be hardcoded
+        if (args.IsProvided("--serverUrl") && !Uri.TryCreate(args.OptServerUrl, UriKind.Absolute, out uri))
+        {
+            ExitWithError($"Invalid --serverUrl ({args.OptServerUrl}) provided.");
+        }
+
+        if (uri.Scheme.ToLower() != "http" && uri.Scheme.ToLower() != "https")
+        {
+            ExitWithError($"Invalid --serverUrl scheme ({uri.Scheme}) provided. ('http' and 'https' supported only)");
+        }
+
+        return uri;
     }
 
     private static List<CoverageSource> ParseCoverageSources(MainArgs args)

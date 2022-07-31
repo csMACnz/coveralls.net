@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Text.RegularExpressions;
+using csmacnz.Coveralls.Tests.TestAdapters;
 using csmacnz.Coveralls.Tests.TestHelpers;
 using Xunit;
 
@@ -21,6 +22,29 @@ public class UsageTests
         var results = CoverallsTestRunner.RunCoveralls("--notanoption");
 
         Assert.NotEqual(0, results.ExitCode);
+    }
+
+    [Theory]
+    [InlineData("w")]
+    [InlineData("/api/v3")]
+    [InlineData("coveralls.io")] // Needs http://
+    public void InvalidServerUrl_FailsWithCorrectError(string badUrl)
+    {
+        var results = CoverallsTestRunner.RunCoveralls($"--opencover -i anytestfile.xml --dryrun --repoToken MYTESTREPOTOKEN --serverUrl {badUrl}");
+
+        Assert.NotEqual(0, results.ExitCode);
+        Assert.Contains($"Invalid --serverUrl ({badUrl}) provided.", results.StandardError, StringComparison.Ordinal);
+    }
+
+    [Theory]
+    [InlineData("ftp://coveralls.io", "ftp")] // Needs http or https
+    [InlineData("tcp://coveralls.io", "tcp")] // Needs http or https
+    public void InvalidServerUrlSchema_FailsWithCorrectError(string badUrl, string scheme)
+    {
+        var results = CoverallsTestRunner.RunCoveralls($"--opencover -i anytestfile.xml --dryrun --repoToken MYTESTREPOTOKEN --serverUrl {badUrl}");
+
+        Assert.NotEqual(0, results.ExitCode);
+        Assert.Contains($"Invalid --serverUrl scheme ({scheme}) provided. ('http' and 'https' supported only)", results.StandardError, StringComparison.Ordinal);
     }
 
     [Fact]

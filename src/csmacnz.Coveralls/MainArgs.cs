@@ -7,8 +7,8 @@ public class MainArgs
     public const string Usage = @"csmacnz.Coveralls - a coveralls.io coverage publisher for .Net
 
 Usage:
-  csmacnz.Coveralls (--opencover | --dynamiccodecoverage | --monocov | --exportcodecoverage | --chutzpah | --lcov | --ncover | --reportgenerator | --multiple) -i ./opencovertests.xml (--repoToken <repoToken> | [--repoTokenVariable <repoTokenVariable>]) [-o ./opencovertests.json] [--dryrun] [--useRelativePaths [--basePath <path>] ] [--commitId <commitId> --commitBranch <commitBranch> [--commitAuthor <commitAuthor> --commitEmail <commitEmail> --commitMessage <commitMessage>] ] [--jobId <jobId>] [--serviceName <Name>] [--serviceNumber <Number>] [--pullRequest <pullRequestId>] [--treatUploadErrorsAsWarnings] [--parallel]
-  csmacnz.Coveralls --completeParallelWork (--repoToken <repoToken> | [--repoTokenVariable <repoTokenVariable>]) [--serviceNumber <Number>]
+  csmacnz.Coveralls (--opencover | --dynamiccodecoverage | --monocov | --exportcodecoverage | --chutzpah | --lcov | --ncover | --reportgenerator | --multiple) -i ./opencovertests.xml (--repoToken <repoToken> | [--repoTokenVariable <repoTokenVariable>]) [-o ./opencovertests.json] [--dryrun] [--useRelativePaths [--basePath <path>] ] [--commitId <commitId> --commitBranch <commitBranch> [--commitAuthor <commitAuthor> --commitEmail <commitEmail> --commitMessage <commitMessage>] ] [--jobId <jobId>] [--serviceName <Name>] [--serviceNumber <Number>] [--pullRequest <pullRequestId>] [--treatUploadErrorsAsWarnings] [--parallel] [--serverUrl <url>]
+  csmacnz.Coveralls --completeParallelWork (--repoToken <repoToken> | [--repoTokenVariable <repoTokenVariable>]) [--serviceNumber <Number>] [--serverUrl <url>]
   csmacnz.Coveralls --version
   csmacnz.Coveralls --help
 
@@ -43,6 +43,7 @@ Options:
  --serviceNumber <Number>                 The service-number for the coverage report.
  --pullRequest <pullRequestId>            The github pull request id. Used for updating status on github PRs.
  -k, --treatUploadErrorsAsWarnings        Exit successfully if an upload error is encountered and this flag is set.
+ --serverUrl <url>                        The coveralls server url [default: https://coveralls.io]
 
 Commit Options:
   If --commitId and --commitBranch are provided, all git settings will come from the command line arguments.
@@ -139,6 +140,8 @@ What it's for:
     public bool OptParallel => _args["--parallel"].IsTrue;
 
     public bool OptCompleteParallelWork => _args["--completeParallelWork"].IsTrue;
+
+    public string? OptServerUrl => _args["--serverUrl"]?.ToString();
 
     public bool OptVersion => _args["--version"].IsTrue;
 
