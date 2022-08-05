@@ -52,6 +52,12 @@ public class CoverallsService : ICoverallsService
             { stringContent, "json_file", "coverage.json" }
         };
 
+        var boundary = formData.Headers.ContentType?.Parameters.FirstOrDefault(o => o.Name == "boundary");
+        if (boundary != null)
+        {
+            boundary.Value = boundary.Value?.Replace("\"", string.Empty);
+        }
+
         var response = client.PostAsync(new Uri(serverUrl, JobsUri), formData).Result;
 
         if (!response.IsSuccessStatusCode)
