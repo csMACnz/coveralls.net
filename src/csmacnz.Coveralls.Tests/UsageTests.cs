@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Runtime.InteropServices;
 using System.Text.RegularExpressions;
 using csmacnz.Coveralls.Tests.TestAdapters;
 using csmacnz.Coveralls.Tests.TestHelpers;
@@ -26,7 +27,6 @@ public class UsageTests
 
     [Theory]
     [InlineData("w")]
-    [InlineData("/api/v3")]
     [InlineData("coveralls.io")] // Needs http://
     public void InvalidServerUrl_FailsWithCorrectError(string badUrl)
     {
@@ -45,6 +45,26 @@ public class UsageTests
 
         Assert.NotEqual(0, results.ExitCode);
         Assert.Contains($"Invalid --serverUrl scheme ({scheme}) provided. ('http' and 'https' supported only)", results.StandardError, StringComparison.Ordinal);
+    }
+
+    [Theory]
+    [InlineData("/api/v3")]
+    [InlineData("/root")]
+    public void UnixFilePathUrlSchema_FailsWithCorrectError(string badUrl)
+    {
+        var results = CoverallsTestRunner.RunCoveralls($"--opencover -i anytestfile.xml --dryrun --repoToken MYTESTREPOTOKEN --serverUrl {badUrl}");
+
+        Assert.NotEqual(0, results.ExitCode);
+        if (RuntimeInformation.IsOSPlatform(OSPlatform.Windows))
+        {
+            // On windows this is a relative path
+            Assert.Contains($"Invalid --serverUrl ({badUrl}) provided.", results.StandardError, StringComparison.Ordinal);
+        }
+        else
+        {
+            // On Unix this is a file path
+            Assert.Contains($"Invalid --serverUrl scheme (file) provided. ('http' and 'https' supported only)", results.StandardError, StringComparison.Ordinal);
+        }
     }
 
     [Fact]
