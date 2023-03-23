@@ -57,6 +57,15 @@ public class CompleteParallelTests
     }
 
     [Fact]
+    public void CompleteParallelCommandWithCarryForwardWorks()
+    {
+        var results = CoverallsTestRunner.RunCoveralls(
+            "--completeParallelWork --repoToken MYTESTREPOTOKEN --carryForward build,analyse,lint");
+
+        CoverallsAssert.RanSuccessfully(results);
+    }
+
+    [Fact]
     public void InvalidArgument_ExitCodeNotSuccess()
     {
         var results = CoverallsTestRunner.RunCoveralls("--completeParallelWork --notanoption");
