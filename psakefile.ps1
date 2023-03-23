@@ -241,7 +241,7 @@ task pack-only {
     if(Test-Path $nuget_pack_dir) {
         Remove-Item $nuget_pack_dir -r
     }
-    dotnet pack --output $package_dir /p:PackageVersion=$script:nugetVersion
+    dotnet pack /p:PackageOutputPath=$package_dir /p:PackageVersion=$script:nugetVersion
 }
 
 task integration {
