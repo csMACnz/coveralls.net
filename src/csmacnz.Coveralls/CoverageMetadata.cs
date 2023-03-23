@@ -5,4 +5,5 @@ public record CoverageMetadata(
         string ServiceJobId,
         string? ServiceBuildNumber,
         string? PullRequestId,
-        bool Parallel);
+        bool Parallel,
+        string? CarryForward);

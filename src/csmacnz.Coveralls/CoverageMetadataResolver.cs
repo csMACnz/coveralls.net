@@ -14,13 +14,15 @@ public static class CoverageMetadataResolver
         var serviceBuildNumber = Resolve(resolvers, r => r.ResolveServiceBuildNumber());
         var pullRequestId = Resolve(resolvers, r => r.ResolvePullRequestId());
         var parallel = ResolveParallel(args, variables);
+        var carryForward = ResolveCarryForward(args, variables);
 
         return new CoverageMetadata(
             ServiceName: serviceName.ValueOr("coveralls.net"),
             ServiceJobId: serviceJobId.ValueOr("0"),
             ServiceBuildNumber: serviceBuildNumber.ValueOrDefault(),
             PullRequestId: pullRequestId.ValueOrDefault(),
-            Parallel: parallel);
+            Parallel: parallel,
+            CarryForward: carryForward);
     }
 
     private static List<IMetaDataResolver> CreateResolvers(MainArgs args, IEnvironmentVariables variables)
@@ -45,5 +47,15 @@ public static class CoverageMetadataResolver
         }
 
         return variables.GetBooleanVariable("COVERALLS_PARALLEL");
+    }
+
+    private static string? ResolveCarryForward(MainArgs args, IEnvironmentVariables variables)
+    {
+        if (args.IsProvided("--carryForward"))
+        {
+            return args.OptCarryForward;
+        }
+
+        return variables.GetEnvironmentVariable("COVERALLS_CARRYFORWARD_FLAGS");
     }
 }

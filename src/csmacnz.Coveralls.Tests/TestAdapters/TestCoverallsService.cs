@@ -11,7 +11,7 @@ public class TestCoverallsService : ICoverallsService
 
     public TestCoverallsService(bool isWorking) => _isWorking = isWorking;
 
-    public Result<Unit, string> PushParallelCompleteWebhook(string repoToken, string? buildNumber, Uri serverUrl) => _isWorking ? Success : "An Error In the Test Service";
+    public Result<Unit, string> PushParallelCompleteWebhook(string repoToken, string? buildNumber, Uri serverUrl, string? carryForward) => _isWorking ? Success : "An Error In the Test Service";
 
     public Result<Unit, string> Upload(string fileData, Uri serverUrl) => _isWorking ? Success : "An Error In the Test Service";
 

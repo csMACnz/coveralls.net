@@ -8,7 +8,7 @@ public class MainArgs
 
 Usage:
   csmacnz.Coveralls (--opencover | --dynamiccodecoverage | --monocov | --exportcodecoverage | --chutzpah | --lcov | --ncover | --reportgenerator | --multiple) -i ./opencovertests.xml (--repoToken <repoToken> | [--repoTokenVariable <repoTokenVariable>]) [-o ./opencovertests.json] [--dryrun] [--useRelativePaths [--basePath <path>] ] [--commitId <commitId> --commitBranch <commitBranch> [--commitAuthor <commitAuthor> --commitEmail <commitEmail> --commitMessage <commitMessage>] ] [--jobId <jobId>] [--serviceName <Name>] [--serviceNumber <Number>] [--pullRequest <pullRequestId>] [--treatUploadErrorsAsWarnings] [--parallel] [--serverUrl <url>]
-  csmacnz.Coveralls --completeParallelWork (--repoToken <repoToken> | [--repoTokenVariable <repoTokenVariable>]) [--serviceNumber <Number>] [--serverUrl <url>]
+  csmacnz.Coveralls --completeParallelWork (--repoToken <repoToken> | [--repoTokenVariable <repoTokenVariable>]) [--serviceNumber <Number>] [--serverUrl <url>] [--carryForward <carryForward>]
   csmacnz.Coveralls --version
   csmacnz.Coveralls --help
 
@@ -44,6 +44,7 @@ Options:
  --pullRequest <pullRequestId>            The github pull request id. Used for updating status on github PRs.
  -k, --treatUploadErrorsAsWarnings        Exit successfully if an upload error is encountered and this flag is set.
  --serverUrl <url>                        The coveralls server url [default: https://coveralls.io]
+ --carryForward                           Any Carryforward Flags to carry forward coverage report data from a previous build for any jobs that are missing from the current build.
 
 Commit Options:
   If --commitId and --commitBranch are provided, all git settings will come from the command line arguments.
@@ -134,6 +135,8 @@ What it's for:
     public string? OptServicenumber => _args["--serviceNumber"]?.ToString();
 
     public string? OptPullrequest => _args["--pullRequest"]?.ToString();
+
+    public string? OptCarryForward => _args["--carryForward"]?.ToString();
 
     public bool OptTreatuploaderrorsaswarnings => _args["--treatUploadErrorsAsWarnings"].IsTrue;
 

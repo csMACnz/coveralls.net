@@ -4,10 +4,23 @@ public class CoverallsService : ICoverallsService
 {
     private static readonly Uri JobsUri = new("/api/v1/jobs", UriKind.Relative);
 
-    private static Uri WebhookUri(string repoToken)
-        => new($"/webhook?repo_token={System.Net.WebUtility.UrlEncode(repoToken)}", UriKind.Relative);
+    private static Uri WebhookUri(string repoToken, string? carryForward)
+    {
+        var uriBuilder = new UriBuilder(new Uri("/webhook", UriKind.Relative));
+        var query = System.Web.HttpUtility.ParseQueryString(string.Empty);
 
-    public Result<Unit, string> PushParallelCompleteWebhook(string repoToken, string? buildNumber, Uri serverUrl)
+        query.Add("repo_token", repoToken);
+
+        if (!string.IsNullOrWhiteSpace(carryForward))
+        {
+            query.Add("carryforward", carryForward);
+        }
+
+        uriBuilder.Query = query.ToString();
+        return uriBuilder.Uri;
+    }
+
+    public Result<Unit, string> PushParallelCompleteWebhook(string repoToken, string? buildNumber, Uri serverUrl, string? carryForward)
     {
         var payload = $@"
 {{
@@ -19,7 +32,7 @@ public class CoverallsService : ICoverallsService
 
         using HttpContent stringContent = new StringContent(payload, Encoding.Default, "application/json");
         using var client = new HttpClient();
-        var url = new Uri(serverUrl, WebhookUri(repoToken));
+        var url = new Uri(serverUrl, WebhookUri(repoToken, carryForward));
 
         var response = client.PostAsync(url, stringContent).Result;
 

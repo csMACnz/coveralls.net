@@ -58,7 +58,7 @@ public class Program
             {
                 var repoToken = ResolveRepoToken(args);
 
-                var pushResult = _coverallsService.PushParallelCompleteWebhook(repoToken, metadata.ServiceBuildNumber, serverUrl);
+                var pushResult = _coverallsService.PushParallelCompleteWebhook(repoToken, metadata.ServiceBuildNumber, serverUrl, metadata.CarryForward);
                 if (!pushResult.Successful)
                 {
                     ExitWithError(pushResult.Error);
