@@ -77,5 +77,5 @@ public class TeamCityGitDataResolverTests
         Assert.Equal(sha, gitData.Value.Item1.Head.Id);
     }
 
-    private void AssertNotNull([NotNull] object t) => Assert.NotNull(t);
+    private static void AssertNotNull([NotNull] object t) => Assert.NotNull(t);
 }

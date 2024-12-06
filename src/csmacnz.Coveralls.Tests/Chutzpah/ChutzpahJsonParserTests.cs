@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Linq;
 using csmacnz.Coveralls.Parsers;
 using Xunit;
 
@@ -13,11 +12,11 @@ public class ChutzpahJsonParserTests
         var fileContents = Reports.ChutzpahSample.ChutzpahExample.Split(new[] { Environment.NewLine }, StringSplitOptions.None);
 
         var results = ChutzpahJsonParser.GenerateSourceFiles(fileContents);
-
+        var first = results[0];
         Assert.Equal(2, results.Count);
-        Assert.Equal(@"D:\path\to\file\file.ts", results.First().FullPath);
-        Assert.Equal(36, results.First().Coverage[0]);
-        Assert.Equal(10, results.First().Coverage[5]);
-        Assert.Null(results.First().Coverage[7]);
+        Assert.Equal(@"D:\path\to\file\file.ts", first.FullPath);
+        Assert.Equal(36, first.Coverage[0]);
+        Assert.Equal(10, first.Coverage[5]);
+        Assert.Null(first.Coverage[7]);
     }
 }

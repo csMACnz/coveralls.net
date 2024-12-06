@@ -121,7 +121,7 @@ public class CoverallsPublisher
             files.AddRange(coverageFiles.Value);
         }
 
-        Debug.Assert(files != null, "Files should always be returned.");
+        Debug.Assert(files != null, "Files should always be returned.", "Files should always be returned.");
         return files;
     }
 

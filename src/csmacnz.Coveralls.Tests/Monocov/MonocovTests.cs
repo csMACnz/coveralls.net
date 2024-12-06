@@ -32,7 +32,7 @@ public class MonocovTests
         Assert.False(jObject.Value<bool?>("parallel"));
 
         Assert.Collection(
-            (JArray?)jObject.GetValue("source_files", StringComparison.Ordinal),
+            (JArray?)jObject.GetValue("source_files", StringComparison.Ordinal)!,
             i => AssertIsValidCoverageFileData(i, "GameOfLife/Game.cs"),
             i => AssertIsValidCoverageFileData(i, "GameOfLife/Program.cs"),
             i => AssertIsValidCoverageFileData(i, "GameOfLife/World.cs"),

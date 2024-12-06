@@ -14,7 +14,7 @@ public static class CoverallsTestRunner
         var applicationPath = GetCoverallsDll();
         var argumentsToUse = "exec " + applicationPath + " " + arguments;
 
-        var exePath = Environment.GetEnvironmentVariable("COVERALLSNET_EXEPATH");
+        var exePath = Path.Combine(Environment.CurrentDirectory, "csmacnz.Coveralls.exe");
         if (!string.IsNullOrWhiteSpace(exePath))
         {
             applicationProcess = exePath;
@@ -59,13 +59,5 @@ public static class CoverallsTestRunner
             exitCode: exitCode);
     }
 
-    private static string GetCoverallsDll()
-    {
-#if DEBUG
-        const string configuration = "Debug";
-#else
-        const string configuration = "Release";
-#endif
-        return Path.Combine("..", "..", "..", "..", "csmacnz.Coveralls", "bin", configuration, "net6.0", "csmacnz.Coveralls.dll");
-    }
+    private static string GetCoverallsDll() => Path.Combine(Environment.CurrentDirectory, "csmacnz.Coveralls.dll");
 }
